@@ -785,3 +785,26 @@ export const LeftArrow = ({ className }) => {
     </>
   );
 };
+export const SparklesIcon=()=>{
+    return(
+        <>
+        <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_1_18778" style={{maskType:'luminance'}} maskUnits="userSpaceOnUse" x="0" y="0" width="27" height="27">
+<path d="M0 3.8147e-06H26.3332V26.3333H0V3.8147e-06Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_1_18778)">
+<path d="M16.0469 17.4869C16.0469 18.055 16.5074 18.5155 17.0755 18.5155C17.6436 18.5155 18.1042 18.055 18.1042 17.4869C18.1042 16.9187 17.6436 16.4582 17.0755 16.4582C16.5074 16.4582 16.0469 16.9187 16.0469 17.4869Z" fill="white"/>
+<path d="M16.0469 1.02861C16.0469 1.59673 16.5074 2.05725 17.0755 2.05725C17.6436 2.05725 18.1042 1.59673 18.1042 1.02861C18.1042 0.460489 17.6436 -3.40939e-05 17.0755 -3.40939e-05C16.5074 -3.40939e-05 16.0469 0.460489 16.0469 1.02861Z" fill="white"/>
+<path d="M3.08852 25.3046C2.56217 25.3046 2.03576 25.1037 1.63397 24.7018C0.830343 23.8982 0.830343 22.5964 1.63397 21.7927L15.6235 7.80319C16.4271 6.99956 17.729 6.99956 18.5326 7.80319C19.3362 8.60682 19.3362 9.90867 18.5326 10.7123L4.54307 24.7018C4.14129 25.1037 3.61488 25.3046 3.08852 25.3046Z" stroke="white" strokeWidth="2.05729" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M23.25 13.3724V17.4869" stroke="white" strokeWidth="2.05729" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M21.1953 15.4296H25.3099" stroke="white" strokeWidth="2.05729" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M23.25 1.02862V5.14319" stroke="white" strokeWidth="2.05729" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M21.1953 3.08594H25.3099" stroke="white" strokeWidth="2.05729" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M10.9062 1.02862V5.14319" stroke="white" strokeWidth="2.05729" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M8.85156 3.08594H12.9661" stroke="white" strokeWidth="2.05729" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round"/>
+</g>
+</svg>
+
+        </>
+    )
+}
