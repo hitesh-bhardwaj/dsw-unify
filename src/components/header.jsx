@@ -18,7 +18,7 @@ export function Header({ title = "Agents" }) {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between bg-white px-6">
+    <header className="flex h-16 items-center justify-between bg-white/50 px-6 sticky w-full top-0 z-10 backdrop-blur-sm">
       {/* Left side - Trigger and Breadcrumb */}
       <div className="flex items-center gap-4">
         <SidebarTrigger />
