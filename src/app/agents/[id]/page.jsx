@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { ApiEndpointModal } from "@/components/api-endpoint-modal";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { AiGenerator, EditIcon, LeftArrow } from "@/components/Icons";
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -58,38 +59,46 @@ export default function AgentDetailPage({ params }) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="border-b bg-white p-6">
+      <div className="bg-white p-6">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link href="/agents">
-              <Button variant="ghost" size="icon" className="shrink-0">
-                <ArrowLeft className="h-5 w-5" />
+          <div className="flex gap-3">
+            <Link href="/agents" className="w-fit">
+              <Button variant="ghost" size="icon" className="shrink-0 w-fit -mt-1">
+                {/* <ArrowLeft className="h-5 w-5" /> */}
+                <LeftArrow/>
               </Button>
             </Link>
             <div>
-              <h1 className="text-2xl font-bold">{agent.name}</h1>
-              <p className="text-sm text-gray-600">{agent.description}</p>
+              <h1 className="text-xl font-medium">{agent.name}</h1>
+              <p className="text-sm text-gray-600 pl-0.5">{agent.description}</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
               onClick={() => setApiModalOpen(true)}
-              className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="gap-2 text-foreground border border-primary"
             >
-              <span className="text-lg">📄</span>
+              <div className="!w-4">
+                <AiGenerator/>
+              </div>
               API
             </Button>
             <Button
               variant="outline"
-              className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="gap-2 text-foreground border border-primary"
             >
-              <span className="text-lg">🧪</span>
+              <div className="!w-4">
+                <AiGenerator/>
+              </div>
               Test
             </Button>
             <Link href={`/agents/${id}/edit`}>
-              <Button className="bg-[#FF5722] hover:bg-[#E64A19] text-white gap-2">
-                <span className="text-lg">✏️</span>
+              <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
+                <div className="!w-4">
+                {/* <AiGenerator/> */}
+                <EditIcon className={"text-white"}/>
+              </div>
                 Edit Agent
               </Button>
             </Link>

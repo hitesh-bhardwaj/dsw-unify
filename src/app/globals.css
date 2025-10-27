@@ -38,12 +38,12 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-card-badge-green:var(--badge-green);
-  --color-card-badge-yellow:var(--badge-yellow);
-  --color-card-badge-blue:var(--badge-blue);
-  --color-card-badge-mint:var(--badge-mint);
-  --color-card-badge-gray:var(--badge-gray);
-  --color-active-card:var(--active-card);
+  --color-card-badge-green: var(--badge-green);
+  --color-card-badge-yellow: var(--badge-yellow);
+  --color-card-badge-blue: var(--badge-blue);
+  --color-card-badge-mint: var(--badge-mint);
+  --color-card-badge-gray: var(--badge-gray);
+  --color-active-card: var(--active-card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -54,14 +54,14 @@
   --font-inter: "Inter", sans-serif;
   --radius: 0.625rem;
   --background: #ffffff;
-  --foreground:  #111111;
-  --active-card:#1d1d1d;
+  --foreground: #111111;
+  --active-card: #1d1d1d;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #F76809;
-  --primary-foreground:  #FFFFFF;
+  --primary: #f76809;
+  --primary-foreground: #ffffff;
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -80,19 +80,18 @@
   --sidebar-background: #ffffff;
   --sidebar: #ffffff;
   --sidebar-foreground: #111111;
-  --sidebar-primary: #F76809;
-  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-primary: #f76809;
+  --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: #aaaaaa;
   --sidebar-ring: oklch(0.708 0 0);
-
-  --badge-yellow: #FFCD41;
-  --badge-blue: #3651EA;
-  --badge-green: #6BC631;
-  --badge-mint: #50DFB1;
-  --badge-gray: #DEDEDE;
-  --card-active: #1D1D1D;
+  --badge-yellow: #ffcd41;
+  --badge-blue: #3651ea;
+  --badge-green: #6bc631;
+  --badge-mint: #50dfb1;
+  --badge-gray: #dedede;
+  --card-active: #1d1d1d;
 }
 
 .dark {
@@ -139,7 +138,7 @@
 }
 
 body {
-  font-family: var(--font-inter), 'system-ui', sans-serif;
+  font-family: var(--font-inter), "system-ui", sans-serif;
   background-color: var(--background);
   color: var(--foreground);
 }
