@@ -51,6 +51,7 @@ export function AppSidebar() {
             <SidebarMenu>
               {navigation.map((item) => {
                 const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
+                const Icon = item.icon;
                 return (
                   <SidebarMenuItem key={item.name}>
                     <SidebarMenuButton
@@ -63,7 +64,7 @@ export function AppSidebar() {
                       )}
                     >
                       <Link href={item.href}>
-                        <item.icon />
+                       <Icon size={30} className="!h-6 !w-auto" />
                         <span>{item.name}</span>
                       </Link>
                     </SidebarMenuButton>

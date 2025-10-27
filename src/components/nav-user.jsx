@@ -30,18 +30,17 @@ export function NavUser({ user }) {
   return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 rounded-lg hover:bg-sidebar-accent p-2 transition-colors">
+            <button className="flex items-center gap-2 rounded-lg hover:bg-sidebar-accent p-2 transition-colors !cursor-pointer">
               <Avatar className="h-10 w-10 rounded-full border-[3px] border-sidebar-primary">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
-              <ChevronDownIcon/>
-              {/* <ChevronsUpDown className="ml-auto size-4" /> */}
+              <ChevronDownIcon className="!h-1.5 !w-auto"/>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            side={"right"}
+            side={"bottom"}
             align="end"
             sideOffset={4}
           >

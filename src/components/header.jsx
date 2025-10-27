@@ -1,6 +1,6 @@
 "use client";
 
-import {Moon} from "lucide-react";
+import {Moon, Sun} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useState } from "react";
@@ -24,8 +24,7 @@ export function Header({ title = "Agents" }) {
         <SidebarTrigger />
         <Separator orientation="vertical" className={"h-8!"} />
         <div className="flex items-center gap-2 text-sm">
-          {/* <Home className="size-4 text-muted-foreground" /> */}
-          <HomeIcon/>
+          <HomeIcon className="h-5 w-auto !cursor-pointer"/>
           <span className="text-foreground">{title}</span>
         </div>
       </div>
@@ -37,27 +36,27 @@ export function Header({ title = "Agents" }) {
           variant="ghost"
           size="icon"
           onClick={() => setIsDark(!isDark)}
-          className="text-gray-600 hover:text-gray-900"
+          className="text-gray-600 hover:text-gray-900 !cursor-pointer"
         >
-          {isDark ? <LightModeIcon className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          {isDark ? <Sun className="!h-5 !w-auto" /> : <Moon className="!h-5 !w-auto" />}
         </Button>
 
         {/* Notifications */}
         <Button
           variant="ghost"
           size="icon"
-          className="text-gray-600 hover:text-gray-900"
+          className="text-gray-600 hover:text-gray-900 !cursor-pointer"
         >
-          <NotificationsIcon className="h-5 w-5" />
+          <NotificationsIcon className="!h-5 !w-auto" />
         </Button>
 
         {/* Help */}
         <Button
           variant="ghost"
           size="icon"
-          className="text-gray-600 hover:text-gray-900"
+          className="text-gray-600 hover:text-gray-900 !cursor-pointer"
         >
-          <FAQIcons className="h-5 w-5" />
+          <FAQIcons className="!h-5 !w-auto " />
         </Button>
         <Separator orientation="vertical" className={"h-8!"} />
 
