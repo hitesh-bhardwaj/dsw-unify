@@ -1,11 +1,12 @@
 "use client";
 
-import { Home, Sun, Moon, Bell, HelpCircle } from "lucide-react";
+import {Moon} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useState } from "react";
 import { Separator } from "./ui/separator";
 import { NavUser } from "./nav-user";
+import { FAQIcons, HomeIcon, LightModeIcon, NotificationsIcon } from "./Icons";
 
 export function Header({ title = "Agents" }) {
   const [isDark, setIsDark] = useState(false);
@@ -23,7 +24,8 @@ export function Header({ title = "Agents" }) {
         <SidebarTrigger />
         <Separator orientation="vertical" className={"h-8!"} />
         <div className="flex items-center gap-2 text-sm">
-          <Home className="size-4 text-muted-foreground" />
+          {/* <Home className="size-4 text-muted-foreground" /> */}
+          <HomeIcon/>
           <span className="text-foreground">{title}</span>
         </div>
       </div>
@@ -37,7 +39,7 @@ export function Header({ title = "Agents" }) {
           onClick={() => setIsDark(!isDark)}
           className="text-gray-600 hover:text-gray-900"
         >
-          {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+          {isDark ? <LightModeIcon className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </Button>
 
         {/* Notifications */}
@@ -46,7 +48,7 @@ export function Header({ title = "Agents" }) {
           size="icon"
           className="text-gray-600 hover:text-gray-900"
         >
-          <Bell className="h-5 w-5" />
+          <NotificationsIcon className="h-5 w-5" />
         </Button>
 
         {/* Help */}
@@ -55,8 +57,10 @@ export function Header({ title = "Agents" }) {
           size="icon"
           className="text-gray-600 hover:text-gray-900"
         >
-          <HelpCircle className="h-5 w-5" />
+          <FAQIcons className="h-5 w-5" />
         </Button>
+        <Separator orientation="vertical" className={"h-8!"} />
+
 
         {/* User avatar with dropdown */}
         <div className="flex items-center gap-2 cursor-pointer">

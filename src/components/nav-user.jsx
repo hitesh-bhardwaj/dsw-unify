@@ -23,6 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ChevronDownIcon } from "./Icons"
 
 export function NavUser({ user }) {
 
@@ -30,11 +31,12 @@ export function NavUser({ user }) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 rounded-lg hover:bg-sidebar-accent p-2 transition-colors">
-              <Avatar className="h-8 w-8 rounded-lg">
+              <Avatar className="h-10 w-10 rounded-full border-[3px] border-sidebar-primary">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
-              <ChevronsUpDown className="ml-auto size-4" />
+              <ChevronDownIcon/>
+              {/* <ChevronsUpDown className="ml-auto size-4" /> */}
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent

@@ -2,16 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Bot,
-  MessageSquare,
-  Cpu,
-  BookOpen,
-  Wrench,
-  Database,
-  Shield,
-  FlaskConical,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Sidebar,
@@ -26,16 +16,17 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import logo from "../../public/unify-logo.png";
+import { AgentsIcon, GuardrailsIcon, KnowledgeBaseIcon, LLMsIcon, MemoriesIcon, PromptsIcon, TestingIcon, ToolsIcon } from "./Icons";
 
 const navigation = [
-  { name: "Agents", href: "/agents", icon: Bot },
-  { name: "Prompts", href: "/prompts", icon: MessageSquare },
-  { name: "LLMs", href: "/llms", icon: Cpu },
-  { name: "Knowledge Bases", href: "/knowledge-bases", icon: BookOpen },
-  { name: "Tools", href: "/tools", icon: Wrench },
-  { name: "Memories", href: "/memories", icon: Database },
-  { name: "Guardrails", href: "/guardrails", icon: Shield },
-  { name: "Testing", href: "/testing", icon: FlaskConical },
+  { name: "Agents", href: "/agents", icon: AgentsIcon },
+  { name: "Prompts", href: "/prompts", icon: PromptsIcon },
+  { name: "LLMs", href: "/llms", icon: LLMsIcon },
+  { name: "Knowledge Bases", href: "/knowledge-bases", icon: KnowledgeBaseIcon },
+  { name: "Tools", href: "/tools", icon: ToolsIcon },
+  { name: "Memories", href: "/memories", icon: MemoriesIcon },
+  { name: "Guardrails", href: "/guardrails", icon: GuardrailsIcon },
+  { name: "Testing", href: "/testing", icon: TestingIcon},
 ];
 
 export function AppSidebar() {

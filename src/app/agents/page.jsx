@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { AgentCard } from "@/components/agent-card";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { PlusIcon, PromptsIcon, SearchIcon } from "@/components/Icons";
 
 // Mock data for agents
 const agents = [
@@ -77,8 +78,9 @@ export default function AgentsPage() {
             </p>
           </div>
           <Link href="/agents/create">
-            <Button className="bg-[#FF5722] hover:bg-[#E64A19] text-white gap-2">
-              <Plus className="h-4 w-4" />
+            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 ">
+              {/* <Plus className="h-4 w-4" /> */}
+              <PlusIcon/>
               Create Agents
             </Button>
           </Link>
@@ -86,7 +88,10 @@ export default function AgentsPage() {
 
         {/* Search bar */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          {/* <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" /> */}
+          <div className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2">
+<SearchIcon/>
+          </div>
           <Input
             placeholder="Search Agents..."
             value={searchQuery}
@@ -96,13 +101,13 @@ export default function AgentsPage() {
         </div>
 
         {/* Filter tabs */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 bg-[#F6F6F6] py-2 px-3 rounded-lg">
           <button
             onClick={() => setActiveTab("prompts")}
             className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors",
+              "flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors w-1/2",
               activeTab === "prompts"
-                ? "border-[#FF5722] bg-orange-50 text-[#FF5722]"
+                ? "border-[#DCDCDC] bg-white text-[#FF5722]"
                 : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
             )}
           >
@@ -120,7 +125,8 @@ export default function AgentsPage() {
                 </div>
               )}
             </div>
-            <MessageSquare className="h-4 w-4" />
+            {/* <MessageSquare className="h-4 w-4" /> */}
+            <PromptsIcon/>
             <span>Prompts</span>
           </button>
 
