@@ -114,12 +114,12 @@ export default function AgentDetailPage({ params }) {
             {/* Agent Information */}
             <Card>
               <CardHeader>
-                <h2 className="text-xl font-semibold">Agent Information</h2>
+                <h2 className="text-xl font-medium">Agent Information</h2>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <h3 className="text-sm font-medium text-gray-700 mb-2">Status</h3>
-                  <Badge className="bg-green-500 text-white hover:bg-green-600">
+                  <Badge className="bg-badge-green text-white hover:bg-green-600">
                     {agent.status.charAt(0).toUpperCase() + agent.status.slice(1)}
                   </Badge>
                 </div>
@@ -130,7 +130,7 @@ export default function AgentDetailPage({ params }) {
                       <Badge
                         key={index}
                         variant="secondary"
-                        className="rounded-full bg-gray-100 text-gray-800"
+                        className="bg-transparent border border-black/20 font-light"
                       >
                         {tag}
                       </Badge>
@@ -153,18 +153,18 @@ export default function AgentDetailPage({ params }) {
             {/* Performance Metrics */}
             <Card>
               <CardHeader>
-                <h2 className="text-xl font-semibold">Performance Metrics</h2>
+                <h2 className="text-xl font-medium">Performance Metrics</h2>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h3 className="text-3xl font-bold text-gray-900">
+                    <h3 className="text-3xl font-medium text-gray-900">
                       {agent.metrics.totalRequests}
                     </h3>
                     <p className="text-sm text-gray-600">Total Requests</p>
                   </div>
                   <div>
-                    <h3 className="text-3xl font-bold text-gray-900">
+                    <h3 className="text-3xl font-medium text-gray-900">
                       {agent.metrics.avgResponse}
                     </h3>
                     <p className="text-sm text-gray-600">Avg. Response</p>
@@ -172,13 +172,13 @@ export default function AgentDetailPage({ params }) {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h3 className="text-3xl font-bold text-green-500">
+                    <h3 className="text-3xl font-medium text-green-500">
                       {agent.metrics.successRate}
                     </h3>
                     <p className="text-sm text-gray-600">Success Rate</p>
                   </div>
                   <div>
-                    <h3 className="text-3xl font-bold text-gray-900">
+                    <h3 className="text-3xl font-medium text-gray-900">
                       {agent.metrics.activeUsers}
                     </h3>
                     <p className="text-sm text-gray-600">Active Users</p>
@@ -190,23 +190,24 @@ export default function AgentDetailPage({ params }) {
             {/* System Health */}
             <Card>
               <CardHeader>
-                <h2 className="text-xl font-semibold">System Health</h2>
+                <h2 className="text-xl font-medium">System Health</h2>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-medium text-gray-700">Last Activity</h3>
-                  <p className="text-sm text-gray-600">{agent.health.lastActivity}</p>
+                  <p className="text-sm text-forground font-medium">{agent.health.lastActivity}</p>
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-medium text-gray-700">Error Rate</h3>
-                  <p className="text-sm text-red-600 font-semibold">
+                  <p className="text-sm text-red-600 font-medium">
                     {agent.health.errorRate}
                   </p>
                 </div>
+                <span className="w-full h-[1px] bg-black/20 block mt-8"/>
                 <div className="pt-4">
-                  <div className="flex items-center gap-2 text-green-600">
-                    <div className="h-2 w-2 rounded-full bg-green-500" />
-                    <span className="font-medium">System Operational</span>
+                  <div className="flex items-center gap-2 text-badge-green">
+                    <div className="h-2 w-2 rounded-full bg-badge-green" />
+                    <span className="text-sm">System Operational</span>
                   </div>
                 </div>
               </CardContent>
@@ -214,16 +215,17 @@ export default function AgentDetailPage({ params }) {
           </div>
 
           {/* Recent Activity */}
-          <Card>
+          <Card className={"border-none"}>
             <CardHeader>
               <h2 className="text-xl font-semibold">Recent Activity</h2>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {agent.recentActivity.map((activity, index) => (
+                  <div key={index} className="w-full flex flex-col gap-2 items-end">
+
                   <div
-                    key={index}
-                    className="flex items-center justify-between py-4 border-b last:border-0"
+                    className="flex items-center justify-between py-4 w-full"
                   >
                     <div className="flex items-center gap-3">
                       <div className={cn("h-2 w-2 rounded-full", getActivityColor(activity.type))} />
@@ -231,6 +233,9 @@ export default function AgentDetailPage({ params }) {
                     </div>
                     <span className="text-sm text-gray-500">{activity.time}</span>
                   </div>
+                  <span className="w-[98.5%] h-[1px] bg-black/20 block"/>
+
+                    </div>
                 ))}
               </div>
             </CardContent>

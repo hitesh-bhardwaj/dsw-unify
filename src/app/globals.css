@@ -38,11 +38,11 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-card-badge-green: var(--badge-green);
-  --color-card-badge-yellow: var(--badge-yellow);
-  --color-card-badge-blue: var(--badge-blue);
-  --color-card-badge-mint: var(--badge-mint);
-  --color-card-badge-gray: var(--badge-gray);
+  --color-badge-green: var(--badge-green);
+  --color-badge-yellow: var(--badge-yellow);
+  --color-badge-blue: var(--badge-blue);
+  --color-badge-mint: var(--badge-mint);
+  --color-badge-gray: var(--badge-gray);
   --color-active-card: var(--active-card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

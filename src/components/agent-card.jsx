@@ -49,7 +49,7 @@ export function AgentCard({ agent }) {
               </span>
               <span
                 className={cn(
-                  "w-3 h-3 rounded-full bg-card-badge-green absolute -top-0.5 -right-0.5",
+                  "w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5",
                   status === "active"
                     ? ""
                     : "hidden"
@@ -62,7 +62,7 @@ export function AgentCard({ agent }) {
               className={cn(
                 "rounded-full px-3 py-1 text-xs font-medium",
                 status === "active"
-                  ? "bg-card-badge-green text-white"
+                  ? "bg-badge-green text-white"
                   : "bg-gray-200 text-foreground px-4"
               )}
             >
@@ -89,10 +89,10 @@ export function AgentCard({ agent }) {
                 className={cn(
                   "rounded-full px-3.5 py-1 text-xs font-normal",
                   tag.color === "yellow" &&
-                    "bg-card-badge-yellow text-foreground ",
-                  tag.color === "blue" && "bg-card-badge-blue text-white ",
-                  tag.color === "green" && "bg-card-badge-mint text-foreground",
-                  tag.color === "orange" && "bg-card-badge-yellow text-foreground",
+                    "bg-badge-yellow text-foreground ",
+                  tag.color === "blue" && "bg-badge-blue text-white ",
+                  tag.color === "green" && "bg-badge-mint text-foreground",
+                  tag.color === "orange" && "bg-badge-yellow text-foreground",
                   tag.color === "purple" && "bg-purple-500 text-white",
                   !tag.color && isDark && "bg-white text-foreground",
                   !tag.color && !isDark && "bg-gray-100 text-gray-800"
@@ -125,7 +125,7 @@ export function AgentCard({ agent }) {
               <div className="w-4 h-4">
                 <FileTimeout
                   className={` ${
-                    isDark ? "text-foreground" : "text-card-badge-blue"
+                    isDark ? "text-foreground" : "text-badge-blue"
                   }`}
                 />
               </div>
