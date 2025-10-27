@@ -64,8 +64,8 @@ export function AppSidebar() {
                       )}
                     >
                       <Link href={item.href}>
-                       <Icon size={30} className="!h-6 !w-auto" />
-                        <span>{item.name}</span>
+                       <Icon size={30} className="!h-5 !w-auto" />
+                        <span className="">{item.name}</span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

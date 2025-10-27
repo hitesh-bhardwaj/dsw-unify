@@ -41,7 +41,7 @@ export function AgentCard({ agent }) {
             >
               <span
                 className={cn(
-                  "w-full h-full flex justify-center items-center  p-3.5",
+                  "w-full h-full flex justify-center items-center  p-4.5",
                   isDark ? "text-black" : "text-white"
                 )}
               >
