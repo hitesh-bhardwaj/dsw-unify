@@ -1,23 +1,19 @@
-import { Star, Copy } from "lucide-react";
+import { Copy } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave } from "./Icons";
+import { Editor, Eye, SynthWave } from "./Icons";
 
-export function PromptCard({ prompt }) {
+export function TemplateCard({ template }) {
   const {
     name,
     description,
-    icon,
-    rating,
-    version,
     tags = [],
+    variable,
     uses,
-    lastUpdated,
-    preview,
     variant = "light",
-  } = prompt;
+  } = template;
 
   const isDark = variant === "dark";
 
@@ -49,21 +45,7 @@ export function PromptCard({ prompt }) {
                 <SynthWave />
               </span>
             </div>
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="text-xs">{rating}</span>
-              <Badge
-                variant="secondary"
-                className={cn(
-                  "px-1.5 py-1 ml-1.5 rounded-sm",
-                  isDark
-                    ? "border border-white bg-transparent text-white "
-                    : "border border-foreground text-foreground bg-transparent"
-                )}
-              >
-                {version}
-              </Badge>
-            </div>
+           
           </div>
 
           {/* Action buttons */}
@@ -102,21 +84,9 @@ export function PromptCard({ prompt }) {
                   : "text-primary hover:bg-sidebar-accent"
               )}
             >
-              {/* <Edit className="h-full w-full" /> */}
               <Editor/>
             </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1 ",
-                isDark
-                  ? "text-white hover:bg-stone-700"
-                  : "text-red-600 hover:bg-red-50"
-              )}
-            >
-              <Bin/>
-            </Button>
+            
           </div>
         </div>
 
@@ -161,26 +131,17 @@ export function PromptCard({ prompt }) {
         </div>
       </CardHeader>
 
-      <CardContent className={`${isDark?"bg-white":"bg-sidebar-accent border border-black/10"} w-[92%] mx-auto py-5 rounded-xl px-4`}>
+      <CardContent className={`${isDark?"bg-white":"bg-sidebar-accent border border-black/10"} w-[92%] mx-auto py-5 rounded-xl px-4 text-foreground text-sm`}>
         {/* Usage stats */}
-        <div className={`flex items-center justify-between text-sm mb-3 `}>
+        <div className={`flex items-center justify-between mb-3 `}>
           <span className={ "text-foreground"}>
             {uses} uses
           </span>
-          <span className={ "text-foreground"}>
-            Updates {lastUpdated}
-          </span>
+          
         </div>
-
+         <span className="font-medium ">Variables: </span><span className="text-black/60">{variable}</span>
         {/* Preview */}
-        <div
-          className={cn(
-            "rounded-lg p-3 text-xs",
-            isDark ? "bg-sidebar-accent text-gray-600" : "bg-white text-gray-600"
-          )}
-        >
-          {preview}
-        </div>
+       
       </CardContent>
     </Card>
   );

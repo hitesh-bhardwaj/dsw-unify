@@ -1,13 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Plus, MessageSquare, LayoutTemplate } from "lucide-react";
+// import { Search, Plus, MessageSquare, LayoutTemplate } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { AgentCard } from "@/components/agent-card";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { PlusIcon, PromptsIcon, SearchIcon, TemplatesIcon } from "@/components/Icons";
+import {
+  PlusIcon,
+  PromptsIcon,
+  SearchIcon,
+  TemplatesIcon,
+} from "@/components/Icons";
 
 // Mock data for agents
 const agents = [
@@ -72,15 +77,15 @@ export default function AgentsPage() {
         {/* Title and CTA */}
         <div className="flex items-center justify-between">
           <div className="space-y-2">
-            <h1 className="text-3xl font-medium text-[#111111]">Agents</h1>
+            <h1 className="text-3xl font-medium text-foreground">Agents</h1>
             <p className="mt-1 text-sm text-gray-600">
               Build, deploy, and manage your AI agents
             </p>
           </div>
           <Link href="/agents/create">
-            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer">
+            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
               {/* <Plus className="h-4 w-4" /> */}
-              <PlusIcon/>
+              <PlusIcon />
               Create Agents
             </Button>
           </Link>
@@ -89,13 +94,13 @@ export default function AgentsPage() {
         {/* Search bar */}
         <div className="relative">
           <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
-<SearchIcon className="!h-3 !w-auto"/>
+            <SearchIcon className="!h-4 !w-auto" />
           </div>
           <Input
             placeholder="Search Agents..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 h-11 bg-white border-[#AAAAAA] py-6 text-[#333333]"
+            className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333]"
           />
         </div>
 
@@ -124,7 +129,7 @@ export default function AgentsPage() {
                 </div>
               )}
             </div>
-            <PromptsIcon className="!h-6 !w-auto"/>
+            <PromptsIcon className="!h-6 !w-auto" />
             <span>Prompts</span>
           </button>
 
@@ -151,8 +156,8 @@ export default function AgentsPage() {
                 </div>
               )}
             </div>
-           
-            <TemplatesIcon className="!h-6 !w-auto"/>
+
+            <TemplatesIcon className="!h-6 !w-auto" />
             <span>Templates</span>
           </button>
         </div>

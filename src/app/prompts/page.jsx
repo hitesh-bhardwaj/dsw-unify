@@ -1,11 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Plus, Sparkles, MessageSquare, LayoutTemplate, SlidersHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PromptCard } from "@/components/prompt-card";
 import { cn } from "@/lib/utils";
+import {
+  AiGenerator,
+  PlusIcon,
+  PromptsIcon,
+  SearchIcon,
+  TemplatesIcon,
+  Tune,
+} from "@/components/Icons";
+import { TemplateCard } from "@/components/template-card";
 
 // Mock data for prompts
 const prompts = [
@@ -24,7 +32,8 @@ const prompts = [
     ],
     uses: "1250",
     lastUpdated: "20/01/2024",
-    preview: "You are a helpful and empathetic customer service representative......",
+    preview:
+      "You are a helpful and empathetic customer service representative......",
     variant: "dark",
   },
   {
@@ -42,7 +51,8 @@ const prompts = [
     ],
     uses: "890",
     lastUpdated: "18/01/2024",
-    preview: "You are an expert technical writer who creates clear, comprehensive documentation......",
+    preview:
+      "You are an expert technical writer who creates clear, comprehensive documentation......",
     variant: "light",
   },
   {
@@ -60,9 +70,37 @@ const prompts = [
     ],
     uses: "156",
     lastUpdated: "22/01/2024",
-    preview: "You are a helpful and empathetic customer service representative......",
+    preview:
+      "You are a helpful and empathetic customer service representative......",
     variant: "light",
   },
+];
+const templates = [
+  {
+    id: 1,
+    name: "Customer Service Template",
+    description: "Standard template for customer service agents",
+    tags: [
+      { label: "Customer Service", color: null },
+      { label: "3 Variables", color: null },
+    ],
+    uses: "45",
+    variable:"company_name, product_name, support_level",
+    variant: "dark",
+  },
+  {
+    id: 2,
+    name: "Technical Q&A Template",
+    description: "Template for technical question answering",
+    tags: [
+      { label: "Technical", color: "yellow" },
+      { label: "3 Variables", color: "blue" },
+    ],
+    uses: "32",
+    variable:"domain, expertise_level, response_format",
+    variant: "light",
+  },
+ 
 ];
 
 export default function PromptsPage() {
@@ -72,6 +110,9 @@ export default function PromptsPage() {
   const filteredPrompts = prompts.filter((prompt) =>
     prompt.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  const filteredTemplates = templates.filter((template) =>
+    template.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div className="flex flex-col h-full">
@@ -80,7 +121,9 @@ export default function PromptsPage() {
         {/* Title and CTAs */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Prompt Library</h1>
+            <h1 className="text-3xl font-medium text-foreground">
+              Prompt Library
+            </h1>
             <p className="mt-1 text-sm text-gray-600">
               Manage and version your prompt templates and configurations
             </p>
@@ -88,13 +131,16 @@ export default function PromptsPage() {
           <div className="flex items-center gap-3">
             <Button
               variant="outline"
-              className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-50"
+              className="gap-2 border-primary text-foreground hover:bg-gray-50"
             >
-              <Sparkles className="h-4 w-4" />
+              <div className="!w-4">
+                <AiGenerator />
+              </div>
+              {/* <Sparkles className="h-4 w-4" /> */}
               Generate Prompt
             </Button>
-            <Button className="bg-[#FF5722] hover:bg-[#E64A19] text-white gap-2">
-              <Plus className="h-4 w-4" />
+            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+              <PlusIcon />
               Create Prompt
             </Button>
           </div>
@@ -103,95 +149,119 @@ export default function PromptsPage() {
         {/* Search bar and filter */}
         <div className="flex gap-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
+              <SearchIcon className="!h-4 !w-auto" />
+            </div>
             <Input
               placeholder="Search Prompts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-11 bg-white border-gray-200"
+              className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333] shadow-none"
             />
           </div>
           <Button
             variant="outline"
-            className="gap-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-4"
+            className="gap-2 border-black/30 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
           >
-            <SlidersHorizontal className="h-4 w-4" />
+            <div className="w-4 h-4">
+              <Tune />
+            </div>
             All Categories
           </Button>
         </div>
 
         {/* Filter tabs */}
-        <div className="flex gap-4">
+        <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
           <button
             onClick={() => setActiveTab("prompts")}
             className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors",
+              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
               activeTab === "prompts"
-                ? "border-[#FF5722] bg-orange-50 text-[#FF5722]"
-                : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                ? "border-[#DCDCDC] bg-white text-[#FF5722]"
+                : "border-transparent text-gray-700 "
             )}
           >
             <div
               className={cn(
-                "h-5 w-5 rounded-full border-2",
+                "h-5 w-5 rounded-full border",
                 activeTab === "prompts"
-                  ? "border-[#FF5722] bg-[#FF5722]"
+                  ? "border-gray-300 bg-white"
                   : "border-gray-300"
               )}
             >
               {activeTab === "prompts" && (
                 <div className="flex h-full items-center justify-center">
-                  <div className="h-2 w-2 rounded-full bg-white" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
                 </div>
               )}
             </div>
-            <MessageSquare className="h-4 w-4" />
+            <PromptsIcon className="!h-6 !w-auto" />
             <span>Prompts</span>
           </button>
 
           <button
             onClick={() => setActiveTab("templates")}
             className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-colors",
+              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
               activeTab === "templates"
-                ? "border-[#FF5722] bg-orange-50 text-[#FF5722]"
-                : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
+                ? "border-[#DCDCDC] bg-white text-[#FF5722]"
+                : "border-transparent text-gray-700 "
             )}
           >
             <div
               className={cn(
-                "h-5 w-5 rounded-full border-2",
+                "h-5 w-5 rounded-full border",
                 activeTab === "templates"
-                  ? "border-[#FF5722] bg-[#FF5722]"
+                  ? "border-[#DCDCDC] bg-white text-[#FF5722]"
                   : "border-gray-300"
               )}
             >
               {activeTab === "templates" && (
                 <div className="flex h-full items-center justify-center">
-                  <div className="h-2 w-2 rounded-full bg-white" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
                 </div>
               )}
             </div>
-            <LayoutTemplate className="h-4 w-4" />
+
+            <TemplatesIcon className="!h-6 !w-auto" />
             <span>Templates</span>
           </button>
         </div>
       </div>
 
       {/* Prompts grid */}
-      <div className="flex-1 overflow-auto p-6 pt-0">
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-          {filteredPrompts.map((prompt) => (
-            <PromptCard key={prompt.id} prompt={prompt} />
-          ))}
-        </div>
-
-        {filteredPrompts.length === 0 && (
-          <div className="flex h-64 items-center justify-center text-gray-500">
-            No prompts found matching "{searchQuery}"
+      {activeTab === "prompts" ? (
+        <div className="flex-1 overflow-auto p-6 pt-0">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+            {filteredPrompts.map((prompt) => (
+              <PromptCard key={prompt.id} prompt={prompt} />
+            ))}
           </div>
-        )}
-      </div>
+
+          {filteredPrompts.length === 0 && (
+            <div className="flex h-64 items-center justify-center text-gray-500">
+              No prompts found matching "{searchQuery}"
+            </div>
+          )}
+        </div>
+      ) : (
+        <>
+         <div className="flex-1 overflow-auto p-6 pt-0">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {filteredTemplates.map((template) => (
+              <TemplateCard key={template.id} template={template} />
+            ))}
+          </div>
+
+          {filteredTemplates.length === 0 && (
+            <div className="flex h-64 items-center justify-center text-gray-500">
+              No templates found matching "{searchQuery}"
+            </div>
+          )}
+        </div>
+        
+        </>
+      )}
     </div>
   );
 }

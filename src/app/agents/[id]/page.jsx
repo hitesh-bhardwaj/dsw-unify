@@ -1,14 +1,13 @@
 "use client";
 
 import { use, useState } from "react";
-import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ApiEndpointModal } from "@/components/api-endpoint-modal";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { AiGenerator, EditIcon, LeftArrow } from "@/components/Icons";
+import { AiGenerator, EditIcon, LeftArrow, SettingIcon } from "@/components/Icons";
+import ApiEndpointModal from "@/components/api-endpoint-modal";
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -206,7 +205,10 @@ export default function AgentDetailPage({ params }) {
                 <span className="w-full h-[1px] bg-black/20 block mt-8"/>
                 <div className="pt-4">
                   <div className="flex items-center gap-2 text-badge-green">
-                    <div className="h-2 w-2 rounded-full bg-badge-green" />
+                    {/* <div className="h-2 w-2 rounded-full bg-badge-green" /> */}
+                    <div className="w-4.5 h-4.5 text-badge-green" >
+                      <SettingIcon/>
+                    </div>
                     <span className="text-sm">System Operational</span>
                   </div>
                 </div>

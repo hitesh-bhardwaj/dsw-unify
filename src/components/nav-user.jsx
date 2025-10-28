@@ -30,7 +30,7 @@ export function NavUser({ user }) {
   return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 rounded-lg hover:bg-sidebar-accent p-2 transition-colors !cursor-pointer">
+            <button className="flex items-center gap-2 rounded-lg hover:bg-sidebar-accent duration-300 p-2 transition-colors !cursor-pointer">
               <Avatar className="h-10 w-10 rounded-full border-[3px] border-sidebar-primary">
                 <AvatarImage src={user.avatar} alt={user.name} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>

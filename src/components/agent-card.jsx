@@ -1,4 +1,3 @@
-import { FileText } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -24,7 +23,7 @@ export function AgentCard({ agent }) {
     <Link href={`/agents/${id}`} className="block">
       <Card
         className={cn(
-          "overflow-hidden transition-all hover:shadow-lg cursor-pointer shadow-none",
+          "overflow-hidden transition-all hover:shadow-lg cursor-pointer duration-500 ease-out",
           isDark
             ? "bg-active-card text-white border-black"
             : "bg-white border border-black/20"

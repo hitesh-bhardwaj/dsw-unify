@@ -23,7 +23,7 @@ export function Header({ title = "Agents" }) {
       <div className="flex items-center gap-4">
         <SidebarTrigger />
         <Separator orientation="vertical" className={"h-8!"} />
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-sm hover:bg-sidebar-accent p-2 rounded-md duration-300">
           <HomeIcon className="h-5 w-auto !cursor-pointer"/>
           <span className="text-foreground">{title}</span>
         </div>
@@ -36,7 +36,7 @@ export function Header({ title = "Agents" }) {
           variant="ghost"
           size="icon"
           onClick={() => setIsDark(!isDark)}
-          className="text-gray-600 hover:text-gray-900 !cursor-pointer"
+          className="text-gray-600 hover:text-gray-900 !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
         >
           {isDark ? <Sun className="!h-5 !w-auto" /> : <Moon className="!h-5 !w-auto" />}
         </Button>
@@ -45,7 +45,7 @@ export function Header({ title = "Agents" }) {
         <Button
           variant="ghost"
           size="icon"
-          className="text-gray-600 hover:text-gray-900 !cursor-pointer"
+          className="text-gray-600 hover:text-gray-900 !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
         >
           <NotificationsIcon className="!h-5 !w-auto" />
         </Button>
@@ -54,7 +54,7 @@ export function Header({ title = "Agents" }) {
         <Button
           variant="ghost"
           size="icon"
-          className="text-gray-600 hover:text-gray-900 !cursor-pointer"
+          className="text-gray-600 hover:text-gray-900 !cursor-pointer hover:bg-sidebar-accent p-2 rounded-md "
         >
           <FAQIcons className="!h-5 !w-auto " />
         </Button>
