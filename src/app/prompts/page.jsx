@@ -25,16 +25,16 @@ const prompts = [
     rating: 4.8,
     version: "v3",
     tags: [
-      { label: "Customer Service", color: null },
-      { label: "Customer-Service", color: null },
-      { label: "Empathy", color: null },
+      { label: "Customer Service", color: "yellow" },
+      { label: "Customer-Service", color: "blue"},
+      { label: "Empathy", color: "green" },
       { label: "+1 more", color: "orange" },
     ],
     uses: "1250",
     lastUpdated: "20/01/2024",
     preview:
       "You are a helpful and empathetic customer service representative......",
-    variant: "dark",
+    variant: "light",
   },
   {
     id: 2,
@@ -81,12 +81,12 @@ const templates = [
     name: "Customer Service Template",
     description: "Standard template for customer service agents",
     tags: [
-      { label: "Customer Service", color: null },
-      { label: "3 Variables", color: null },
+      { label: "Customer Service", color: "yellow" },
+      { label: "3 Variables", color: "blue" },
     ],
     uses: "45",
     variable:"company_name, product_name, support_level",
-    variant: "dark",
+    variant: "light",
   },
   {
     id: 2,
@@ -167,11 +167,11 @@ export default function PromptsPage() {
               <Tune />
             </div>
             All Categories
-          </Button>
+          </Button> 
         </div>
 
         {/* Filter tabs */}
-        <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
+        {/* <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
           <button
             onClick={() => setActiveTab("prompts")}
             className={cn(
@@ -226,11 +226,69 @@ export default function PromptsPage() {
             <TemplatesIcon className="!h-6 !w-auto" />
             <span>Templates</span>
           </button>
+        </div> */}
+       
+<div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
+  <button
+    onClick={() => setActiveTab("prompts")}
+    className={cn(
+      "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
+      activeTab === "prompts"
+        ? "border-[#DCDCDC] bg-white text-[#FF5722]"
+        : "border-transparent text-gray-700 "
+    )}
+  >
+    <div
+      className={cn(
+        "h-5 w-5 rounded-full border",
+        activeTab === "prompts"
+          ? "border-gray-300 bg-white"
+          : "border-gray-300"
+      )}
+    >
+      {activeTab === "prompts" && (
+        <div className="flex h-full items-center justify-center">
+          <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
         </div>
+      )}
+    </div>
+    <PromptsIcon className="!h-6 !w-auto" />
+    <span>Prompts</span>
+  </button>
+
+  <button
+    onClick={() => setActiveTab("templates")}
+    className={cn(
+      "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
+      activeTab === "templates"
+        ? "border-[#DCDCDC] bg-white text-[#FF5722]"
+        : "border-transparent text-gray-700 "
+    )}
+  >
+    <div
+      className={cn(
+        "h-5 w-5 rounded-full border",
+        activeTab === "templates"
+          ? "border-[#DCDCDC] bg-white text-[#FF5722]"
+          : "border-gray-300"
+      )}
+    >
+      {activeTab === "templates" && (
+        <div className="flex h-full items-center justify-center">
+          <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
+        </div>
+      )}
+    </div>
+
+    <TemplatesIcon className="!h-6 !w-auto" />
+    <span>Templates</span>
+  </button>
+</div>
+
       </div>
 
       {/* Prompts grid */}
-      {activeTab === "prompts" ? (
+      {/* {activeTab === "prompts" ? (
         <div className="flex-1 overflow-auto p-6 pt-0">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
             {filteredPrompts.map((prompt) => (
@@ -261,7 +319,53 @@ export default function PromptsPage() {
         </div>
         
         </>
-      )}
+      )} */}
+      
+<div className="flex-1 overflow-hidden relative">
+  <div
+    className={cn(
+      "absolute inset-0 overflow-auto p-6 pt-0 transition-all duration-700 ease-in",
+      activeTab === "prompts" 
+        ? "translate-x-0 opacity-100" 
+        : "-translate-x-[40%] opacity-0 pointer-events-none"
+    )}
+  >
+    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+      {filteredPrompts.map((prompt) => (
+        <PromptCard key={prompt.id} prompt={prompt} />
+      ))}
+    </div>
+
+    {filteredPrompts.length === 0 && (
+      <div className="flex h-64 items-center justify-center text-gray-500">
+        No prompts found matching "{searchQuery}"
+      </div>
+    )}
+  </div>
+
+
+  <div
+    className={cn(
+      "absolute inset-0 overflow-auto p-6 pt-0 transition-all duration-700 ease-in",
+      activeTab === "templates" 
+        ? "translate-x-0 opacity-100" 
+        : "translate-x-[40%] opacity-0 pointer-events-none"
+    )}
+  >
+    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      {filteredTemplates.map((template) => (
+        <TemplateCard key={template.id} template={template} />
+      ))}
+    </div>
+
+    {filteredTemplates.length === 0 && (
+      <div className="flex h-64 items-center justify-center text-gray-500">
+        No templates found matching "{searchQuery}"
+      </div>
+    )}
+  </div>
+</div>
+      
     </div>
   );
 }

@@ -23,12 +23,12 @@ const agents = [
     icon: "🎧",
     status: "active",
     tags: [
-      { label: "Support", color: null },
-      { label: "Customer-Services", color: null },
+      { label: "Support", color: "yellow" },
+      { label: "Customer-Services", color: "blue" },
     ],
     lastActivity: "2 Hours Ago",
     requestCount: "1.2K Request",
-    variant: "dark",
+    variant: "light",
   },
   {
     id: "content-writer-agent",

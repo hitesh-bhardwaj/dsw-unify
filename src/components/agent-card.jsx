@@ -20,13 +20,13 @@ export function AgentCard({ agent }) {
   const isDark = variant === "dark";
 
   return (
-    <Link href={`/agents/${id}`} className="block">
+    <Link href={`/agents/${id}`} className="block group">
       <Card
         className={cn(
-          "overflow-hidden transition-all hover:shadow-lg cursor-pointer duration-500 ease-out",
-          isDark
-            ? "bg-active-card text-white border-black"
-            : "bg-white border border-black/20"
+          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black",
+          // isDark
+          //   ? "bg-active-card text-white border-black"
+          //   : "bg-white border border-black/20"
         )}
       >
         <CardHeader className="">
@@ -34,21 +34,21 @@ export function AgentCard({ agent }) {
             {/* Icon */}
             <div
               className={cn(
-                "flex h-14 w-14 items-center justify-center rounded-lg relative",
-                isDark ? "bg-white" : "bg-black"
+                "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black group-hover:bg-white transition-all duration-500 ease-out ",
+                // isDark ? "bg-white" : "bg-black"
               )}
             >
               <span
                 className={cn(
-                  "w-full h-full flex justify-center items-center  p-4.5",
-                  isDark ? "text-black" : "text-white"
+                  "w-full h-full flex justify-center items-center  p-4.5 text-white group-hover:text-black transition-all duration-500 ease-out ",
+                  // isDark ? "text-black" : "text-white"
                 )}
               >
                 <SynthWave />
               </span>
               <span
                 className={cn(
-                  "w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5",
+                  "w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse",
                   status === "active"
                     ? ""
                     : "hidden"
@@ -59,7 +59,7 @@ export function AgentCard({ agent }) {
             {/* Status badge */}
             <Badge
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-medium",
+                "rounded-full px-3 py-1 text-xs font-medium ",
                 status === "active"
                   ? "bg-badge-green text-white"
                   : "bg-gray-200 text-foreground px-4"
@@ -70,10 +70,10 @@ export function AgentCard({ agent }) {
           </div>
 
           {/* Agent name */}
-          <h3 className="mt-7 text-xl font-medium">{name}</h3>
+          <h3 className="mt-7 text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out ">{name}</h3>
 
           {/* Description */}
-          <p className={cn("text-sm", isDark ? "text-white" : "text-gray-600")}>
+          <p className={cn("text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out ")}>
             {description}
           </p>
         </CardHeader>
@@ -88,13 +88,13 @@ export function AgentCard({ agent }) {
                 className={cn(
                   "rounded-full px-3.5 py-1 text-xs font-normal",
                   tag.color === "yellow" &&
-                    "bg-badge-yellow text-foreground ",
-                  tag.color === "blue" && "bg-badge-blue text-white ",
-                  tag.color === "green" && "bg-badge-mint text-foreground",
-                  tag.color === "orange" && "bg-badge-yellow text-foreground",
-                  tag.color === "purple" && "bg-purple-500 text-white",
-                  !tag.color && isDark && "bg-white text-foreground",
-                  !tag.color && !isDark && "bg-gray-100 text-gray-800"
+                    "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "blue" && "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "green" && "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "orange" && "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "purple" && "bg-purple-500 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  // !tag.color && isDark && "bg-white text-foreground",
+                  // !tag.color && !isDark && "bg-gray-100 text-gray-800"
                 )}
               >
                 {tag.label}
@@ -113,25 +113,23 @@ export function AgentCard({ agent }) {
               {/* <Calendar className={cn("h-4 w-4", isDark ? "text-primary" : "text-orange-600")} /> */}
               <div className="w-4 h-4">
                 <Calendar
-                  className={` ${isDark ? "text-foreground" : "text-primary"}`}
+                  className={`text-primary group-hover:text-foreground transition-all duration-500 ease-out `}
                 />
               </div>
-              <span className={isDark ? "text-foreground" : "text-foreground"}>
+              <span className="">
                 {lastActivity}
               </span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4">
                 <FileTimeout
-                  className={` ${
-                    isDark ? "text-foreground" : "text-badge-blue"
-                  }`}
+                  className={`text-badge-blue group-hover:text-foreground transition-all duration-500 ease-out `}
                 />
               </div>
               <span
                 className={cn(
                   "font-medium",
-                  isDark ? "text-foreground" : "text-foreground"
+                  // isDark ? "text-foreground" : "text-foreground"
                 )}
               >
                 {requestCount}

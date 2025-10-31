@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave } from "./Icons";
+import Link from "next/link";
 
 export function PromptCard({ prompt }) {
   const {
@@ -22,12 +23,13 @@ export function PromptCard({ prompt }) {
   const isDark = variant === "dark";
 
   return (
+    <Link href={"/"} className="block group">
     <Card
       className={cn(
-        "overflow-hidden transition-all hover:shadow-lg duration-500 ease-out py-5 ",
-        isDark
-          ? "bg-active-card text-white border-black"
-          : "bg-white border border-black/30"
+        "overflow-hidden transition-all hover:shadow-lg duration-500 ease-out py-5 bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black",
+        // isDark
+        //   ? "bg-active-card text-white border-black"
+        //   : "bg-white border border-black/30"
       )}
     >
       <CardHeader className="pb-4">
@@ -36,14 +38,14 @@ export function PromptCard({ prompt }) {
           <div className="flex items-center gap-3">
             <div
               className={cn(
-                "flex h-14 w-14 items-center justify-center  rounded-lg relative",
-                isDark ? "bg-white" : "bg-black"
+                "flex h-14 w-14 items-center justify-center  rounded-lg relative bg-black group-hover:bg-white",
+                // isDark ? "bg-white" : "bg-black"
               )}
             >
               <span
                 className={cn(
-                  "w-full h-full flex justify-center items-center  p-4.5",
-                  isDark ? "text-black" : "text-white"
+                  "w-full h-full flex justify-center items-center  p-4.5 text-white group-hover:text-black",
+                  // isDark ? "text-black" : "text-white"
                 )}
               >
                 <SynthWave />
@@ -55,10 +57,10 @@ export function PromptCard({ prompt }) {
               <Badge
                 variant="secondary"
                 className={cn(
-                  "px-1.5 py-1 ml-1.5 rounded-sm",
-                  isDark
-                    ? "border border-white bg-transparent text-white "
-                    : "border border-foreground text-foreground bg-transparent"
+                  "px-1.5 py-1 ml-1.5 rounded-sm border border-foreground text-foreground bg-transparent group-hover:border-white group-hover:text-white",
+                  // isDark
+                  //   ? "border border-white bg-transparent text-white "
+                  //   : "border border-foreground text-foreground bg-transparent"
                 )}
               >
                 {version}
@@ -72,10 +74,10 @@ export function PromptCard({ prompt }) {
               variant="ghost"
               size="icon"
               className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1 ",
-                isDark
-                  ? "text-white hover:bg-stone-700"
-                  : "text-badge-blue hover:bg-sidebar-accent"
+                "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white  ",
+                // isDark
+                //   ? "text-white hover:bg-stone-700"
+                //   : "text-badge-blue hover:bg-sidebar-accent"
               )}
             >
               <Eye/>
@@ -84,10 +86,10 @@ export function PromptCard({ prompt }) {
               variant="ghost"
               size="icon"
               className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1 ",
-                isDark
-                  ? "text-white hover:bg-stone-700"
-                  : "text-foreground hover:bg-sidebar-accent"
+                "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-stone-700 group-hover:text-white",
+                // isDark
+                //   ? "text-white hover:bg-stone-700"
+                //   : "text-foreground hover:bg-sidebar-accent"
               )}
             >
               <Copy className="!h-full !w-full" />
@@ -96,10 +98,10 @@ export function PromptCard({ prompt }) {
               variant="ghost"
               size="icon"
               className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1 ",
-                isDark
-                  ? "text-white hover:bg-stone-700"
-                  : "text-primary hover:bg-sidebar-accent"
+                "h-7 w-7 flex items-center justify-center px-1 py-1  text-primary hover:bg-stone-700 group-hover:text-white",
+                // isDark
+                //   ? "text-white hover:bg-stone-700"
+                //   : "text-primary hover:bg-sidebar-accent"
               )}
             >
               {/* <Edit className="h-full w-full" /> */}
@@ -109,10 +111,10 @@ export function PromptCard({ prompt }) {
               variant="ghost"
               size="icon"
               className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1 ",
-                isDark
-                  ? "text-white hover:bg-stone-700"
-                  : "text-red-600 hover:bg-red-50"
+                "h-7 w-7 flex items-center justify-center px-1 py-1  text-red-600 hover:bg-stone-700 group-hover:text-white",
+                // isDark
+                //   ? "text-white hover:bg-stone-700"
+                //   : "text-red-600 hover:bg-red-50"
               )}
             >
               <Bin/>
@@ -126,8 +128,8 @@ export function PromptCard({ prompt }) {
         {/* Description */}
         <p
           className={cn(
-            "text-sm mb-4",
-            isDark ? "text-gray-300" : "text-gray-600"
+            "text-sm mb-4 text-gray-600 group-hover:text-gray-300 transition-all duration-500 ease-out",
+            // isDark ? "text-gray-300" : "text-gray-600"
           )}
         >
           {description}
@@ -142,17 +144,17 @@ export function PromptCard({ prompt }) {
               className={cn(
                 "rounded-full px-3 py-1 text-xs font-light",
                 tag.color === "yellow" &&
-                  "bg-badge-yellow text-foreground",
+                  "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
                 tag.color === "blue" &&
-                  "bg-badge-blue text-white",
+                  "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
                 tag.color === "green" &&
-                  "bg-badge-mint text-foreground",
+                  "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
                 tag.color === "orange" &&
-                  "bg-transparent border-primary text-primary",
+                  "bg-transparent border-primary text-primary  group-hover:text-white transition-all duration-500 ease-out group-hover:border-white",
                 tag.color === "orange" &&isDark &&
-                  "bg-transparent border border-white text-white",
-                !tag.color && isDark && "bg-white text-foreground",
-                !tag.color && !isDark && "bg-gray-100 text-gray-800"
+                  "bg-transparent border border-white text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                // !tag.color && isDark && "bg-white text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                // !tag.color && !isDark && "bg-gray-100 text-gray-800 group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
               )}
             >
               {tag.label}
@@ -183,5 +185,6 @@ export function PromptCard({ prompt }) {
         </div>
       </CardContent>
     </Card>
+    </Link>
   );
 }
