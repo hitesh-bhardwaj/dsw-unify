@@ -43,6 +43,7 @@
   --color-badge-blue: var(--badge-blue);
   --color-badge-mint: var(--badge-mint);
   --color-badge-gray: var(--badge-gray);
+  --color-badge-sea-green:var(--badge-sea-green);
   --color-active-card: var(--active-card);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -91,6 +92,7 @@
   --badge-green: #6bc631;
   --badge-mint: #50dfb1;
   --badge-gray: #dedede;
+  --badge-sea-green:#89D7D8;
   --card-active: #1d1d1d;
 }
 

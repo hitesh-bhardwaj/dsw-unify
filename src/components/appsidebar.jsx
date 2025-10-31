@@ -21,7 +21,7 @@ import { AgentsIcon, GuardrailsIcon, KnowledgeBaseIcon, LLMsIcon, MemoriesIcon, 
 const navigation = [
   { name: "Agents", href: "/agents", icon: AgentsIcon },
   { name: "Prompts", href: "/prompts", icon: PromptsIcon },
-  { name: "LLMs", href: "/llms", icon: LLMsIcon },
+  { name: "LLMs", href: "/#", icon: LLMsIcon },
   { name: "Knowledge Bases", href: "/knowledge-bases", icon: KnowledgeBaseIcon },
   { name: "Tools", href: "/tools", icon: ToolsIcon },
   { name: "Memories", href: "/memories", icon: MemoriesIcon },

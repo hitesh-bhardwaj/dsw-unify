@@ -2,28 +2,24 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Calendar, FileTimeout, SynthWave } from "./Icons";
+import { SynthWave } from "./Icons";
 
-export function AgentCard({ agent }) {
+export function MemoryCard({ memories }) {
   const {
-    id,
     name,
     description,
-    icon,
     status,
     tags = [],
-    lastActivity,
-    requestCount,
+    entries,
     variant = "light",
-  } = agent;
+  } = memories;
 
-  const isDark = variant === "dark";
 
   return (
-    <Link href={`/agents/${id}`} className="block group">
+    <Link href={`/#`} className="block group">
       <Card
         className={cn(
-          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black",
+          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-5",
           // isDark
           //   ? "bg-active-card text-white border-black"
           //   : "bg-white border border-black/20"
@@ -80,7 +76,7 @@ export function AgentCard({ agent }) {
 
         <CardContent>
           {/* Tags */}
-          <div className="mb-16 flex flex-wrap gap-1">
+          <div className="mb-8 flex flex-wrap gap-1">
             {tags.map((tag, index) => (
               <Badge
                 key={index}
@@ -105,34 +101,16 @@ export function AgentCard({ agent }) {
           {/* Footer stats */}
           <div
             className={cn(
-              "flex items-center justify-between rounded-lg p-3 text-sm py-6",
-              isDark ? "bg-white" : "bg-gray-100 border"
+              "flex items-center justify-between rounded-lg p-3 text-sm py-4 bg-gray-100 border group-hover:bg-white"
             )}
           >
-            <div className="flex items-center gap-2 font-medium">
-              {/* <Calendar className={cn("h-4 w-4", isDark ? "text-primary" : "text-orange-600")} /> */}
-              <div className="w-4 h-4">
-                <Calendar
-                  className={`text-primary group-hover:text-foreground transition-all duration-500 ease-out `}
-                />
-              </div>
-              <span className=" text-foreground">
-                {lastActivity}
+            <div className="flex flex-col items-start gap-1">
+              
+              <span className=" text-foreground font-medium text-lg">
+                {entries}
               </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4">
-                <FileTimeout
-                  className={`text-badge-blue group-hover:text-foreground transition-all duration-500 ease-out `}
-                />
-              </div>
-              <span
-                className={cn(
-                  "font-medium text-foreground",
-                  // isDark ? "text-foreground" : "text-foreground"
-                )}
-              >
-                {requestCount}
+               <span className=" text-gray-600">
+                Entries
               </span>
             </div>
           </div>

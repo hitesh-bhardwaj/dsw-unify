@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Calendar, FileTimeout, SynthWave } from "./Icons";
 
-export function AgentCard({ agent }) {
+export function ToolsCard({ tools }) {
   const {
     id,
     name,
@@ -12,18 +12,15 @@ export function AgentCard({ agent }) {
     icon,
     status,
     tags = [],
-    lastActivity,
-    requestCount,
     variant = "light",
-  } = agent;
+  } = tools;
 
-  const isDark = variant === "dark";
 
   return (
-    <Link href={`/agents/${id}`} className="block group">
+    <Link href={`#`} className="block group">
       <Card
         className={cn(
-          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black",
+          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !pt-5",
           // isDark
           //   ? "bg-active-card text-white border-black"
           //   : "bg-white border border-black/20"
@@ -62,10 +59,10 @@ export function AgentCard({ agent }) {
                 "rounded-full px-3 py-1 text-xs font-medium ",
                 status === "active"
                   ? "bg-badge-green text-white"
-                  : "bg-gray-200 text-foreground px-4"
+                  : "bg-badge-sea-green text-white px-4 opacity-[0.8]"
               )}
             >
-              {status === "active" ? "Active" : "Draft"}
+              {status === "active" ? "Active" : "Beta"}
             </Badge>
           </div>
 
@@ -100,41 +97,6 @@ export function AgentCard({ agent }) {
                 {tag.label}
               </Badge>
             ))}
-          </div>
-
-          {/* Footer stats */}
-          <div
-            className={cn(
-              "flex items-center justify-between rounded-lg p-3 text-sm py-6",
-              isDark ? "bg-white" : "bg-gray-100 border"
-            )}
-          >
-            <div className="flex items-center gap-2 font-medium">
-              {/* <Calendar className={cn("h-4 w-4", isDark ? "text-primary" : "text-orange-600")} /> */}
-              <div className="w-4 h-4">
-                <Calendar
-                  className={`text-primary group-hover:text-foreground transition-all duration-500 ease-out `}
-                />
-              </div>
-              <span className=" text-foreground">
-                {lastActivity}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4">
-                <FileTimeout
-                  className={`text-badge-blue group-hover:text-foreground transition-all duration-500 ease-out `}
-                />
-              </div>
-              <span
-                className={cn(
-                  "font-medium text-foreground",
-                  // isDark ? "text-foreground" : "text-foreground"
-                )}
-              >
-                {requestCount}
-              </span>
-            </div>
           </div>
         </CardContent>
       </Card>
