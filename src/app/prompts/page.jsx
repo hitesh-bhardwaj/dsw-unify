@@ -14,6 +14,8 @@ import {
   Tune,
 } from "@/components/Icons";
 import { TemplateCard } from "@/components/template-card";
+import Link from "next/link";
+import CreatePromptModal from "@/components/CreatePromptModal";
 
 // Mock data for prompts
 const prompts = [
@@ -26,7 +28,7 @@ const prompts = [
     version: "v3",
     tags: [
       { label: "Customer Service", color: "yellow" },
-      { label: "Customer-Service", color: "blue"},
+      { label: "Customer-Service", color: "blue" },
       { label: "Empathy", color: "green" },
       { label: "+1 more", color: "orange" },
     ],
@@ -85,7 +87,7 @@ const templates = [
       { label: "3 Variables", color: "blue" },
     ],
     uses: "45",
-    variable:"company_name, product_name, support_level",
+    variable: "company_name, product_name, support_level",
     variant: "light",
   },
   {
@@ -97,15 +99,15 @@ const templates = [
       { label: "3 Variables", color: "blue" },
     ],
     uses: "32",
-    variable:"domain, expertise_level, response_format",
+    variable: "domain, expertise_level, response_format",
     variant: "light",
   },
- 
 ];
 
 export default function PromptsPage() {
   const [activeTab, setActiveTab] = useState("prompts");
   const [searchQuery, setSearchQuery] = useState("");
+   const [createPrompt, setCreatePrompt] = useState(false);
 
   const filteredPrompts = prompts.filter((prompt) =>
     prompt.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -115,6 +117,7 @@ export default function PromptsPage() {
   );
 
   return (
+    <>
     <div className="flex flex-col h-full">
       {/* Header section */}
       <div className="space-y-6 p-6">
@@ -139,10 +142,12 @@ export default function PromptsPage() {
               {/* <Sparkles className="h-4 w-4" /> */}
               Generate Prompt
             </Button>
-            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-              <PlusIcon />
-              Create Prompt
-            </Button>
+            {/* <Link href={"/prompts/create"}> */}
+              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300" onClick={()=>setCreatePrompt(true)}>
+                <PlusIcon />
+                Create Prompt
+              </Button>
+            {/* </Link> */}
           </div>
         </div>
 
@@ -167,11 +172,10 @@ export default function PromptsPage() {
               <Tune />
             </div>
             All Categories
-          </Button> 
+          </Button>
         </div>
 
-        {/* Filter tabs */}
-        {/* <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
+        <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
           <button
             onClick={() => setActiveTab("prompts")}
             className={cn(
@@ -226,70 +230,18 @@ export default function PromptsPage() {
             <TemplatesIcon className="!h-6 !w-auto" />
             <span>Templates</span>
           </button>
-        </div> */}
-       
-<div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
-  <button
-    onClick={() => setActiveTab("prompts")}
-    className={cn(
-      "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
-      activeTab === "prompts"
-        ? "border-[#DCDCDC] bg-white text-[#FF5722]"
-        : "border-transparent text-gray-700 "
-    )}
-  >
-    <div
-      className={cn(
-        "h-5 w-5 rounded-full border",
-        activeTab === "prompts"
-          ? "border-gray-300 bg-white"
-          : "border-gray-300"
-      )}
-    >
-      {activeTab === "prompts" && (
-        <div className="flex h-full items-center justify-center">
-          <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
         </div>
-      )}
-    </div>
-    <PromptsIcon className="!h-6 !w-auto" />
-    <span>Prompts</span>
-  </button>
-
-  <button
-    onClick={() => setActiveTab("templates")}
-    className={cn(
-      "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
-      activeTab === "templates"
-        ? "border-[#DCDCDC] bg-white text-[#FF5722]"
-        : "border-transparent text-gray-700 "
-    )}
-  >
-    <div
-      className={cn(
-        "h-5 w-5 rounded-full border",
-        activeTab === "templates"
-          ? "border-[#DCDCDC] bg-white text-[#FF5722]"
-          : "border-gray-300"
-      )}
-    >
-      {activeTab === "templates" && (
-        <div className="flex h-full items-center justify-center">
-          <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
-        </div>
-      )}
-    </div>
-
-    <TemplatesIcon className="!h-6 !w-auto" />
-    <span>Templates</span>
-  </button>
-</div>
-
       </div>
 
-      {/* Prompts grid */}
-      {/* {activeTab === "prompts" ? (
-        <div className="flex-1 overflow-auto p-6 pt-0">
+      <div className="flex-1 overflow-hidden relative">
+        <div
+          className={cn(
+            "absolute inset-0 overflow-auto p-6 pt-0 transition-all ",
+            activeTab === "prompts"
+              ? "translate-x-0 opacity-100 duration-500 ease-out"
+              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+          )}
+        >
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
             {filteredPrompts.map((prompt) => (
               <PromptCard key={prompt.id} prompt={prompt} />
@@ -302,9 +254,15 @@ export default function PromptsPage() {
             </div>
           )}
         </div>
-      ) : (
-        <>
-         <div className="flex-1 overflow-auto p-6 pt-0">
+
+        <div
+          className={cn(
+            "absolute inset-0 overflow-auto p-6 pt-0 transition-all ",
+            activeTab === "templates"
+              ? "translate-x-0 opacity-100 duration-500 ease-out"
+              : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out "
+          )}
+        >
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {filteredTemplates.map((template) => (
               <TemplateCard key={template.id} template={template} />
@@ -317,55 +275,13 @@ export default function PromptsPage() {
             </div>
           )}
         </div>
-        
-        </>
-      )} */}
-      
-<div className="flex-1 overflow-hidden relative">
-  <div
-    className={cn(
-      "absolute inset-0 overflow-auto p-6 pt-0 transition-all duration-700 ease-in",
-      activeTab === "prompts" 
-        ? "translate-x-0 opacity-100" 
-        : "-translate-x-[40%] opacity-0 pointer-events-none"
-    )}
-  >
-    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
-      {filteredPrompts.map((prompt) => (
-        <PromptCard key={prompt.id} prompt={prompt} />
-      ))}
-    </div>
-
-    {filteredPrompts.length === 0 && (
-      <div className="flex h-64 items-center justify-center text-gray-500">
-        No prompts found matching "{searchQuery}"
       </div>
-    )}
-  </div>
-
-
-  <div
-    className={cn(
-      "absolute inset-0 overflow-auto p-6 pt-0 transition-all duration-700 ease-in",
-      activeTab === "templates" 
-        ? "translate-x-0 opacity-100" 
-        : "translate-x-[40%] opacity-0 pointer-events-none"
-    )}
-  >
-    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {filteredTemplates.map((template) => (
-        <TemplateCard key={template.id} template={template} />
-      ))}
     </div>
-
-    {filteredTemplates.length === 0 && (
-      <div className="flex h-64 items-center justify-center text-gray-500">
-        No templates found matching "{searchQuery}"
-      </div>
-    )}
-  </div>
-</div>
-      
-    </div>
+    <CreatePromptModal
+    open={createPrompt}
+    onOpenChange={setCreatePrompt}
+    />
+    
+    </>
   );
 }

@@ -164,12 +164,23 @@ export default function AgentsPage() {
       </div>
 
       {/* Agents grid */}
+
       <div className="flex-1 overflow-auto p-6 pt-0">
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {filteredAgents.map((agent) => (
-            <AgentCard key={agent.id} agent={agent} />
-          ))}
-        </div>
+        {activeTab == "prompts" ? (
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {filteredAgents.map((agent) => (
+              <AgentCard key={agent.id} agent={agent} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="grid gap-6 grid-cols-1 h-full">
+              <div className="w-full border rounded-2xl h-full flex justify-center items-center text-black/50">
+                <p>"No Templates to be shown"</p>
+              </div>
+            </div>
+          </>
+        )}
 
         {filteredAgents.length === 0 && (
           <div className="flex h-64 items-center justify-center text-gray-500">

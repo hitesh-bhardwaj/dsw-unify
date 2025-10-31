@@ -26,7 +26,7 @@ export default function CreateAgentPage() {
       <div className=" bg-white p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
-            <Link href="/agents">
+            <Link href="/prompts">
               <Button variant="ghost" size="icon" className="shrink-0 w-fit -mt-0.5">
                 {/* <ArrowLeft className="h-5 w-5" /> */}
                 <LeftArrow/>
