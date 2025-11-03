@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PromptCard } from "@/components/prompt-card";
 import { cn } from "@/lib/utils";
@@ -9,13 +8,12 @@ import {
   AiGenerator,
   PlusIcon,
   PromptsIcon,
-  SearchIcon,
   TemplatesIcon,
   Tune,
 } from "@/components/Icons";
 import { TemplateCard } from "@/components/template-card";
-import Link from "next/link";
 import CreatePromptModal from "@/components/CreatePromptModal";
+import SearchBar from "@/components/search-bar";
 
 // Mock data for prompts
 const prompts = [
@@ -106,14 +104,14 @@ const templates = [
 
 export default function PromptsPage() {
   const [activeTab, setActiveTab] = useState("prompts");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
    const [createPrompt, setCreatePrompt] = useState(false);
 
   const filteredPrompts = prompts.filter((prompt) =>
-    prompt.name.toLowerCase().includes(searchQuery.toLowerCase())
+    prompt.name.toLowerCase().includes(query.toLowerCase())
   );
   const filteredTemplates = templates.filter((template) =>
-    template.name.toLowerCase().includes(searchQuery.toLowerCase())
+    template.name.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -151,18 +149,11 @@ export default function PromptsPage() {
           </div>
         </div>
 
-        {/* Search bar and filter */}
+        
         <div className="flex gap-3">
           <div className="relative flex-1">
-            <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
-              <SearchIcon className="!h-4 !w-auto" />
-            </div>
-            <Input
-              placeholder="Search Prompts..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333] shadow-none"
-            />
+             <SearchBar placeholder="Search Prompts..." value={query}
+  onChange={(e) => setQuery(e.target.value)}/>
           </div>
           <Button
             variant="outline"
@@ -250,7 +241,7 @@ export default function PromptsPage() {
 
           {filteredPrompts.length === 0 && (
             <div className="flex h-64 items-center justify-center text-gray-500">
-              No prompts found matching "{searchQuery}"
+              No prompts found matching "{query}"
             </div>
           )}
         </div>
@@ -271,7 +262,7 @@ export default function PromptsPage() {
 
           {filteredTemplates.length === 0 && (
             <div className="flex h-64 items-center justify-center text-gray-500">
-              No templates found matching "{searchQuery}"
+              No templates found matching "{query}"
             </div>
           )}
         </div>

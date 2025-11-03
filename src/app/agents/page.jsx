@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
-// import { Search, Plus, MessageSquare, LayoutTemplate } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AgentCard } from "@/components/agent-card";
 import { cn } from "@/lib/utils";
@@ -10,9 +8,9 @@ import Link from "next/link";
 import {
   PlusIcon,
   PromptsIcon,
-  SearchIcon,
   TemplatesIcon,
 } from "@/components/Icons";
+import SearchBar from "@/components/search-bar";
 
 // Mock data for agents
 const agents = [
@@ -64,10 +62,10 @@ const agents = [
 
 export default function AgentsPage() {
   const [activeTab, setActiveTab] = useState("prompts");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
 
   const filteredAgents = agents.filter((agent) =>
-    agent.name.toLowerCase().includes(searchQuery.toLowerCase())
+    agent.name.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -90,21 +88,9 @@ export default function AgentsPage() {
             </Button>
           </Link>
         </div>
+      <SearchBar placeholder="Search Agents..." value={query}
+  onChange={(e) => setQuery(e.target.value)}/>
 
-        {/* Search bar */}
-        <div className="relative">
-          <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
-            <SearchIcon className="!h-4 !w-auto" />
-          </div>
-          <Input
-            placeholder="Search Agents..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333]"
-          />
-        </div>
-
-        {/* Filter tabs */}
         <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
           <button
             onClick={() => setActiveTab("prompts")}

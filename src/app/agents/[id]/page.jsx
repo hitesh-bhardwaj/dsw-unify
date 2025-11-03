@@ -8,6 +8,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { AiGenerator, EditIcon, LeftArrow, SettingIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
+import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -61,12 +62,7 @@ export default function AgentDetailPage({ params }) {
       <div className="bg-white p-6">
         <div className="flex items-center justify-between">
           <div className="flex gap-3">
-            <Link href="/agents" className="w-fit">
-              <Button variant="ghost" size="icon" className="shrink-0 w-fit -mt-1">
-                {/* <ArrowLeft className="h-5 w-5" /> */}
-                <LeftArrow/>
-              </Button>
-            </Link>
+<LeftArrowAnim link={"/agents"}/>
             <div>
               <h1 className="text-xl font-medium">{agent.name}</h1>
               <p className="text-sm text-gray-600 pl-0.5">{agent.description}</p>

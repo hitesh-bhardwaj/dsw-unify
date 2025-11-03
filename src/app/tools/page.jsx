@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusIcon,SearchIcon,} from "@/components/Icons";
+import { PlusIcon} from "@/components/Icons";
 import { ToolsCard } from "@/components/tools-card";
+import SearchBar from "@/components/search-bar";
 
 // Mock data for agents
 const tools = [
@@ -45,10 +45,10 @@ const tools = [
 ];
 
 export default function ToolsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
 
   const filteredTools = tools.filter((tool) =>
-    tool.name.toLowerCase().includes(searchQuery.toLowerCase())
+    tool.name.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -72,18 +72,8 @@ export default function ToolsPage() {
           </Link>
         </div>
 
-        {/* Search bar */}
-        <div className="relative">
-          <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
-            <SearchIcon className="!h-4 !w-auto" />
-          </div>
-          <Input
-            placeholder="Search Tools..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333]"
-          />
-        </div>
+         <SearchBar placeholder="Search Tools..." value={query}
+  onChange={(e) => setQuery(e.target.value)}/>
       </div>
 
       <div className="flex-1 overflow-auto p-6 pt-0">
@@ -95,7 +85,7 @@ export default function ToolsPage() {
 
         {filteredTools.length === 0 && (
           <div className="flex h-64 items-center justify-center text-gray-500">
-            No agents found matching "{searchQuery}"
+            No agents found matching "{query}"
           </div>
         )}
       </div>

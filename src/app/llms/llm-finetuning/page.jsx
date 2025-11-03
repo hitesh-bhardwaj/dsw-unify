@@ -8,6 +8,7 @@ import { LeftArrow, UploadIcon } from "@/components/Icons";
 import { DataSet } from "@/components/llmtuning/dataset-card";
 import { TrainingCard } from "@/components/llmtuning/training-card";
 import Tabs from "@/components/common/Tabs";
+import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 
 // Mock data for agents
 const datasets = [
@@ -85,15 +86,8 @@ export default function LLMFineTuning() {
         {/* Title and CTA */}
         <div className="flex items-center justify-between mb-10">
           <div className="w-fit flex gap-2">
-            <Link href="/llms">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="shrink-0 w-fit -mt-0.5"
-              >
-                <LeftArrow />
-              </Button>
-            </Link>
+           
+<LeftArrowAnim link={"/llms"}/>
             <div className="space-y-2">
               <h1 className="text-2xl font-medium text-foreground">
                 LLM Finetuning

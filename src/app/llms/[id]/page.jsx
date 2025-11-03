@@ -16,6 +16,7 @@ import {
 import { Bar, BarChart } from "recharts";
 import CountUp from "@/components/animations/CountUp";
 import Tabs from "@/components/common/Tabs";
+import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
@@ -73,15 +74,8 @@ export default function LLMsDetailPage({ params }) {
       <div className="bg-white p-6 space-y-6">
         <div className="flex items-center justify-between mb-10">
           <div className="flex gap-3">
-            <Link href="/llms" className="w-fit">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="shrink-0 w-fit -mt-1"
-              >
-                <LeftArrow />
-              </Button>
-            </Link>
+           
+<LeftArrowAnim link={"/llms"}/>
             <div className="space-y-2">
               <div className="w-fit flex gap-2">
                 <h1 className="text-xl font-medium">{llm.name}</h1>

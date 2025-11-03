@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusIcon, SearchIcon} from "@/components/Icons";
+import { PlusIcon} from "@/components/Icons";
 import { KnowledgeCard } from "@/components/knowledge-card";
+import SearchBar from "@/components/search-bar";
 
-// Mock data for agents
+
 const knowlwdgeBases = [
   {
     id: "company-documentation",
@@ -30,10 +30,10 @@ const knowlwdgeBases = [
 ];
 
 export default function AgentsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
 
   const filteredAgents = knowlwdgeBases.filter((agent) =>
-    agent.name.toLowerCase().includes(searchQuery.toLowerCase())
+    agent.name.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -55,19 +55,8 @@ export default function AgentsPage() {
             </Button>
           </Link>
         </div>
-
-        {/* Search bar */}
-        <div className="relative">
-          <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
-            <SearchIcon className="!h-4 !w-auto" />
-          </div>
-          <Input
-            placeholder="Search Knowledge Bases..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333]"
-          />
-        </div>
+         <SearchBar placeholder="Search Knowledge Bases..."  value={query}
+  onChange={(e) => setQuery(e.target.value)}/>
 
       </div>
 
@@ -81,7 +70,7 @@ export default function AgentsPage() {
 
         {filteredAgents.length === 0 && (
           <div className="flex h-64 items-center justify-center text-gray-500">
-            No agents found matching "{searchQuery}"
+            No agents found matching "{query}"
           </div>
         )}
       </div>

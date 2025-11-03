@@ -11,13 +11,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { AiGenerator, EditIcon, LeftArrow, SearchIcon, SparklesIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
+import SearchBar from "@/components/search-bar";
+import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("MY AI Assistant");
   const [description, setDescription] = useState("A Helpful AI Assistant for...");
   const [systemPrompt, setSystemPrompt] = useState("You are a helpful AI assistant that...");
-  const [searchPrompt, setSearchPrompt] = useState("");
+  const [query, setQuery] = useState("");
   const [enhancePrompt, setEnhancePrompt] = useState("");
 
   return (
@@ -26,12 +28,9 @@ export default function CreateAgentPage() {
       <div className=" bg-white p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
-            <Link href="/agents">
-              <Button variant="ghost" size="icon" className="shrink-0 w-fit -mt-0.5">
-                {/* <ArrowLeft className="h-5 w-5" /> */}
-                <LeftArrow/>
-              </Button>
-            </Link>
+           
+<LeftArrowAnim link={"/agents"}/>
+
             <div className="space-y-2">
               <h1 className="text-2xl font-medium">Agent Builder</h1>
               <p className="text-sm text-gray-600">
@@ -136,24 +135,11 @@ export default function CreateAgentPage() {
                       Define how your agent should behave and respond
                     </p>
 
-                    {/* Search Existing Prompts */}
                     <div className="space-y-2 mb-4 mt-8">
-                      <label className="text-sm font-medium text-[#11111]">
-                        Search Existing Prompts
-                      </label>
-                      <div className="relative mt-2 ">
-                        <div className="absolute top-6 left-5 -translate-y-1/2">
-                        <SearchIcon className="!h-4 !w-auto"/>
-
-                        </div>
-                        <Input
-                          value={searchPrompt}
-                          onChange={(e) => setSearchPrompt(e.target.value)}
-                          placeholder="Search by name, tags or content..."
-                          className="h-11 pl-12 border-[#AAAAAA] !text-xs"
-                        />
-                      </div>
+                      <SearchBar placeholder="Search by name, tags or content..." value={query}
+                      onChange={(e) => setQuery(e.target.value)}/>
                     </div>
+                    
 
                     {/* System Prompt Textarea */}
                     <div className="space-y-2 mb-4">

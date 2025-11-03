@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { AiGenerator, EditIcon, LeftArrow, SearchIcon, SparklesIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
+import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -26,12 +27,8 @@ export default function CreateAgentPage() {
       <div className=" bg-white p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
-            <Link href="/prompts">
-              <Button variant="ghost" size="icon" className="shrink-0 w-fit -mt-0.5">
-                {/* <ArrowLeft className="h-5 w-5" /> */}
-                <LeftArrow/>
-              </Button>
-            </Link>
+            
+<LeftArrowAnim link={"/prompts"}/>
             <div className="space-y-2">
               <h1 className="text-2xl font-medium">Agent Builder</h1>
               <p className="text-sm text-gray-600">

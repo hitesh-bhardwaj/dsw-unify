@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import {PlusIcon,SearchIcon,} from "@/components/Icons";
+import {PlusIcon} from "@/components/Icons";
 import { MemoryCard } from "@/components/memory-card";
+import SearchBar from "@/components/search-bar";
 
 const memories = [
   {
@@ -47,10 +47,10 @@ const memories = [
 ];
 
 export default function MemoriesPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
 
   const filteredMemories = memories.filter((memory) =>
-    memory.name.toLowerCase().includes(searchQuery.toLowerCase())
+    memory.name.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -74,18 +74,8 @@ export default function MemoriesPage() {
           </Link>
         </div>
 
-        {/* Search bar */}
-        <div className="relative">
-          <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
-            <SearchIcon className="!h-4 !w-auto" />
-          </div>
-          <Input
-            placeholder="Search Memories..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333]"
-          />
-        </div>
+         <SearchBar placeholder="Search Memories..." value={query}
+  onChange={(e) => setQuery(e.target.value)} />
       </div>
 
      
@@ -98,7 +88,7 @@ export default function MemoriesPage() {
 
         {filteredMemories.length === 0 && (
           <div className="flex h-64 items-center justify-center text-gray-500">
-            No agents found matching "{searchQuery}"
+            No agents found matching "{query}"
           </div>
         )}
       </div>

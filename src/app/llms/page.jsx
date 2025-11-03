@@ -1,22 +1,15 @@
 "use client";
 
 import { useState } from "react";
-// import { Search, Plus, MessageSquare, LayoutTemplate } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import {
-  AiGenerator,
-  DownloadIcon,
-  PlusIcon,
-  SearchIcon,
-  SynthWave,
-} from "@/components/Icons";
+import {AiGenerator,DownloadIcon,PlusIcon,SynthWave} from "@/components/Icons";
 import { LLMCard } from "@/components/LLMCard";
 import Tabs from "@/components/common/Tabs";
+import SearchBar from "@/components/search-bar";
 
-// Mock data for agents
+
 const LLMs = [
   {
     id: "gpt-4-turbo",
@@ -98,7 +91,7 @@ const Recent = [
 ];
 
 export default function LLMsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [tab, setTab] = useState("all");
 
   const tabs = [
@@ -118,7 +111,7 @@ export default function LLMsPage() {
   ];
 
   const filteredLLMs = LLMs.filter((llm) =>
-    llm.name.toLowerCase().includes(searchQuery.toLowerCase())
+    llm.name.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
@@ -163,18 +156,9 @@ export default function LLMsPage() {
           </div>
         </div>
 
-        {/* Search bar */}
-        <div className="relative">
-          <div className="absolute left-5 top-1/2  -translate-y-1/2 text-[#333333]">
-            <SearchIcon className="!h-4 !w-auto" />
-          </div>
-          <Input
-            placeholder="Search Prompts..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 h-11 bg-white border-black/30 py-6 text-[#333333]"
-          />
-        </div>
+
+         <SearchBar placeholder="Search LLMs..." value={query}
+  onChange={(e) => setQuery(e.target.value)} />
 
         {/* Filter tabs */}
         
@@ -200,7 +184,7 @@ export default function LLMsPage() {
 
           {filteredLLMs.length === 0 && (
             <div className="flex h-64 items-center justify-center text-gray-500">
-              No LLMs found matching "{searchQuery}"
+              No LLMs found matching "{query}"
             </div>
           )}
         </div>
