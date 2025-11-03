@@ -21,10 +21,10 @@ export function TestingCard({ test }) {
   const isDark = variant === "dark";
 
   return (
-    <Link href={`/agents/${id}`} className="block group">
+    <Link href={`/#`} className="block group">
       <Card
         className={cn(
-          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1",
+          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1 !pl-0",
           // isDark
           //   ? "bg-active-card text-white border-black"
           //   : "bg-white border border-black/20"
@@ -98,7 +98,7 @@ export function TestingCard({ test }) {
           {/* Footer stats */}
           <div
             className={cn(
-              "flex items-center justify-between rounded-lg p-3 text-sm py-6 group-hover:text-white",
+              "flex items-center justify-between  text-sm py-4 group-hover:text-white",
              
             )}
           >

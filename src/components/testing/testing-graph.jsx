@@ -49,13 +49,15 @@ const TestingGraph = () => {
         <CardDescription>Success rates and response times for the last 30 days</CardDescription>
       </CardHeader>
       <CardContent className="px-30 h-[32vh]">
-        <ChartContainer config={chartConfig} className={"!h-full !w-full"}>
+        <ChartContainer config={chartConfig} className={"!h-full !w-full"} >
           <BarChart accessibilityLayer data={chartData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={[3, 3, 0, 0]} barSize={30}  className="!rounded-b-0 " />
+            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={[3, 3, 0, 0]} barSize={30}  animationBegin={0}              // delay in ms before starting
+  animationDuration={800}       
+  animationEasing="ease-out"  className="!rounded-b-0 " />
           </BarChart>
         </ChartContainer>
       </CardContent>
