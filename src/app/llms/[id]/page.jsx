@@ -14,10 +14,28 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Bar, BarChart } from "recharts";
+import CountUp from "@/components/animations/CountUp";
+import Tabs from "@/components/common/Tabs";
 
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
-  const [activeTab, setActiveTab] = useState("Configuration");
+  const [tab, setTab] = useState("Configuration");
+
+  const tabs = [
+    { id: "Configuration", label: "Configuration" },
+    {
+      id: "Usage Metric",
+      label: "Usage Metric",
+    },
+    {
+      id: "Deployment Logs",
+      label: "Deployment Logs",
+    },
+    {
+      id: "API Details",
+      label: "API Details",
+    },
+  ];
 
   // Mock data - in real app, fetch based on id
   const llm = {
@@ -94,69 +112,32 @@ export default function LLMsDetailPage({ params }) {
         </div>
         <div className="w-full flex gap-4">
           <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
-            <p className="text-3xl font-medium text-green">{llm.request}</p>
+            <p className="text-3xl font-medium text-green">
+              <CountUp value={llm.request} duration={1.2} startOnView once />
+            </p>
             <p className="text-black/60">Total Requests</p>
           </div>
           <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
-            <p className="text-3xl font-medium text-badge-blue">{llm.avgRes}</p>
+            <p className="text-3xl font-medium text-badge-blue">
+              <CountUp value={llm.avgRes} duration={1.2} startOnView once />
+            </p>
             <p className="text-black/60">Total Requests</p>
           </div>
           <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
-            <p className="text-3xl font-medium text-yellow">{llm.upTime}</p>
+            <p className="text-3xl font-medium text-yellow">
+              <CountUp value={llm.upTime} duration={1.2} startOnView once />
+            </p>
             <p className="text-black/60">Total Requests</p>
           </div>
           <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
-            <p className="text-3xl font-medium text-red">{llm.cost}</p>
+            <p className="text-3xl font-medium text-red">
+              <CountUp value={llm.cost} duration={1.2} startOnView once />
+            </p>
             <p className="text-black/60">Total Requests</p>
           </div>
         </div>
-        <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
-          <button
-            onClick={() => setActiveTab("Configuration")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "Configuration"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Configuration</span>
-          </button>
+        <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
 
-          <button
-            onClick={() => setActiveTab("Usage Metric")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "Usage Metric"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Usage Metric</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("Deployment Logs")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "Deployment Logs"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Deployment Logs</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("API Details")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "API Details"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>API Details</span>
-          </button>
-        </div>
         <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
           <Card
             className={cn(

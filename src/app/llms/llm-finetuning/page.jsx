@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { LeftArrow, UploadIcon } from "@/components/Icons";
-import TestingAnalyticsComp from "@/components/testing/testing-analytics";
 import { DataSet } from "@/components/llmtuning/dataset-card";
 import { TrainingCard } from "@/components/llmtuning/training-card";
+import Tabs from "@/components/common/Tabs";
 
 // Mock data for agents
 const datasets = [
@@ -41,12 +41,10 @@ const TrainingJobs = [
     id: "customer-support-v1",
     name: "Customer-Support-v1",
     description: "Customer support model training",
-    tags: [
-      { label: "Completed", color: "green" },
-    ],
-    progress:"1000/1000",
+    tags: [{ label: "Completed", color: "green" }],
+    progress: "1000/1000",
     successRate: "100%",
-    loss:"0.23",
+    loss: "0.23",
     width: "w-[100%]",
     date: "22/01/2024",
   },
@@ -54,49 +52,33 @@ const TrainingJobs = [
     id: "tech-assistant-v2",
     name: "Tech-Assistant-v2",
     description: "Technical assistant model training",
-    tags: [
-      { label: "Running", color: "blue" },
-    ],
-    progress:"450/800",
+    tags: [{ label: "Running", color: "blue" }],
+    progress: "450/800",
     successRate: "56.3%",
-    loss:"0.45",
+    loss: "0.45",
     width: "w-[56.3%]",
     date: "22/01/2024",
   },
 ];
-const analyticsCardData = [
-  {
-    id: "average-response-time",
-    heading: "Average Response Time",
-    progress: "1.2s",
-    remarks: "-0.3s from last week",
-    positive: false,
-  },
-  {
-    id: "success-rate",
-    heading: "Success Rate",
-    progress: "89%",
-    remarks: "+5% from last week",
-    positive: true,
-  },
-  {
-    id: "token-usage",
-    heading: "Token Usage",
-    progress: "1,250",
-    remarks: "+120 from last week",
-    positive: true,
-  },
-  {
-    id: "error-rate",
-    heading: "Error Rate",
-    progress: "2.1%",
-    remarks: "-1.2% from last week",
-    posictive: false,
-  },
-];
 
 export default function LLMFineTuning() {
-  const [activeTab, setActiveTab] = useState("Datasets");
+  const [tab, setTab] = useState("Datasets");
+
+  const tabs = [
+    { id: "Datasets", label: "Datasets" },
+    {
+      id: "Training Jobs",
+      label: "Training Jobs",
+    },
+    {
+      id: "Models",
+      label: "Models",
+    },
+    {
+      id: "Inference",
+      label: "Inference",
+    },
+  ];
   return (
     <div className="flex flex-col h-full">
       <div className="space-y-6 p-6">
@@ -133,7 +115,7 @@ export default function LLMFineTuning() {
         </div>
 
         {/* Filter tabs */}
-        <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
+        {/* <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
           <button
             onClick={() => setActiveTab("Datasets")}
             className={cn(
@@ -180,7 +162,8 @@ export default function LLMFineTuning() {
           >
             <span>Inference</span>
           </button>
-        </div>
+        </div> */}
+        <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
       </div>
 
       {/* Content with sliding animation */}
@@ -189,7 +172,7 @@ export default function LLMFineTuning() {
         <div
           className={cn(
             "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            activeTab === "Datasets"
+            tab === "Datasets"
               ? "translate-x-0 opacity-100 duration-500 ease-out"
               : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
           )}
@@ -205,9 +188,9 @@ export default function LLMFineTuning() {
         <div
           className={cn(
             "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            activeTab === "Training Jobs"
+            tab === "Training Jobs"
               ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : activeTab === "Datasets"
+              : tab === "Datasets"
               ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
               : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
           )}
@@ -223,12 +206,28 @@ export default function LLMFineTuning() {
         <div
           className={cn(
             "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            activeTab === "analytics"
+            tab === "Models"
+              ? "translate-x-0 opacity-100 duration-500 ease-out"
+              : tab === "Training Jobs"||tab==="Datasets"
+              ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+          )}
+        >
+          <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
+            <p>No Models to show</p>
+          </div>
+        </div>
+        <div
+          className={cn(
+            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
+            tab === "Inference"
               ? "translate-x-0 opacity-100 duration-500 ease-out"
               : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
           )}
         >
-          <TestingAnalyticsComp cardData={analyticsCardData} />
+          <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
+            <p>No Inference to show</p>
+          </div>
         </div>
       </div>
     </div>

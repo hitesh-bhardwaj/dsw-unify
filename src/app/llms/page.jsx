@@ -14,6 +14,7 @@ import {
   SynthWave,
 } from "@/components/Icons";
 import { LLMCard } from "@/components/LLMCard";
+import Tabs from "@/components/common/Tabs";
 
 // Mock data for agents
 const LLMs = [
@@ -97,8 +98,24 @@ const Recent = [
 ];
 
 export default function LLMsPage() {
-  const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [tab, setTab] = useState("all");
+
+  const tabs = [
+    { id: "all", label: "All Models" },
+    {
+      id: "selfHosted",
+      label: "Self-Hosted",
+    },
+    {
+      id: "apiBased",
+      label: "API-Based",
+    },
+    {
+      id: "fineTuned",
+      label: "Fine-Tuned",
+    },
+  ];
 
   const filteredLLMs = LLMs.filter((llm) =>
     llm.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -160,57 +177,12 @@ export default function LLMsPage() {
         </div>
 
         {/* Filter tabs */}
-        <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
-          <button
-            onClick={() => setActiveTab("all")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "all"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>All Models</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("selfHosted")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "selfHosted"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Self-Hosted</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("apiBased")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "apiBased"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>API-Based</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("fineTuned")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm justify-center transition-colors w-1/2 cursor-pointer",
-              activeTab === "fineTuned"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Fine-Tuned</span>
-          </button>
-        </div>
+        
+         <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
 
         {/* LLMs grid */}
         <div className="flex-1 overflow-auto pt-0">
-          {activeTab == "all" ? (
+          {tab == "all" ? (
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
               {filteredLLMs.map((llm) => (
                 <LLMCard key={llm.id} llm={llm} />
@@ -220,7 +192,7 @@ export default function LLMsPage() {
             <>
               <div className="grid gap-6 grid-cols-1 h-120">
                 <div className="w-full border rounded-2xl h-full flex justify-center items-center text-black/50">
-                  <p>"No {activeTab} to be shown"</p>
+                  <p>"No {tab} to be shown"</p>
                 </div>
               </div>
             </>
@@ -235,7 +207,7 @@ export default function LLMsPage() {
 
         {/* Recent Acitvity */}
         {
-         activeTab=="all"&& <div className="space-y-10 mt-20">
+         tab=="all"&& <div className="space-y-10 mt-20">
             <h2 className="text-2xl font-medium">Recent Activity</h2>
             <div className="w-full space-y-4">
               {Recent.map((recent, id) => (
