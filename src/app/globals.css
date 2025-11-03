@@ -43,6 +43,9 @@
   --color-badge-blue: var(--badge-blue);
   --color-badge-mint: var(--badge-mint);
   --color-badge-gray: var(--badge-gray);
+  --color-green:var(--green);
+  --color-yellow:var(--yellow);
+  --color-red:var(--red);
   --color-badge-sea-green:var(--badge-sea-green);
   --color-active-card: var(--active-card);
   --radius-sm: calc(var(--radius) - 4px);
@@ -89,6 +92,9 @@
   --sidebar-ring: oklch(0.708 0 0);
   --badge-yellow: #ffcd41;
   --badge-blue: #3651ea;
+  --green:#00ba00;
+  --yellow: #FFC107;
+  --red:#FF050A;
   --badge-green: #6bc631;
   --badge-mint: #50dfb1;
   --badge-gray: #dedede;
