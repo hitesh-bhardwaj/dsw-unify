@@ -26,7 +26,7 @@ export function PromptCard({ prompt }) {
     <Link href={"/"} className="block group">
     <Card
       className={cn(
-        "overflow-hidden transition-all hover:shadow-lg duration-500 ease-out py-5 bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black",
+        "overflow-hidden h-full transition-all hover:shadow-lg duration-500 ease-out py-5 bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black",
         // isDark
         //   ? "bg-active-card text-white border-black"
         //   : "bg-white border border-black/30"
