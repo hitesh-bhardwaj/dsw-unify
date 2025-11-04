@@ -16,6 +16,7 @@ import { Bar, BarChart } from "recharts";
 import CountUp from "@/components/animations/CountUp";
 import Tabs from "@/components/common/Tabs";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
+import { FadeUp } from "@/components/animations/fadeup";
 
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
@@ -71,79 +72,88 @@ export default function LLMsDetailPage({ params }) {
   useEffect(() => {
     if (tab === "Configuration") {
       // Just bump the id; Recharts will replay the animation for shapes with this animationId.
-      setAnimationId(id => id + 1);
+      setAnimationId((id) => id + 1);
     }
   }, [tab]);
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="bg-white p-6 space-y-6 h-full">
-        <div className="flex items-center justify-between mb-10">
-          <div className="flex gap-3">
-            <LeftArrowAnim link={"/llms"} />
-            <div className="space-y-2">
-              <div className="w-fit flex gap-2">
-                <h1 className="text-xl font-medium">{llm.name}</h1>
-                {
-                  (llm.status = "active" && (
-                    <Badge
-                      className={
-                        " py-1 text-xs font-medium bg-badge-green text-white"
-                      }
-                    >
-                      Active
-                    </Badge>
-                  ))
-                }
+        <FadeUp>
+          <div className="flex items-center justify-between mb-10">
+            <div className="flex gap-3">
+              <LeftArrowAnim link={"/llms"} />
+              <div className="space-y-2">
+                <div className="w-fit flex gap-2">
+                  <h1 className="text-xl font-medium">{llm.name}</h1>
+                  {
+                    (llm.status = "active" && (
+                      <Badge
+                        className={
+                          " py-1 text-xs font-medium bg-badge-green text-white"
+                        }
+                      >
+                        Active
+                      </Badge>
+                    ))
+                  }
+                </div>
+                <p className="text-sm text-gray-600 pl-0.5">
+                  {llm.description}
+                </p>
               </div>
-              <p className="text-sm text-gray-600 pl-0.5">{llm.description}</p>
+            </div>
+            <div className="flex items-center gap-3">
+              <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
+                <div className="w-5">
+                  <ConfigureIcon />
+                </div>
+                Configure
+              </Button>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
-              <div className="w-5">
-                <ConfigureIcon />
-              </div>
-              Configure
-            </Button>
+        </FadeUp>
+        <FadeUp delay={0.1}>
+          <div className="w-full flex gap-4">
+            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
+              <p className="text-3xl font-medium text-green">
+                <CountUp value={llm.request} duration={1.2} startOnView once />
+              </p>
+              <p className="text-black/60">Total Requests</p>
+            </div>
+            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
+              <p className="text-3xl font-medium text-badge-blue">
+                <CountUp value={llm.avgRes} duration={1.2} startOnView once />
+              </p>
+              <p className="text-black/60">Avg. Response Time</p>
+            </div>
+            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
+              <p className="text-3xl font-medium text-yellow">
+                <CountUp value={llm.upTime} duration={1.2} startOnView once />
+              </p>
+              <p className="text-black/60">Uptime</p>
+            </div>
+            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
+              <p className="text-3xl font-medium text-red">
+                <CountUp value={llm.cost} duration={1.2} startOnView once />
+              </p>
+              <p className="text-black/60">This Month Cost</p>
+            </div>
           </div>
-        </div>
-        <div className="w-full flex gap-4">
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-            <p className="text-3xl font-medium text-green">
-              <CountUp value={llm.request} duration={1.2} startOnView once />
-            </p>
-            <p className="text-black/60">Total Requests</p>
-          </div>
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-            <p className="text-3xl font-medium text-badge-blue">
-              <CountUp value={llm.avgRes} duration={1.2} startOnView once />
-            </p>
-            <p className="text-black/60">Avg. Response Time</p>
-          </div>
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-            <p className="text-3xl font-medium text-yellow">
-              <CountUp value={llm.upTime} duration={1.2} startOnView once />
-            </p>
-            <p className="text-black/60">Uptime</p>
-          </div>
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-            <p className="text-3xl font-medium text-red">
-              <CountUp value={llm.cost} duration={1.2} startOnView once />
-            </p>
-            <p className="text-black/60">This Month Cost</p>
-          </div>
-        </div>
-        <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+        </FadeUp>
+        <FadeUp delay={0.2}>
+          <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+        </FadeUp>
         <div className="flex-1 pt-0 h-auto w-full relative overflow-hidden">
           <div
             className={cn(
-              "relative inset-0 overflow-auto  pt-0 transition-all h-full",
+              "relative inset-0  pt-0 transition-all h-full",
               tab === "Configuration"
                 ? "translate-x-0 opacity-100 duration-500 ease-out"
                 : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
             )}
           >
+            <FadeUp delay={0.3}>
             <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
               <Card
                 className={cn(
@@ -171,7 +181,11 @@ export default function LLMsDetailPage({ params }) {
                       <p>0.7</p>
                     </div>
                     <div className="w-full h-[4px] bg-black/15 rounded-full flex items-center">
-                      <div className={` h-full bg-primary rounded-full relative duration-700 ease-in-out ${tab=="Configuration"?"w-[70%] delay-300":"w-0"}`}/>
+                      <div
+                        className={` h-full bg-primary rounded-full relative duration-700 ease-in-out ${
+                          tab == "Configuration" ? "w-[70%] delay-300" : "w-0"
+                        }`}
+                      />
 
                       <div className="w-5 h-5 rounded-full bg-white border-3 border-black -ml-1 relative z-[2] " />
                     </div>
@@ -235,7 +249,7 @@ export default function LLMsDetailPage({ params }) {
                         className={"h-30 w-full px-6 pt-8"}
                       >
                         <BarChart
-                         key={animationId}
+                          key={animationId}
                           accessibilityLayer
                           data={chartData}
                           margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
@@ -252,7 +266,7 @@ export default function LLMsDetailPage({ params }) {
                             animationBegin={0}
                             animationDuration={600}
                             animationEasing="ease-out"
-                            animationId={animationId} 
+                            animationId={animationId}
                             className="!rounded-b-0 "
                           />
                         </BarChart>
@@ -280,6 +294,8 @@ export default function LLMsDetailPage({ params }) {
                 </div>
               </Card>
             </div>
+
+            </FadeUp>
           </div>
           <div
             className={cn(

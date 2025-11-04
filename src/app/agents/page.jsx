@@ -132,14 +132,14 @@ export default function AgentsPage() {
             </div>
             <div
               className={cn(
-                "absolute inset-0 overflow-auto p-6 pt-0 transition-all ",
+                "absolute inset-0 overflow-auto  pt-0 transition-all ",
                 tab === "templates"
                   ? "translate-x-0 opacity-100 duration-500 ease-out"
                   : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out "
               )}
             >
               <div className="grid gap-6 grid-cols-1 h-full">
-                <div className="w-full border rounded-2xl h-full flex justify-center items-center text-black/50">
+                <div className="w-full border border-black/30 rounded-2xl h-full flex justify-center items-center text-black/50">
                   <p>"No Templates to be shown"</p>
                 </div>
               </div>

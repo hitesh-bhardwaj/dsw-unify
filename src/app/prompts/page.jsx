@@ -213,7 +213,7 @@ export default function PromptsPage() {
             </div>
             <div
               className={cn(
-                "absolute inset-0 overflow-auto p-6 pt-0 transition-all ",
+                "absolute inset-0 overflow-auto pt-0 transition-all ",
                 tab === "templates"
                   ? "translate-x-0 opacity-100 duration-500 ease-out"
                   : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out "

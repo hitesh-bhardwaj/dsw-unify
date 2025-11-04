@@ -9,6 +9,7 @@ import { DataSet } from "@/components/llmtuning/dataset-card";
 import { TrainingCard } from "@/components/llmtuning/training-card";
 import Tabs from "@/components/common/Tabs";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
+import { FadeUp } from "@/components/animations/fadeup";
 
 // Mock data for agents
 const datasets = [
@@ -84,146 +85,101 @@ export default function LLMFineTuning() {
     <div className="flex flex-col h-full">
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <div className="flex items-center justify-between mb-10">
-          <div className="w-fit flex gap-2">
-           
-<LeftArrowAnim link={"/llms"}/>
-            <div className="space-y-2">
-              <h1 className="text-2xl font-medium text-foreground">
-                LLM Finetuning
-              </h1>
-              <p className="mt-1 text-sm text-gray-600">
-                Manage datasets, train custom models, and deploy them for
-                inference
-              </p>
+        <FadeUp>
+          <div className="flex items-center justify-between mb-10">
+            <div className="w-fit flex gap-2">
+              <LeftArrowAnim link={"/llms"} />
+              <div className="space-y-2">
+                <h1 className="text-2xl font-medium text-foreground">
+                  LLM Finetuning
+                </h1>
+                <p className="mt-1 text-sm text-gray-600">
+                  Manage datasets, train custom models, and deploy them for
+                  inference
+                </p>
+              </div>
+            </div>
+            <Link href="/agents/create">
+              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                <div className="w-4 h-4">
+                  <UploadIcon />
+                </div>
+                Upload Dataset
+              </Button>
+            </Link>
+          </div>
+        </FadeUp>
+        <FadeUp delay={0.1}>
+          <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+        </FadeUp>
+      </div>
+
+        <div className="flex-1 relative">
+          {/* Datasets Tab */}
+          <div
+            className={cn(
+              "relative inset-0  p-6 pt-0 transition-all",
+              tab === "Datasets"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="space-y-4">
+              {datasets.map((data,id) => (
+                <FadeUp key={data.id} delay={0.2+id/20}>
+                  <DataSet key={data.id} data={data} />
+                </FadeUp>
+              ))}
             </div>
           </div>
-          <Link href="/agents/create">
-            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-              <div className="w-4 h-4">
-                <UploadIcon />
-              </div>
-              Upload Dataset
-            </Button>
-          </Link>
+
+          {/* Training Jobs Tab */}
+          <div
+            className={cn(
+              "absolute inset-0  p-6 pt-0 transition-all",
+              tab === "Training Jobs"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "Datasets"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="space-y-4">
+              {TrainingJobs.map((data) => (
+                <TrainingCard key={data.id} data={data} playKey={tab} />
+              ))}
+            </div>
+          </div>
+
+          {/* Analytics Tab */}
+          <div
+            className={cn(
+              "absolute inset-0  p-6 pt-0 transition-all",
+              tab === "Models"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "Training Jobs" || tab === "Datasets"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No Models to show</p>
+            </div>
+          </div>
+          <div
+            className={cn(
+              "absolute inset-0  p-6 pt-0 transition-all",
+              tab === "Inference"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No Inference to show</p>
+            </div>
+          </div>
         </div>
-
-        {/* Filter tabs */}
-        {/* <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
-          <button
-            onClick={() => setActiveTab("Datasets")}
-            className={cn(
-              "flex items-center justify-center gap-2 rounded-lg border px-4 py-3 text-sm  transition-colors w-1/3  cursor-pointer",
-              activeTab === "Datasets"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Datasets</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("Training Jobs")}
-            className={cn(
-              "flex items-center justify-center gap-2 rounded-lg border px-4 py-3 text-sm transition-colors w-1/3 cursor-pointer",
-              activeTab === "Training Jobs"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Training Jobs</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("Models")}
-            className={cn(
-              "flex items-center justify-center gap-2 rounded-lg border px-4 py-3 text-sm transition-colors w-1/3 cursor-pointer",
-              activeTab === "Models"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Models</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("Inference")}
-            className={cn(
-              "flex items-center justify-center gap-2 rounded-lg border px-4 py-3 text-sm transition-colors w-1/3 cursor-pointer",
-              activeTab === "Inference"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722] font-medium"
-                : "border-transparent text-gray-700 "
-            )}
-          >
-            <span>Inference</span>
-          </button>
-        </div> */}
-        <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
-      </div>
-
       {/* Content with sliding animation */}
-      <div className="flex-1 overflow-hidden relative">
-        {/* Datasets Tab */}
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            tab === "Datasets"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="space-y-4">
-            {datasets.map((data) => (
-              <DataSet key={data.id} data={data} />
-            ))}
-          </div>
-        </div>
-
-        {/* Training Jobs Tab */}
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            tab === "Training Jobs"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : tab === "Datasets"
-              ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="space-y-4">
-            {TrainingJobs.map((data) => (
-              <TrainingCard key={data.id} data={data} playKey={tab}/>
-            ))}
-          </div>
-        </div>
-
-        {/* Analytics Tab */}
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            tab === "Models"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : tab === "Training Jobs"||tab==="Datasets"
-              ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
-            <p>No Models to show</p>
-          </div>
-        </div>
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            tab === "Inference"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
-            <p>No Inference to show</p>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
