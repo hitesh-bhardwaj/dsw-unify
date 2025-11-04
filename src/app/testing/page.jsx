@@ -8,9 +8,7 @@ import { PlusIcon } from "@/components/Icons";
 import { TestingCard } from "@/components/testing/testing-card";
 import { TestingCardResults } from "@/components/testing/testing-card-results";
 import TestingAnalyticsComp from "@/components/testing/testing-analytics";
-import {
-  FadeUpStagger,
-} from "@/components/animations/Fadeup";
+// import {FadeUpStagger} from "@/components/animations/Fadeup";
 import Tabs from "@/components/common/Tabs";
 
 // Mock data for agents
@@ -173,13 +171,13 @@ export default function TestingPage() {
           )}
         >
           {tab === "test-results" && (
-            <FadeUpStagger key="test-results" staggerDelay={0.2} delay={0.6}>
+            // <FadeUpStagger key="test-results" staggerDelay={0.2} delay={0.6}>
               <div className="space-y-4">
                 {testsResults.map((test) => (
                   <TestingCardResults test={test} key={test.id} />
                 ))}
               </div>
-            </FadeUpStagger>
+            // </FadeUpStagger>
           )}
         </div>
 
