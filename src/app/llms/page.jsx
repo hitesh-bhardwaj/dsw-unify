@@ -13,6 +13,7 @@ import {
 import { LLMCard } from "@/components/LLMCard";
 import Tabs from "@/components/common/Tabs";
 import SearchBar from "@/components/search-bar";
+import { FadeUp } from "@/components/animations/fadeup";
 
 const LLMs = [
   {
@@ -123,117 +124,123 @@ export default function LLMsPage() {
       {/* Header section */}
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
-          </div>
-          <div className="gap-2 flex">
-            <Link href={"/llms/llm-finetuning"}>
+        <FadeUp>
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
+            </div>
+            <div className="gap-2 flex">
+              <Link href={"/llms/llm-finetuning"}>
+                <Button
+                  variant="outline"
+                  //   onClick={() => setApiModalOpen(true)}
+                  className="gap-2 text-foreground border border-primary"
+                >
+                  <div className="!w-4">
+                    <AiGenerator />
+                  </div>
+                  LLM Finetuning
+                </Button>
+              </Link>
               <Button
                 variant="outline"
-                //   onClick={() => setApiModalOpen(true)}
                 className="gap-2 text-foreground border border-primary"
               >
                 <div className="!w-4">
-                  <AiGenerator />
+                  {/* <AiGenerator /> */}
+                  <DownloadIcon />
                 </div>
-                LLM Finetuning
+                Import Model
               </Button>
-            </Link>
-            <Button
-              variant="outline"
-              className="gap-2 text-foreground border border-primary"
-            >
-              <div className="!w-4">
-                {/* <AiGenerator /> */}
-                <DownloadIcon />
-              </div>
-              Import Model
-            </Button>
-            <Link href="/llms/deploy">
-              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                <PlusIcon />
-                Deploy New Model
-              </Button>
-            </Link>
+              <Link href="/llms/deploy">
+                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <PlusIcon />
+                  Deploy New Model
+                </Button>
+              </Link>
+            </div>
           </div>
-        </div>
-
-        <SearchBar
-          placeholder="Search LLMs..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        </FadeUp>
+        <FadeUp delay={0.1}>
+          <SearchBar
+            placeholder="Search LLMs..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </FadeUp>
 
         {/* Filter tabs */}
-
-        <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+        <FadeUp delay={0.2}>
+          <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+        </FadeUp>
 
         {/* LLMs grid */}
-        <div className="flex-1 pt-0 h-fit w-full relative">
-          <div
-            className={cn(
-              "relative inset-0  pt-0 transition-all h-full",
-              tab === "all"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
-            )}
-          >
-            {tab === "all" && (
-              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-                {filteredLLMs.map((llm) => (
-                  <LLMCard key={llm.id} llm={llm} />
-                ))}
+        <FadeUp delay={0.3}>
+          <div className="flex-1 pt-0 h-fit w-full relative">
+            <div
+              className={cn(
+                "relative inset-0  pt-0 transition-all h-full",
+                tab === "all"
+                  ? "translate-x-0 opacity-100 duration-500 ease-out"
+                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
+              )}
+            >
+              {tab === "all" && (
+                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+                  {filteredLLMs.map((llm) => (
+                    <LLMCard key={llm.id} llm={llm} />
+                  ))}
+                </div>
+              )}
+            </div>
+            <div
+              className={cn(
+                "absolute inset-0 pt-0 transition-all",
+                tab === "selfHosted"
+                  ? "translate-x-0 opacity-100 duration-500 ease-out"
+                  : tab === "all"
+                  ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+              )}
+            >
+              <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
+                <p>No Self Hosted available at this point </p>
+              </div>
+            </div>
+            <div
+              className={cn(
+                "absolute inset-0  pt-0 transition-all",
+                tab === "apiBased"
+                  ? "translate-x-0 opacity-100 duration-500 ease-out"
+                  : tab === "selfHosted" || tab === "all"
+                  ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+              )}
+            >
+              <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
+                <p>No API Based available at this point </p>
+              </div>
+            </div>
+            <div
+              className={cn(
+                "absolute inset-0 pt-0 transition-all",
+                tab === "fineTuned"
+                  ? "translate-x-0 opacity-100 duration-500 ease-out"
+                  : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+              )}
+            >
+              <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
+                <p>No Fine Tuned to show</p>
+              </div>
+            </div>
+
+            {filteredLLMs.length === 0 && (
+              <div className="flex h-64 items-center justify-center text-gray-500">
+                No LLMs found matching "{query}"
               </div>
             )}
           </div>
-          <div
-            className={cn(
-              "absolute inset-0 pt-0 transition-all",
-              tab === "selfHosted"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : tab === "all"
-                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-            )}
-          >
-            <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
-              <p>No Self Hosted available at this point </p>
-            </div>
-          </div>
-          <div
-            className={cn(
-              "absolute inset-0  pt-0 transition-all",
-              tab === "apiBased"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : tab === "selfHosted" || tab === "all"
-                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-            )}
-          >
-            <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
-              <p>No API Based available at this point </p>
-            </div>
-          </div>
-          <div
-            className={cn(
-              "absolute inset-0 pt-0 transition-all",
-              tab === "fineTuned"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-            )}
-          >
-            <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
-              <p>No Fine Tuned to show</p>
-            </div>
-          </div>
-
-          {filteredLLMs.length === 0 && (
-            <div className="flex h-64 items-center justify-center text-gray-500">
-              No LLMs found matching "{query}"
-            </div>
-          )}
-        </div>
+        </FadeUp>
 
         {/* Recent Acitvity */}
         {tab == "all" && (
@@ -241,7 +248,10 @@ export default function LLMsPage() {
             <h2 className="text-2xl font-medium">Recent Activity</h2>
             <div className="w-full space-y-4">
               {Recent.map((recent, id) => (
-                <div key={id} className="w-full h-fit flex gap-6 items-center group ">
+                <div
+                  key={id}
+                  className="w-full h-fit flex gap-6 items-center group "
+                >
                   <div className="w-13 h-12">
                     <span
                       className={cn(
@@ -259,7 +269,7 @@ export default function LLMsPage() {
                       </p>
                     </div>
                     <div className="w-full h-[1px] bg-black/20">
-                    <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left"/>
+                      <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
                     </div>
                   </div>
                 </div>

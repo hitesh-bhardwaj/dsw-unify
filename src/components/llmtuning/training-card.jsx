@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Eye } from "lucide-react";
 import { Button } from "../ui/button";
+import AnimatedProgressBar from "../animations/ProgressBar";
 
 export function TrainingCard({ data }) {
   const {
@@ -95,11 +96,15 @@ export function TrainingCard({ data }) {
                   <span className="">{successRate}</span>
                 </div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2 relative">
-                <span
-                  className={`bg-primary h-full absolute top-0 left-0 z-[5] rounded-full ${width}`}
-                />
-              </div>
+              <AnimatedProgressBar
+                value={width} // 65 or "65%"
+                duration={1.2}
+                ease="easeInOut"
+                animateOnMount
+                className="w-full"
+                trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                barClassName="bg-primary h-full absolute top-0 left-0 z-[5] rounded-full"
+              />
             </div>
 
             <div

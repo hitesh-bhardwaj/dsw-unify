@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ConfigureIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
@@ -66,7 +66,14 @@ export default function LLMsDetailPage({ params }) {
       color: "var(--primary)",
     },
   };
+  const [animationId, setAnimationId] = useState(0);
 
+  useEffect(() => {
+    if (tab === "Configuration") {
+      // Just bump the id; Recharts will replay the animation for shapes with this animationId.
+      setAnimationId(id => id + 1);
+    }
+  }, [tab]);
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
@@ -163,10 +170,10 @@ export default function LLMsDetailPage({ params }) {
                       <p>Temprature</p>
                       <p>0.7</p>
                     </div>
-                    <div className="w-full h-[4px] bg-black/15 rounded-full">
-                      <div className="w-[70%] h-full bg-primary rounded-full relative">
-                        <div className="w-5 h-5 rounded-full absolute right-0 bg-white border-3 border-black top-1/2 -translate-y-1/2 "></div>
-                      </div>
+                    <div className="w-full h-[4px] bg-black/15 rounded-full flex items-center">
+                      <div className={` h-full bg-primary rounded-full relative duration-700 ease-in-out ${tab=="Configuration"?"w-[70%] delay-300":"w-0"}`}/>
+
+                      <div className="w-5 h-5 rounded-full bg-white border-3 border-black -ml-1 relative z-[2] " />
                     </div>
                   </div>
                   <div className="">
@@ -241,6 +248,10 @@ export default function LLMsDetailPage({ params }) {
                             fill="var(--color-desktop)"
                             radius={[5, 5, 0, 0]}
                             barSize={30}
+                            animationBegin={0} // delay in ms before starting
+                            animationDuration={600}
+                            animationEasing="ease-out"
+                            animationId={animationId} 
                             className="!rounded-b-0 "
                           />
                         </BarChart>

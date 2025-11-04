@@ -32,7 +32,7 @@
 //         )}
 //       >
 //         <CardHeader className="">
-          
+
 //           <div className="flex items-center w-full justify-between">
 //             <div className="space-y-3">
 //             <div className="flex items-center gap-[3vw] mt-4">
@@ -60,7 +60,6 @@
 //             ))}
 //           </div>
 // </div>
-          
 
 //           {/* Description */}
 //           <p className={cn("text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out ")}>
@@ -99,11 +98,10 @@
 //                 </div>
 //                 </div>
 
-            
 //           <div
 //             className={cn(
 //               "flex items-end justify-end p-3 text-sm py-6 group-hover:text-white",
-             
+
 //             )}
 //           >
 //             <div className="flex items-center gap-1">
@@ -130,7 +128,8 @@ import { Eye } from "lucide-react";
 import { Button } from "../ui/button";
 // import { motion, useAnimationControls, useInView } from "motion";
 import { useEffect, useMemo, useRef } from "react";
-import { useInView , motion, useAnimationControls,} from "framer-motion";
+import { useInView, motion, useAnimationControls } from "framer-motion";
+import AnimatedProgressBar from "../animations/ProgressBar";
 
 export function TestingCardResults({ test }) {
   const {
@@ -148,53 +147,54 @@ export function TestingCardResults({ test }) {
 
   const isDark = variant === "dark";
 
-  const targetWidth = useMemo(() => {
-    const fromNumber =
-      typeof width === "number"
-        ? width
-        : typeof successRate === "number"
-        ? successRate
-        : undefined;
+  // const targetWidth = useMemo(() => {
+  //   const fromNumber =
+  //     typeof width === "number"
+  //       ? width
+  //       : typeof successRate === "number"
+  //       ? successRate
+  //       : undefined;
 
-    if (typeof fromNumber === "number" && !Number.isNaN(fromNumber)) {
-      return `${Math.max(0, Math.min(100, fromNumber))}%`;
-    }
+  //   if (typeof fromNumber === "number" && !Number.isNaN(fromNumber)) {
+  //     return `${Math.max(0, Math.min(100, fromNumber))}%`;
+  //   }
 
-    if (typeof width === "string") {
-      const match = width.match(/(\d+(?:\.\d+)?)%/);
-      if (match?.[1]) return `${Math.max(0, Math.min(100, parseFloat(match[1])))}%`;
-    }
+  //   if (typeof width === "string") {
+  //     const match = width.match(/(\d+(?:\.\d+)?)%/);
+  //     if (match?.[1])
+  //       return `${Math.max(0, Math.min(100, parseFloat(match[1])))}%`;
+  //   }
 
-    // Parse from successRate text e.g. "65%"
-    const asText = String(successRate ?? "").trim();
-    const n = parseFloat(asText.replace("%", ""));
-    if (!Number.isNaN(n)) return `${Math.max(0, Math.min(100, n))}%`;
+  //   // Parse from successRate text e.g. "65%"
+  //   const asText = String(successRate ?? "").trim();
+  //   const n = parseFloat(asText.replace("%", ""));
+  //   if (!Number.isNaN(n)) return `${Math.max(0, Math.min(100, n))}%`;
 
-    return "0%";
-  }, [width, successRate]);
+  //   return "0%";
+  // }, [width, successRate]);
 
   // ---- Animate when visible ----
   const ref = useRef(null);
-  const inView = useInView(ref, { margin: "-10% 0px -10% 0px", amount: 0.4 });
-  const controls = useAnimationControls();
+  // const inView = useInView(ref, { margin: "-10% 0px -10% 0px", amount: 0.4 });
+  // const controls = useAnimationControls();
 
-  useEffect(() => {
-    if (inView) {
-      controls.start({
-        width: targetWidth,
-        transition: { duration: 1.2, ease: "easeInOut" },
-      });
-    } else {
-      // reset when leaving viewport (so it replays on re-entry)
-      controls.set({ width: "0%" });
-    }
-  }, [inView, targetWidth, controls]);
+  // useEffect(() => {
+  //   if (inView) {
+  //     controls.start({
+  //       width: targetWidth,
+  //       transition: { duration: 1.2, ease: "easeInOut" },
+  //     });
+  //   } else {
+  //     // reset when leaving viewport (so it replays on re-entry)
+  //     controls.set({ width: "0%" });
+  //   }
+  // }, [inView, targetWidth, controls]);
 
   return (
     <Link href={`/#`} className="block group" aria-label={`${name} test card`}>
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1",
+          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1"
         )}
       >
         <CardHeader>
@@ -261,21 +261,25 @@ export function TestingCardResults({ test }) {
                 </div>
                 <div className="space-x-1">
                   <span className="text-primary">
-                    {typeof successRate === "number" ? `${successRate}%` : successRate}
+                    {typeof successRate === "number"
+                      ? `${successRate}%`
+                      : successRate}
                   </span>
                   <span>Success Rate</span>
                 </div>
               </div>
 
               {/* Animated Progress Bar */}
-              <div className="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden">
-                <motion.div
-                  aria-hidden
-                  initial={{ width: "0%" }}
-                  animate={controls}
-                  className="bg-primary h-full absolute top-0 left-0 z-[5] rounded-full"
-                />
-              </div>
+
+              <AnimatedProgressBar
+                value={width} // 65 or "65%"
+                duration={1.2}
+                ease="easeInOut"
+                animateOnMount
+                className="w-full"
+                trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                barClassName="bg-primary h-full absolute top-0 left-0 z-[5] rounded-full"
+              />
             </div>
 
             <div className="flex items-end justify-end p-3 text-sm py-6 group-hover:text-white">
