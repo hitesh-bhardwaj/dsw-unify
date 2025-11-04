@@ -34,7 +34,7 @@ export function TestingCard({ test }) {
           
           <div className="flex items-center w-full justify-between">
             <div className="space-y-3">
-            <div className="flex items-center gap-[3vw] mt-4">
+            <div className="flex items-center gap-2 mt-4">
     {/* Agent name */}
           <h3 className="text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out ">{name}</h3>
       <div className=" flex flex-wrap gap-1">

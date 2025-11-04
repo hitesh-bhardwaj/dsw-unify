@@ -119,19 +119,19 @@ export default function LLMsDetailPage({ params }) {
             <p className="text-3xl font-medium text-badge-blue">
               <CountUp value={llm.avgRes} duration={1.2} startOnView once />
             </p>
-            <p className="text-black/60">Total Requests</p>
+            <p className="text-black/60">Avg. Response Time</p>
           </div>
           <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
             <p className="text-3xl font-medium text-yellow">
               <CountUp value={llm.upTime} duration={1.2} startOnView once />
             </p>
-            <p className="text-black/60">Total Requests</p>
+            <p className="text-black/60">Uptime</p>
           </div>
           <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
             <p className="text-3xl font-medium text-red">
               <CountUp value={llm.cost} duration={1.2} startOnView once />
             </p>
-            <p className="text-black/60">Total Requests</p>
+            <p className="text-black/60">This Month Cost</p>
           </div>
         </div>
         <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
@@ -147,7 +147,7 @@ export default function LLMsDetailPage({ params }) {
             <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
               <Card
                 className={cn(
-                  "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full"
+                  "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
                 )}
               >
                 <div className="space-y-4 px-5">
@@ -167,7 +167,7 @@ export default function LLMsDetailPage({ params }) {
                   </div>
                   <div className="space-y-2">
                     <div className="w-full flex justify-between">
-                      <p>Temprature</p>
+                      <p>Temperature</p>
                       <p>0.7</p>
                     </div>
                     <div className="w-full h-[4px] bg-black/15 rounded-full flex items-center">
@@ -217,7 +217,7 @@ export default function LLMsDetailPage({ params }) {
               </Card>
               <Card
                 className={cn(
-                  "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-3 w-full"
+                  "overflow-hidden   cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-3 w-full"
                 )}
               >
                 <div className="space-y-4 px-5">
@@ -235,6 +235,7 @@ export default function LLMsDetailPage({ params }) {
                         className={"h-30 w-full px-6 pt-8"}
                       >
                         <BarChart
+                         key={animationId}
                           accessibilityLayer
                           data={chartData}
                           margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
@@ -248,7 +249,7 @@ export default function LLMsDetailPage({ params }) {
                             fill="var(--color-desktop)"
                             radius={[5, 5, 0, 0]}
                             barSize={30}
-                            animationBegin={0} // delay in ms before starting
+                            animationBegin={0}
                             animationDuration={600}
                             animationEasing="ease-out"
                             animationId={animationId} 

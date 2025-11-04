@@ -13,6 +13,9 @@ import { AiGenerator, EditIcon, LeftArrow, SearchIcon, SparklesIcon } from "@/co
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import SearchBar from "@/components/search-bar";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
+import { FadeUp } from "@/components/animations/fadeup";
+import { cn } from "@/lib/utils";
+// import Tabs from "@/components/common/Tabs";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -21,6 +24,24 @@ export default function CreateAgentPage() {
   const [systemPrompt, setSystemPrompt] = useState("You are a helpful AI assistant that...");
   const [query, setQuery] = useState("");
   const [enhancePrompt, setEnhancePrompt] = useState("");
+  const [tab, setTab] = useState("all");
+
+  const tabs = [
+    { id: "all", label: "All Models" },
+    {
+      id: "selfHosted",
+      label: "Self-Hosted",
+    },
+    {
+      id: "apiBased",
+      label: "API-Based",
+    },
+    {
+      id: "fineTuned",
+      label: "Fine-Tuned",
+    },
+  ];
+
 
   return (
     <div className="flex flex-col h-full">
@@ -139,9 +160,6 @@ export default function CreateAgentPage() {
                       <SearchBar placeholder="Search by name, tags or content..." value={query}
                       onChange={(e) => setQuery(e.target.value)}/>
                     </div>
-                    
-
-                    {/* System Prompt Textarea */}
                     <div className="space-y-2 mb-4">
                       <Textarea
                         value={systemPrompt}
@@ -150,8 +168,6 @@ export default function CreateAgentPage() {
                         className="min-h-[200px] resize-none border-[#AAAAAA] !text-xs p-4"
                       />
                     </div>
-
-                    {/* Generate or Enhance Prompt */}
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-[#111111]">
                         Generate or Enhance Prompt
@@ -219,6 +235,11 @@ export default function CreateAgentPage() {
               </Tabs>
             </CardContent>
           </Card>
+
+          {/* <FadeUp delay={0.2}>
+                    <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+                  </FadeUp> */}
+        
         </div>
       </div>
 

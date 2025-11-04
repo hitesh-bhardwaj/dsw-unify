@@ -17,13 +17,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Tabs from "./common/Tabs";
 
 function CopyWithTooltip({
   text,
@@ -53,6 +54,23 @@ function CopyWithTooltip({
     </Tooltip>
   );
 }
+
+
+ const tabs = [
+    
+    {
+      id: "curl",
+      label: "cURL",
+    },
+    {
+      id: "javascript",
+      label: "Javascript",
+    },
+    {
+      id: "python",
+      label: "Python",
+    },
+  ];
 
 export default function ApiEndpointModal({
   open,
@@ -101,6 +119,22 @@ print(response.json())`,
   const scrollRef = useRef(null);
   const trackRef = useRef(null);
   const thumbRef = useRef(null);
+  const [activeTab, setActiveTab] = useState("curl");
+const [displayedTab, setDisplayedTab] = useState("curl");
+const [isTransitioning, setIsTransitioning] = useState(false);
+
+const handleTabChange = (value) => {
+  if (value === activeTab) return;
+  
+  setIsTransitioning(true);
+  setActiveTab(value);
+  
+  // Wait for fade out to complete, then change content and fade in
+  setTimeout(() => {
+    setDisplayedTab(value);
+    setIsTransitioning(false);
+  }, 300); // Match this to your transition duration (duration-300 = 300ms)
+};
 
   // Start at 0 so there's no fake size; we compute before first paint.
   const [thumbH, setThumbH] = useState(0);
@@ -314,65 +348,25 @@ print(response.json())`,
                 {/* Code Examples */}
                 <div className="space-y-3">
                   <h3 className="text-xl font-medium">Code Examples</h3>
-                  <Tabs defaultValue="curl" className="w-full">
-                    <TabsList className="w-full flex border border-black/10">
-                      <TabsTrigger value="curl">cURL</TabsTrigger>
-                      <TabsTrigger value="javascript">JavaScript</TabsTrigger>
-                      <TabsTrigger value="python">Python</TabsTrigger>
-                    </TabsList>
+                    <Tabs tabs={tabs} value={activeTab} onValueChange={handleTabChange} />
 
-                    <TabsContent
-                      value="curl"
-                      className="mt-4 border rounded-xl overflow-hidden w-full"
-                    >
-                      <div className="relative w-full">
-                        <pre className="rounded-lg bg-white p-4 text-sm text-foreground overflow-x-auto">
-                          <code>{codeExamples.curl}</code>
-                        </pre>
-                        <div className="absolute right-2 top-2">
-                          <CopyWithTooltip
-                            text={codeExamples.curl}
-                            aria-label="Copy cURL example"
-                          />
-                        </div>
-                      </div>
-                    </TabsContent>
-
-                    <TabsContent
-                      value="javascript"
-                      className="mt-4 border rounded-xl overflow-hidden w-full"
-                    >
-                      <div className="relative">
-                        <pre className="rounded-lg bg-white p-4 text-sm text-foreground overflow-x-auto">
-                          <code>{codeExamples.javascript}</code>
-                        </pre>
-                        <div className="absolute right-2 top-2">
-                          <CopyWithTooltip
-                            text={codeExamples.javascript}
-                            aria-label="Copy JavaScript example"
-                          />
-                        </div>
-                      </div>
-                    </TabsContent>
-
-                    <TabsContent
-                      value="python"
-                      className="mt-4 border rounded-xl overflow-hidden w-full"
-                    >
-                      <div className="relative">
-                        <pre className="rounded-lg bg-white p-4 text-sm text-foreground overflow-x-auto">
-                          <code>{codeExamples.python}</code>
-                        </pre>
-                        <div className="absolute right-2 top-2">
-                          <CopyWithTooltip
-                            text={codeExamples.python}
-                            aria-label="Copy Python example"
-                          />
-                        </div>
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                </div>
+     <div className="mt-4 border rounded-xl overflow-hidden w-full">
+      <div className="relative">
+        <pre 
+          className={`rounded-lg bg-white p-4 text-sm text-foreground overflow-x-auto transition-opacity duration-300 ease-in ${
+            isTransitioning ? 'opacity-0' : 'opacity-100'
+          }`}
+        >
+          <code>{codeExamples[displayedTab]}</code>
+        </pre>
+        <div className="absolute right-2 top-2">
+          <CopyWithTooltip
+            text={codeExamples[displayedTab]}
+            aria-label={`Copy ${displayedTab} example`}
+          />
+        </div>
+      </div>
+    </div>      </div>
               </div>
             </div>
           </div>

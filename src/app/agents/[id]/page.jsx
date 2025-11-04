@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { AiGenerator, EditIcon, LeftArrow, SettingIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
+import CountUp from "@/components/animations/CountUp";
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -154,13 +155,15 @@ export default function AgentDetailPage({ params }) {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <h3 className="text-3xl font-medium text-gray-900">
-                      {agent.metrics.totalRequests}
+                      <CountUp value={agent.metrics.totalRequests}/>
+                      
+                      
                     </h3>
                     <p className="text-sm text-gray-600">Total Requests</p>
                   </div>
                   <div>
                     <h3 className="text-3xl font-medium text-gray-900">
-                      {agent.metrics.avgResponse}
+                      <CountUp value={agent.metrics.avgResponse}/>
                     </h3>
                     <p className="text-sm text-gray-600">Avg. Response</p>
                   </div>
@@ -168,13 +171,13 @@ export default function AgentDetailPage({ params }) {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <h3 className="text-3xl font-medium text-green-500">
-                      {agent.metrics.successRate}
+                      <CountUp value={agent.metrics.successRate}/>
                     </h3>
                     <p className="text-sm text-gray-600">Success Rate</p>
                   </div>
                   <div>
                     <h3 className="text-3xl font-medium text-gray-900">
-                      {agent.metrics.activeUsers}
+                      <CountUp value={agent.metrics.activeUsers}/>
                     </h3>
                     <p className="text-sm text-gray-600">Active Users</p>
                   </div>
@@ -220,18 +223,21 @@ export default function AgentDetailPage({ params }) {
             <CardContent>
               <div className="space-y-4">
                 {agent.recentActivity.map((activity, index) => (
-                  <div key={index} className="w-full flex flex-col gap-2 items-end">
+                  <div key={index} className="w-full flex flex-col gap-2 items-end group">
 
                   <div
                     className="flex items-center justify-between py-4 w-full"
                   >
                     <div className="flex items-center gap-3">
-                      <div className={cn("h-2 w-2 rounded-full", getActivityColor(activity.type))} />
+                      <div className={cn("h-2 w-2 rounded-full animate-pulse", getActivityColor(activity.type))} />
                       <span className="text-sm text-gray-900">{activity.event}</span>
                     </div>
                     <span className="text-sm text-gray-500">{activity.time}</span>
                   </div>
-                  <span className="w-[98.5%] h-[1px] bg-black/20 block"/>
+                  {/* <span className="w-[98.5%] h-[1px] bg-black/20 block"/> */}
+                   <div className="w-full h-[1px] bg-black/20">
+                      <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
+                    </div>
 
                     </div>
                 ))}

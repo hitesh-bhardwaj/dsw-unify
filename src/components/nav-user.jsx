@@ -87,3 +87,4 @@ export function NavUser({ user }) {
         </DropdownMenu>
   )
 }
+

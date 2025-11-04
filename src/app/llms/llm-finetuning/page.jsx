@@ -191,7 +191,7 @@ export default function LLMFineTuning() {
         >
           <div className="space-y-4">
             {TrainingJobs.map((data) => (
-              <TrainingCard key={data.id} data={data} />
+              <TrainingCard key={data.id} data={data} playKey={tab}/>
             ))}
           </div>
         </div>

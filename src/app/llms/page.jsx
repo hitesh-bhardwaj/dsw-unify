@@ -152,7 +152,7 @@ export default function LLMsPage() {
                 </div>
                 Import Model
               </Button>
-              <Link href="/llms/deploy">
+              <Link href="/#">
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <PlusIcon />
                   Deploy New Model
