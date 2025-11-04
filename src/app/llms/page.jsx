@@ -185,13 +185,13 @@ export default function LLMsPage() {
                   : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
               )}
             >
-              {tab === "all" && (
+              {/* {tab === "all" && ( */}
                 <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
                   {filteredLLMs.map((llm) => (
                     <LLMCard key={llm.id} llm={llm} />
                   ))}
                 </div>
-              )}
+              {/* )} */}
             </div>
             <div
               className={cn(

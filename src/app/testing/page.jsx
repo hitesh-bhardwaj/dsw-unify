@@ -10,6 +10,7 @@ import { TestingCardResults } from "@/components/testing/testing-card-results";
 import TestingAnalyticsComp from "@/components/testing/testing-analytics";
 // import {FadeUpStagger} from "@/components/animations/Fadeup";
 import Tabs from "@/components/common/Tabs";
+import { FadeUp } from "@/components/animations/fadeup";
 
 // Mock data for agents
 const testsSuites = [
@@ -121,82 +122,78 @@ export default function TestingPage() {
     <div className="flex flex-col h-full">
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-medium text-foreground">Testing</h1>
-            <p className="mt-1 text-sm text-gray-600">
-              Validate agent performance with comprehensive test suites
-            </p>
+        <FadeUp>
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-medium text-foreground">Testing</h1>
+              <p className="mt-1 text-sm text-gray-600">
+                Validate agent performance with comprehensive test suites
+              </p>
+            </div>
+            <Link href="/agents/create">
+              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                <PlusIcon />
+                Create Test Suite
+              </Button>
+            </Link>
           </div>
-          <Link href="/agents/create">
-            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-              <PlusIcon />
-              Create Test Suite
-            </Button>
-          </Link>
-        </div>
+        </FadeUp>
 
         {/* Filter tabs */}
-      
-        <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+        <FadeUp delay={0.1}>
+          <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+        </FadeUp>
       </div>
-
-      <div className="flex-1 overflow-hidden relative">
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            tab === "test-suites"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          {tab === "test-suites" && (
-            <div className="space-y-4">
-              {testsSuites.map((test) => (
-                <TestingCard test={test} key={test.id} />
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Test Results Tab */}
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            tab === "test-results"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : tab === "test-suites"
-              ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          {tab === "test-results" && (
-            // <FadeUpStagger key="test-results" staggerDelay={0.2} delay={0.6}>
+      <FadeUp delay={0.2}>
+        <div className="flex-1 h-full w-full relative">
+          <div
+            className={cn(
+              "relative inset-0  p-6 pt-0 transition-all",
+              tab === "test-suites"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
               <div className="space-y-4">
+                {testsSuites.map((test) => (
+                  <TestingCard test={test} key={test.id} />
+                ))}
+              </div>
+          </div>
+
+          {/* Test Results Tab */}
+          <div
+            className={cn(
+              "absolute inset-0  h-full p-6 pt-0 transition-all",
+              tab === "test-results"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "test-suites"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            
+              <div className="space-y-4 h-full">
                 {testsResults.map((test) => (
                   <TestingCardResults test={test} key={test.id} />
                 ))}
               </div>
-            // </FadeUpStagger>
-          )}
-        </div>
+             
+          </div>
 
-        {/* Analytics Tab */}
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all",
-            tab === "analytics"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          {tab === "analytics" && (
-            <TestingAnalyticsComp cardData={analyticsCardData} />
-          )}
+          {/* Analytics Tab */}
+          <div
+            className={cn(
+              "absolute inset-0  h-full p-6 pt-0 transition-all",
+              tab === "analytics"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+              <TestingAnalyticsComp cardData={analyticsCardData} />
+          </div>
         </div>
-      </div>
+      </FadeUp>
     </div>
   );
 }
-
-

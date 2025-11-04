@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { AiGenerator, Calendar, FileTimeout, SynthWave } from "../Icons";
+import { AiGenerator } from "../Icons";
 import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 
@@ -25,9 +25,7 @@ export function TestingCard({ test }) {
       <Card
         className={cn(
           "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1 !pl-0",
-          // isDark
-          //   ? "bg-active-card text-white border-black"
-          //   : "bg-white border border-black/20"
+         
         )}
       >
         <CardHeader className="">
@@ -50,8 +48,7 @@ export function TestingCard({ test }) {
                   tag.color === "green" && "bg-badge-green text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "orange" && "bg-primary  text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "red" && "bg-red-500 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                  // !tag.color && isDark && "bg-white text-foreground",
-                  // !tag.color && !isDark && "bg-gray-100 text-gray-800"
+                  
                 )}
               >
                 {tag.label}

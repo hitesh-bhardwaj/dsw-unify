@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusIcon} from "@/components/Icons";
+import { PlusIcon } from "@/components/Icons";
 import { ToolsCard } from "@/components/tools-card";
 import SearchBar from "@/components/search-bar";
+import { FadeUp } from "@/components/animations/fadeup";
 
 // Mock data for agents
 const tools = [
@@ -38,7 +39,7 @@ const tools = [
     status: "beta",
     tags: [
       { label: "sandbox", color: "yellow" },
-      { label: "development", color: "blue" }
+      { label: "development", color: "blue" },
     ],
     variant: "light",
   },
@@ -56,39 +57,46 @@ export default function ToolsPage() {
       {/* Header section */}
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <div className="flex items-center justify-between">
-          <div className="space-y-2">
-            <h1 className="text-3xl font-medium text-foreground">Tools</h1>
-            <p className="mt-1 text-sm text-gray-600">
-             Manage agent tools and capabilities
-            </p>
+        <FadeUp>
+          <div className="flex items-center justify-between">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-medium text-foreground">Tools</h1>
+              <p className="mt-1 text-sm text-gray-600">
+                Manage agent tools and capabilities
+              </p>
+            </div>
+            <Link href="/agents/create">
+              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                {/* <Plus className="h-4 w-4" /> */}
+                <PlusIcon />
+                Add Tools
+              </Button>
+            </Link>
           </div>
-          <Link href="/agents/create">
-            <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-              {/* <Plus className="h-4 w-4" /> */}
-              <PlusIcon />
-             Add Tools
-            </Button>
-          </Link>
-        </div>
-
-         <SearchBar placeholder="Search Tools..." value={query}
-  onChange={(e) => setQuery(e.target.value)}/>
+        </FadeUp>
+        <FadeUp delay={0.1}>
+          <SearchBar
+            placeholder="Search Tools..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </FadeUp>
       </div>
-
-      <div className="flex-1 overflow-auto p-6 pt-0">
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {filteredTools.map((tool) => (
-            <ToolsCard key={tool.id} tools={tool} />
-          ))}
-        </div>
-
-        {filteredTools.length === 0 && (
-          <div className="flex h-64 items-center justify-center text-gray-500">
-            No agents found matching "{query}"
+      <FadeUp delay={0.2}>
+        <div className="flex-1 overflow-auto p-6 pt-0">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {filteredTools.map((tool) => (
+              <ToolsCard key={tool.id} tools={tool} />
+            ))}
           </div>
-        )}
-      </div>
+
+          {filteredTools.length === 0 && (
+            <div className="flex h-64 items-center justify-center text-gray-500">
+              No agents found matching "{query}"
+            </div>
+          )}
+        </div>
+      </FadeUp>
     </div>
   );
 }

@@ -14,6 +14,8 @@ import {
 import { TemplateCard } from "@/components/template-card";
 import CreatePromptModal from "@/components/CreatePromptModal";
 import SearchBar from "@/components/search-bar";
+import RadioTabs from "@/components/common/RadioTabs";
+import { FadeUp } from "@/components/animations/fadeup";
 
 // Mock data for prompts
 const prompts = [
@@ -103,9 +105,9 @@ const templates = [
 ];
 
 export default function PromptsPage() {
-  const [activeTab, setActiveTab] = useState("prompts");
   const [query, setQuery] = useState("");
-   const [createPrompt, setCreatePrompt] = useState(false);
+  const [createPrompt, setCreatePrompt] = useState(false);
+  const [tab, setTab] = useState("prompts");
 
   const filteredPrompts = prompts.filter((prompt) =>
     prompt.name.toLowerCase().includes(query.toLowerCase())
@@ -116,163 +118,125 @@ export default function PromptsPage() {
 
   return (
     <>
-    <div className="flex flex-col h-full">
-      {/* Header section */}
-      <div className="space-y-6 p-6">
-        {/* Title and CTAs */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-medium text-foreground">
-              Prompt Library
-            </h1>
-            <p className="mt-1 text-sm text-gray-600">
-              Manage and version your prompt templates and configurations
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Button
-              variant="outline"
-              className="gap-2 border-primary text-foreground hover:bg-gray-50"
-            >
-              <div className="!w-4">
-                <AiGenerator />
+      <div className="flex flex-col h-full">
+        {/* Header section */}
+        <div className="space-y-6 p-6 w-full h-full">
+          {/* Title and CTAs */}
+          <FadeUp>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-medium text-foreground">
+                  Prompt Library
+                </h1>
+                <p className="mt-1 text-sm text-gray-600">
+                  Manage and version your prompt templates and configurations
+                </p>
               </div>
-              {/* <Sparkles className="h-4 w-4" /> */}
-              Generate Prompt
-            </Button>
-            {/* <Link href={"/prompts/create"}> */}
-              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300" onClick={()=>setCreatePrompt(true)}>
-                <PlusIcon />
-                Create Prompt
+              <div className="flex items-center gap-3">
+                <Button
+                  variant="outline"
+                  className="gap-2 border-primary text-foreground hover:bg-gray-50"
+                >
+                  <div className="!w-4">
+                    <AiGenerator />
+                  </div>
+                  {/* <Sparkles className="h-4 w-4" /> */}
+                  Generate Prompt
+                </Button>
+                {/* <Link href={"/prompts/create"}> */}
+                <Button
+                  className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                  onClick={() => setCreatePrompt(true)}
+                >
+                  <PlusIcon />
+                  Create Prompt
+                </Button>
+                {/* </Link> */}
+              </div>
+            </div>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <div className="flex gap-3">
+              <div className="relative flex-1">
+                <SearchBar
+                  placeholder="Search Prompts..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </div>
+              <Button
+                variant="outline"
+                className="gap-2 border-black/30 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
+              >
+                <div className="w-4 h-4">
+                  <Tune />
+                </div>
+                All Categories
               </Button>
-            {/* </Link> */}
-          </div>
-        </div>
-
-        
-        <div className="flex gap-3">
-          <div className="relative flex-1">
-             <SearchBar placeholder="Search Prompts..." value={query}
-  onChange={(e) => setQuery(e.target.value)}/>
-          </div>
-          <Button
-            variant="outline"
-            className="gap-2 border-black/30 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
-          >
-            <div className="w-4 h-4">
-              <Tune />
             </div>
-            All Categories
-          </Button>
-        </div>
-
-        <div className="flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200">
-          <button
-            onClick={() => setActiveTab("prompts")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
-              activeTab === "prompts"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722]"
-                : "border-transparent text-gray-700 "
-            )}
-          >
+          </FadeUp>
+          <FadeUp delay={0.2}>
+            <RadioTabs
+              items={[
+                { id: "prompts", label: "Prompts", icon: PromptsIcon },
+                { id: "templates", label: "Templates", icon: TemplatesIcon },
+              ]}
+              value={tab}
+              onValueChange={setTab}
+              activeClassName="  text-[#FF5722]"
+              inactiveClassName="border-transparent text-gray-700"
+              dotColorClassName="bg-[#FF5722]"
+              equalWidth={true}
+            />
+          </FadeUp>
+          <FadeUp delay={0.3}>
+          <div className="flex-1 relative w-full h-full">
             <div
               className={cn(
-                "h-5 w-5 rounded-full border",
-                activeTab === "prompts"
-                  ? "border-gray-300 bg-white"
-                  : "border-gray-300"
+                "relative inset-0 overflow-auto pt-0 transition-all ",
+                tab === "prompts"
+                  ? "translate-x-0 opacity-100 duration-500 ease-out"
+                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
               )}
             >
-              {activeTab === "prompts" && (
-                <div className="flex h-full items-center justify-center">
-                  <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
+              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-stretch">
+                {filteredPrompts.map((prompt) => (
+                  <PromptCard key={prompt.id} prompt={prompt} />
+                ))}
+              </div>
+
+              {filteredPrompts.length === 0 && (
+                <div className="flex h-64 items-center justify-center text-gray-500">
+                  No prompts found matching "{query}"
                 </div>
               )}
             </div>
-            <PromptsIcon className="!h-6 !w-auto" />
-            <span>Prompts</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab("templates")}
-            className={cn(
-              "flex items-center gap-2 rounded-lg border px-4 py-3 text-sm font-medium transition-colors w-1/2 cursor-pointer",
-              activeTab === "templates"
-                ? "border-[#DCDCDC] bg-white text-[#FF5722]"
-                : "border-transparent text-gray-700 "
-            )}
-          >
             <div
               className={cn(
-                "h-5 w-5 rounded-full border",
-                activeTab === "templates"
-                  ? "border-[#DCDCDC] bg-white text-[#FF5722]"
-                  : "border-gray-300"
+                "absolute inset-0 overflow-auto p-6 pt-0 transition-all ",
+                tab === "templates"
+                  ? "translate-x-0 opacity-100 duration-500 ease-out"
+                  : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out "
               )}
             >
-              {activeTab === "templates" && (
-                <div className="flex h-full items-center justify-center">
-                  <div className="h-2.5 w-2.5 rounded-full bg-[#FF5722]" />
+              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {filteredTemplates.map((template) => (
+                  <TemplateCard key={template.id} template={template} />
+                ))}
+              </div>
+
+              {filteredTemplates.length === 0 && (
+                <div className="flex h-64 items-center justify-center text-gray-500">
+                  No templates found matching "{query}"
                 </div>
               )}
             </div>
-
-            <TemplatesIcon className="!h-6 !w-auto" />
-            <span>Templates</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="flex-1 overflow-hidden relative">
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all ",
-            activeTab === "prompts"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-stretch">
-            {filteredPrompts.map((prompt) => (
-              <PromptCard key={prompt.id} prompt={prompt} />
-            ))}
           </div>
 
-          {filteredPrompts.length === 0 && (
-            <div className="flex h-64 items-center justify-center text-gray-500">
-              No prompts found matching "{query}"
-            </div>
-          )}
-        </div>
-
-        <div
-          className={cn(
-            "absolute inset-0 overflow-auto p-6 pt-0 transition-all ",
-            activeTab === "templates"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out "
-          )}
-        >
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {filteredTemplates.map((template) => (
-              <TemplateCard key={template.id} template={template} />
-            ))}
-          </div>
-
-          {filteredTemplates.length === 0 && (
-            <div className="flex h-64 items-center justify-center text-gray-500">
-              No templates found matching "{query}"
-            </div>
-          )}
+          </FadeUp>
         </div>
       </div>
-    </div>
-    <CreatePromptModal
-    open={createPrompt}
-    onOpenChange={setCreatePrompt}
-    />
-    
+      <CreatePromptModal open={createPrompt} onOpenChange={setCreatePrompt} />
     </>
   );
 }
