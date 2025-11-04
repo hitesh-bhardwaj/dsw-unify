@@ -10,7 +10,7 @@ import { TestingCardResults } from "@/components/testing/testing-card-results";
 import TestingAnalyticsComp from "@/components/testing/testing-analytics";
 import {
   FadeUpStagger,
-} from "@/components/animations/FadeUp";
+} from "@/components/animations/Fadeup";
 import Tabs from "@/components/common/Tabs";
 
 // Mock data for agents

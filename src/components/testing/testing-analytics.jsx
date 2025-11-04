@@ -1,7 +1,7 @@
 import React from 'react'
 import { TestingAnalyticsCard } from './testing-analytics-card'
 import TestingGraph from './testing-graph'
-import { FadeUp, FadeUpStagger, FadeUpItem } from '../animations/fadeup'
+import { FadeUp, FadeUpStagger, FadeUpItem } from '../animations/Fadeup'
 
 const TestingAnalyticsComp = ({cardData, analytics}) => {
   return (
