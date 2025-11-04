@@ -4,11 +4,15 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import {AiGenerator,DownloadIcon,PlusIcon,SynthWave} from "@/components/Icons";
+import {
+  AiGenerator,
+  DownloadIcon,
+  PlusIcon,
+  SynthWave,
+} from "@/components/Icons";
 import { LLMCard } from "@/components/LLMCard";
 import Tabs from "@/components/common/Tabs";
 import SearchBar from "@/components/search-bar";
-
 
 const LLMs = [
   {
@@ -125,17 +129,16 @@ export default function LLMsPage() {
           </div>
           <div className="gap-2 flex">
             <Link href={"/llms/llm-finetuning"}>
-            <Button
-              variant="outline"
-            //   onClick={() => setApiModalOpen(true)}
-              className="gap-2 text-foreground border border-primary"
-            >
-              <div className="!w-4">
-                <AiGenerator />
-              </div>
-              LLM Finetuning
-            </Button>
-            
+              <Button
+                variant="outline"
+                //   onClick={() => setApiModalOpen(true)}
+                className="gap-2 text-foreground border border-primary"
+              >
+                <div className="!w-4">
+                  <AiGenerator />
+                </div>
+                LLM Finetuning
+              </Button>
             </Link>
             <Button
               variant="outline"
@@ -156,31 +159,74 @@ export default function LLMsPage() {
           </div>
         </div>
 
-
-         <SearchBar placeholder="Search LLMs..." value={query}
-  onChange={(e) => setQuery(e.target.value)} />
+        <SearchBar
+          placeholder="Search LLMs..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
 
         {/* Filter tabs */}
-        
-         <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
+
+        <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
 
         {/* LLMs grid */}
-        <div className="flex-1 overflow-auto pt-0">
-          {tab == "all" ? (
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-              {filteredLLMs.map((llm) => (
-                <LLMCard key={llm.id} llm={llm} />
-              ))}
-            </div>
-          ) : (
-            <>
-              <div className="grid gap-6 grid-cols-1 h-120">
-                <div className="w-full border rounded-2xl h-full flex justify-center items-center text-black/50">
-                  <p>"No {tab} to be shown"</p>
-                </div>
+        <div className="flex-1 pt-0 h-fit w-full relative">
+          <div
+            className={cn(
+              "relative inset-0  pt-0 transition-all h-full",
+              tab === "all"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
+            )}
+          >
+            {tab === "all" && (
+              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+                {filteredLLMs.map((llm) => (
+                  <LLMCard key={llm.id} llm={llm} />
+                ))}
               </div>
-            </>
-          )}
+            )}
+          </div>
+          <div
+            className={cn(
+              "absolute inset-0 pt-0 transition-all",
+              tab === "selfHosted"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "all"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No Self Hosted available at this point </p>
+            </div>
+          </div>
+          <div
+            className={cn(
+              "absolute inset-0  pt-0 transition-all",
+              tab === "apiBased"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "selfHosted" || tab === "all"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No API Based available at this point </p>
+            </div>
+          </div>
+          <div
+            className={cn(
+              "absolute inset-0 pt-0 transition-all",
+              tab === "fineTuned"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No Fine Tuned to show</p>
+            </div>
+          </div>
 
           {filteredLLMs.length === 0 && (
             <div className="flex h-64 items-center justify-center text-gray-500">
@@ -190,12 +236,12 @@ export default function LLMsPage() {
         </div>
 
         {/* Recent Acitvity */}
-        {
-         tab=="all"&& <div className="space-y-10 mt-20">
+        {tab == "all" && (
+          <div className="space-y-10 mt-20">
             <h2 className="text-2xl font-medium">Recent Activity</h2>
             <div className="w-full space-y-4">
               {Recent.map((recent, id) => (
-                <div key={id} className="w-full h-fit flex gap-6 items-center">
+                <div key={id} className="w-full h-fit flex gap-6 items-center group ">
                   <div className="w-13 h-12">
                     <span
                       className={cn(
@@ -205,17 +251,22 @@ export default function LLMsPage() {
                       <SynthWave />
                     </span>
                   </div>
-                  <div className="w-full flex justify-between items-center border-0 border-b-[1px] border-black/20 pt-5 pb-8">
-                    <p>{recent.content}</p>
-                    <p className="text-xs text-black/60">
-                      {recent.recentActivity}
-                    </p>
+                  <div className="flex flex-col w-full">
+                    <div className="w-full flex justify-between items-center  pt-5 pb-8">
+                      <p>{recent.content}</p>
+                      <p className="text-xs text-black/60">
+                        {recent.recentActivity}
+                      </p>
+                    </div>
+                    <div className="w-full h-[1px] bg-black/20">
+                    <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left"/>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-        }
+        )}
       </div>
     </div>
   );

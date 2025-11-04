@@ -2,8 +2,7 @@
 
 import { use, useState } from "react";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { ConfigureIcon, EditIcon, LeftArrow } from "@/components/Icons";
+import { ConfigureIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Card, CardHeader } from "@/components/ui/card";
@@ -71,11 +70,10 @@ export default function LLMsDetailPage({ params }) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-white p-6 space-y-6">
+      <div className="bg-white p-6 space-y-6 h-full">
         <div className="flex items-center justify-between mb-10">
           <div className="flex gap-3">
-           
-<LeftArrowAnim link={"/llms"}/>
+            <LeftArrowAnim link={"/llms"} />
             <div className="space-y-2">
               <div className="w-fit flex gap-2">
                 <h1 className="text-xl font-medium">{llm.name}</h1>
@@ -97,7 +95,6 @@ export default function LLMsDetailPage({ params }) {
           <div className="flex items-center gap-3">
             <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
               <div className="w-5">
-                {/* <EditIcon className={"text-white"} /> */}
                 <ConfigureIcon />
               </div>
               Configure
@@ -105,25 +102,25 @@ export default function LLMsDetailPage({ params }) {
           </div>
         </div>
         <div className="w-full flex gap-4">
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
+          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
             <p className="text-3xl font-medium text-green">
               <CountUp value={llm.request} duration={1.2} startOnView once />
             </p>
             <p className="text-black/60">Total Requests</p>
           </div>
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
+          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
             <p className="text-3xl font-medium text-badge-blue">
               <CountUp value={llm.avgRes} duration={1.2} startOnView once />
             </p>
             <p className="text-black/60">Total Requests</p>
           </div>
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
+          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
             <p className="text-3xl font-medium text-yellow">
               <CountUp value={llm.upTime} duration={1.2} startOnView once />
             </p>
             <p className="text-black/60">Total Requests</p>
           </div>
-          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8">
+          <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
             <p className="text-3xl font-medium text-red">
               <CountUp value={llm.cost} duration={1.2} startOnView once />
             </p>
@@ -131,135 +128,187 @@ export default function LLMsDetailPage({ params }) {
           </div>
         </div>
         <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
-
-        <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
-          <Card
+        <div className="flex-1 pt-0 h-auto w-full relative overflow-hidden">
+          <div
             className={cn(
-              "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full"
+              "relative inset-0 overflow-auto  pt-0 transition-all h-full",
+              tab === "Configuration"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
             )}
           >
-            <div className="space-y-4 px-5">
-              <CardHeader className="px-0">
-                <h3 className=" text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out ">
-                  Model Confugiration
-                </h3>
-              </CardHeader>
+            <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
+              <Card
+                className={cn(
+                  "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full"
+                )}
+              >
+                <div className="space-y-4 px-5">
+                  <CardHeader className="px-0">
+                    <h3 className=" text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out ">
+                      Model Configuration
+                    </h3>
+                  </CardHeader>
 
-              <div className="">
-                <label className="text-sm  text-[#111111]">API key</label>
-                <Input
-                  readOnly
-                  placeholder="123456789"
-                  className="h-11 border-[#AAAAAA] mt-2"
-                />
-              </div>
-              <div className="space-y-2">
-                <div className="w-full flex justify-between">
-                  <p>Temprature</p>
-                  <p>0.7</p>
-                </div>
-                <div className="w-full h-[4px] bg-black/15 rounded-full">
-                  <div className="w-[70%] h-full bg-primary rounded-full relative">
-                    <div className="w-5 h-5 rounded-full absolute right-0 bg-white border-3 border-black top-1/2 -translate-y-1/2 "></div>
+                  <div className="">
+                    <label className="text-sm  text-[#111111]">API key</label>
+                    <Input
+                      readOnly
+                      placeholder="123456789"
+                      className="h-11 border-[#AAAAAA] mt-2"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="w-full flex justify-between">
+                      <p>Temprature</p>
+                      <p>0.7</p>
+                    </div>
+                    <div className="w-full h-[4px] bg-black/15 rounded-full">
+                      <div className="w-[70%] h-full bg-primary rounded-full relative">
+                        <div className="w-5 h-5 rounded-full absolute right-0 bg-white border-3 border-black top-1/2 -translate-y-1/2 "></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="">
+                    <label className="text-sm  text-[#111111]">
+                      Max Tokens
+                    </label>
+                    <Input
+                      readOnly
+                      placeholder="4096"
+                      className="h-11 border-[#AAAAAA] mt-2"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <p>Tags</p>
+                    <div className="flex gap-2">
+                      <Badge
+                        className={
+                          "bg-transparent border border-black/20 text-foreground font-normal"
+                        }
+                      >
+                        general purpose
+                      </Badge>
+                      <Badge
+                        className={
+                          "bg-transparent border border-black/20 text-foreground font-normal"
+                        }
+                      >
+                        api-based
+                      </Badge>
+                      <Badge
+                        className={
+                          "bg-transparent border border-black/20 text-foreground font-normal"
+                        }
+                      >
+                        production
+                      </Badge>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="">
-                <label className="text-sm  text-[#111111]">Max Tokens</label>
-                <Input
-                  readOnly
-                  placeholder="4096"
-                  className="h-11 border-[#AAAAAA] mt-2"
-                />
-              </div>
+              </Card>
+              <Card
+                className={cn(
+                  "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-3 w-full"
+                )}
+              >
+                <div className="space-y-4 px-5">
+                  <CardHeader className="px-0">
+                    <h3 className=" text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out ">
+                      Usage Analytics
+                    </h3>
+                  </CardHeader>
+                  <div className="space-y-3">
+                    <p className="text-sm">Request Over Time</p>
 
-              <div className="space-y-2">
-                <p>Tags</p>
-                <div className="flex gap-2">
-                  <Badge
-                    className={
-                      "bg-transparent border border-black/20 text-foreground font-normal"
-                    }
-                  >
-                    general purpose
-                  </Badge>
-                  <Badge
-                    className={
-                      "bg-transparent border border-black/20 text-foreground font-normal"
-                    }
-                  >
-                    api-based
-                  </Badge>
-                  <Badge
-                    className={
-                      "bg-transparent border border-black/20 text-foreground font-normal"
-                    }
-                  >
-                    production
-                  </Badge>
+                    <div className="w-full h-fit bg-[#F6F6F6] rounded-xl overflow-hidden">
+                      <ChartContainer
+                        config={chartConfig}
+                        className={"h-30 w-full px-6 pt-8"}
+                      >
+                        <BarChart
+                          accessibilityLayer
+                          data={chartData}
+                          margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+                        >
+                          <ChartTooltip
+                            cursor={false}
+                            content={<ChartTooltipContent hideLabel />}
+                          />
+                          <Bar
+                            dataKey="desktop"
+                            fill="var(--color-desktop)"
+                            radius={[5, 5, 0, 0]}
+                            barSize={30}
+                            className="!rounded-b-0 "
+                          />
+                        </BarChart>
+                      </ChartContainer>
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <p>Top Application</p>
+                    <div className="w-full h-fit rounded-xl bg-[#f6f6f6] space-y-2 p-4 text-sm">
+                      <div className="w-full flex justify-between">
+                        <p>Customer Support Agent</p>
+                        <p>45%</p>
+                      </div>
+                      <div className="w-full flex justify-between">
+                        <p>Content Generation</p>
+                        <p>45%</p>
+                      </div>
+                      <div className="w-full flex justify-between">
+                        <p>Data Analysis</p>
+                        <p>45%</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div></div>
                 </div>
-              </div>
+              </Card>
             </div>
-          </Card>
-          <Card
+          </div>
+          <div
             className={cn(
-              "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-3 w-full"
+              "absolute inset-0 pt-0 transition-all",
+              tab === "Usage Metric"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "Configuration"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
             )}
           >
-            <div className="space-y-4 px-5">
-              <CardHeader className="px-0">
-                <h3 className=" text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out ">
-                  Usage Analytics
-                </h3>
-              </CardHeader>
-              <div className="space-y-3">
-                <p className="text-sm">Request Over Time</p>
-
-                <div className="w-full h-fit bg-[#F6F6F6] rounded-xl overflow-hidden">
-                  <ChartContainer
-                    config={chartConfig}
-                    className={"h-30 w-full px-6 pt-8"}
-                  >
-                    <BarChart
-                      accessibilityLayer
-                      data={chartData}
-                      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                    >
-                      <ChartTooltip
-                        cursor={false}
-                        content={<ChartTooltipContent hideLabel />}
-                      />
-                      <Bar
-                        dataKey="desktop"
-                        fill="var(--color-desktop)"
-                        radius={[5, 5, 0, 0]}
-                        barSize={30}
-                        className="!rounded-b-0 "
-                      />
-                    </BarChart>
-                  </ChartContainer>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <p>Top Application</p>
-                <div className="w-full h-fit rounded-xl bg-[#f6f6f6] space-y-2 p-4 text-sm">
-                  <div className="w-full flex justify-between">
-                    <p>Customer Support Agent</p>
-                    <p>45%</p>
-                  </div>
-                  <div className="w-full flex justify-between">
-                    <p>Content Generation</p>
-                    <p>45%</p>
-                  </div>
-                  <div className="w-full flex justify-between">
-                    <p>Data Analysis</p>
-                    <p>45%</p>
-                  </div>
-                </div>
-              </div>
-              <div></div>
+            <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No Usage Metric available at this point </p>
             </div>
-          </Card>
+          </div>
+          <div
+            className={cn(
+              "absolute inset-0  pt-0 transition-all",
+              tab === "Deployment Logs"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "Usage Metric" || tab === "Configuration"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No Deployment Logs available at this point </p>
+            </div>
+          </div>
+          <div
+            className={cn(
+              "absolute inset-0 pt-0 transition-all",
+              tab === "API Details"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
+              <p>No API Details to show</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { LeftArrow, UploadIcon } from "@/components/Icons";
+import { UploadIcon } from "@/components/Icons";
 import { DataSet } from "@/components/llmtuning/dataset-card";
 import { TrainingCard } from "@/components/llmtuning/training-card";
 import Tabs from "@/components/common/Tabs";
