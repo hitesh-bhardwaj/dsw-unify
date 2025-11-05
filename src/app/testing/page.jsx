@@ -10,7 +10,8 @@ import { TestingCardResults } from "@/components/testing/testing-card-results";
 import TestingAnalyticsComp from "@/components/testing/testing-analytics";
 // import {FadeUpStagger} from "@/components/animations/Fadeup";
 import Tabs from "@/components/common/Tabs";
-import { FadeUp } from "@/components/animations/fadeup";
+import { FadeUp } from "@/components/animations/Animations";
+import { RippleButton } from "@/components/ui/ripple-button";
 
 // Mock data for agents
 const testsSuites = [
@@ -130,21 +131,23 @@ export default function TestingPage() {
                 Validate agent performance with comprehensive test suites
               </p>
             </div>
-            <Link href="/agents/create">
-              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                <PlusIcon />
-                Create Test Suite
-              </Button>
-            </Link>
+            <RippleButton>
+              <Link href="/agents/create">
+                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <PlusIcon />
+                  Create Test Suite
+                </Button>
+              </Link>
+            </RippleButton>
           </div>
         </FadeUp>
 
         {/* Filter tabs */}
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.05}>
           <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
         </FadeUp>
       </div>
-      <FadeUp delay={0.2}>
+      <FadeUp delay={0.1}>
         <div className="flex-1 h-full w-full relative">
           <div
             className={cn(
@@ -154,11 +157,11 @@ export default function TestingPage() {
                 : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
             )}
           >
-              <div className="space-y-4">
-                {testsSuites.map((test) => (
-                  <TestingCard test={test} key={test.id} />
-                ))}
-              </div>
+            <div className="space-y-4">
+              {testsSuites.map((test) => (
+                <TestingCard test={test} key={test.id} />
+              ))}
+            </div>
           </div>
 
           {/* Test Results Tab */}
@@ -172,13 +175,14 @@ export default function TestingPage() {
                 : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
             )}
           >
-            
-              <div className="space-y-4 h-full">
-                {testsResults.map((test) => (
-                  <TestingCardResults test={test} key={test.id} />
-                ))}
-              </div>
-             
+            <div className="space-y-4 h-full">
+              {testsResults.map((test) => {
+                // console.log(tab);
+                return (
+                  <TestingCardResults test={test} key={test.id} tab={tab} />
+                );
+              })}
+            </div>
           </div>
 
           {/* Analytics Tab */}
@@ -190,7 +194,7 @@ export default function TestingPage() {
                 : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
             )}
           >
-              <TestingAnalyticsComp cardData={analyticsCardData} />
+            <TestingAnalyticsComp cardData={analyticsCardData} tab={tab} />
           </div>
         </div>
       </FadeUp>

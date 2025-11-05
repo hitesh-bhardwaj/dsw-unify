@@ -4,7 +4,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave } from "./Icons";
-import Link from "next/link";
 
 export function PromptCard({ prompt }) {
   const {
@@ -23,168 +22,173 @@ export function PromptCard({ prompt }) {
   const isDark = variant === "dark";
 
   return (
-    <Link href={"/"} className="block group">
-    <Card
-      className={cn(
-        "overflow-hidden h-full transition-all hover:shadow-lg duration-500 ease-out py-5 bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black",
-        // isDark
-        //   ? "bg-active-card text-white border-black"
-        //   : "bg-white border border-black/30"
-      )}
-    >
-      <CardHeader className="pb-4">
-        <div className="flex items-center justify-between mb-4">
-          {/* Icon, Rating, and Version */}
-          <div className="flex items-center gap-3">
-            <div
-              className={cn(
-                "flex h-14 w-14 items-center justify-center  rounded-lg relative bg-black group-hover:bg-white",
-                // isDark ? "bg-white" : "bg-black"
-              )}
-            >
-              <span
+    // <Link href={"/"} className="block group">
+    <div className="group w-full h-full">
+      <Card
+        className={cn(
+          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5 bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black"
+          // isDark
+          //   ? "bg-active-card text-white border-black"
+          //   : "bg-white border border-black/30"
+        )}
+      >
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between mb-4">
+            {/* Icon, Rating, and Version */}
+            <div className="flex items-center gap-3">
+              <div
                 className={cn(
-                  "w-full h-full flex justify-center items-center  p-4.5 text-white group-hover:text-black",
-                  // isDark ? "text-black" : "text-white"
+                  "flex h-14 w-14 items-center justify-center  rounded-lg relative bg-black group-hover:bg-white duration-500 ease-out"
+                  // isDark ? "bg-white" : "bg-black"
                 )}
               >
-                <SynthWave />
-              </span>
+                <span
+                  className={cn(
+                    "w-full h-full flex justify-center items-center  p-4.5 text-white group-hover:text-black duration-500 ease-out"
+                    // isDark ? "text-black" : "text-white"
+                  )}
+                >
+                  <SynthWave />
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                <span className="text-xs">{rating}</span>
+                <Badge
+                  variant="secondary"
+                  className={cn(
+                    "px-1.5 py-1 ml-1.5 rounded-sm border border-foreground text-foreground bg-transparent group-hover:border-white group-hover:text-white duration-500 ease-out"
+                    // isDark
+                    //   ? "border border-white bg-transparent text-white "
+                    //   : "border border-foreground text-foreground bg-transparent"
+                  )}
+                >
+                  {version}
+                </Badge>
+              </div>
             </div>
+
+            {/* Action buttons */}
             <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="text-xs">{rating}</span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white duration-500 ease-out "
+                  // isDark
+                  //   ? "text-white hover:bg-stone-700"
+                  //   : "text-badge-blue hover:bg-sidebar-accent"
+                )}
+              >
+                <Eye />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-stone-700 group-hover:text-white duration-500 ease-out"
+                  // isDark
+                  //   ? "text-white hover:bg-stone-700"
+                  //   : "text-foreground hover:bg-sidebar-accent"
+                )}
+              >
+                <Copy className="!h-full !w-full" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "h-7 w-7 flex items-center justify-center px-1 py-1  text-primary hover:bg-stone-700 group-hover:text-white duration-500 ease-out"
+                  // isDark
+                  //   ? "text-white hover:bg-stone-700"
+                  //   : "text-primary hover:bg-sidebar-accent"
+                )}
+              >
+                {/* <Edit className="h-full w-full" /> */}
+                <Editor />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "h-7 w-7 flex items-center justify-center px-1 py-1  text-red-600 hover:bg-stone-700 group-hover:text-white duration-500 ease-out"
+                  // isDark
+                  //   ? "text-white hover:bg-stone-700"
+                  //   : "text-red-600 hover:bg-red-50"
+                )}
+              >
+                <Bin />
+              </Button>
+            </div>
+          </div>
+
+          {/* Title */}
+          <h3 className="text-xl font-medium mb-2">{name}</h3>
+
+          {/* Description */}
+          <p
+            className={cn(
+              "text-sm mb-4 text-gray-600 group-hover:text-gray-300 transition-all duration-500 ease-out"
+              // isDark ? "text-gray-300" : "text-gray-600"
+            )}
+          >
+            {description}
+          </p>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-1">
+            {tags.map((tag, index) => (
               <Badge
+                key={index}
                 variant="secondary"
                 className={cn(
-                  "px-1.5 py-1 ml-1.5 rounded-sm border border-foreground text-foreground bg-transparent group-hover:border-white group-hover:text-white",
-                  // isDark
-                  //   ? "border border-white bg-transparent text-white "
-                  //   : "border border-foreground text-foreground bg-transparent"
+                  "rounded-full px-3 py-1 text-xs font-light",
+                  tag.color === "yellow" &&
+                    "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "blue" &&
+                    "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "green" &&
+                    "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "orange" &&
+                    "bg-transparent border-primary text-primary  group-hover:text-white transition-all duration-500 ease-out group-hover:border-white",
+                  tag.color === "orange" &&
+                    isDark &&
+                    "bg-transparent border border-white text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
+                  // !tag.color && isDark && "bg-white text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                  // !tag.color && !isDark && "bg-gray-100 text-gray-800 group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
                 )}
               >
-                {version}
+                {tag.label}
               </Badge>
-            </div>
+            ))}
+          </div>
+        </CardHeader>
+
+        <CardContent
+          className={`${
+            isDark ? "bg-white" : "bg-sidebar-accent border border-black/10 "
+          } w-[92%] mx-auto py-5 rounded-xl px-4 duration-500 ease-out`}
+        >
+          {/* Usage stats */}
+          <div className={`flex items-center justify-between text-sm mb-3 `}>
+            <span className={"text-foreground"}>{uses} uses</span>
+            <span className={"text-foreground"}>Updates {lastUpdated}</span>
           </div>
 
-          {/* Action buttons */}
-          <div className="flex items-center gap-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white  ",
-                // isDark
-                //   ? "text-white hover:bg-stone-700"
-                //   : "text-badge-blue hover:bg-sidebar-accent"
-              )}
-            >
-              <Eye/>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-stone-700 group-hover:text-white",
-                // isDark
-                //   ? "text-white hover:bg-stone-700"
-                //   : "text-foreground hover:bg-sidebar-accent"
-              )}
-            >
-              <Copy className="!h-full !w-full" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1  text-primary hover:bg-stone-700 group-hover:text-white",
-                // isDark
-                //   ? "text-white hover:bg-stone-700"
-                //   : "text-primary hover:bg-sidebar-accent"
-              )}
-            >
-              {/* <Edit className="h-full w-full" /> */}
-              <Editor/>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-7 w-7 flex items-center justify-center px-1 py-1  text-red-600 hover:bg-stone-700 group-hover:text-white",
-                // isDark
-                //   ? "text-white hover:bg-stone-700"
-                //   : "text-red-600 hover:bg-red-50"
-              )}
-            >
-              <Bin/>
-            </Button>
+          {/* Preview */}
+          <div
+            className={cn(
+              "rounded-lg p-3 text-xs duration-500 ease-out",
+              isDark
+                ? "bg-sidebar-accent text-gray-600"
+                : "bg-white text-gray-600"
+            )}
+          >
+            {preview}
           </div>
-        </div>
-
-        {/* Title */}
-        <h3 className="text-xl font-medium mb-2">{name}</h3>
-
-        {/* Description */}
-        <p
-          className={cn(
-            "text-sm mb-4 text-gray-600 group-hover:text-gray-300 transition-all duration-500 ease-out",
-            // isDark ? "text-gray-300" : "text-gray-600"
-          )}
-        >
-          {description}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1">
-          {tags.map((tag, index) => (
-            <Badge
-              key={index}
-              variant="secondary"
-              className={cn(
-                "rounded-full px-3 py-1 text-xs font-light",
-                tag.color === "yellow" &&
-                  "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                tag.color === "blue" &&
-                  "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                tag.color === "green" &&
-                  "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                tag.color === "orange" &&
-                  "bg-transparent border-primary text-primary  group-hover:text-white transition-all duration-500 ease-out group-hover:border-white",
-                tag.color === "orange" &&isDark &&
-                  "bg-transparent border border-white text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                // !tag.color && isDark && "bg-white text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                // !tag.color && !isDark && "bg-gray-100 text-gray-800 group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
-              )}
-            >
-              {tag.label}
-            </Badge>
-          ))}
-        </div>
-      </CardHeader>
-
-      <CardContent className={`${isDark?"bg-white":"bg-sidebar-accent border border-black/10"} w-[92%] mx-auto py-5 rounded-xl px-4`}>
-        {/* Usage stats */}
-        <div className={`flex items-center justify-between text-sm mb-3 `}>
-          <span className={ "text-foreground"}>
-            {uses} uses
-          </span>
-          <span className={ "text-foreground"}>
-            Updates {lastUpdated}
-          </span>
-        </div>
-
-        {/* Preview */}
-        <div
-          className={cn(
-            "rounded-lg p-3 text-xs",
-            isDark ? "bg-sidebar-accent text-gray-600" : "bg-white text-gray-600"
-          )}
-        >
-          {preview}
-        </div>
-      </CardContent>
-    </Card>
-    </Link>
+        </CardContent>
+      </Card>
+    </div>
+    // </Link>
   );
 }

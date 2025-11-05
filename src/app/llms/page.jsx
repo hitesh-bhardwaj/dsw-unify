@@ -13,7 +13,8 @@ import {
 import { LLMCard } from "@/components/LLMCard";
 import Tabs from "@/components/common/Tabs";
 import SearchBar from "@/components/search-bar";
-import { FadeUp } from "@/components/animations/fadeup";
+import { FadeUp } from "@/components/animations/Animations";
+import { RippleButton } from "@/components/ui/ripple-button";
 
 const LLMs = [
   {
@@ -130,38 +131,44 @@ export default function LLMsPage() {
               <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
             </div>
             <div className="gap-2 flex">
-              <Link href={"/llms/llm-finetuning"}>
+              <RippleButton>
+                <Link href={"/llms/llm-finetuning"}>
+                  <Button
+                    variant="outline"
+                    //   onClick={() => setApiModalOpen(true)}
+                    className="gap-2 text-foreground border border-primary"
+                  >
+                    <div className="!w-4">
+                      <AiGenerator />
+                    </div>
+                    LLM Finetuning
+                  </Button>
+                </Link>
+              </RippleButton>
+              <RippleButton>
                 <Button
                   variant="outline"
-                  //   onClick={() => setApiModalOpen(true)}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
-                    <AiGenerator />
+                    {/* <AiGenerator /> */}
+                    <DownloadIcon />
                   </div>
-                  LLM Finetuning
+                  Import Model
                 </Button>
-              </Link>
-              <Button
-                variant="outline"
-                className="gap-2 text-foreground border border-primary"
-              >
-                <div className="!w-4">
-                  {/* <AiGenerator /> */}
-                  <DownloadIcon />
-                </div>
-                Import Model
-              </Button>
-              <Link href="/#">
-                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                  <PlusIcon />
-                  Deploy New Model
-                </Button>
-              </Link>
+              </RippleButton>
+              <RippleButton>
+                <Link href="/#">
+                  <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                    <PlusIcon />
+                    Deploy New Model
+                  </Button>
+                </Link>
+              </RippleButton>
             </div>
           </div>
         </FadeUp>
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.05}>
           <SearchBar
             placeholder="Search LLMs..."
             value={query}
@@ -170,12 +177,12 @@ export default function LLMsPage() {
         </FadeUp>
 
         {/* Filter tabs */}
-        <FadeUp delay={0.2}>
+        <FadeUp delay={0.1}>
           <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
         </FadeUp>
 
         {/* LLMs grid */}
-        <FadeUp delay={0.3}>
+        <FadeUp delay={0.15}>
           <div className="flex-1 pt-0 h-fit w-full relative">
             <div
               className={cn(
@@ -186,11 +193,11 @@ export default function LLMsPage() {
               )}
             >
               {/* {tab === "all" && ( */}
-                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-                  {filteredLLMs.map((llm) => (
-                    <LLMCard key={llm.id} llm={llm} />
-                  ))}
-                </div>
+              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+                {filteredLLMs.map((llm) => (
+                  <LLMCard key={llm.id} llm={llm} />
+                ))}
+              </div>
               {/* )} */}
             </div>
             <div

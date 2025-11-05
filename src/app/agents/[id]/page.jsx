@@ -15,7 +15,8 @@ import {
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import CountUp from "@/components/animations/CountUp";
-import { FadeUp } from "@/components/animations/fadeup";
+import { FadeUp } from "@/components/animations/Animations";
+import { RippleButton } from "@/components/ui/ripple-button";
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -83,6 +84,7 @@ export default function AgentDetailPage({ params }) {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <RippleButton>
             <Button
               variant="outline"
               onClick={() => setApiModalOpen(true)}
@@ -93,6 +95,8 @@ export default function AgentDetailPage({ params }) {
               </div>
               API
             </Button>
+            </RippleButton>
+            <RippleButton>
             <Button
               variant="outline"
               className="gap-2 text-foreground border border-primary"
@@ -102,14 +106,16 @@ export default function AgentDetailPage({ params }) {
               </div>
               Test
             </Button>
+            </RippleButton>
             <Link href={`/agents/${id}/edit`}>
+            <RippleButton>
               <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                 <div className="!w-4">
-                  {/* <AiGenerator/> */}
                   <EditIcon className={"text-white"} />
                 </div>
                 Edit Agent
               </Button>
+            </RippleButton>
             </Link>
           </div>
         </div>
@@ -120,7 +126,7 @@ export default function AgentDetailPage({ params }) {
       <div className="flex-1 overflow-auto p-6 bg-background">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Top Cards Row */}
-          <FadeUp delay={0.1}>
+          <FadeUp delay={0.05}>
           <div className="grid grid-cols-3 gap-6">
             {/* Agent Information */}
             <Card>
@@ -245,7 +251,7 @@ export default function AgentDetailPage({ params }) {
 
           {/* Recent Activity */}
           <Card className={"border-none"}>
-            <FadeUp delay={0.2}>
+            <FadeUp delay={0.1}>
             <CardHeader>
               <h2 className="text-xl font-semibold">Recent Activity</h2>
             </CardHeader>

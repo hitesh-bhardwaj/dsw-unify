@@ -62,7 +62,7 @@ export function TestingAnalyticsCard({ cards }) {
     <>
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-5 !rounded-lg",
+          "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-5 !rounded-lg",
         )}
       >
         <CardHeader>

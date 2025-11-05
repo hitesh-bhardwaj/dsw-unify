@@ -2,22 +2,21 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Calendar, FileTimeout, SynthWave } from "./Icons";
+import { SynthWave } from "./Icons";
+import { Bounce } from "./animations/Animations";
 
 export function ToolsCard({ tools }) {
   const {
-    id,
     name,
     description,
-    icon,
     status,
     tags = [],
-    variant = "light",
   } = tools;
 
 
   return (
-    <Link href={`#`} className="block group">
+    <Bounce>
+    <Link href={`/#`} className="block group h-full">
       <Card
         className={cn(
           "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !pt-5",
@@ -101,5 +100,6 @@ export function ToolsCard({ tools }) {
         </CardContent>
       </Card>
     </Link>
+    </Bounce>
   );
 }

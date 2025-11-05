@@ -3,11 +3,13 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { SynthWave } from "./Icons";
+import { Bounce } from "./animations/Animations";
 
 export function LLMCard({ llm }) {
   const { id, name, description, status, tags = [] } = llm;
 
   return (
+    <Bounce>
     <Link href={`/llms/${id}`} className="block group h-full">
       <Card
         className={cn(
@@ -105,7 +107,7 @@ export function LLMCard({ llm }) {
             llm.performance ? (
               <div
                 className={cn(
-                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-gray-100 group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10"
+                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10"
                 )}
               >
                 <p>Performance</p>
@@ -124,7 +126,7 @@ export function LLMCard({ llm }) {
             ) : (
               <div
                 className={cn(
-                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-gray-100 group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10"
+                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10"
                 )}
               >
                 <p>Usage Stats</p>
@@ -142,7 +144,7 @@ export function LLMCard({ llm }) {
               </div>
             )
           ):<>
-          <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-gray-100 group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10">
+          <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10">
                <p>Deploying Status</p>
                <div className="w-full flex flex-col gap-4">
                 <p className="text-primary">Progress:75%</p>
@@ -156,5 +158,6 @@ export function LLMCard({ llm }) {
         </CardContent>
       </Card>
     </Link>
+    </Bounce>
   );
 }

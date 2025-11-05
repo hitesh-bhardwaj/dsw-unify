@@ -16,6 +16,7 @@ import {
   SelectItem,
   SelectValue,
 } from "./ui/select";
+import { RippleButton } from "./ui/ripple-button";
 
 const CATEGORY_OPTIONS = [
   "General",
@@ -49,14 +50,24 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
           <div className="flex w-full h-fit gap-2">
             <div className="flex flex-col gap-2 w-[60%]">
               <label className="text-sm text-foreground">Prompt Name*</label>
-              <Input className="border border-black/20 placeholder:text-black/60" placeholder="Enter Prompt Name" />
+              <Input
+                className="border border-black/20 placeholder:text-black/60"
+                placeholder="Enter Prompt Name"
+              />
             </div>
 
             <div className="flex flex-col gap-2 w-[40%]">
               <label className="text-sm text-foreground">Category</label>
-              <Select value={category} onValueChange={setCategory} className="w-full">
+              <Select
+                value={category}
+                onValueChange={setCategory}
+                className="w-full"
+              >
                 <SelectTrigger className="border border-black/20 placeholder:text-black/60 !text-black/60 !h-10.5 w-full">
-                  <SelectValue placeholder="Choose category" className={"placeholder:text-sm "}/>
+                  <SelectValue
+                    placeholder="Choose category"
+                    className={"placeholder:text-sm "}
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   {CATEGORY_OPTIONS.map((c) => (
@@ -72,7 +83,10 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
           <div className="flex w-full h-fit gap-2">
             <div className="flex flex-col gap-2 w-full">
               <label className="text-sm text-foreground">Description</label>
-              <Input className="border border-black/20 placeholder:text-black/60" placeholder="Brief Description" />
+              <Input
+                className="border border-black/20 placeholder:text-black/60"
+                placeholder="Brief Description"
+              />
             </div>
           </div>
 
@@ -89,33 +103,44 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
           <div className="flex w-full h-fit gap-2 items-end">
             <div className="flex flex-col gap-2 w-[85%]">
               <label className="text-sm text-foreground">Tags</label>
-              <Input className="border border-black/20 placeholder:text-black/60" placeholder="Add a tag" />
+              <Input
+                className="border border-black/20 placeholder:text-black/60"
+                placeholder="Add a tag"
+              />
             </div>
-            <div className="flex gap-2 w-[15%] border border-black/20 placeholder:text-black/60 h-10.5 rounded-lg bg-foreground text-white justify-start pl-2.5 items-center cursor-pointer">
+            <div className="w-[15%]">
+            <RippleButton className={"w-full rounded-lg"} circColor={"bg-white/40"}>
+            <div className="flex gap-2 w-full  border border-black/20 placeholder:text-black/60 h-10.5 rounded-lg bg-foreground text-white justify-start pl-2.5 items-center cursor-pointer">
               <div className="w-3.5 h-auto">
                 <PlusIcon className="w-full h-full" />
               </div>
               <p>Add</p>
             </div>
+
+            </RippleButton>
+            </div>
           </div>
 
           <div className="w-full flex justify-end gap-2">
-            <Button
-              variant="outline"
-              className="gap-2 border-primary text-foreground hover:bg-gray-50 w-fit px-7"
-              onClick={() => onOpenChange?.(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
-              onClick={handleCreate}
-            >
-              <div className="w-4 h-auto">
-                <AiGenerator />
-              </div>
-              Create Prompt
-            </Button>
+            <RippleButton>
+              <Button
+                variant="outline"
+                className="gap-2 border-primary text-foreground hover:bg-gray-50 w-fit px-7"
+                onClick={() => onOpenChange?.(false)}
+              >
+                Cancel
+              </Button>
+            </RippleButton>
+            <RippleButton>
+              <Button
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+              >
+                <div className="w-4 h-auto">
+                  <AiGenerator />
+                </div>
+                Create Prompt
+              </Button>
+            </RippleButton>
           </div>
         </div>
       </DialogContent>
