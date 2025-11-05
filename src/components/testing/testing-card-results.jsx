@@ -25,10 +25,10 @@
 //     <Link href={`/#`} className="block group">
 //       <Card
 //         className={cn(
-//           "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1",
+//           "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1",
 //           // isDark
 //           //   ? "bg-active-card text-white border-black"
-//           //   : "bg-white border border-black/20"
+//           //   : "bg-background border border-black/20"
 //         )}
 //       >
 //         <CardHeader className="">
@@ -46,12 +46,12 @@
 //                 className={cn(
 //                   "rounded-full px-3.5 py-1 text-xs font-normal",
 //                   tag.color === "yellow" &&
-//                     "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-//                   tag.color === "blue" && "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-//                   tag.color === "green" && "bg-badge-green text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-//                   tag.color === "orange" && "bg-primary  text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-//                   tag.color === "red" && "bg-red-500 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-//                   // !tag.color && isDark && "bg-white text-foreground",
+//                     "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+//                   tag.color === "blue" && "bg-badge-blue text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+//                   tag.color === "green" && "bg-badge-green text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+//                   tag.color === "orange" && "bg-primary  text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+//                   tag.color === "red" && "bg-red-500 text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+//                   // !tag.color && isDark && "bg-background text-foreground",
 //                   // !tag.color && !isDark && "bg-gray-100 text-gray-800"
 //                 )}
 //               >
@@ -168,7 +168,7 @@ export function TestingCardResults({ test ,tab}) {
     <Link href={`/#`} className="block group" aria-label={`${name} test card`}>
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1"
+          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1"
         )}
       >
         <CardHeader>
@@ -189,15 +189,15 @@ export function TestingCardResults({ test ,tab}) {
                       className={cn(
                         "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out",
                         tag.color === "yellow" &&
-                          "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black",
+                          "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
                         tag.color === "blue" &&
-                          "bg-badge-blue text-white group-hover:bg-white group-hover:text-black",
+                          "bg-badge-blue text-white group-hover:bg-background group-hover:text-black",
                         tag.color === "green" &&
-                          "bg-badge-green text-white group-hover:bg-white group-hover:text-black",
+                          "bg-badge-green text-white group-hover:bg-background group-hover:text-black",
                         tag.color === "orange" &&
-                          "bg-primary text-white group-hover:bg-white group-hover:text-black",
+                          "bg-primary text-white group-hover:bg-background group-hover:text-black",
                         tag.color === "red" &&
-                          "bg-red-500 text-white group-hover:bg-white group-hover:text-black"
+                          "bg-red-500 text-white group-hover:bg-background group-hover:text-black"
                       )}
                     >
                       {tag.label}

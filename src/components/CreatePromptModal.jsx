@@ -109,7 +109,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
               />
             </div>
             <div className="w-[15%]">
-            <RippleButton className={"w-full rounded-lg"} circColor={"bg-white/40"}>
+            <RippleButton className={"w-full rounded-lg"} circColor={"bg-background/40"}>
             <div className="flex gap-2 w-full  border border-black/20 placeholder:text-black/60 h-10.5 rounded-lg bg-foreground text-white justify-start pl-2.5 items-center cursor-pointer">
               <div className="w-3.5 h-auto">
                 <PlusIcon className="w-full h-full" />

@@ -24,7 +24,7 @@ export default function CreateAgentPage() {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className=" bg-white p-6">
+      <div className=" bg-background p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
             

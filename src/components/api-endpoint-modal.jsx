@@ -353,7 +353,7 @@ const handleTabChange = (value) => {
      <div className="mt-4 border rounded-xl overflow-hidden w-full">
       <div className="relative">
         <pre 
-          className={`rounded-lg bg-white p-4 text-sm text-foreground overflow-x-auto transition-opacity duration-300 ease-in ${
+          className={`rounded-lg bg-background p-4 text-sm text-foreground overflow-x-auto transition-opacity duration-300 ease-in ${
             isTransitioning ? 'opacity-0' : 'opacity-100'
           }`}
         >

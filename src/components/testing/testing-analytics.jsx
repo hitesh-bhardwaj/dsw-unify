@@ -11,7 +11,7 @@ const TestingAnalyticsComp = ({cardData, analytics,tab}) => {
           <div className="grid gap-6 grid-cols-4 h-fit">
             {cardData.map((card) => (
               // <FadeUpItem key={card.id}>
-                <TestingAnalyticsCard cards={card} key={card.id} />
+                <TestingAnalyticsCard cards={card} key={card.id} tab={tab} />
               // </FadeUpItem>
             ))}
           </div>

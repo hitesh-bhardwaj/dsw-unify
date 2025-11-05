@@ -24,10 +24,10 @@ export function KnowledgeCard({ agent }) {
       <Link href={`/#`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-5 h-full"
+            "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-5 h-full"
             // isDark
             //   ? "bg-active-card text-white border-black"
-            //   : "bg-white border border-black/20"
+            //   : "bg-background border border-black/20"
           )}
         >
           <CardHeader className="">
@@ -35,8 +35,8 @@ export function KnowledgeCard({ agent }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black group-hover:bg-white transition-all duration-500 ease-out "
-                  // isDark ? "bg-white" : "bg-black"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black group-hover:bg-background transition-all duration-500 ease-out "
+                  // isDark ? "bg-background" : "bg-black"
                 )}
               >
                 <span
@@ -88,7 +88,7 @@ export function KnowledgeCard({ agent }) {
             <div
               className={cn(
                 "flex items-center justify-between rounded-lg  text-sm py-4 px-6 mt-10",
-                isDark ? "bg-white" : "bg-gray-100 border"
+                isDark ? "bg-background" : "bg-gray-100 border"
               )}
             >
               <div className="flex flex-col items-start  gap-1 font-medium">

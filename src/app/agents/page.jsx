@@ -76,7 +76,7 @@ export default function AgentsPage() {
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Agents</h1>
-              <p className="mt-1 text-sm text-gray-600">
+              <p className="mt-1 text-sm dark:text-foreground text-black/60">
                 Build, deploy, and manage your AI agents
               </p>
             </div>
@@ -107,8 +107,8 @@ export default function AgentsPage() {
             ]}
             value={tab}
             onValueChange={setTab}
-            activeClassName="  text-[#FF5722]"
-            inactiveClassName="border-transparent text-gray-700"
+            activeClassName=" text-primary"
+            inactiveClassName="border-transparent text-foreground"
             dotColorClassName="bg-[#FF5722]"
             equalWidth={true}
           />
@@ -142,7 +142,7 @@ export default function AgentsPage() {
               )}
             >
               <div className="grid gap-6 grid-cols-1 h-full">
-                <div className="w-full border border-black/30 rounded-2xl h-full flex justify-center items-center text-black/50">
+                <div className="w-full border border-border-color-1 rounded-2xl h-full flex justify-center items-center text-border-color-3">
                   <p>"No Templates to be shown"</p>
                 </div>
               </div>

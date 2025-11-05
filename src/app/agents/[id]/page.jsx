@@ -71,7 +71,7 @@ export default function AgentDetailPage({ params }) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-white p-6">
+      <div className="bg-background p-6">
         <FadeUp>
         <div className="flex items-center justify-between">
           <div className="flex gap-3">

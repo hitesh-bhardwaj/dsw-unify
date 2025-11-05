@@ -78,7 +78,7 @@ export function TypewriterInput({
   return (
     <div className="relative">
       {icon ? (
-        <div className="absolute left-5 top-1/2 -translate-y-1/2 text-[#333333]">
+        <div className="absolute left-5 top-1/2 -translate-y-1/2 text-border-color-3">
           {icon}
         </div>
       ) : null}
@@ -87,7 +87,7 @@ export function TypewriterInput({
         placeholder={animatedPlaceholder}
         value={value}
         onChange={onChange}
-        className={["h-11 bg-white border-black/30 py-6 text-[#333333]", icon ? "pl-12" : "", className]
+        className={["h-11 bg-background border-border-color-1 py-6 placeholder:text-border-color-3 ", icon ? "pl-12" : "", className]
           .filter(Boolean)
           .join(" ")}
         {...rest}

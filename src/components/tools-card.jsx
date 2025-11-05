@@ -19,10 +19,10 @@ export function ToolsCard({ tools }) {
     <Link href={`/#`} className="block group h-full">
       <Card
         className={cn(
-          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !pt-5",
+          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !pt-5",
           // isDark
           //   ? "bg-active-card text-white border-black"
-          //   : "bg-white border border-black/20"
+          //   : "bg-background border border-black/20"
         )}
       >
         <CardHeader className="">
@@ -30,8 +30,8 @@ export function ToolsCard({ tools }) {
             {/* Icon */}
             <div
               className={cn(
-                "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black group-hover:bg-white transition-all duration-500 ease-out ",
-                // isDark ? "bg-white" : "bg-black"
+                "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black group-hover:bg-background transition-all duration-500 ease-out ",
+                // isDark ? "bg-background" : "bg-black"
               )}
             >
               <span
@@ -84,12 +84,12 @@ export function ToolsCard({ tools }) {
                 className={cn(
                   "rounded-full px-3.5 py-1 text-xs font-normal",
                   tag.color === "yellow" &&
-                    "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                  tag.color === "blue" && "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                  tag.color === "green" && "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                  tag.color === "orange" && "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                  tag.color === "purple" && "bg-purple-500 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                  // !tag.color && isDark && "bg-white text-foreground",
+                    "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "blue" && "bg-badge-blue text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "green" && "bg-badge-mint text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "orange" && "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                  tag.color === "purple" && "bg-purple-500 text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                  // !tag.color && isDark && "bg-background text-foreground",
                   // !tag.color && !isDark && "bg-gray-100 text-gray-800"
                 )}
               >

@@ -13,7 +13,7 @@ export function LLMCard({ llm }) {
     <Link href={`/llms/${id}`} className="block group h-full">
       <Card
         className={cn(
-          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-5"
+          "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-5"
         )}
       >
         <CardHeader className="">
@@ -21,7 +21,7 @@ export function LLMCard({ llm }) {
             {/* Icon */}
             <div
               className={cn(
-                "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black group-hover:bg-white transition-all duration-500 ease-out "
+                "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black group-hover:bg-background transition-all duration-500 ease-out "
               )}
             >
               <span
@@ -86,15 +86,15 @@ export function LLMCard({ llm }) {
                 className={cn(
                   "rounded-full px-3.5 py-1 text-xs font-normal",
                   tag.color === "yellow" &&
-                    "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                    "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "blue" &&
-                    "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                    "bg-badge-blue text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "green" &&
-                    "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                    "bg-badge-mint text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "orange" &&
-                    "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                    "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "purple" &&
-                    "bg-purple-500 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
+                    "bg-purple-500 text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out "
                 )}
               >
                 {tag.label}
@@ -107,7 +107,7 @@ export function LLMCard({ llm }) {
             llm.performance ? (
               <div
                 className={cn(
-                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10"
+                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-background border border-black/10"
                 )}
               >
                 <p>Performance</p>
@@ -126,7 +126,7 @@ export function LLMCard({ llm }) {
             ) : (
               <div
                 className={cn(
-                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10"
+                  "flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-background border border-black/10"
                 )}
               >
                 <p>Usage Stats</p>
@@ -144,7 +144,7 @@ export function LLMCard({ llm }) {
               </div>
             )
           ):<>
-          <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-white border border-black/10">
+          <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-sidebar-accent group-hover:text-foreground text-foreground group-hover:bg-background border border-black/10">
                <p>Deploying Status</p>
                <div className="w-full flex flex-col gap-4">
                 <p className="text-primary">Progress:75%</p>

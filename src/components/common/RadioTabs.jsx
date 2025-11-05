@@ -19,7 +19,7 @@ export default function RadioTabs({
   inactiveClassName = "border-transparent text-gray-700",
   equalWidth = true,
   ariaLabel = "Radio tabs",
-  indicatorClassName = "rounded-lg bg-white border border-[#DCDCDC] transition-all duration-300 ease-out",
+  indicatorClassName = "rounded-lg bg-background border border-border-color-2 transition-all duration-300 ease-out",
   indicatorOffsetX = 0, // set to -7 to mimic your earlier tweak
   indicatorInset = 6,   // equals tailwind top-1.5 / bottom-1.5 (~6px)
 }) {
@@ -139,7 +139,7 @@ export default function RadioTabs({
         role="radiogroup"
         aria-label={ariaLabel}
         className={cx(
-          "relative flex gap-4 bg-[#F6F6F6] py-1.5 px-1.5 rounded-lg border border-gray-200",
+          "relative flex gap-4 bg-sidebar-accent py-1.5 px-1.5 rounded-lg border border-border-color-2",
           groupClassName
         )}
         onKeyDown={onKeyDown}
@@ -180,8 +180,8 @@ export default function RadioTabs({
               {/* radio bullet */}
               <span
                 className={cx(
-                  "h-5 w-5 rounded-full border flex items-center justify-center bg-white",
-                  isActive ? "border-gray-300 " : "border-gray-300 "
+                  "h-5 w-5 rounded-full border flex items-center justify-center bg-background border-border-color-3",
+                  
                 )}
                 aria-hidden="true"
               >
@@ -191,7 +191,7 @@ export default function RadioTabs({
               </span>
 
               {/* icon (if provided) */}
-              <div className="flex gap-2">
+              <div className={`flex gap-2`}>
               {Icon ? (
                 <Icon className="!h-6 !w-auto" aria-hidden="true" />
               ) : (

@@ -26,10 +26,10 @@ export function PromptCard({ prompt }) {
     <div className="group w-full h-full">
       <Card
         className={cn(
-          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5 bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black"
+          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5 bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black"
           // isDark
           //   ? "bg-active-card text-white border-black"
-          //   : "bg-white border border-black/30"
+          //   : "bg-background border border-black/30"
         )}
       >
         <CardHeader className="pb-4">
@@ -38,8 +38,8 @@ export function PromptCard({ prompt }) {
             <div className="flex items-center gap-3">
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center  rounded-lg relative bg-black group-hover:bg-white duration-500 ease-out"
-                  // isDark ? "bg-white" : "bg-black"
+                  "flex h-14 w-14 items-center justify-center  rounded-lg relative bg-black group-hover:bg-background duration-500 ease-out"
+                  // isDark ? "bg-background" : "bg-black"
                 )}
               >
                 <span
@@ -144,18 +144,18 @@ export function PromptCard({ prompt }) {
                 className={cn(
                   "rounded-full px-3 py-1 text-xs font-light",
                   tag.color === "yellow" &&
-                    "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                    "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "blue" &&
-                    "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                    "bg-badge-blue text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "green" &&
-                    "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                    "bg-badge-mint text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                   tag.color === "orange" &&
                     "bg-transparent border-primary text-primary  group-hover:text-white transition-all duration-500 ease-out group-hover:border-white",
                   tag.color === "orange" &&
                     isDark &&
-                    "bg-transparent border border-white text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
-                  // !tag.color && isDark && "bg-white text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                  // !tag.color && !isDark && "bg-gray-100 text-gray-800 group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
+                    "bg-transparent border border-white text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out "
+                  // !tag.color && isDark && "bg-background text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                  // !tag.color && !isDark && "bg-gray-100 text-gray-800 group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out "
                 )}
               >
                 {tag.label}
@@ -166,7 +166,7 @@ export function PromptCard({ prompt }) {
 
         <CardContent
           className={`${
-            isDark ? "bg-white" : "bg-sidebar-accent border border-black/10 "
+            isDark ? "bg-background" : "bg-sidebar-accent border border-black/10 "
           } w-[92%] mx-auto py-5 rounded-xl px-4 duration-500 ease-out`}
         >
           {/* Usage stats */}
@@ -181,7 +181,7 @@ export function PromptCard({ prompt }) {
               "rounded-lg p-3 text-xs duration-500 ease-out",
               isDark
                 ? "bg-sidebar-accent text-gray-600"
-                : "bg-white text-gray-600"
+                : "bg-background text-gray-600"
             )}
           >
             {preview}

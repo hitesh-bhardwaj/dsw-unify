@@ -79,7 +79,7 @@ export default function LLMsDetailPage({ params }) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-white p-6 space-y-6 h-full">
+      <div className="bg-background p-6 space-y-6 h-full">
         <FadeUp>
           <div className="flex items-center justify-between mb-10">
             <div className="flex gap-3">
@@ -160,7 +160,7 @@ export default function LLMsDetailPage({ params }) {
             <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
               <Card
                 className={cn(
-                  "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
+                  "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
                 )}
               >
                 <div className="space-y-4 px-5">
@@ -190,7 +190,7 @@ export default function LLMsDetailPage({ params }) {
                         }`}
                       />
 
-                      <div className="w-5 h-5 rounded-full bg-white border-3 border-black -ml-1 relative z-[2] " />
+                      <div className="w-5 h-5 rounded-full bg-background border-3 border-black -ml-1 relative z-[2] " />
                     </div>
                   </div>
                   <div className="">
@@ -234,7 +234,7 @@ export default function LLMsDetailPage({ params }) {
               </Card>
               <Card
                 className={cn(
-                  "overflow-hidden   cursor-pointer transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-3 w-full"
+                  "overflow-hidden   cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-3 w-full"
                 )}
               >
                 <div className="space-y-4 px-5">

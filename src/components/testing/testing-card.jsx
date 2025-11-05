@@ -28,7 +28,7 @@ export function TestingCard({ test }) {
     <div className="group">
       <Card
         className={cn(
-          "overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-white border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1 !pl-0"
+          "overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1 !pl-0"
         )}
       >
         <CardHeader className="">
@@ -47,15 +47,15 @@ export function TestingCard({ test }) {
                       className={cn(
                         "rounded-full px-3.5 py-1 text-xs font-normal",
                         tag.color === "yellow" &&
-                          "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                         tag.color === "blue" &&
-                          "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-badge-blue text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                         tag.color === "green" &&
-                          "bg-badge-green text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-badge-green text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                         tag.color === "orange" &&
-                          "bg-primary  text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-primary  text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
                         tag.color === "red" &&
-                          "bg-red-500 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
+                          "bg-red-500 text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out "
                       )}
                     >
                       {tag.label}

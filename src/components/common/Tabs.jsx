@@ -89,13 +89,13 @@ export default function Tabs({
       <div
         ref={barRef}
         className={cx(
-          "relative flex gap-4 bg-[#F6F6F6] p-1.5 rounded-lg border border-gray-200",
+          "relative flex gap-4 bg-sidebar-accent p-1.5 rounded-lg border border-gray-200",
           barClassName
         )}
       >
         {/* Animated indicator */}
         <div
-          className="absolute top-1.5 bottom-1.5 rounded-lg bg-white border border-[#DCDCDC] transition-all duration-300 ease-out"
+          className="absolute top-1.5 bottom-1.5 rounded-lg bg-background border border-[#DCDCDC] transition-all duration-300 ease-out"
           style={{
             transform: `translateX(${indicator.left-7}px)`,
             width: indicator.width,
