@@ -12,7 +12,8 @@ import { AiGenerator, EditIcon, SparklesIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import SearchBar from "@/components/search-bar";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import { FadeUp } from "@/components/animations/fadeup";
+import { FadeUp } from "@/components/animations/Animations";
+import { RippleButton } from "@/components/ui/ripple-button";
 // import Tabs from "@/components/common/Tabs";
 
 export default function CreateAgentPage() {
@@ -61,32 +62,38 @@ export default function CreateAgentPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button
-                variant="outline"
-                onClick={() => setApiModalOpen(true)}
-                className="gap-2 text-foreground border border-primary"
-              >
-                <div className="!w-4">
-                  <AiGenerator />
-                </div>
-                API
-              </Button>
-              <Button
-                variant="outline"
-                className="gap-2 text-foreground border border-primary"
-              >
-                <div className="!w-4">
-                  <AiGenerator />
-                </div>
-                Test
-              </Button>
-              <Link href={`/agents/edit`}>
-                <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
+              <RippleButton>
+                <Button
+                  variant="outline"
+                  onClick={() => setApiModalOpen(true)}
+                  className="gap-2 text-foreground border border-primary"
+                >
                   <div className="!w-4">
-                    <EditIcon className={"text-white"} />
+                    <AiGenerator />
                   </div>
-                  Save Agent
+                  API
                 </Button>
+              </RippleButton>
+              <RippleButton>
+                <Button
+                  variant="outline"
+                  className="gap-2 text-foreground border border-primary"
+                >
+                  <div className="!w-4">
+                    <AiGenerator />
+                  </div>
+                  Test
+                </Button>
+              </RippleButton>
+              <Link href={`/agents/edit`}>
+                <RippleButton>
+                  <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
+                    <div className="!w-4">
+                      <EditIcon className={"text-white"} />
+                    </div>
+                    Save Agent
+                  </Button>
+                </RippleButton>
               </Link>
             </div>
           </div>
@@ -97,7 +104,7 @@ export default function CreateAgentPage() {
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-6xl mx-auto ">
           {/* Basic Information */}
-          <FadeUp delay={0.1}>
+          <FadeUp delay={0.05}>
             <Card className={"h-full py-10 shadow-none border-[#AAAAAA]"}>
               <CardHeader>
                 <h2 className="text-xl font-medium">Basic Information</h2>
@@ -135,7 +142,7 @@ export default function CreateAgentPage() {
           </FadeUp>
 
           {/* Configuration Tabs */}
-          <FadeUp delay={0.2}>
+          <FadeUp delay={0.1}>
             <Card className={"border-none shadow-none "}>
               <CardContent className="pt-2 px-0">
                 <Tabs defaultValue="prompt" className="w-full">
@@ -226,12 +233,15 @@ export default function CreateAgentPage() {
                             value={enhancePrompt}
                             onChange={(e) => setEnhancePrompt(e.target.value)}
                             placeholder="Describe how you want to modify the prompt..."
-                            className="h-11 flex-1 !text-xs p-4 border-[#AAAAAA] shadow-none"
+                            className="h-12 flex-1 !text-xs p-4 border-[#AAAAAA] shadow-none"
                           />
-                          <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2 !h-10.5  cursor-pointer w-30 rounded-lg">
+                          <RippleButton className={"rounded-lg"}>
+                          <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2  cursor-pointer w-30 rounded-lg">
                             <SparklesIcon />
                             Generate
                           </Button>
+
+                          </RippleButton>
                         </div>
                         <p className="text-xs text-[#111111]">
                           Use natural language to create a new prompt or enhance
@@ -296,7 +306,7 @@ export default function CreateAgentPage() {
             </Card>
           </FadeUp>
 
-          {/* <FadeUp delay={0.2}>
+          {/* <FadeUp delay={0.1}>
                     <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
                   </FadeUp> */}
         </div>

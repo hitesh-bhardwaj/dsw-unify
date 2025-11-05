@@ -16,7 +16,8 @@ import { Bar, BarChart } from "recharts";
 import CountUp from "@/components/animations/CountUp";
 import Tabs from "@/components/common/Tabs";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import { FadeUp } from "@/components/animations/fadeup";
+import { FadeUp } from "@/components/animations/Animations";
+import { RippleButton } from "@/components/ui/ripple-button";
 
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
@@ -104,16 +105,18 @@ export default function LLMsDetailPage({ params }) {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <RippleButton>
               <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                 <div className="w-5">
                   <ConfigureIcon />
                 </div>
                 Configure
               </Button>
+              </RippleButton>
             </div>
           </div>
         </FadeUp>
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.05}>
           <div className="w-full flex gap-4">
             <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
               <p className="text-3xl font-medium text-green">
@@ -141,7 +144,7 @@ export default function LLMsDetailPage({ params }) {
             </div>
           </div>
         </FadeUp>
-        <FadeUp delay={0.2}>
+        <FadeUp delay={0.1}>
           <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
         </FadeUp>
         <div className="flex-1 pt-0 h-auto w-full relative overflow-hidden">
@@ -153,7 +156,7 @@ export default function LLMsDetailPage({ params }) {
                 : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
             )}
           >
-            <FadeUp delay={0.3}>
+            <FadeUp delay={0.15}>
             <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
               <Card
                 className={cn(

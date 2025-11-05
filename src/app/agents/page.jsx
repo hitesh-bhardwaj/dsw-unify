@@ -7,8 +7,9 @@ import Link from "next/link";
 import { PlusIcon, PromptsIcon, TemplatesIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import RadioTabs from "@/components/common/RadioTabs";
-import { FadeUp } from "@/components/animations/fadeup";
+import { FadeUp } from "@/components/animations/Animations";
 import { cn } from "@/lib/utils";
+import { RippleButton } from "@/components/ui/ripple-button";
 
 // Mock data for agents
 const agents = [
@@ -79,16 +80,18 @@ export default function AgentsPage() {
                 Build, deploy, and manage your AI agents
               </p>
             </div>
+            
             <Link href="/agents/create">
+            <RippleButton>
               <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                {/* <Plus className="h-4 w-4" /> */}
                 <PlusIcon />
                 Create Agents
               </Button>
+            </RippleButton>
             </Link>
           </div>
         </FadeUp>
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.05}>
           <SearchBar
             placeholder="Search Agents..."
             value={query}
@@ -96,7 +99,7 @@ export default function AgentsPage() {
           />
         </FadeUp>
 
-        <FadeUp delay={0.2}>
+        <FadeUp delay={0.1}>
           <RadioTabs
             items={[
               { id: "prompts", label: "Prompts", icon: PromptsIcon },
@@ -113,7 +116,7 @@ export default function AgentsPage() {
       </div>
 
       {/* Agents grid */}
-      <FadeUp delay={0.3}>
+      <FadeUp delay={0.15}>
         <div className="flex-1 overflow-auto p-6 pt-0">
           <div className="flex-1 pt-0 h-fit w-full relative">
             <div

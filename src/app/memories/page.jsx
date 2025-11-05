@@ -6,7 +6,8 @@ import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
 import { MemoryCard } from "@/components/memory-card";
 import SearchBar from "@/components/search-bar";
-import { FadeUp } from "@/components/animations/fadeup";
+import { FadeUp } from "@/components/animations/Animations";
+import { RippleButton } from "@/components/ui/ripple-button";
 
 const memories = [
   {
@@ -67,16 +68,18 @@ export default function MemoriesPage() {
                 Manage agent memory systems
               </p>
             </div>
-            <Link href="/agents/create">
-              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                {/* <Plus className="h-4 w-4" /> */}
-                <PlusIcon />
-                Create Memory
-              </Button>
-            </Link>
+            <RippleButton>
+              <Link href="/agents/create">
+                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  {/* <Plus className="h-4 w-4" /> */}
+                  <PlusIcon />
+                  Create Memory
+                </Button>
+              </Link>
+            </RippleButton>
           </div>
         </FadeUp>
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.05}>
           <SearchBar
             placeholder="Search Memories..."
             value={query}
@@ -84,7 +87,7 @@ export default function MemoriesPage() {
           />
         </FadeUp>
       </div>
-      <FadeUp delay={0.2}>
+      <FadeUp delay={0.1}>
         <div className="flex-1 overflow-auto p-6 pt-0">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {filteredMemories.map((memory) => (

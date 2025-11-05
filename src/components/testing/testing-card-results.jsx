@@ -127,11 +127,10 @@ import Link from "next/link";
 import { Eye } from "lucide-react";
 import { Button } from "../ui/button";
 // import { motion, useAnimationControls, useInView } from "motion";
-import { useEffect, useMemo, useRef } from "react";
-import { useInView, motion, useAnimationControls } from "framer-motion";
+import { useRef } from "react";
 import AnimatedProgressBar from "../animations/ProgressBar";
 
-export function TestingCardResults({ test }) {
+export function TestingCardResults({ test ,tab}) {
   const {
     id,
     name,
@@ -145,33 +144,8 @@ export function TestingCardResults({ test }) {
     variant = "light",
   } = test;
 
-  const isDark = variant === "dark";
+// console.log(tab)
 
-  // const targetWidth = useMemo(() => {
-  //   const fromNumber =
-  //     typeof width === "number"
-  //       ? width
-  //       : typeof successRate === "number"
-  //       ? successRate
-  //       : undefined;
-
-  //   if (typeof fromNumber === "number" && !Number.isNaN(fromNumber)) {
-  //     return `${Math.max(0, Math.min(100, fromNumber))}%`;
-  //   }
-
-  //   if (typeof width === "string") {
-  //     const match = width.match(/(\d+(?:\.\d+)?)%/);
-  //     if (match?.[1])
-  //       return `${Math.max(0, Math.min(100, parseFloat(match[1])))}%`;
-  //   }
-
-  //   // Parse from successRate text e.g. "65%"
-  //   const asText = String(successRate ?? "").trim();
-  //   const n = parseFloat(asText.replace("%", ""));
-  //   if (!Number.isNaN(n)) return `${Math.max(0, Math.min(100, n))}%`;
-
-  //   return "0%";
-  // }, [width, successRate]);
 
   // ---- Animate when visible ----
   const ref = useRef(null);
@@ -276,6 +250,7 @@ export function TestingCardResults({ test }) {
                 duration={1.2}
                 ease="easeInOut"
                 animateOnMount
+                playKey={tab}
                 className="w-full"
                 trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
                 barClassName="bg-primary h-full absolute top-0 left-0 z-[5] rounded-full"

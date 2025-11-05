@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar, BarChart } from "recharts";
 
 import {
@@ -39,7 +39,15 @@ const chartConfig = {
   },
 };
 
-const TestingGraph = () => {
+const TestingGraph = ({tab}) => {
+  console.log(tab)
+    const [animationId, setAnimationId] = useState(0);
+   useEffect(() => {
+      if (tab === "analytics") {
+        // Just bump the id; Recharts will replay the animation for shapes with this animationId.
+        setAnimationId((id) => id + 1);
+      }
+    }, [tab]);
   return (
     <>
       <Card className={"!pb-0 "}>
@@ -52,6 +60,7 @@ const TestingGraph = () => {
         <CardContent className="px-30 h-[32vh]">
           <ChartContainer config={chartConfig} className={"!h-full !w-full"}>
             <BarChart
+             key={animationId}
               accessibilityLayer
               data={chartData}
               margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
@@ -65,6 +74,7 @@ const TestingGraph = () => {
                 fill="var(--color-desktop)"
                 radius={[3, 3, 0, 0]}
                 barSize={30}
+                animationId={animationId}
                 animationBegin={0} // delay in ms before starting
                 animationDuration={800}
                 animationEasing="ease-out"
