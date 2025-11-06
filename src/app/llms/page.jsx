@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -15,6 +15,9 @@ import Tabs from "@/components/common/Tabs";
 import SearchBar from "@/components/search-bar";
 import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
+import AnimatedTabsSection from "@/components/common/TabsPane";
+import LLMGrid from "@/components/LLMGrid";
+import EmptyCard from "@/components/common/EmptyCard";
 
 const LLMs = [
   {
@@ -97,34 +100,58 @@ const Recent = [
 ];
 
 export default function LLMsPage() {
-  const [query, setQuery] = useState("");
-  const [tab, setTab] = useState("all");
+   const [query, setQuery] = useState("");
+   const [activeTab, setActiveTab] = useState("all");
 
-  const tabs = [
-    { id: "all", label: "All Models" },
+  const filteredLLMs = useMemo(() => {
+    const q = query.toLowerCase();
+    return LLMs.filter(
+      (llm) =>
+        llm.name.toLowerCase().includes(q) ||
+        llm.description.toLowerCase().includes(q)
+    );
+  }, [query]);
+
+  const ctx = { filteredLLMs, query };
+
+  const items = [
     {
-      id: "selfHosted",
-      label: "Self-Hosted",
+      id: "tab-all",
+      value: "all",
+      label: "All",
+      name: "All",
+      render: ({ filteredLLMs}) =>
+          <LLMGrid items={filteredLLMs} />
     },
     {
-      id: "apiBased",
-      label: "API-Based",
+      id: "tab-self",
+      value: "selfHosted",
+      label: "Self Hosted",
+      name: "Self Hosted",
+      render: () =>
+          <EmptyCard children={"No Self Hosted LLM is available at this point"}/>
     },
     {
-      id: "fineTuned",
-      label: "Fine-Tuned",
+      id: "tab-api",
+      value: "apiBased",
+      label: "API Based",
+      name: "API Based",
+      render: () =>
+         <EmptyCard children={"No API Based LLM is available at this point"}/>
+    },
+    {
+      id: "tab-fine",
+      value: "fineTuned",
+      label: "Fine Tuned",
+      name: "Fine Tuned",
+      render: () =>
+         <EmptyCard children={"No Finetuned LLM is available at this point"}/>
     },
   ];
 
-  const filteredLLMs = LLMs.filter((llm) =>
-    llm.name.toLowerCase().includes(query.toLowerCase())
-  );
-
   return (
     <div className="flex flex-col h-full">
-      {/* Header section */}
       <div className="space-y-6 p-6">
-        {/* Title and CTA */}
         <FadeUp>
           <div className="flex items-center justify-between">
             <div className="space-y-2">
@@ -151,7 +178,6 @@ export default function LLMsPage() {
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
-                    {/* <AiGenerator /> */}
                     <DownloadIcon />
                   </div>
                   Import Model
@@ -175,82 +201,17 @@ export default function LLMsPage() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </FadeUp>
-
-        {/* Filter tabs */}
-        <FadeUp delay={0.1}>
-          <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
-        </FadeUp>
-
-        {/* LLMs grid */}
-        <FadeUp delay={0.15}>
-          <div className="flex-1 pt-0 h-fit w-full relative">
-            <div
-              className={cn(
-                "relative inset-0  pt-0 transition-all h-full",
-                tab === "all"
-                  ? "translate-x-0 opacity-100 duration-500 ease-out"
-                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
-              )}
-            >
-              {/* {tab === "all" && ( */}
-              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-                {filteredLLMs.map((llm) => (
-                  <LLMCard key={llm.id} llm={llm} />
-                ))}
-              </div>
-              {/* )} */}
-            </div>
-            <div
-              className={cn(
-                "absolute inset-0 pt-0 transition-all",
-                tab === "selfHosted"
-                  ? "translate-x-0 opacity-100 duration-500 ease-out"
-                  : tab === "all"
-                  ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              )}
-            >
-              <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
-                <p>No Self Hosted available at this point </p>
-              </div>
-            </div>
-            <div
-              className={cn(
-                "absolute inset-0  pt-0 transition-all",
-                tab === "apiBased"
-                  ? "translate-x-0 opacity-100 duration-500 ease-out"
-                  : tab === "selfHosted" || tab === "all"
-                  ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              )}
-            >
-              <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
-                <p>No API Based available at this point </p>
-              </div>
-            </div>
-            <div
-              className={cn(
-                "absolute inset-0 pt-0 transition-all",
-                tab === "fineTuned"
-                  ? "translate-x-0 opacity-100 duration-500 ease-out"
-                  : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              )}
-            >
-              <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
-                <p>No Fine Tuned to show</p>
-              </div>
-            </div>
-
-            {filteredLLMs.length === 0 && (
-              <div className="flex h-64 items-center justify-center text-gray-500">
-                No LLMs found matching "{query}"
-              </div>
-            )}
-          </div>
-        </FadeUp>
+        <FadeUp delay={0.05}>
+                      <AnimatedTabsSection
+                       items={items}
+                          ctx={ctx}
+                          onValueChange={setActiveTab}
+                          defaultValue="all"/>
+                          </FadeUp>
 
         {/* Recent Acitvity */}
-        {tab == "all" && (
+        {activeTab === "all" && (
+          <FadeUp delay={0.08}>
           <div className="space-y-10 mt-20">
             <h2 className="text-2xl font-medium">Recent Activity</h2>
             <div className="w-full space-y-4">
@@ -283,7 +244,10 @@ export default function LLMsPage() {
               ))}
             </div>
           </div>
+             </FadeUp>
+
         )}
+       
       </div>
     </div>
   );

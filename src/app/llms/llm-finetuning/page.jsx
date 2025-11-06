@@ -1,18 +1,16 @@
 "use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { UploadIcon } from "@/components/Icons";
-import { DataSet } from "@/components/llmtuning/dataset-card";
-import { TrainingCard } from "@/components/llmtuning/training-card";
-import Tabs from "@/components/common/Tabs";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
+import AnimatedTabsSection from "@/components/common/TabsPane";
+import EmptyCard from "@/components/common/EmptyCard";
+import DatasetsGrid from "@/components/llmtuning/datasets-grid";
+import TrainingJobsGrid from "@/components/llmtuning/training-jobs-grid";
 
-// Mock data for agents
+
 const datasets = [
   {
     id: "customer-support-dataset",
@@ -65,22 +63,40 @@ const TrainingJobs = [
 ];
 
 export default function LLMFineTuning() {
-  const [tab, setTab] = useState("Datasets");
-
-  const tabs = [
-    { id: "Datasets", label: "Datasets" },
+   const items = [
     {
-      id: "Training Jobs",
+      id: "datasets",
+      value: "datasets",
+      label: "Datasets",
+      name: "Datasets",
+      render: () =>
+          <DatasetsGrid items={datasets}/>
+         
+    },
+    {
+      id: "training-jobs",
+      value: "training-jobs",
       label: "Training Jobs",
+      name: "Training Jobs",
+     render: () =>
+          <TrainingJobsGrid items={TrainingJobs}/>
     },
     {
-      id: "Models",
+      id: "models",
+      value: "models",
       label: "Models",
+      name: "Models",
+     render: () =>
+          <EmptyCard children={"Models configuration coming soon..."}/>
     },
     {
-      id: "Inference",
+      id: "inference",
+      value: "inference",
       label: "Inference",
-    },
+      name: "Inference",
+     render: () =>
+          <EmptyCard children={"Inference configuration coming soon..."}/>
+    }
   ];
   return (
     <div className="flex flex-col h-full">
@@ -113,77 +129,12 @@ export default function LLMFineTuning() {
           </div>
         </FadeUp>
         <FadeUp delay={0.05}>
-          <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
-        </FadeUp>
+              <AnimatedTabsSection
+               items={items}
+                  // ctx={ctx}
+                  defaultValue="datasets"/>
+                  </FadeUp>
       </div>
-
-      <div className="flex-1 relative">
-        {/* Datasets Tab */}
-        <div
-          className={cn(
-            "relative inset-0  p-6 pt-0 transition-all",
-            tab === "Datasets"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="space-y-4">
-            {datasets.map((data, id) => (
-              <FadeUp key={data.id} delay={0.1 + id / 20}>
-                <DataSet key={data.id} data={data} />
-              </FadeUp>
-            ))}
-          </div>
-        </div>
-
-        {/* Training Jobs Tab */}
-        <div
-          className={cn(
-            "absolute inset-0  p-6 pt-0 transition-all",
-            tab === "Training Jobs"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : tab === "Datasets"
-              ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="space-y-4">
-            {TrainingJobs.map((data) => {
-              console.log(tabs);
-              return <TrainingCard key={data.id} data={data} playKey={tab} />;
-            })}
-          </div>
-        </div>
-
-        {/* Analytics Tab */}
-        <div
-          className={cn(
-            "absolute inset-0  p-6 pt-0 transition-all",
-            tab === "Models"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : tab === "Training Jobs" || tab === "Datasets"
-              ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-              : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
-            <p>No Models to show</p>
-          </div>
-        </div>
-        <div
-          className={cn(
-            "absolute inset-0  p-6 pt-0 transition-all",
-            tab === "Inference"
-              ? "translate-x-0 opacity-100 duration-500 ease-out"
-              : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-          )}
-        >
-          <div className="w-full h-full rounded-xl border border-black/20 flex justify-center items-center">
-            <p>No Inference to show</p>
-          </div>
-        </div>
-      </div>
-      {/* Content with sliding animation */}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { AiGenerator, DownloadIcon, PlusIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { FadeUp } from "@/components/animations/Animations";
-import LLMGrid from "@/components/common/LLMGrid";
+import LLMGrid from "@/components/LLMGrid";
 import EmptyCard from "@/components/common/EmptyCard";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 

@@ -233,7 +233,10 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon"
-      className={cn("size-10 hover:bg-sidebar-accent flex items-center justify-center duration-800", className)}
+      className={cn("size-10 hover:bg-sidebar-accent flex items-center justify-center  duration-800", className)}
+      // style={{
+      //   ease : "cubic-beizer(0.335, -0.006, 0.014, 0.995)"
+      // }}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()

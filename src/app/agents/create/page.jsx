@@ -3,47 +3,91 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { ApiEndpointModal } from "@/components/api-endpoint-modal";
 import Link from "next/link";
 import { AiGenerator, EditIcon, SparklesIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
-import SearchBar from "@/components/search-bar";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
-// import Tabs from "@/components/common/Tabs";
+import AnimatedTabsSection from "@/components/common/TabsPane";
+import EmptyCard from "@/components/common/EmptyCard";
+import PromptCardGrid from "@/components/prompt-card-grid";
+
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
-  const [agentName, setAgentName] = useState("MY AI Assistant");
-  const [description, setDescription] = useState(
-    "A Helpful AI Assistant for..."
-  );
-  const [systemPrompt, setSystemPrompt] = useState(
-    "You are a helpful AI assistant that..."
-  );
-  const [query, setQuery] = useState("");
-  const [enhancePrompt, setEnhancePrompt] = useState("");
-  const [tab, setTab] = useState("all");
+  const [agentName, setAgentName] = useState("");
+   const [description, setDescription] = useState("");
 
-  const tabs = [
-    { id: "all", label: "All Models" },
+   const items = [
     {
-      id: "selfHosted",
-      label: "Self-Hosted",
+      id: "prompt",
+      value: "prompt",
+      label: "Prompt",
+      name: "Prompt",
+      render: () =>
+          <PromptCardGrid/>
     },
     {
-      id: "apiBased",
-      label: "API-Based",
+      id: "model",
+      value: "model",
+      label: "Model",
+      name: "Model",
+      render: () =>
+          <EmptyCard children={"Models configuration coming soon..."}/>
+         
     },
     {
-      id: "fineTuned",
-      label: "Fine-Tuned",
+      id: "tools",
+      value: "tools",
+      label: "Tools",
+      name: "Tools",
+     render: () =>
+          <EmptyCard children={"Tools configuration coming soon..."}/>
     },
+    {
+      id: "knowledge",
+      value: "knowledge",
+      label: "Knowledge",
+      name: "Knowledge",
+     render: () =>
+          <EmptyCard children={"Knowledge configuration coming soon..."}/>
+    },
+    {
+      id: "memory",
+      value: "memory",
+      label: "Memory",
+      name: "Memory",
+     render: () =>
+          <EmptyCard children={"Memory configuration coming soon..."}/>
+    },
+    {
+      id: "guardrails",
+      value: "guardrails",
+      label: "Guardrails",
+      name: "Guardrails",
+     render: () =>
+          <EmptyCard children={"Guardrails configuration coming soon..."}/>
+    },
+    {
+      id: "finetuning",
+      value: "finetuning",
+      label: "Finetuning",
+      name: "Finetuning",
+     render: () =>
+          <EmptyCard children={"Finetuning configuration coming soon..."}/>
+    },
+    {
+      id: "tags",
+      value: "tags",
+      label: "Tags",
+      name: "Tags",
+     render: () =>
+          <EmptyCard children={"Tags configuration coming soon..."}/>
+    }
   ];
+ 
 
   return (
     <div className="flex flex-col h-full">
@@ -102,7 +146,7 @@ export default function CreateAgentPage() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto p-6">
-        <div className="max-w-6xl mx-auto ">
+        <div className="max-w-6xl mx-auto space-y-4">
           {/* Basic Information */}
           <FadeUp delay={0.05}>
             <Card className={"h-full py-10 shadow-none border-[#AAAAAA]"}>
@@ -141,174 +185,12 @@ export default function CreateAgentPage() {
             </Card>
           </FadeUp>
 
-          {/* Configuration Tabs */}
-          <FadeUp delay={0.1}>
-            <Card className={"border-none shadow-none "}>
-              <CardContent className="pt-2 px-0">
-                <Tabs defaultValue="prompt" className="w-full">
-                  <TabsList className="grid w-full grid-cols-8 mb-6 border h-15 px-1.5 py-1.5">
-                    <TabsTrigger
-                      value="prompt"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Prompt
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="model"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Model
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="tools"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Tools
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="knowledge"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Knowledge
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="memory"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Memory
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="guardrails"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Guardrails
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="finetuning"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Finetuning
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="tags"
-                      className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
-                    >
-                      Tags
-                    </TabsTrigger>
-                  </TabsList>
-
-                  <TabsContent
-                    value="prompt"
-                    className="space-y-6 border rounded-3xl p-6 border-[#AAAAAA] h-full pb-8 "
-                  >
-                    <div>
-                      <h3 className="text-xl font-medium mb-2">
-                        System Prompt
-                      </h3>
-                      <p className="text-sm text-gray-600 mb-4">
-                        Define how your agent should behave and respond
-                      </p>
-
-                      <div className="space-y-2 mb-4 mt-8">
-                        <SearchBar
-                          placeholder="Search by name, tags or content..."
-                          value={query}
-                          onChange={(e) => setQuery(e.target.value)}
-                        />
-                      </div>
-                      <div className="space-y-2 mb-4">
-                        <Textarea
-                          value={systemPrompt}
-                          onChange={(e) => setSystemPrompt(e.target.value)}
-                          placeholder="You are a helpful AI assistant that..."
-                          className="min-h-[200px] resize-none border-[#AAAAAA] !text-xs p-4"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-[#111111]">
-                          Generate or Enhance Prompt
-                        </label>
-                        <div className="flex gap-2 mt-2">
-                          <Input
-                            value={enhancePrompt}
-                            onChange={(e) => setEnhancePrompt(e.target.value)}
-                            placeholder="Describe how you want to modify the prompt..."
-                            className="h-12 flex-1 !text-xs p-4 border-[#AAAAAA] shadow-none"
-                          />
-                          <RippleButton className={"rounded-lg"}>
-                          <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2  cursor-pointer w-30 rounded-lg">
-                            <SparklesIcon />
-                            Generate
-                          </Button>
-
-                          </RippleButton>
-                        </div>
-                        <p className="text-xs text-[#111111]">
-                          Use natural language to create a new prompt or enhance
-                          the existing one
-                        </p>
-                      </div>
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="model" className={"border rounded-xl"}>
-                    <div className="text-center py-12 text-gray-500">
-                      Model configuration coming soon...
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="tools" className={"border rounded-xl"}>
-                    <div className="text-center py-12 text-gray-500">
-                      Tools configuration coming soon...
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent
-                    value="knowledge"
-                    className={"border rounded-xl"}
-                  >
-                    <div className="text-center py-12 text-gray-500">
-                      Knowledge configuration coming soon...
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="memory" className={"border rounded-xl"}>
-                    <div className="text-center py-12 text-gray-500">
-                      Memory configuration coming soon...
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent
-                    value="guardrails"
-                    className={"border rounded-xl"}
-                  >
-                    <div className="text-center py-12 text-gray-500">
-                      Guardrails configuration coming soon...
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent
-                    value="finetuning"
-                    className={"border rounded-xl"}
-                  >
-                    <div className="text-center py-12 text-gray-500">
-                      Finetuning configuration coming soon...
-                    </div>
-                  </TabsContent>
-
-                  <TabsContent value="tags" className={"border rounded-xl"}>
-                    <div className="text-center py-12 text-gray-500">
-                      Tags configuration coming soon...
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </FadeUp>
-
-          {/* <FadeUp delay={0.1}>
-                    <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
-                  </FadeUp> */}
+<FadeUp delay={0.05}>
+        <AnimatedTabsSection
+         items={items}
+            // ctx={ctx}
+            defaultValue="prompt"/>
+            </FadeUp>
         </div>
       </div>
 

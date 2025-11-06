@@ -148,7 +148,7 @@ function MotionHighlight(
                   }
                 }}
                 transition={transition}
-                className={cn('bg-muted absolute z-0', className, activeClassNameState)} />
+                className={cn('bg-black absolute z-0 !border !border-black', className, activeClassNameState)} />
             )}
           </AnimatePresence>
           {children}

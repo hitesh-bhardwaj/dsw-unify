@@ -1,19 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
-import { TestingCard } from "@/components/testing/testing-card";
-import { TestingCardResults } from "@/components/testing/testing-card-results";
 import TestingAnalyticsComp from "@/components/testing/testing-analytics";
-// import {FadeUpStagger} from "@/components/animations/Fadeup";
-import Tabs from "@/components/common/Tabs";
 import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
+import AnimatedTabsSection from "@/components/common/TabsPane";
+import TestingSuitesGrid from "@/components/testing/testing-suites-grid";
+import TestingResultsGrid from "@/components/testing/testing-results-grid";
 
-// Mock data for agents
 const testsSuites = [
   {
     id: "customer-support-validation",
@@ -106,18 +102,32 @@ const analyticsCardData = [
 ];
 
 export default function TestingPage() {
-  const [tab, setTab] = useState("test-suites");
-
-  const tabs = [
-    { id: "test-suites", label: "Test Suites" },
+  const items = [
+    {
+      id: "test-suites",
+      value: "test-suites",
+      label: "Test Suites",
+      name: "Test Suites",
+      render: () =>
+          <TestingSuitesGrid items={testsSuites} />
+    },
     {
       id: "test-results",
+      value: "test-results",
       label: "Test Results",
+      name: "Test Results",
+      render: () =>
+          <TestingResultsGrid items={testsResults} />
+         
     },
     {
       id: "analytics",
+      value: "analytics",
       label: "Analytics",
-    },
+      name: "Analytics",
+     render: () =>
+          <TestingAnalyticsComp cardData={analyticsCardData} />
+    }
   ];
   return (
     <div className="flex flex-col h-full">
@@ -141,63 +151,14 @@ export default function TestingPage() {
             </RippleButton>
           </div>
         </FadeUp>
-
-        {/* Filter tabs */}
-        <FadeUp delay={0.05}>
-          <Tabs tabs={tabs} value={tab} onValueChange={setTab} />
-        </FadeUp>
+<FadeUp delay={0.05}>
+        <AnimatedTabsSection
+         items={items}
+            // ctx={ctx}
+            defaultValue="test-suites"/>
+            </FadeUp>
+       
       </div>
-      <FadeUp delay={0.1}>
-        <div className="flex-1 h-full w-full relative">
-          <div
-            className={cn(
-              "relative inset-0  p-6 pt-0 transition-all",
-              tab === "test-suites"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-            )}
-          >
-            <div className="space-y-4">
-              {testsSuites.map((test) => (
-                <TestingCard test={test} key={test.id} />
-              ))}
-            </div>
-          </div>
-
-          {/* Test Results Tab */}
-          <div
-            className={cn(
-              "absolute inset-0  h-full p-6 pt-0 transition-all",
-              tab === "test-results"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : tab === "test-suites"
-                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-            )}
-          >
-            <div className="space-y-4 h-full">
-              {testsResults.map((test) => {
-                // console.log(tab);
-                return (
-                  <TestingCardResults test={test} key={test.id} tab={tab} />
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Analytics Tab */}
-          <div
-            className={cn(
-              "absolute inset-0  h-full p-6 pt-0 transition-all",
-              tab === "analytics"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-            )}
-          >
-            <TestingAnalyticsComp cardData={analyticsCardData} tab={tab} />
-          </div>
-        </div>
-      </FadeUp>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { LLMCard } from '../LLMCard'
+import { LLMCard } from './LLMCard'
 
 const LLMGrid = ({items}) => {
   return (
