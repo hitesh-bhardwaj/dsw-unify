@@ -30,6 +30,7 @@ const CATEGORY_OPTIONS = [
 
 const CreatePromptModal = ({ open, onOpenChange }) => {
   const [category, setCategory] = useState();
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleCreate = () => {
     // TODO: wire up your submit logic here
@@ -61,17 +62,18 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
               <Select
                 value={category}
                 onValueChange={setCategory}
-                className="w-full"
+                onOpenChange={(open) => setIsOpen(open)}
+                className="w-full "
               >
-                <SelectTrigger className="border border-black/20 placeholder:text-black/60 !text-black/60 !h-10.5 w-full">
+                <SelectTrigger className={`border border-black/20 placeholder:text-black/60 text-black !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${isOpen ? '[&>svg]:rotate-180' : ''}`}>
                   <SelectValue
                     placeholder="Choose category"
-                    className={"placeholder:text-sm "}
+                    className={"placeholder:text-sm !cursor-pointer "}
                   />
                 </SelectTrigger>
                 <SelectContent>
                   {CATEGORY_OPTIONS.map((c) => (
-                    <SelectItem key={c} value={c}>
+                    <SelectItem key={c} value={c} className={"!cursor-pointer"}>
                       {c}
                     </SelectItem>
                   ))}
