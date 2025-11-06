@@ -6,6 +6,7 @@ import { Separator } from "./ui/separator";
 import { NavUser } from "./nav-user";
 import { FAQIcons, HomeIcon, NotificationsIcon } from "./Icons";
 import { ThemeTogglerBtn } from "./headerdark";
+import Breadcrumbs from "./common/Breadcrumbs";
 
 export function Header({ title = "Agents" }) {
 
@@ -22,8 +23,9 @@ export function Header({ title = "Agents" }) {
         <SidebarTrigger />
         <Separator orientation="vertical" className={"h-8!"} />
         <div className="flex items-center gap-2 text-sm hover:bg-sidebar-accent p-2 rounded-md duration-300">
-          <HomeIcon className="h-5 w-auto !cursor-pointer"/>
-          <span className="text-foreground">{title}</span>
+         
+          {/* <span className="text-foreground">{title}</span> */}
+          <Breadcrumbs/>
         </div>
       </div>
 
