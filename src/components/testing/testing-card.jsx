@@ -1,61 +1,63 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { AiGenerator } from "../Icons";
 import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { RippleButton } from "../ui/ripple-button";
-import { useEffect } from "react";
 
-export function TestingCard({ test }) {
-  const {
-    id,
-    name,
-    description,
-    tags = [],
-    tests,
-    agent,
-    lastrun,
-    variant = "light",
-  } = test;
+export function TestingCard({ test, minSkeletonMs = 500 }) {
+  const { id, name, description, tags = [], tests, agent, lastrun, variant = "light" } =
+    test || {};
 
-  const isDark = variant === "dark";
+  // Keep skeleton visible for at least `minSkeletonMs`
+  const [showSkeleton, setShowSkeleton] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setShowSkeleton(false), minSkeletonMs);
+    return () => clearTimeout(t);
+  }, [minSkeletonMs]);
 
+  if (showSkeleton) return <TestingCardSkeleton />;
 
   return (
-    // <Link href={`/#`} className="block group">
     <div className="group">
       <Card
         className={cn(
-          "overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1 !pl-0"
+          "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out",
+          "bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1 !pl-0"
         )}
       >
-        <CardHeader className="">
+        <CardHeader>
           <div className="flex items-center w-full justify-between">
             <div className="space-y-3">
               <div className="flex items-center gap-2 mt-4">
-                {/* Agent name */}
-                <h3 className="text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out ">
+                {/* Name */}
+                <h3 className="text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out">
                   {name}
                 </h3>
-                <div className=" flex flex-wrap gap-1">
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1">
                   {tags.map((tag, index) => (
                     <Badge
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full px-3.5 py-1 text-xs font-normal",
+                        "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out",
                         tag.color === "yellow" &&
-                          "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
                         tag.color === "blue" &&
-                          "bg-badge-blue text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-badge-blue text-white group-hover:bg-background group-hover:text-black",
                         tag.color === "green" &&
-                          "bg-badge-green text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-badge-green text-white group-hover:bg-background group-hover:text-black",
                         tag.color === "orange" &&
-                          "bg-primary  text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out ",
+                          "bg-primary text-white group-hover:bg-background group-hover:text-black",
                         tag.color === "red" &&
-                          "bg-red-500 text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out "
+                          "bg-red-500 text-white group-hover:bg-background group-hover:text-black"
                       )}
                     >
                       {tag.label}
@@ -65,20 +67,18 @@ export function TestingCard({ test }) {
               </div>
 
               {/* Description */}
-              <p
-                className={cn(
-                  "text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out "
-                )}
-              >
+              <p className="text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out">
                 {description}
               </p>
             </div>
+
+            {/* Actions */}
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white  "
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white"
                 )}
               >
                 <Eye />
@@ -86,7 +86,6 @@ export function TestingCard({ test }) {
               <RippleButton>
                 <Button
                   variant="outline"
-                  //   onClick={() => setApiModalOpen(true)}
                   className="gap-2 text-white bg-primary !border-none duration-300 ease-out"
                 >
                   <div className="!w-4">
@@ -101,28 +100,71 @@ export function TestingCard({ test }) {
 
         <CardContent>
           {/* Footer stats */}
-          <div
-            className={cn(
-              "flex items-center justify-between  text-sm py-4 group-hover:text-white"
-            )}
-          >
+          <div className="flex items-center justify-between text-sm py-4 group-hover:text-white">
             <div className="flex items-center gap-1">
-              <span className=" ">{tests}</span>
+              <span>{tests}</span>
               <span>tests</span>
             </div>
             <div className="flex items-center">
-              <span>Agent: </span>
+              <span>Agent:&nbsp;</span>
               <span>{agent}</span>
             </div>
             <div className="flex items-center">
-              <span>Last run: </span>
+              <span>Last run:&nbsp;</span>
               <span>{lastrun}</span>
             </div>
           </div>
         </CardContent>
       </Card>
-
     </div>
-    // </Link>
+  );
+}
+
+/* ---------------------------------------------
+   Skeleton that mirrors the TestingCard layout
+---------------------------------------------- */
+export function TestingCardSkeleton() {
+  return (
+    <div className="group">
+      <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 !py-3 !pb-1 !pl-0">
+        <CardHeader>
+          <div className="flex items-center w-full justify-between">
+            <div className="space-y-6 w-full">
+              <div className="flex items-center gap-2 mt-4">
+                <Skeleton className="h-6 w-44" />
+                <div className="flex flex-wrap gap-1">
+                  <Skeleton className="h-6 w-16 rounded-full" />
+                  <Skeleton className="h-6 w-20 rounded-full" />
+                  <Skeleton className="h-6 w-14 rounded-full" />
+                </div>
+              </div>
+              <Skeleton className="h-4 w-11/12" />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-7 w-7 rounded" />
+              <Skeleton className="h-9 w-28 rounded" />
+            </div>
+          </div>
+        </CardHeader>
+
+        <CardContent>
+          <div className="flex items-center justify-between text-sm py-4">
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-4 w-10" />
+              <Skeleton className="h-4 w-10" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-4 w-12" />
+              <Skeleton className="h-4 w-20" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Skeleton className="h-4 w-14" />
+              <Skeleton className="h-4 w-24" />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

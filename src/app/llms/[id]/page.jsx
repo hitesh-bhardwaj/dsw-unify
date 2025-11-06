@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ConfigureIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
@@ -11,9 +11,17 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import LLMConfigurationGrid from "@/components/llm-configuration-grid";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
+
+  const [showMetricsSkeleton, setShowMetricsSkeleton] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setShowMetricsSkeleton(false), 500);
+    return () => clearTimeout(t);
+  }, []);
+
   const items = [
     {
       id: "configuration",
@@ -51,11 +59,11 @@ export default function LLMsDetailPage({ params }) {
     },
   ];
 
-  // Mock data - in real app, fetch based on id
+  // Mock data
   const llm = {
     id: id,
     name: "GPT-4 Turbo",
-    description: "OpenAI API Model | Version: 2024-04-09",
+    description: "OpenAI API Model | Version: 2024-04-09",
     status: "active",
     request: "1,234",
     avgRes: "2.3s",
@@ -64,7 +72,7 @@ export default function LLMsDetailPage({ params }) {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header */}
       <div className="bg-background p-6 space-y-6 h-full">
         <FadeUp>
@@ -72,19 +80,11 @@ export default function LLMsDetailPage({ params }) {
             <div className="flex gap-3">
               <LeftArrowAnim link={"/llms"} />
               <div className="space-y-2">
-                <div className="w-fit flex gap-2">
+                <div className="w-fit flex gap-2 items-center">
                   <h1 className="text-xl font-medium">{llm.name}</h1>
-                  {
-                    (llm.status = "active" && (
-                      <Badge
-                        className={
-                          " py-1 text-xs font-medium bg-badge-green text-white"
-                        }
-                      >
-                        Active
-                      </Badge>
-                    ))
-                  }
+                  <Badge className="py-1 text-xs font-medium bg-badge-green text-white">
+                    Active
+                  </Badge>
                 </div>
                 <p className="text-sm text-gray-600 pl-0.5">
                   {llm.description}
@@ -103,40 +103,53 @@ export default function LLMsDetailPage({ params }) {
             </div>
           </div>
         </FadeUp>
+
+        {/* Metrics row with 500ms skeletons */}
         <FadeUp delay={0.02}>
-          <div className="w-full flex gap-4">
-            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-              <p className="text-3xl font-medium text-green">
-                <CountUp value={llm.request} duration={1.2} startOnView once />
-              </p>
-              <p className="text-black/60">Total Requests</p>
+          {showMetricsSkeleton ? (
+            <div className="w-full flex gap-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out"
+                >
+                  <Skeleton className="h-8 w-28 mb-3" />
+                  <Skeleton className="h-4 w-40" />
+                </div>
+              ))}
             </div>
-            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-              <p className="text-3xl font-medium text-badge-blue">
-                <CountUp value={llm.avgRes} duration={1.2} startOnView once />
-              </p>
-              <p className="text-black/60">Avg. Response Time</p>
+          ) : (
+            <div className="w-full flex gap-4">
+              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium text-green">
+                  <CountUp value={llm.request} duration={1.2} startOnView once />
+                </p>
+                <p className="text-black/60 text-sm ">Total Requests</p>
+              </div>
+              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium text-badge-blue">
+                  <CountUp value={llm.avgRes} duration={1.2} startOnView once />
+                </p>
+                <p className="text-black/60 text-sm">Avg. Response Time</p>
+              </div>
+              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium text-yellow">
+                  <CountUp value={llm.upTime} duration={1.2} startOnView once />
+                </p>
+                <p className="text-black/60 text-sm">Uptime</p>
+              </div>
+              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium text-red">
+                  <CountUp value={llm.cost} duration={1.2} startOnView once />
+                </p>
+                <p className="text-black/60 text-sm">This Month Cost</p>
+              </div>
             </div>
-            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-              <p className="text-3xl font-medium text-yellow">
-                <CountUp value={llm.upTime} duration={1.2} startOnView once />
-              </p>
-              <p className="text-black/60">Uptime</p>
-            </div>
-            <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out">
-              <p className="text-3xl font-medium text-red">
-                <CountUp value={llm.cost} duration={1.2} startOnView once />
-              </p>
-              <p className="text-black/60">This Month Cost</p>
-            </div>
-          </div>
+          )}
         </FadeUp>
+
         <FadeUp delay={0.04}>
-          <AnimatedTabsSection
-            items={items}
-            // ctx={ctx}
-            defaultValue="configuration"
-          />
+          <AnimatedTabsSection items={items} defaultValue="configuration" />
         </FadeUp>
       </div>
     </div>

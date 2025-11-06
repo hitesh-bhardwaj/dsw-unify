@@ -81,22 +81,10 @@ const LLMs = [
 ];
 
 const Recent = [
-  {
-    content: "Mistral 7B Instruct deployment completed",
-    recentActivity: "30 minutes ago",
-  },
-  {
-    content: "GPT-4 Turbo deployment completed",
-    recentActivity: "2 hours ago",
-  },
-  {
-    content: "Llama 2 7B deployment started",
-    recentActivity: "4 hours ago",
-  },
-  {
-    content: "Custom Insurance Model retrained",
-    recentActivity: "1 day ago",
-  },
+  { content: "Mistral 7B Instruct deployment completed", recentActivity: "30 minutes ago" },
+  { content: "GPT-4 Turbo deployment completed", recentActivity: "2 hours ago" },
+  { content: "Llama 2 7B deployment started", recentActivity: "4 hours ago" },
+  { content: "Custom Insurance Model retrained", recentActivity: "1 day ago" },
 ];
 
 export default function LLMsPage() {
@@ -104,12 +92,16 @@ export default function LLMsPage() {
   const [activeTab, setActiveTab] = useState("all");
 
   const filteredLLMs = useMemo(() => {
-    const q = query.toLowerCase();
-    return LLMs.filter(
-      (llm) =>
-        llm.name.toLowerCase().includes(q) ||
-        llm.description.toLowerCase().includes(q)
-    );
+    const q = query.trim().toLowerCase();
+    if (!q) return LLMs;
+    return LLMs.filter((llm) => {
+      const inName = llm.name.toLowerCase().includes(q);
+      const inDesc = llm.description.toLowerCase().includes(q);
+      const inTags = (llm.tags || []).some((t) =>
+        (t.label || "").toLowerCase().includes(q)
+      );
+      return inName || inDesc || inTags;
+    });
   }, [query]);
 
   const ctx = { filteredLLMs, query };
@@ -120,7 +112,14 @@ export default function LLMsPage() {
       value: "all",
       label: "All",
       name: "All",
-      render: ({ filteredLLMs }) => <LLMGrid items={filteredLLMs} />,
+      render: ({ filteredLLMs, query }) =>
+        filteredLLMs.length > 0 ? (
+          <LLMGrid items={filteredLLMs} />
+        ) : (
+          <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground border border-border-color-1 rounded-xl">
+            No LLMs found matching "{query}"
+          </div>
+        ),
     },
     {
       id: "tab-self",
@@ -128,7 +127,7 @@ export default function LLMsPage() {
       label: "Self Hosted",
       name: "Self Hosted",
       render: () => (
-        <EmptyCard children={"No Self Hosted LLM is available at this point"} />
+        <EmptyCard>No Self Hosted LLM is available at this point</EmptyCard>
       ),
     },
     {
@@ -137,7 +136,7 @@ export default function LLMsPage() {
       label: "API Based",
       name: "API Based",
       render: () => (
-        <EmptyCard children={"No API Based LLM is available at this point"} />
+        <EmptyCard>No API Based LLM is available at this point</EmptyCard>
       ),
     },
     {
@@ -146,7 +145,7 @@ export default function LLMsPage() {
       label: "Fine Tuned",
       name: "Fine Tuned",
       render: () => (
-        <EmptyCard children={"No Finetuned LLM is available at this point"} />
+        <EmptyCard>No Finetuned LLM is available at this point</EmptyCard>
       ),
     },
   ];
@@ -177,7 +176,6 @@ export default function LLMsPage() {
                 <Link href={"/llms/llm-finetuning"}>
                   <Button
                     variant="outline"
-                    //   onClick={() => setApiModalOpen(true)}
                     className="gap-2 text-foreground border border-primary"
                   >
                     <div className="!w-4">
@@ -209,6 +207,7 @@ export default function LLMsPage() {
             </div>
           </div>
         </FadeUp>
+
         <FadeUp delay={0.02}>
           <SearchBar
             placeholder="Search LLMs..."
@@ -216,6 +215,7 @@ export default function LLMsPage() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </FadeUp>
+
         <FadeUp delay={0.04}>
           <AnimatedTabsSection
             items={items}
@@ -225,7 +225,7 @@ export default function LLMsPage() {
           />
         </FadeUp>
 
-        {/* Recent Acitvity */}
+        {/* Recent Activity (still shows under "All") */}
         {activeTab === "all" && (
           <FadeUp delay={0.06}>
             <div className="space-y-10 mt-20">
@@ -239,14 +239,14 @@ export default function LLMsPage() {
     <div className="w-13 h-12">
       <span
         className={cn(
-          "w-full h-full flex justify-center items-center  p-3.5 text-white bg-foreground rounded-lg -mt-1 "
+          "w-full h-full flex justify-center items-center p-3.5 text-white bg-foreground rounded-lg -mt-1"
         )}
       >
         <SynthWave />
       </span>
     </div>
     <div className="flex flex-col w-full">
-      <div className="w-full flex justify-between items-center  pt-5 pb-8">
+      <div className="w-full flex justify-between items-center pt-5 pb-8">
         <p>{recent.content}</p>
         <p className="text-xs text-black/60">
           {recent.recentActivity}

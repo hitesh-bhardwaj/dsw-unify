@@ -83,7 +83,7 @@ export default function KnowledgePage() {
                 ))}
               </div>
             ) : (
-              <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground border border-border-color-1 rounded-xl">
+              <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground">
                 No Knowledge base found matching "{query}"
               </div>
             )}

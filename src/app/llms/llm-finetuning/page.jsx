@@ -99,7 +99,7 @@ export default function LLMFineTuning() {
     }
   ];
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
         <FadeUp>

@@ -93,7 +93,7 @@ export default function CreateAgentPage() {
   ];
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header */}
       <div className=" bg-background p-6">
         <FadeUp>
@@ -148,7 +148,7 @@ export default function CreateAgentPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 p-6">
         <div className="max-w-6xl mx-auto space-y-4">
           {/* Basic Information */}
           <FadeUp delay={0.02}>
