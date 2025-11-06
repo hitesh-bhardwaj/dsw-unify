@@ -56,7 +56,7 @@ export default function MemoriesPage() {
   );
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header section */}
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
@@ -79,7 +79,7 @@ export default function MemoriesPage() {
             </RippleButton>
           </div>
         </FadeUp>
-        <FadeUp delay={0.05}>
+        <FadeUp delay={0.02}>
           <SearchBar
             placeholder="Search Memories..."
             value={query}
@@ -87,7 +87,7 @@ export default function MemoriesPage() {
           />
         </FadeUp>
       </div>
-      <FadeUp delay={0.1}>
+      <FadeUp delay={0.04}>
         <div className="flex-1 overflow-auto p-6 pt-0">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {filteredMemories.map((memory) => (

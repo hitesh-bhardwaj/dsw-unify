@@ -100,8 +100,8 @@ const Recent = [
 ];
 
 export default function LLMsPage() {
-   const [query, setQuery] = useState("");
-   const [activeTab, setActiveTab] = useState("all");
+  const [query, setQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
 
   const filteredLLMs = useMemo(() => {
     const q = query.toLowerCase();
@@ -120,37 +120,40 @@ export default function LLMsPage() {
       value: "all",
       label: "All",
       name: "All",
-      render: ({ filteredLLMs}) =>
-          <LLMGrid items={filteredLLMs} />
+      render: ({ filteredLLMs }) => <LLMGrid items={filteredLLMs} />,
     },
     {
       id: "tab-self",
       value: "selfHosted",
       label: "Self Hosted",
       name: "Self Hosted",
-      render: () =>
-          <EmptyCard children={"No Self Hosted LLM is available at this point"}/>
+      render: () => (
+        <EmptyCard children={"No Self Hosted LLM is available at this point"} />
+      ),
     },
     {
       id: "tab-api",
       value: "apiBased",
       label: "API Based",
       name: "API Based",
-      render: () =>
-         <EmptyCard children={"No API Based LLM is available at this point"}/>
+      render: () => (
+        <EmptyCard children={"No API Based LLM is available at this point"} />
+      ),
     },
     {
       id: "tab-fine",
       value: "fineTuned",
       label: "Fine Tuned",
       name: "Fine Tuned",
-      render: () =>
-         <EmptyCard children={"No Finetuned LLM is available at this point"}/>
+      render: () => (
+        <EmptyCard children={"No Finetuned LLM is available at this point"} />
+      ),
     },
   ];
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
+      {/* Header section */}
       <div className="space-y-6 p-6">
         <FadeUp>
           <div className="flex items-center justify-between">
@@ -194,60 +197,59 @@ export default function LLMsPage() {
             </div>
           </div>
         </FadeUp>
-        <FadeUp delay={0.05}>
+        <FadeUp delay={0.02}>
           <SearchBar
             placeholder="Search LLMs..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
         </FadeUp>
-        <FadeUp delay={0.05}>
-                      <AnimatedTabsSection
-                       items={items}
-                          ctx={ctx}
-                          onValueChange={setActiveTab}
-                          defaultValue="all"/>
-                          </FadeUp>
+        <FadeUp delay={0.04}>
+          <AnimatedTabsSection
+            items={items}
+            ctx={ctx}
+            onValueChange={setActiveTab}
+            defaultValue="all"
+          />
+        </FadeUp>
 
         {/* Recent Acitvity */}
         {activeTab === "all" && (
-          <FadeUp delay={0.08}>
-          <div className="space-y-10 mt-20">
-            <h2 className="text-2xl font-medium">Recent Activity</h2>
-            <div className="w-full space-y-4">
-              {Recent.map((recent, id) => (
-                <div
-                  key={id}
-                  className="w-full h-fit flex gap-6 items-center group "
-                >
-                  <div className="w-13 h-12">
-                    <span
-                      className={cn(
-                        "w-full h-full flex justify-center items-center  p-3.5 text-white bg-foreground rounded-lg -mt-1 "
-                      )}
-                    >
-                      <SynthWave />
-                    </span>
-                  </div>
-                  <div className="flex flex-col w-full">
-                    <div className="w-full flex justify-between items-center  pt-5 pb-8">
-                      <p>{recent.content}</p>
-                      <p className="text-xs text-black/60">
-                        {recent.recentActivity}
-                      </p>
+          <FadeUp delay={0.06}>
+            <div className="space-y-10 mt-20">
+              <h2 className="text-2xl font-medium">Recent Activity</h2>
+              <div className="w-full space-y-4">
+                {Recent.map((recent, id) => (
+                  <div
+                    key={id}
+                    className="w-full h-fit flex gap-6 items-center group "
+                  >
+                    <div className="w-13 h-12">
+                      <span
+                        className={cn(
+                          "w-full h-full flex justify-center items-center  p-3.5 text-white bg-foreground rounded-lg -mt-1 "
+                        )}
+                      >
+                        <SynthWave />
+                      </span>
                     </div>
-                    <div className="w-full h-[1px] bg-black/20">
-                      <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
+                    <div className="flex flex-col w-full">
+                      <div className="w-full flex justify-between items-center  pt-5 pb-8">
+                        <p>{recent.content}</p>
+                        <p className="text-xs text-black/60">
+                          {recent.recentActivity}
+                        </p>
+                      </div>
+                      <div className="w-full h-[1px] bg-black/20">
+                        <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-             </FadeUp>
-
+          </FadeUp>
         )}
-       
       </div>
     </div>
   );

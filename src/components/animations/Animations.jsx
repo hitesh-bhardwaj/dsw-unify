@@ -16,10 +16,11 @@ export const FadeUp = ({
   delay = 0,
   duration = 1,
   yOffset = 50,
-  className = "",
+  className = "w-full",
 }) => {
   return (
     <motion.div
+      
       initial={{ opacity: 0, y: yOffset }}
       animate={{ opacity: 1, y: 0 }}
       transition={{

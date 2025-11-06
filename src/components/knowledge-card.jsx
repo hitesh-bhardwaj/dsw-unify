@@ -88,7 +88,7 @@ export function KnowledgeCard({ agent }) {
             <div
               className={cn(
                 "flex items-center justify-between rounded-lg  text-sm py-4 px-6 mt-10",
-                isDark ? "bg-background" : "bg-gray-100 border"
+                isDark ? "bg-background" : "bg-sidebar-accent border"
               )}
             >
               <div className="flex flex-col items-start  gap-1 font-medium">

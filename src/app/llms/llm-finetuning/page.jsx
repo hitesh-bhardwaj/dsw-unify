@@ -128,7 +128,7 @@ export default function LLMFineTuning() {
             </RippleButton>
           </div>
         </FadeUp>
-        <FadeUp delay={0.05}>
+        <FadeUp delay={0.04}>
               <AnimatedTabsSection
                items={items}
                   // ctx={ctx}

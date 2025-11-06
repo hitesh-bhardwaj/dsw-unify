@@ -126,7 +126,7 @@ export default function AgentDetailPage({ params }) {
       <div className="flex-1 overflow-auto p-6 bg-background">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Top Cards Row */}
-          <FadeUp delay={0.05}>
+          <FadeUp delay={0.02}>
           <div className="grid grid-cols-3 gap-6">
             {/* Agent Information */}
             <Card>
@@ -251,7 +251,7 @@ export default function AgentDetailPage({ params }) {
 
           {/* Recent Activity */}
           <Card className={"border-none"}>
-            <FadeUp delay={0.1}>
+            <FadeUp delay={0.04}>
             <CardHeader>
               <h2 className="text-xl font-semibold">Recent Activity</h2>
             </CardHeader>

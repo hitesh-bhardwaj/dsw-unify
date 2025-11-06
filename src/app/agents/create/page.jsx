@@ -14,80 +14,83 @@ import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import PromptCardGrid from "@/components/prompt-card-grid";
 
-
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("");
-   const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("");
 
-   const items = [
+  const items = [
     {
       id: "prompt",
       value: "prompt",
       label: "Prompt",
       name: "Prompt",
-      render: () =>
-          <PromptCardGrid/>
+      render: () => <PromptCardGrid />,
     },
     {
       id: "model",
       value: "model",
       label: "Model",
       name: "Model",
-      render: () =>
-          <EmptyCard children={"Models configuration coming soon..."}/>
-         
+      render: () => (
+        <EmptyCard children={"Models configuration coming soon..."} />
+      ),
     },
     {
       id: "tools",
       value: "tools",
       label: "Tools",
       name: "Tools",
-     render: () =>
-          <EmptyCard children={"Tools configuration coming soon..."}/>
+      render: () => (
+        <EmptyCard children={"Tools configuration coming soon..."} />
+      ),
     },
     {
       id: "knowledge",
       value: "knowledge",
       label: "Knowledge",
       name: "Knowledge",
-     render: () =>
-          <EmptyCard children={"Knowledge configuration coming soon..."}/>
+      render: () => (
+        <EmptyCard children={"Knowledge configuration coming soon..."} />
+      ),
     },
     {
       id: "memory",
       value: "memory",
       label: "Memory",
       name: "Memory",
-     render: () =>
-          <EmptyCard children={"Memory configuration coming soon..."}/>
+      render: () => (
+        <EmptyCard children={"Memory configuration coming soon..."} />
+      ),
     },
     {
       id: "guardrails",
       value: "guardrails",
       label: "Guardrails",
       name: "Guardrails",
-     render: () =>
-          <EmptyCard children={"Guardrails configuration coming soon..."}/>
+      render: () => (
+        <EmptyCard children={"Guardrails configuration coming soon..."} />
+      ),
     },
     {
       id: "finetuning",
       value: "finetuning",
       label: "Finetuning",
       name: "Finetuning",
-     render: () =>
-          <EmptyCard children={"Finetuning configuration coming soon..."}/>
+      render: () => (
+        <EmptyCard children={"Finetuning configuration coming soon..."} />
+      ),
     },
     {
       id: "tags",
       value: "tags",
       label: "Tags",
       name: "Tags",
-     render: () =>
-          <EmptyCard children={"Tags configuration coming soon..."}/>
-    }
+      render: () => (
+        <EmptyCard children={"Tags configuration coming soon..."} />
+      ),
+    },
   ];
- 
 
   return (
     <div className="flex flex-col h-full">
@@ -148,7 +151,7 @@ export default function CreateAgentPage() {
       <div className="flex-1 overflow-auto p-6">
         <div className="max-w-6xl mx-auto space-y-4">
           {/* Basic Information */}
-          <FadeUp delay={0.05}>
+          <FadeUp delay={0.02}>
             <Card className={"h-full py-10 shadow-none border-[#AAAAAA]"}>
               <CardHeader>
                 <h2 className="text-xl font-medium">Basic Information</h2>
@@ -185,12 +188,13 @@ export default function CreateAgentPage() {
             </Card>
           </FadeUp>
 
-<FadeUp delay={0.05}>
-        <AnimatedTabsSection
-         items={items}
-            // ctx={ctx}
-            defaultValue="prompt"/>
-            </FadeUp>
+          <FadeUp delay={0.04}>
+            <AnimatedTabsSection
+              items={items}
+              // ctx={ctx}
+              defaultValue="prompt"
+            />
+          </FadeUp>
         </div>
       </div>
 

@@ -108,29 +108,25 @@ export default function TestingPage() {
       value: "test-suites",
       label: "Test Suites",
       name: "Test Suites",
-      render: () =>
-          <TestingSuitesGrid items={testsSuites} />
+      render: () => <TestingSuitesGrid items={testsSuites} />,
     },
     {
       id: "test-results",
       value: "test-results",
       label: "Test Results",
       name: "Test Results",
-      render: () =>
-          <TestingResultsGrid items={testsResults} />
-         
+      render: () => <TestingResultsGrid items={testsResults} />,
     },
     {
       id: "analytics",
       value: "analytics",
       label: "Analytics",
       name: "Analytics",
-     render: () =>
-          <TestingAnalyticsComp cardData={analyticsCardData} />
-    }
+      render: () => <TestingAnalyticsComp cardData={analyticsCardData} />,
+    },
   ];
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
         <FadeUp>
@@ -151,13 +147,13 @@ export default function TestingPage() {
             </RippleButton>
           </div>
         </FadeUp>
-<FadeUp delay={0.05}>
-        <AnimatedTabsSection
-         items={items}
+        <FadeUp delay={0.04}>
+          <AnimatedTabsSection
+            items={items}
             // ctx={ctx}
-            defaultValue="test-suites"/>
-            </FadeUp>
-       
+            defaultValue="test-suites"
+          />
+        </FadeUp>
       </div>
     </div>
   );

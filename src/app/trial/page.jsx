@@ -149,7 +149,7 @@ export default function LLMsPage() {
         </FadeUp>
 
         {/* search */}
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.04}>
           <SearchBar
             placeholder="Search LLMs..."
             value={query}

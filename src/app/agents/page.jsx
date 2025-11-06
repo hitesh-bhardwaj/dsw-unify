@@ -17,7 +17,6 @@ const agents = [
     id: "customer-support-agent",
     name: "Customer Support Agent",
     description: "Handles customer inquiries and support tickets",
-    icon: "🎧",
     status: "active",
     tags: [
       { label: "Support", color: "yellow" },
@@ -31,7 +30,6 @@ const agents = [
     id: "content-writer-agent",
     name: "Content Writer Agent",
     description: "Generates blog posts and marketing content",
-    icon: "✍️",
     status: "draft",
     tags: [
       { label: "Content", color: "yellow" },
@@ -46,7 +44,6 @@ const agents = [
     id: "data-analyst-agent",
     name: "Data Analyst Agent",
     description: "Analyzes data and generates insights",
-    icon: "📊",
     status: "active",
     tags: [
       { label: "Analytics", color: "orange" },
@@ -68,7 +65,7 @@ export default function AgentsPage() {
   );
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header section */}
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
@@ -80,18 +77,18 @@ export default function AgentsPage() {
                 Build, deploy, and manage your AI agents
               </p>
             </div>
-            
+
             <Link href="/agents/create">
-            <RippleButton>
-              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                <PlusIcon />
-                Create Agents
-              </Button>
-            </RippleButton>
+              <RippleButton>
+                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <PlusIcon />
+                  Create Agents
+                </Button>
+              </RippleButton>
             </Link>
           </div>
         </FadeUp>
-        <FadeUp delay={0.05}>
+        <FadeUp delay={0.02}>
           <SearchBar
             placeholder="Search Agents..."
             value={query}
@@ -99,7 +96,7 @@ export default function AgentsPage() {
           />
         </FadeUp>
 
-        <FadeUp delay={0.1}>
+        <FadeUp delay={0.04}>
           <RadioTabs
             items={[
               { id: "prompts", label: "Prompts", icon: PromptsIcon },
@@ -116,42 +113,42 @@ export default function AgentsPage() {
       </div>
 
       {/* Agents grid */}
-      <FadeUp delay={0.15}>
-        <div className="flex-1 overflow-auto p-6 pt-0">
-          <div className="flex-1 pt-0 h-fit w-full relative">
-            <div
-              className={cn(
-                "relative inset-0  pt-0 transition-all h-full",
-                tab === "prompts"
-                  ? "translate-x-0 opacity-100 duration-500 ease-out"
-                  : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
-              )}
-            >
-              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                {filteredAgents.map((agent) => (
-                  <AgentCard key={agent.id} agent={agent} />
-                ))}
-              </div>
+
+      <FadeUp delay={0.06}>
+        <div className="flex-1 pt-0 px-6 h-fit w-full relative">
+          <div
+            className={cn(
+              "relative inset-0  pt-0 transition-all h-full",
+              tab === "prompts"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
+            )}
+          >
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+              {filteredAgents.map((agent) => (
+                <AgentCard key={agent.id} agent={agent} />
+              ))}
             </div>
-            <div
-              className={cn(
-                "absolute inset-0 overflow-auto  pt-0 transition-all ",
-                tab === "templates"
-                  ? "translate-x-0 opacity-100 duration-500 ease-out"
-                  : "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out "
-              )}
-            >
-              <div className="grid gap-6 grid-cols-1 h-full">
-                <div className="w-full border border-border-color-1 rounded-2xl h-full flex justify-center items-center text-border-color-3">
-                  <p>"No Templates to be shown"</p>
-                </div>
+          </div>
+          <div
+            className={cn(
+              "absolute inset-0 pt-0 transition-all px-6 h-94",
+              tab === "templates"
+                ? "translate-x-0 opacity-100 duration-500 ease-out"
+                : tab === "prompts"
+                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+            )}
+          >
+            <div className="grid gap-6 grid-cols-1 h-full">
+              <div className="w-full border border-border-color-1 rounded-2xl h-full flex justify-center items-center text-border-color-3">
+                <p>"No Templates to be shown"</p>
               </div>
             </div>
           </div>
-
-          {filteredAgents.length === 0 && (
-            <div className="flex h-64 items-center justify-center text-gray-500">
-              No agents found matching "{searchQuery}"
+          {filteredAgents.length === 0 && tab==="prompts"&& (
+            <div className="flex h-64 items-center justify-center text-border-color-3 dark:text-foreground border border-border-color-1 rounded-xl">
+              No prompts found matching "{query}"
             </div>
           )}
         </div>

@@ -46,6 +46,7 @@ const guardrails = [
     triggers: "08",
     variant: "light",
   },
+  
 ];
 
 export default function GuardrailsPage() {
@@ -56,7 +57,7 @@ export default function GuardrailsPage() {
   );
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header section */}
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
@@ -81,7 +82,7 @@ export default function GuardrailsPage() {
             </RippleButton>
           </div>
         </FadeUp>
-        <FadeUp delay={0.05}>
+        <FadeUp delay={0.02}>
           <SearchBar
             placeholder="Search Guardrails..."
             value={query}
@@ -89,7 +90,7 @@ export default function GuardrailsPage() {
           />
         </FadeUp>
       </div>
-      <FadeUp delay={0.1}>
+      <FadeUp delay={0.04}>
         <div className="flex-1 overflow-auto p-6 pt-0">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
             {filteredGuardrails.map((guardrail) => (
