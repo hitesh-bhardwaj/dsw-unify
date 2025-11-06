@@ -36,7 +36,7 @@ export function TestingAnalyticsCard({ cards, tab }) {
           <p
             className={cn(
               `text-sm group-hover:text-white transition-all duration-500 ease-out ${
-                positive === true ? "text-green-500" : "text-red-500"
+                positive === true ? "text-green" : "text-red"
               }`
             )}
           >

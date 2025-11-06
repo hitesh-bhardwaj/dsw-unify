@@ -17,6 +17,8 @@ import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import CountUp from "@/components/animations/CountUp";
 import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
+import { motion } from 'framer-motion';
+
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -66,6 +68,18 @@ export default function AgentDetailPage({ params }) {
       default:
         return "bg-gray-500";
     }
+  };
+  const separatorVariants = {
+    hidden: { scaleX: 0, originX: 0 },
+    visible: (i) => ({
+      scaleX: 1,
+      originX: 0,
+      transition: {
+        delay: i * 0.07,
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    })
   };
 
   return (
@@ -196,7 +210,7 @@ export default function AgentDetailPage({ params }) {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h3 className="text-3xl font-medium text-green-500">
+                    <h3 className="text-3xl font-medium text-green">
                       <CountUp value={agent.metrics.successRate} />
                     </h3>
                     <p className="text-sm text-gray-600">Success Rate</p>
@@ -257,37 +271,40 @@ export default function AgentDetailPage({ params }) {
             </CardHeader>
             </FadeUp>
             <CardContent>
-              <div className="space-y-4">
-                {agent.recentActivity.map((activity, index) => (
-                  <FadeUp delay={0.3+index/20} key={index}>
-                  <div
-                    className="w-full flex flex-col gap-2 items-end group"
-                  >
-                    <div className="flex items-center justify-between py-4 w-full">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={cn(
-                            "h-2 w-2 rounded-full group-hover:animate-pulse",
-                            getActivityColor(activity.type)
-                          )}
-                        />
-                        <span className="text-sm text-gray-900">
-                          {activity.event}
-                        </span>
-                      </div>
-                      <span className="text-sm text-gray-500">
-                        {activity.time}
-                      </span>
-                    </div>
-                    {/* <span className="w-[98.5%] h-[1px] bg-black/20 block"/> */}
-                    <div className="w-full h-[1px] bg-black/20">
-                      <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
-                    </div>
-                  </div>
-                  </FadeUp>
-                ))}
-              </div>
-            </CardContent>
+  <div className="space-y-4">
+    {agent.recentActivity.map((activity, index) => (
+      <FadeUp delay={0.06 + index * 0.08} key={index}>
+        <div className="w-full flex flex-col gap-2 items-end group">
+          <div className="flex items-center justify-between py-4 w-full">
+            <div className="flex items-center gap-3">
+              <div
+                className={cn(
+                  "h-2 w-2 rounded-full group-hover:animate-pulse",
+                  getActivityColor(activity.type)
+                )}
+              />
+              <span className="text-sm text-gray-900">
+                {activity.event}
+              </span>
+            </div>
+            <span className="text-sm text-gray-500">
+              {activity.time}
+            </span>
+          </div>
+          <motion.div
+            custom={index}
+            initial="hidden"
+            animate="visible"
+            variants={separatorVariants}
+            className="w-full h-[1px] bg-black/20"
+          >
+            <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
+          </motion.div>
+        </div>
+      </FadeUp>
+    ))}
+  </div>
+</CardContent>
           </Card>
         </div>
       </div>
