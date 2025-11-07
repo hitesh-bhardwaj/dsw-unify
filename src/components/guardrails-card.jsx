@@ -9,15 +9,25 @@ import Link from "next/link";
 import { SynthWave } from "./Icons";
 import { Bounce } from "./animations/Animations";
 
+const skeletonShownMap = new Map();
 export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
-  const { name, description, status, tags = [], triggers } = memories || {};
+  const {id, name, description, status, tags = [], triggers } = memories || {};
 
   // Keep skeleton visible for at least `minSkeletonMs`
-  const [showSkeleton, setShowSkeleton] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setShowSkeleton(false), minSkeletonMs);
-    return () => clearTimeout(t);
-  }, [minSkeletonMs]);
+ const [showSkeleton, setShowSkeleton] = useState(() => {
+      // Only show skeleton if it hasn't been shown for this test before
+      return !skeletonShownMap.has(id);
+    });
+  
+    useEffect(() => {
+      if (showSkeleton && id) {
+        const t = setTimeout(() => {
+          setShowSkeleton(false);
+          skeletonShownMap.set(id, true);
+        }, minSkeletonMs);
+        return () => clearTimeout(t);
+      }
+    }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) return <GuardrailsCardSkeleton />;
 

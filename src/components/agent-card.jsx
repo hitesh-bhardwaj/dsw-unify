@@ -9,7 +9,10 @@ import Link from "next/link";
 import { Calendar, FileTimeout, SynthWave } from "./Icons";
 import { Bounce } from "./animations/Animations";
 
-export function AgentCard({ agent }) {
+
+const skeletonShownMap = new Map();
+
+export function AgentCard({ agent,minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -25,12 +28,22 @@ export function AgentCard({ agent }) {
   const isDark = variant === "dark";
 
   // Show skeleton for 500ms, then show real data
-  const [showSkeleton, setShowSkeleton] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setShowSkeleton(false), 700);
-    return () => clearTimeout(t);
-  }, []);
+    const [showSkeleton, setShowSkeleton] = useState(() => {
+      // Only show skeleton if it hasn't been shown for this test before
+      return !skeletonShownMap.has(id);
+    });
+  
+    useEffect(() => {
+      if (showSkeleton && id) {
+        const t = setTimeout(() => {
+          setShowSkeleton(false);
+          skeletonShownMap.set(id, true);
+        }, minSkeletonMs);
+        return () => clearTimeout(t);
+      }
+    }, [minSkeletonMs, id, showSkeleton]);
 
+    
   if (showSkeleton) {
     // Skeleton that mirrors the real card's structure
     return (

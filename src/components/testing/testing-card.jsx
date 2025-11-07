@@ -10,16 +10,27 @@ import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { RippleButton } from "../ui/ripple-button";
 
+// Track which tests have already shown their skeleton
+const skeletonShownMap = new Map();
+
 export function TestingCard({ test, minSkeletonMs = 500 }) {
   const { id, name, description, tags = [], tests, agent, lastrun, variant = "light" } =
     test || {};
 
-  // Keep skeleton visible for at least `minSkeletonMs`
-  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(() => {
+    // Only show skeleton if it hasn't been shown for this test before
+    return !skeletonShownMap.has(id);
+  });
+
   useEffect(() => {
-    const t = setTimeout(() => setShowSkeleton(false), minSkeletonMs);
-    return () => clearTimeout(t);
-  }, [minSkeletonMs]);
+    if (showSkeleton && id) {
+      const t = setTimeout(() => {
+        setShowSkeleton(false);
+        skeletonShownMap.set(id, true);
+      }, minSkeletonMs);
+      return () => clearTimeout(t);
+    }
+  }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) return <TestingCardSkeleton />;
 

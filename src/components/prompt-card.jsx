@@ -9,8 +9,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave } from "./Icons";
 
+const skeletonShownMap = new Map();
 export function PromptCard({ prompt, minSkeletonMs = 500 }) {
   const {
+    id,
     name,
     description,
     icon,
@@ -26,11 +28,20 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
   const isDark = variant === "dark";
 
   // keep a skeleton up for at least `minSkeletonMs`
-  const [showSkeleton, setShowSkeleton] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setShowSkeleton(false), minSkeletonMs);
-    return () => clearTimeout(t);
-  }, [minSkeletonMs]);
+    const [showSkeleton, setShowSkeleton] = useState(() => {
+      // Only show skeleton if it hasn't been shown for this test before
+      return !skeletonShownMap.has(id);
+    });
+  
+    useEffect(() => {
+      if (showSkeleton && id) {
+        const t = setTimeout(() => {
+          setShowSkeleton(false);
+          skeletonShownMap.set(id, true);
+        }, minSkeletonMs);
+        return () => clearTimeout(t);
+      }
+    }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) {
     return <PromptCardSkeleton />;

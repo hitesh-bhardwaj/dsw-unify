@@ -10,6 +10,7 @@ import { SynthWave } from "./Icons";
 import { Separator } from "./ui/separator";
 import { Bounce } from "./animations/Animations";
 
+const skeletonShownMap = new Map();
 export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
   const {
     id,
@@ -23,12 +24,20 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
 
   const isDark = variant === "dark";
 
-  // keep a skeleton up for at least `minSkeletonMs`
-  const [showSkeleton, setShowSkeleton] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setShowSkeleton(false), minSkeletonMs);
-    return () => clearTimeout(t);
-  }, [minSkeletonMs]);
+    const [showSkeleton, setShowSkeleton] = useState(() => {
+      // Only show skeleton if it hasn't been shown for this test before
+      return !skeletonShownMap.has(id);
+    });
+  
+    useEffect(() => {
+      if (showSkeleton && id) {
+        const t = setTimeout(() => {
+          setShowSkeleton(false);
+          skeletonShownMap.set(id, true);
+        }, minSkeletonMs);
+        return () => clearTimeout(t);
+      }
+    }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) return <KnowledgeCardSkeleton />;
 

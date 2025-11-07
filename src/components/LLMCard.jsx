@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,14 +9,26 @@ import Link from "next/link";
 import { SynthWave } from "./Icons";
 import { Bounce } from "./animations/Animations";
 
+// Track which LLMs have already shown their skeleton
+const skeletonShownMap = new Map();
+
 export function LLMCard({ llm, minSkeletonMs = 500 }) {
   const { id, name, description, status, tags = [] } = llm || {};
 
-  const [showSkeleton, setShowSkeleton] = useState(true);
+  const [showSkeleton, setShowSkeleton] = useState(() => {
+    // Only show skeleton if it hasn't been shown for this LLM before
+    return !skeletonShownMap.has(id);
+  });
+
   useEffect(() => {
-    const t = setTimeout(() => setShowSkeleton(false), minSkeletonMs);
-    return () => clearTimeout(t);
-  }, [minSkeletonMs]);
+    if (showSkeleton && id) {
+      const t = setTimeout(() => {
+        setShowSkeleton(false);
+        skeletonShownMap.set(id, true);
+      }, minSkeletonMs);
+      return () => clearTimeout(t);
+    }
+  }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) {
     return <LLMCardSkeleton />;
@@ -175,7 +187,6 @@ export function LLMCardSkeleton() {
             <div className="flex items-start justify-between">
               <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-black/40 relative">
                 <Skeleton className="h-full w-full rounded" />
-                {/* <span className="w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 opacity-40" /> */}
               </div>
               <div className="rounded-full text-xs font-medium bg-gray-200">
                 <Skeleton className="h-6 w-16" />

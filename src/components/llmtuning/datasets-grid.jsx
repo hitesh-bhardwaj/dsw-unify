@@ -7,7 +7,7 @@ const DatasetsGrid = ({items}) => {
       <>
        <div className="flex-1 h-full w-full relative space-y-4">
             {items.map((item) => (
-            <DataSet key={item.id} data={item}/>
+            <DataSet key={item.id} data={item} id={item.id}/>
             ))}
           </div></>
   )

@@ -8,21 +8,33 @@ import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function DataSet({ data }) {
-  const [showSkeleton, setShowSkeleton] = useState(true);
+const skeletonShownMap = new Map();
 
-  // Show skeleton for exactly/min 500ms on mount
+export function DataSet({ data , minSkeletonMs = 500 }) {
+   const { id, name, description, tags = [], records, createdBy } = data;
+  const [showSkeleton, setShowSkeleton] = useState(() => {
+    // Only show skeleton if it hasn't been shown for this test before
+    return !skeletonShownMap.has(id);
+  });
+
   useEffect(() => {
-    const t = setTimeout(() => setShowSkeleton(false), 500);
-    return () => clearTimeout(t);
-  }, []);
+    if (showSkeleton && id) {
+      const t = setTimeout(() => {
+        setShowSkeleton(false);
+        skeletonShownMap.set(id, true);
+      }, minSkeletonMs);
+      return () => clearTimeout(t);
+    }
+  }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) {
     return (
       <div className="block">
-        <Card className={cn(
-          "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 pt-3 pb-8"
-        )}>
+        <Card
+          className={cn(
+            "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 pt-3 pb-8"
+          )}
+        >
           <CardHeader>
             <div className="flex items-center w-full justify-between">
               <div className="space-y-3 w-full max-w-[75%]">
@@ -63,14 +75,7 @@ export function DataSet({ data }) {
     );
   }
 
-  const {
-    id,
-    name,
-    description,
-    tags = [],
-    records,
-    createdBy,
-  } = data;
+
 
   return (
     <Link href={`/agents/${id}`} className="block group">

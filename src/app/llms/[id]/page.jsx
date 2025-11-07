@@ -28,7 +28,7 @@ export default function LLMsDetailPage({ params }) {
       value: "configuration",
       label: "Configuration",
       name: "Configuration",
-      render: () => <LLMConfigurationGrid />,
+      render: () => <LLMConfigurationGrid  id={"configuration"}/>,
     },
     {
       id: "usage-metric",

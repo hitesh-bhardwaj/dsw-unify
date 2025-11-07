@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { Card, CardHeader } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
-import { Skeleton } from '@/components/ui/skeleton'
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
-import { Bar, BarChart } from 'recharts'
-import { cn } from '@/lib/utils'
+import React, { useEffect, useState } from "react";
+import { Card, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Bar, BarChart } from "recharts";
+import { cn } from "@/lib/utils";
 
-const LLMConfigurationGrid = () => {
+const skeletonShownMap = new Map();
+const LLMConfigurationGrid = ({id, minSkeletonMs = 500}) => {
   const chartData = [
     { month: "January", desktop: 156 },
     { month: "February", desktop: 116 },
@@ -17,37 +22,46 @@ const LLMConfigurationGrid = () => {
     { month: "June", desktop: 114 },
     { month: "January", desktop: 146 },
     { month: "February", desktop: 89 },
-  ]
+  ];
 
   const chartConfig = {
     desktop: {
       label: "Desktop",
       color: "var(--primary)",
     },
-  }
+  };
 
-  const [animationId, setAnimationId] = useState(0)
-  const [showProgress, setShowProgress] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [animationId, setAnimationId] = useState(0);
+  const [showProgress, setShowProgress] = useState(false);
+  // const [isLoading, setIsLoading] = useState(true)
 
-  // Keep skeleton on screen for at least 500ms
+  const [showSkeleton, setShowSkeleton] = useState(() => {
+    // Only show skeleton if it hasn't been shown for this test before
+    return !skeletonShownMap.has(id);
+  });
+
   useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 600) // a touch over 500ms feels nicer
-    return () => clearTimeout(t)
-  }, [])
+    if (showSkeleton && id) {
+      const t = setTimeout(() => {
+        setShowSkeleton(false);
+        skeletonShownMap.set(id, true);
+      }, minSkeletonMs);
+      return () => clearTimeout(t);
+    }
+  }, [minSkeletonMs, id, showSkeleton]);
 
   // Kick off your original animations right after skeleton disappears
   useEffect(() => {
-    if (isLoading) return
-    setShowProgress(false)
+    if (showSkeleton) return;
+    setShowProgress(false);
     const timer = setTimeout(() => {
-      setShowProgress(true)
-      setAnimationId(id => id + 1)
-    }, 50)
-    return () => clearTimeout(timer)
-  }, [isLoading])
+      setShowProgress(true);
+      setAnimationId((id) => id + 1);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [showSkeleton]);
 
-  if (isLoading) {
+  if (showSkeleton) {
     // Skeleton view (approximate structure of final UI)
     return (
       <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
@@ -121,7 +135,7 @@ const LLMConfigurationGrid = () => {
           </div>
         </Card>
       </div>
-    )
+    );
   }
 
   // Final (original) UI
@@ -157,7 +171,7 @@ const LLMConfigurationGrid = () => {
               <div className="w-full h-[4px] bg-black/15 rounded-full flex items-center">
                 <div
                   className={`h-full bg-primary rounded-full relative duration-700 ease-in-out ${
-                    showProgress ? 'w-[70%]' : 'w-0'
+                    showProgress ? "w-[70%]" : "w-0"
                   } delay-300`}
                 />
                 <div className="w-5 h-5 rounded-full bg-background border-3 border-black -ml-1 relative z-[2]" />
@@ -206,14 +220,20 @@ const LLMConfigurationGrid = () => {
               <p className="text-sm">Request Over Time</p>
 
               <div className="w-full h-fit bg-[#F6F6F6] rounded-xl overflow-hidden">
-                <ChartContainer config={chartConfig} className="h-30 w-full px-6 pt-8">
+                <ChartContainer
+                  config={chartConfig}
+                  className="h-30 w-full px-6 pt-8"
+                >
                   <BarChart
                     key={animationId}
                     accessibilityLayer
                     data={chartData}
                     margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
                   >
-                    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent hideLabel />}
+                    />
                     <Bar
                       dataKey="desktop"
                       fill="var(--color-desktop)"
@@ -253,7 +273,7 @@ const LLMConfigurationGrid = () => {
         </Card>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default LLMConfigurationGrid
+export default LLMConfigurationGrid;
