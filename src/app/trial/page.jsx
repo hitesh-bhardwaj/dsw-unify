@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { AiGenerator, DownloadIcon, PlusIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import LLMGrid from "@/components/LLMGrid";
 import EmptyCard from "@/components/common/EmptyCard";
 import AnimatedTabsSection from "@/components/common/TabsPane";
@@ -125,7 +125,7 @@ export default function LLMsPage() {
     <div className="flex flex-col h-full">
       <div className="space-y-6 p-6">
         {/* header */}
-        <FadeUp>
+        {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
             <div className="gap-2 flex">
@@ -146,25 +146,25 @@ export default function LLMsPage() {
               </Link>
             </div>
           </div>
-        </FadeUp>
+        {/* </FadeUp> */}
 
         {/* search */}
-        <FadeUp delay={0.04}>
+        {/* <FadeUp delay={0.04}> */}
           <SearchBar
             placeholder="Search LLMs..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        </FadeUp>
+        {/* </FadeUp> */}
 
         {/* tabs (reusable, animated) */}
-        <FadeUp delay={0.3}>
+        {/* <FadeUp delay={0.3}> */}
           <AnimatedTabsSection
             items={items}
             ctx={ctx}
             defaultValue="all"
           />
-        </FadeUp>
+        {/* </FadeUp> */}
       </div>
     </div>
   );

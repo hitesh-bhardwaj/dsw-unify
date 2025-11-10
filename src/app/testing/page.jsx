@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
 import TestingAnalyticsComp from "@/components/testing/testing-analytics";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import TestingSuitesGrid from "@/components/testing/testing-suites-grid";
 import TestingResultsGrid from "@/components/testing/testing-results-grid";
+import { ScaleDown } from "@/components/animations/Animations";
 
 const testsSuites = [
   {
@@ -127,9 +128,10 @@ export default function TestingPage() {
   ];
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
+      <ScaleDown>
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <FadeUp>
+        {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Testing</h1>
@@ -146,15 +148,16 @@ export default function TestingPage() {
               </Link>
             </RippleButton>
           </div>
-        </FadeUp>
-        <FadeUp delay={0.04}>
+        {/* </FadeUp> */}
+        {/* <FadeUp delay={0.04}> */}
           <AnimatedTabsSection
             items={items}
             // ctx={ctx}
             defaultValue="test-suites"
           />
-        </FadeUp>
+        {/* </FadeUp> */}
       </div>
+      </ScaleDown>
     </div>
   );
 }

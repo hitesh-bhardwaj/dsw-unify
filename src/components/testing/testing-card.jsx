@@ -38,8 +38,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
     <div className="group">
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out",
-          "bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1 !pl-0"
+          "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-3 !pb-1 !pl-0"
         )}
       >
         <CardHeader>
@@ -47,7 +46,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
             <div className="space-y-3">
               <div className="flex items-center gap-2 mt-4">
                 {/* Name */}
-                <h3 className="text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out">
+                <h3 className="text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
                   {name}
                 </h3>
 
@@ -58,7 +57,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out",
+                        "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out dark:group-hover:bg-foreground",
                         tag.color === "yellow" &&
                           "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
                         tag.color === "blue" &&
@@ -78,7 +77,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out">
+              <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-white transition-all duration-500 ease-out">
                 {description}
               </p>
             </div>
@@ -89,7 +88,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white dark:text-foreground"
                 )}
               >
                 <Eye />
@@ -97,7 +96,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
               <RippleButton>
                 <Button
                   variant="outline"
-                  className="gap-2 text-white bg-primary !border-none duration-300 ease-out"
+                  className="gap-2 text-white bg-primary !border-none duration-300 ease-out dark:hover:bg-primary "
                 >
                   <div className="!w-4">
                     <AiGenerator />
@@ -137,7 +136,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
 export function TestingCardSkeleton() {
   return (
     <div className="group">
-      <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 !py-3 !pb-1 !pl-0">
+      <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-2 !py-3 !pb-1 !pl-0">
         <CardHeader>
           <div className="flex items-center w-full justify-between">
             <div className="space-y-6 w-full">

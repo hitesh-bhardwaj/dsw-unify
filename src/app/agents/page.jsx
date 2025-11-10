@@ -7,7 +7,7 @@ import Link from "next/link";
 import { PlusIcon, PromptsIcon, TemplatesIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import RadioTabs from "@/components/common/RadioTabs";
-import { FadeUp } from "@/components/animations/Animations";
+import { FadeUp, ScaleDown } from "@/components/animations/Animations";
 import { cn } from "@/lib/utils";
 import { RippleButton } from "@/components/ui/ripple-button";
 
@@ -66,10 +66,11 @@ export default function AgentsPage() {
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
-      {/* Header section */}
-      <div className="space-y-6 p-6">
-        {/* Title and CTA */}
-        <FadeUp>
+      <ScaleDown>
+        {/* Header section */}
+        <div className="space-y-6 p-6">
+          {/* Title and CTA */}
+          {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Agents</h1>
@@ -87,16 +88,16 @@ export default function AgentsPage() {
               </RippleButton>
             </Link>
           </div>
-        </FadeUp>
-        <FadeUp delay={0.02}>
+          {/* </FadeUp> */}
+          {/* <FadeUp delay={0.02}> */}
           <SearchBar
             placeholder="Search Agents..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        </FadeUp>
+          {/* </FadeUp> */}
 
-        <FadeUp delay={0.04}>
+          {/* <FadeUp delay={0.04}> */}
           <RadioTabs
             items={[
               { id: "prompts", label: "Prompts", icon: PromptsIcon },
@@ -105,16 +106,16 @@ export default function AgentsPage() {
             value={tab}
             onValueChange={setTab}
             activeClassName=" text-primary"
-            inactiveClassName="border-transparent text-foreground"
+            inactiveClassName="border-transparent dark:text-foreground text-black/70"
             dotColorClassName="bg-[#FF5722]"
             equalWidth={true}
           />
-        </FadeUp>
-      </div>
+          {/* </FadeUp> */}
+        </div>
 
-      {/* Agents grid */}
+        {/* Agents grid */}
 
-      <FadeUp delay={0.06}>
+        {/* <FadeUp delay={0.06}> */}
         <div className="flex-1 pt-0 px-6 h-fit w-full relative">
           <div
             className={cn(
@@ -146,13 +147,14 @@ export default function AgentsPage() {
               </div>
             </div>
           </div>
-          {filteredAgents.length === 0 && tab==="prompts"&& (
+          {filteredAgents.length === 0 && tab === "prompts" && (
             <div className="flex h-64 items-center justify-center text-border-color-3 dark:text-foreground border border-border-color-1 rounded-xl">
               No prompts found matching "{query}"
             </div>
           )}
         </div>
-      </FadeUp>
+        {/* </FadeUp> */}
+      </ScaleDown>
     </div>
   );
 }

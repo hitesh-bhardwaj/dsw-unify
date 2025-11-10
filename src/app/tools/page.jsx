@@ -6,9 +6,10 @@ import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
 import { ToolsCard } from "@/components/tools-card";
 import SearchBar from "@/components/search-bar";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { cn } from "@/lib/utils";
+import { ScaleDown } from "@/components/animations/Animations";
 
 // Mock data for tools
 const tools = [
@@ -80,9 +81,10 @@ export default function ToolsPage() {
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header section */}
+      <ScaleDown>
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <FadeUp>
+        {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Tools</h1>
@@ -99,18 +101,18 @@ export default function ToolsPage() {
               </Link>
             </RippleButton>
           </div>
-        </FadeUp>
+        {/* </FadeUp> */}
 
-        <FadeUp delay={0.02}>
+        {/* <FadeUp delay={0.02}> */}
           <SearchBar
             placeholder="Search Tools..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        </FadeUp>
+        {/* </FadeUp> */}
       </div>
 
-      <FadeUp delay={0.04}>
+      {/* <FadeUp delay={0.04}> */}
         <div className="flex-1 pt-0 px-6 h-fit w-full relative">
           <div className={cn("relative inset-0 pt-0 transition-all h-full")}>
             {filteredTools.length > 0 ? (
@@ -126,7 +128,8 @@ export default function ToolsPage() {
             )}
           </div>
         </div>
-      </FadeUp>
+      {/* </FadeUp> */}
+      </ScaleDown>
     </div>
   );
 }

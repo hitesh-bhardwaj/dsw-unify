@@ -22,10 +22,10 @@ export function TemplateCard({ template }) {
     <div className="group h-full">
       <Card
         className={cn(
-          "overflow-hidden transition-all hover:shadow-xl duration-500 ease-out py-5  bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black "
+          "overflow-hidden transition-all hover:shadow-xl duration-500 ease-out py-5 border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 bg-background "
           // isDark
           //   ? "bg-active-card text-white border-black"
-          //   : "bg-background border border-black/30"
+          //   : "bg-background border border-border-color-1"
         )}
       >
         <CardHeader className="pb-4">
@@ -34,13 +34,13 @@ export function TemplateCard({ template }) {
             <div className="flex items-center gap-3">
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center  rounded-lg relative bg-black group-hover:bg-background duration-500 ease-out"
+                  "flex h-14 w-14 items-center justify-center  rounded-lg relative bg-foreground dark:bg-sidebar-accent group-hover:bg-background dark:group-hover:bg-background transition-all duration-500 ease-out"
                   // isDark ? "bg-background" : "bg-black"
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center  p-4.5 text-white group-hover:text-black duration-500 ease-out"
+                    "w-full h-full flex justify-center items-center  p-4.5 text-white group-hover:text-black dark:group-hover:text-foreground transition-all duration-500 ease-out "
                     // isDark ? "text-black" : "text-white"
                   )}
                 >
@@ -96,7 +96,7 @@ export function TemplateCard({ template }) {
           {/* Description */}
           <p
             className={cn(
-              "text-sm mb-4 text-gray-600 group-hover:text-gray-300 duration-500 ease-out"
+              "text-sm mb-4 text-gray-600 dark:text-foreground dark:group-hover:text-foreground group-hover:text-background transition-all duration-500 ease-out"
               // isDark ? "text-gray-300" : "text-gray-600"
             )}
           >
@@ -110,7 +110,7 @@ export function TemplateCard({ template }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-light",
+                  "rounded-full px-3 py-1 text-xs font-light dark:group-hover:bg-foreground transition-all duration-500 ease-out",
                   tag.color === "yellow" &&
                     "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out",
                   tag.color === "blue" &&
@@ -132,16 +132,14 @@ export function TemplateCard({ template }) {
         </CardHeader>
 
         <CardContent
-          className={`${
-            isDark ? "bg-background" : "bg-sidebar-accent border border-black/10"
-          } group-hover:bg-sidebar-accent group-hover:border group-hover:border-black/10 w-[92%] mx-auto py-5 rounded-xl px-4 text-foreground text-sm duration-500 ease-out`}
+          className={`group-hover:bg-sidebar-accent group-hover:border group-hover:border-black/10 w-[92%] mx-auto py-5 rounded-xl px-4 text-foreground text-sm duration-500 ease-out bg-sidebar-accent border border-black/10 dark:group-hover:bg-background`}
         >
           {/* Usage stats */}
           <div className={`flex items-center justify-between mb-3 `}>
             <span className={"text-foreground"}>{uses} uses</span>
           </div>
           <span className="font-medium ">Variables: </span>
-          <span className="text-black/60">{variable}</span>
+          <span className="text-black/60 dark:text-foreground/70">{variable}</span>
           {/* Preview */}
         </CardContent>
       </Card>

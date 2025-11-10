@@ -25,10 +25,10 @@
 //     <Link href={`/#`} className="block group">
 //       <Card
 //         className={cn(
-//           "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1",
+//           "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1",
 //           // isDark
 //           //   ? "bg-active-card text-white border-black"
-//           //   : "bg-background border border-black/20"
+//           //   : "bg-background border border-border-color-1"
 //         )}
 //       >
 //         <CardHeader className="">
@@ -149,26 +149,13 @@ export function TestingCardResults({ test ,tab}) {
 
   // ---- Animate when visible ----
   const ref = useRef(null);
-  // const inView = useInView(ref, { margin: "-10% 0px -10% 0px", amount: 0.4 });
-  // const controls = useAnimationControls();
-
-  // useEffect(() => {
-  //   if (inView) {
-  //     controls.start({
-  //       width: targetWidth,
-  //       transition: { duration: 1.2, ease: "easeInOut" },
-  //     });
-  //   } else {
-  //     // reset when leaving viewport (so it replays on re-entry)
-  //     controls.set({ width: "0%" });
-  //   }
-  // }, [inView, targetWidth, controls]);
+ 
 
   return (
     <Link href={`/#`} className="block group" aria-label={`${name} test card`}>
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-3 !pb-1"
+          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-3 !pb-1"
         )}
       >
         <CardHeader>
@@ -176,7 +163,7 @@ export function TestingCardResults({ test ,tab}) {
             <div className="space-y-3">
               <div className="flex items-center gap-[3vw] mt-4">
                 {/* Agent name */}
-                <h3 className="text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out">
+                <h3 className="text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
                   {name}
                 </h3>
 
@@ -187,7 +174,7 @@ export function TestingCardResults({ test ,tab}) {
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out",
+                        "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out dark:group-hover:bg-foreground",
                         tag.color === "yellow" &&
                           "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
                         tag.color === "blue" &&
@@ -207,7 +194,7 @@ export function TestingCardResults({ test ,tab}) {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out">
+              <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-white transition-all duration-500 ease-out">
                 {description}
               </p>
             </div>

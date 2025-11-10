@@ -52,7 +52,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-[60%]">
               <label className="text-sm text-foreground">Prompt Name*</label>
               <Input
-                className="border border-black/20 placeholder:text-black/60"
+                className="border border-foreground/20 placeholder:text-foreground/40"
                 placeholder="Enter Prompt Name"
               />
             </div>
@@ -65,7 +65,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
                 onOpenChange={(open) => setIsOpen(open)}
                 className="w-full "
               >
-                <SelectTrigger className={`border border-black/20 placeholder:text-black/60 text-black !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${isOpen ? '[&>svg]:rotate-180' : ''}`}>
+                <SelectTrigger className={`border border-foreground/20 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${isOpen ? '[&>svg]:rotate-180' : ''}`}>
                   <SelectValue
                     placeholder="Choose category"
                     className={"placeholder:text-sm !cursor-pointer "}
@@ -86,7 +86,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-full">
               <label className="text-sm text-foreground">Description</label>
               <Input
-                className="border border-black/20 placeholder:text-black/60"
+                className="border border-foreground/20 placeholder:text-foreground/40"
                 placeholder="Brief Description"
               />
             </div>
@@ -96,7 +96,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-full">
               <label className="text-sm text-foreground">Prompt Content*</label>
               <Textarea
-                className="border border-black/20 placeholder:text-black/60 placeholder:text-xs h-36"
+                className="border border-foreground/20 placeholder:text-foreground/40 placeholder:text-xs h-36"
                 placeholder="Enter Prompt Content"
               />
             </div>
@@ -106,15 +106,15 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-[85%]">
               <label className="text-sm text-foreground">Tags</label>
               <Input
-                className="border border-black/20 placeholder:text-black/60"
+                className="border border-foreground/20 placeholder:text-foreground/40"
                 placeholder="Add a tag"
               />
             </div>
-            <div className="w-[15%]">
-            <RippleButton className={"w-full rounded-lg"} circColor={"bg-background/40"}>
-            <div className="flex gap-2 w-full  border border-black/20 placeholder:text-black/60 h-10.5 rounded-lg bg-foreground text-white justify-start pl-2.5 items-center cursor-pointer">
+            <div className="w-[15%] h-fit">
+            <RippleButton className={"w-full rounded-lg mt-1"} circColor={"dark:bg-background/40 bg-white "}>
+            <div className="flex gap-2 w-full  border border-foreground/20 placeholder:text-foreground/40 h-10.5 rounded-lg bg-foreground text-background justify-start pl-2.5 items-center cursor-pointer">
               <div className="w-3.5 h-auto">
-                <PlusIcon className="w-full h-full" />
+                <PlusIcon className="w-full h-full text-background" />
               </div>
               <p>Add</p>
             </div>

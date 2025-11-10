@@ -6,8 +6,9 @@ import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
 import { MemoryCard } from "@/components/memory-card";
 import SearchBar from "@/components/search-bar";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
+import { ScaleDown } from "@/components/animations/Animations";
 
 const memories = [
   {
@@ -58,9 +59,10 @@ export default function MemoriesPage() {
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header section */}
+      <ScaleDown>
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <FadeUp>
+        {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Memories</h1>
@@ -78,17 +80,17 @@ export default function MemoriesPage() {
               </Link>
             </RippleButton>
           </div>
-        </FadeUp>
-        <FadeUp delay={0.02}>
+        {/* </FadeUp> */}
+        {/* <FadeUp delay={0.02}> */}
           <SearchBar
             placeholder="Search Memories..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        </FadeUp>
+        {/* </FadeUp> */}
       </div>
-      <FadeUp delay={0.04}>
-        <div className="flex-1 overflow-auto p-6 pt-0">
+      {/* <FadeUp delay={0.04}> */}
+        <div className="flex-1 overflow-auto p-6 pt-0 w-full h-full">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {filteredMemories.map((memory) => (
               <MemoryCard key={memory.id} memories={memory} />
@@ -101,7 +103,8 @@ export default function MemoriesPage() {
             </div>
           )}
         </div>
-      </FadeUp>
+      {/* </FadeUp> */}
+      </ScaleDown>
     </div>
   );
 }

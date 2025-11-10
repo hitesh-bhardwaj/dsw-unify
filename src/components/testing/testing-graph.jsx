@@ -50,14 +50,14 @@ const TestingGraph = ({tab}) => {
     }, [tab]);
   return (
     <>
-      <Card className={"!pb-0 "}>
+      <Card className={"!pb-0 bg-sidebar-accent"}>
         <CardHeader>
           <CardTitle>Test Performance Over Time</CardTitle>
           <CardDescription>
             Success rates and response times for the last 30 days
           </CardDescription>
         </CardHeader>
-        <CardContent className="px-30 h-[32vh]">
+        <CardContent className="px-30 h-[32vh] ">
           <ChartContainer config={chartConfig} className={"!h-full !w-full"}>
             <BarChart
              key={animationId}

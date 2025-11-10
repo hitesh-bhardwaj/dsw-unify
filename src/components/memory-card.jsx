@@ -11,24 +11,24 @@ import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
 export function MemoryCard({ memories, minSkeletonMs = 500 }) {
-  const { id,name, description, status, tags = [], entries } = memories || {};
+  const { id, name, description, status, tags = [], entries } = memories || {};
 
   // Keep skeleton visible for at least `minSkeletonMs`
 
-    const [showSkeleton, setShowSkeleton] = useState(() => {
-      // Only show skeleton if it hasn't been shown for this test before
-      return !skeletonShownMap.has(id);
-    });
-  
-    useEffect(() => {
-      if (showSkeleton && id) {
-        const t = setTimeout(() => {
-          setShowSkeleton(false);
-          skeletonShownMap.set(id, true);
-        }, minSkeletonMs);
-        return () => clearTimeout(t);
-      }
-    }, [minSkeletonMs, id, showSkeleton]);
+  const [showSkeleton, setShowSkeleton] = useState(() => {
+    // Only show skeleton if it hasn't been shown for this test before
+    return !skeletonShownMap.has(id);
+  });
+
+  useEffect(() => {
+    if (showSkeleton && id) {
+      const t = setTimeout(() => {
+        setShowSkeleton(false);
+        skeletonShownMap.set(id, true);
+      }, minSkeletonMs);
+      return () => clearTimeout(t);
+    }
+  }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) return <MemoryCardSkeleton />;
 
@@ -37,8 +37,7 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
       <Link href={`/#`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out",
-            "bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !py-5"
+            "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out border border-border-color-2 bg-background group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5"
           )}
         >
           <CardHeader>
@@ -46,14 +45,12 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black",
-                  "group-hover:bg-background transition-all duration-500 ease-out"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground dark:bg-sidebar-accent dark:group-hover:bg-background transition-all duration-500 ease-out group-hover:bg-background"
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center p-4.5 text-white",
-                    "group-hover:text-black transition-all duration-500 ease-out"
+                    "w-full h-full flex justify-center items-center p-4.5 text-white group-hover:text-black transition-all duration-500 ease-out dark:group-hover:text-foreground"
                   )}
                 >
                   <SynthWave />
@@ -80,12 +77,12 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
             </div>
 
             {/* Name */}
-            <h3 className="mt-7 text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out">
+            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
               {name}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out">
+            <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-background dark-hover:text-foreground  transition-all duration-500 ease-out">
               {description}
             </p>
           </CardHeader>
@@ -98,7 +95,7 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out",
+                    "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out dark:group-hover:bg-foreground",
                     tag.color === "yellow" &&
                       "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
                     tag.color === "blue" &&
@@ -117,12 +114,12 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
             </div>
 
             {/* Footer stats */}
-            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4 bg-gray-100 border group-hover:bg-background">
+            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4 bg-sidebar-accent border group-hover:bg-background  duration-500 ease-out ">
               <div className="flex flex-col items-start gap-1">
                 <span className="text-foreground font-medium text-lg">
                   {entries}
                 </span>
-                <span className="text-gray-600">Entries</span>
+                <span className="text-gray-600 dark:text-foreground/60">Entries</span>
               </div>
             </div>
           </CardContent>
@@ -139,7 +136,7 @@ export function MemoryCardSkeleton() {
   return (
     <Bounce>
       <div className="block group h-full">
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 !py-5">
+        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 !py-5">
           <CardHeader>
             <div className="flex items-start justify-between">
               {/* Icon placeholder */}

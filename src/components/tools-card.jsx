@@ -39,8 +39,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
       <Link href={`/#`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out",
-            "bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black !pt-5"
+            "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5",
           )}
         >
           <CardHeader>
@@ -48,14 +47,12 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black",
-                  "group-hover:bg-background transition-all duration-500 ease-out"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground dark:bg-sidebar-accent dark:group-hover:bg-background transition-all duration-500 ease-out group-hover:bg-background",
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center p-4.5 text-white",
-                    "group-hover:text-black transition-all duration-500 ease-out"
+                    "w-full h-full flex justify-center items-center p-4.5 text-white group-hover:text-black transition-all duration-500 ease-out dark:group-hover:text-foreground"
                   )}
                 >
                   <SynthWave />
@@ -82,12 +79,12 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
             </div>
 
             {/* Name */}
-            <h3 className="mt-7 text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out">
+            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
               {name}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out">
+            <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-background dark-hover:text-foreground transition-all duration-500 ease-out">
               {description}
             </p>
           </CardHeader>
@@ -100,7 +97,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out",
+                    "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out dark:group-hover:bg-foreground",
                     tag.color === "yellow" &&
                       "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
                     tag.color === "blue" &&
@@ -131,7 +128,7 @@ export function ToolsCardSkeleton() {
   return (
     <Bounce>
       <div className="block group h-full">
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 !pt-5">
+        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-2 !pt-5">
           <CardHeader>
             <div className="flex items-start justify-between">
               {/* Icon placeholder */}

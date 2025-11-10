@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,26 +9,37 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { ApiEndpointModal } from "@/components/api-endpoint-modal";
 import Link from "next/link";
-import { AiGenerator, EditIcon, LeftArrow, SearchIcon, SparklesIcon } from "@/components/Icons";
+import {
+  AiGenerator,
+  EditIcon,
+  LeftArrow,
+  SearchIcon,
+  SparklesIcon,
+} from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
+import { ScaleDown } from "@/components/animations/Animations";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("MY AI Assistant");
-  const [description, setDescription] = useState("A Helpful AI Assistant for...");
-  const [systemPrompt, setSystemPrompt] = useState("You are a helpful AI assistant that...");
+  const [description, setDescription] = useState(
+    "A Helpful AI Assistant for..."
+  );
+  const [systemPrompt, setSystemPrompt] = useState(
+    "You are a helpful AI assistant that..."
+  );
   const [searchPrompt, setSearchPrompt] = useState("");
   const [enhancePrompt, setEnhancePrompt] = useState("");
 
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
+      {/* <ScaleDown> */}
       <div className=" bg-background p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
-            
-<LeftArrowAnim link={"/prompts"}/>
+            <LeftArrowAnim link={"/prompts"} />
             <div className="space-y-2">
               <h1 className="text-2xl font-medium">Agent Builder</h1>
               <p className="text-sm text-gray-600">
@@ -43,7 +54,7 @@ export default function CreateAgentPage() {
               className="gap-2 text-foreground border border-primary"
             >
               <div className="!w-4">
-                <AiGenerator/>
+                <AiGenerator />
               </div>
               API
             </Button>
@@ -52,21 +63,19 @@ export default function CreateAgentPage() {
               className="gap-2 text-foreground border border-primary"
             >
               <div className="!w-4">
-                <AiGenerator/>
+                <AiGenerator />
               </div>
               Test
             </Button>
             <Link href={`/agents/edit`}>
               <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                 <div className="!w-4">
-              
-                <EditIcon className={"text-white"}/>
-              </div>
-               Save Agent
+                  <EditIcon className={"text-white"} />
+                </div>
+                Save Agent
               </Button>
             </Link>
           </div>
-        
         </div>
       </div>
 
@@ -114,20 +123,61 @@ export default function CreateAgentPage() {
             <CardContent className="pt-2 px-0">
               <Tabs defaultValue="prompt" className="w-full">
                 <TabsList className="grid w-full grid-cols-8 mb-6 border h-15 px-1.5 py-1.5">
-                  <TabsTrigger value="prompt" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">
+                  <TabsTrigger
+                    value="prompt"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
                     Prompt
                   </TabsTrigger>
-                  <TabsTrigger value="model" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">Model</TabsTrigger>
-                  <TabsTrigger value="tools" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">Tools</TabsTrigger>
-                  <TabsTrigger value="knowledge" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">Knowledge</TabsTrigger>
-                  <TabsTrigger value="memory" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">Memory</TabsTrigger>
-                  <TabsTrigger value="guardrails" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">Guardrails</TabsTrigger>
-                  <TabsTrigger value="finetuning" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">Finetuning</TabsTrigger>
-                  <TabsTrigger value="tags" className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]">Tags</TabsTrigger>
+                  <TabsTrigger
+                    value="model"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
+                    Model
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="tools"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
+                    Tools
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="knowledge"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
+                    Knowledge
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="memory"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
+                    Memory
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="guardrails"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
+                    Guardrails
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="finetuning"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
+                    Finetuning
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="tags"
+                    className="text-[#333333] data-[state=active]:text-[#FF5722] py-3 data-[state=active]:shadow-none data-[state=active]:border-[#DCDCDC]"
+                  >
+                    Tags
+                  </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="prompt" className="space-y-6 border rounded-3xl p-6 border-[#AAAAAA] h-full pb-8 ">
-                  <div >
+                <TabsContent
+                  value="prompt"
+                  className="space-y-6 border rounded-3xl p-6 border-[#AAAAAA] h-full pb-8 "
+                >
+                  <div>
                     <h3 className="text-xl font-medium mb-2">System Prompt</h3>
                     <p className="text-sm text-gray-600 mb-4">
                       Define how your agent should behave and respond
@@ -140,8 +190,7 @@ export default function CreateAgentPage() {
                       </label>
                       <div className="relative mt-2 ">
                         <div className="absolute top-6 left-5 -translate-y-1/2">
-                        <SearchIcon className="!h-4 !w-auto"/>
-
+                          <SearchIcon className="!h-4 !w-auto" />
                         </div>
                         <Input
                           value={searchPrompt}
@@ -175,12 +224,13 @@ export default function CreateAgentPage() {
                           className="h-11 flex-1 !text-xs p-4 border-[#AAAAAA] shadow-none"
                         />
                         <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2 !h-10.5  cursor-pointer w-30 rounded-lg">
-                         <SparklesIcon/>
+                          <SparklesIcon />
                           Generate
                         </Button>
                       </div>
                       <p className="text-xs text-[#111111]">
-                        Use natural language to create a new prompt or enhance the existing one
+                        Use natural language to create a new prompt or enhance
+                        the existing one
                       </p>
                     </div>
                   </div>
@@ -232,6 +282,7 @@ export default function CreateAgentPage() {
           </Card>
         </div>
       </div>
+      {/* </ScaleDown> */}
 
       {/* API Modal */}
       <ApiEndpointModal

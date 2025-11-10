@@ -10,14 +10,14 @@ import {
   PlusIcon,
   SynthWave,
 } from "@/components/Icons";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 import SearchBar from "@/components/search-bar";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import LLMGrid from "@/components/LLMGrid";
 import EmptyCard from "@/components/common/EmptyCard";
-
+import { ScaleDown } from "@/components/animations/Animations";
 
 const LLMs = [
   {
@@ -81,8 +81,14 @@ const LLMs = [
 ];
 
 const Recent = [
-  { content: "Mistral 7B Instruct deployment completed", recentActivity: "30 minutes ago" },
-  { content: "GPT-4 Turbo deployment completed", recentActivity: "2 hours ago" },
+  {
+    content: "Mistral 7B Instruct deployment completed",
+    recentActivity: "30 minutes ago",
+  },
+  {
+    content: "GPT-4 Turbo deployment completed",
+    recentActivity: "2 hours ago",
+  },
   { content: "Llama 2 7B deployment started", recentActivity: "4 hours ago" },
   { content: "Custom Insurance Model retrained", recentActivity: "1 day ago" },
 ];
@@ -157,16 +163,17 @@ export default function LLMsPage() {
       transition: {
         delay: i * 0.07,
         duration: 0.5,
-        ease: "easeOut"
-      }
-    })
+        ease: "easeOut",
+      },
+    }),
   };
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header section */}
-      <div className="space-y-6 p-6">
-        <FadeUp>
+      <ScaleDown>
+        <div className="space-y-6 p-6">
+          {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
@@ -206,70 +213,71 @@ export default function LLMsPage() {
               </RippleButton>
             </div>
           </div>
-        </FadeUp>
+          {/* </FadeUp> */}
 
-        <FadeUp delay={0.02}>
+          {/* <FadeUp delay={0.02}> */}
           <SearchBar
             placeholder="Search LLMs..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        </FadeUp>
+          {/* </FadeUp> */}
 
-        <FadeUp delay={0.04}>
+          {/* <FadeUp delay={0.04}> */}
           <AnimatedTabsSection
             items={items}
             ctx={ctx}
             onValueChange={setActiveTab}
             defaultValue="all"
           />
-        </FadeUp>
+          {/* </FadeUp> */}
 
-        {/* Recent Activity (still shows under "All") */}
-        {activeTab === "all" && (
-          <FadeUp delay={0.06}>
+          {/* Recent Activity (still shows under "All") */}
+          {activeTab === "all" && (
+            // <FadeUp delay={0.06}>
             <div className="space-y-10 mt-20">
               <h2 className="text-2xl font-medium">Recent Activity</h2>
               <div className="w-full space-y-4">
-               {Recent.map((recent, id) => (
-  <div
-    key={id}
-    className="w-full h-fit flex gap-6 items-center group "
-  >
-    <div className="w-13 h-12">
-      <span
-        className={cn(
-          "w-full h-full flex justify-center items-center p-3.5 text-white bg-foreground rounded-lg -mt-1"
-        )}
-      >
-        <SynthWave />
-      </span>
-    </div>
-    <div className="flex flex-col w-full">
-      <div className="w-full flex justify-between items-center pt-5 pb-8">
-        <p>{recent.content}</p>
-        <p className="text-xs text-black/60">
-          {recent.recentActivity}
-        </p>
-      </div>
-      <motion.div
-        custom={id}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true,amount:0.5 }}
-        variants={separatorVariants}
-        className="w-full h-[1px] bg-black/20"
-      >
-        <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
-      </motion.div>
-    </div>
-  </div>
-))}
+                {Recent.map((recent, id) => (
+                  <div
+                    key={id}
+                    className="w-full h-fit flex gap-6 items-center group "
+                  >
+                    <div className="w-13 h-12">
+                      <span
+                        className={cn(
+                          "w-full h-full flex justify-center items-center p-3.5 text-background bg-foreground rounded-lg -mt-1"
+                        )}
+                      >
+                        <SynthWave />
+                      </span>
+                    </div>
+                    <div className="flex flex-col w-full">
+                      <div className="w-full flex justify-between items-center pt-5 pb-8">
+                        <p>{recent.content}</p>
+                        <p className="text-xs text-black/60">
+                          {recent.recentActivity}
+                        </p>
+                      </div>
+                      <motion.div
+                        custom={id}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.5 }}
+                        variants={separatorVariants}
+                        className="w-full h-[1px] bg-foreground/20"
+                      >
+                        <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
+                      </motion.div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </FadeUp>
-        )}
-      </div>
+            // {/* </FadeUp> */}
+          )}
+        </div>
+      </ScaleDown>
     </div>
   );
 }

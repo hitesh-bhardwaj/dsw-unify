@@ -51,8 +51,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
     <div className="group w-full h-full">
       <Card
         className={cn(
-          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5",
-          "bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black"
+          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5 border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -61,14 +60,13 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
             <div className="flex items-center gap-3">
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-black",
-                  "group-hover:bg-background duration-500 ease-out"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground dark:bg-sidebar-accent group-hover:bg-background dark:group-hover:bg-background transition-all duration-500 ease-out",
+                 
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center p-4.5 text-white",
-                    "group-hover:text-black duration-500 ease-out"
+                    "w-full h-full flex justify-center items-center p-4.5 text-white group-hover:text-black dark:group-hover:text-foreground transition-all duration-500 ease-out "
                   )}
                 >
                   {icon ?? <SynthWave />}
@@ -141,7 +139,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
           {/* Description */}
           <p
             className={cn(
-              "text-sm mb-4 text-gray-600 group-hover:text-gray-300 transition-all duration-500 ease-out"
+              "text-sm mb-4 text-gray-600 dark:text-foreground dark:group-hover:text-foreground group-hover:text-background transition-all duration-500 ease-out"
             )}
           >
             {description}
@@ -154,15 +152,15 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-light transition-all duration-500 ease-out",
+                  "rounded-full px-3 py-1 text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-foreground",
                   tag.color === "yellow" &&
-                    "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
+                    "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black ",
                   tag.color === "blue" &&
                     "bg-badge-blue text-white group-hover:bg-background group-hover:text-black",
                   tag.color === "green" &&
                     "bg-badge-mint text-foreground group-hover:bg-background group-hover:text-black",
                   tag.color === "orange" &&
-                    "bg-transparent border-primary text-primary group-hover:text-white group-hover:border-white",
+                    "bg-transparent border-primary text-primary group-hover:text-white group-hover:border-white dark:group-hover:bg-transparent",
                   tag.color === "orange" &&
                     isDark &&
                     "bg-transparent border border-white text-white group-hover:bg-background group-hover:text-black"
@@ -178,7 +176,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
           className={cn(
             isDark
               ? "bg-background"
-              : "bg-sidebar-accent border border-black/10",
+              : "bg-sidebar-accent border-border-color-2 border dark:group-hover:bg-background",
             "w-[92%] mx-auto py-5 rounded-xl px-4 duration-500 ease-out"
           )}
         >
@@ -191,7 +189,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
           {/* Preview */}
           <div
             className={cn(
-              "rounded-lg p-3 text-xs duration-500 ease-out",
+              "rounded-lg p-3 text-xs duration-500 ease-out dark:group-hover:bg-sidebar-accent dark:text-white/80",
               isDark
                 ? "bg-sidebar-accent text-gray-600"
                 : "bg-background text-gray-600"
@@ -211,7 +209,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
 export function PromptCardSkeleton() {
   return (
     <div className="group w-full h-full">
-      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-black/30">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

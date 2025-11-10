@@ -28,7 +28,7 @@ export default function Tabs({
   barClassName,
   contentClassName,
   activeTextClassName = "text-[#FF5722]",
-  inactiveTextClassName = "text-gray-700",
+  inactiveTextClassName = "text-foreground/70",
   renderContent = true,
 }) {
   // uncontrolled fallback -> first tab
@@ -89,13 +89,13 @@ export default function Tabs({
       <div
         ref={barRef}
         className={cx(
-          "relative flex gap-4 bg-sidebar-accent p-1.5 rounded-lg border border-gray-200",
+          "relative flex gap-4 bg-sidebar-accent p-1.5 rounded-lg border border-foreground/20",
           barClassName
         )}
       >
         {/* Animated indicator */}
         <div
-          className="absolute top-1.5 bottom-1.5 rounded-lg bg-background border border-[#DCDCDC] transition-all duration-300 ease-out"
+          className="absolute top-1.5 bottom-1.5 rounded-lg bg-background border border-foreground/20 transition-all duration-300 ease-out"
           style={{
             transform: `translateX(${indicator.left-7}px)`,
             width: indicator.width,

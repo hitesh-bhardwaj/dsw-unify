@@ -34,6 +34,29 @@ export const FadeUp = ({
     </motion.div>
   );
 };
+export const ScaleDown = ({
+  children,
+  delay = 0,
+  duration = 0.2,
+  className = "w-full",
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity:0,scale:1.03 }}
+      animate={{ opacity: 1, scale:1 }}
+      exit={{opacity:0,scale:0.97}}
+      style={{ originY: 0.2, originX: 0.5 }}
+      transition={{
+        duration,
+        delay,
+        ease: [0.335, -0.006, 0.014, 0.995],
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 // /**
 //  * Container for staggered children animations

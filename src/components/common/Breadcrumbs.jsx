@@ -10,6 +10,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 import { HomeIcon } from '../Icons'
+import Link from 'next/link'
 
 const Breadcrumbs = () => {
   const pathname = usePathname()
@@ -38,22 +39,25 @@ const Breadcrumbs = () => {
   const isHomeActive = breadcrumbItems.length === 1
 
   return (
-    <Breadcrumb>
+    <Breadcrumb className="">
       <BreadcrumbList>
+      <Link href={"/"} className='p-2 hover:bg-sidebar-accent rounded-lg duration-300 ease-out'>
         <HomeIcon 
-          className={`h-5 w-auto !cursor-pointer ${
+          className={`h-5 w-auto !cursor-pointer   ${
             isHomeActive ? '' : 'text-gray-500'
           }`}
         />
+
+      </Link>
 
         {breadcrumbItems.map((item, index) => (
           <div key={item.href} className='contents'>
             {index > 0 && <BreadcrumbSeparator />}
             <BreadcrumbItem>
               {item.isLast ? (
-                <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                <BreadcrumbPage className={"p-2 hover:bg-sidebar-accent rounded-lg duration-300 ease-out"}>{item.label}</BreadcrumbPage>
               ) : (
-                <BreadcrumbLink href={item.href} className='text-gray-500'>
+                <BreadcrumbLink href={item.href} className='text-gray-500 p-2 hover:bg-sidebar-accent rounded-lg duration-300 ease-out'>
                   {item.label}
                 </BreadcrumbLink>
               )}

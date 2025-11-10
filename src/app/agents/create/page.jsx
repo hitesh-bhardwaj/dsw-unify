@@ -8,11 +8,12 @@ import Link from "next/link";
 import { AiGenerator, EditIcon, SparklesIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import PromptCardGrid from "@/components/prompt-card-grid";
+import { ScaleDown } from "@/components/animations/Animations";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -95,15 +96,16 @@ export default function CreateAgentPage() {
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header */}
+      <ScaleDown>
       <div className=" bg-background p-6">
-        <FadeUp>
+        {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="flex items-start gap-3">
               <LeftArrowAnim link={"/agents"} />
 
               <div className="space-y-2">
                 <h1 className="text-2xl font-medium">Agent Builder</h1>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600  dark:text-foreground">
                   Configure your AI agent with custom prompts, models, and tools
                 </p>
               </div>
@@ -144,59 +146,60 @@ export default function CreateAgentPage() {
               </Link>
             </div>
           </div>
-        </FadeUp>
+        {/* </FadeUp> */}
       </div>
 
       {/* Main Content */}
       <div className="flex-1 p-6">
         <div className="max-w-6xl mx-auto space-y-4">
           {/* Basic Information */}
-          <FadeUp delay={0.02}>
-            <Card className={"h-full py-10 shadow-none border-[#AAAAAA]"}>
+          {/* <FadeUp delay={0.02}> */}
+            <Card className={"h-full py-10 shadow-none border-border-color-1 bg-background"}>
               <CardHeader>
                 <h2 className="text-xl font-medium">Basic Information</h2>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-foreground  ">
                   Set up the basic details for your agent
                 </p>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <label className="text-sm font-medium text-[#111111]">
+                    <label className="text-sm font-medium text-[#111111] dark:text-foreground ">
                       Agent Name
                     </label>
                     <Input
                       value={agentName}
                       onChange={(e) => setAgentName(e.target.value)}
                       placeholder="MY AI Assistant"
-                      className="h-11 border-[#AAAAAA] mt-3"
+                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/70 "
                     />
                   </div>
                   <div className="space-y-4">
-                    <label className="text-sm font-medium text-[#111111]">
+                    <label className="text-sm font-medium text-[#111111] dark:text-foreground">
                       Description
                     </label>
                     <Input
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="A Helpful AI Assistant for..."
-                      className="h-11 border-[#AAAAAA] mt-3"
+                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/70"
                     />
                   </div>
                 </div>
               </CardContent>
             </Card>
-          </FadeUp>
+          {/* </FadeUp> */}
 
-          <FadeUp delay={0.04}>
+          {/* <FadeUp delay={0.04}> */}
             <AnimatedTabsSection
               items={items}
               // ctx={ctx}
               defaultValue="prompt"
             />
-          </FadeUp>
+          {/* </FadeUp> */}
         </div>
       </div>
+      </ScaleDown>
 
       {/* API Modal */}
       <ApiEndpointModal

@@ -144,7 +144,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             {/* Description */}
             <p
               className={cn(
-                "text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out "
+                "text-sm text-gray-600 dark:text-foreground group-hover:text-background dark-hover:text-foreground  transition-all duration-500 ease-out "
               )}
             >
               {description}

@@ -11,20 +11,43 @@ import { AiGenerator, EditIcon, SettingIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import CountUp from "@/components/animations/CountUp";
-import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { motion } from "framer-motion";
+import { ScaleDown } from "@/components/animations/Animations";
 
 export default function AgentDetailPage({ params }) {
-  const { id } = use(params);
-  const [apiModalOpen, setApiModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+   const { id } = use(params);
 
-  // ensure skeletons appear for at least 500ms
+  const [apiModalOpen, setApiModalOpen] = useState(false);
+
+  // Show skeleton only once per agent id
+  const [isLoading, setIsLoading] = useState(true);
+  const [mounted, setMounted] = useState(false);
+
+  // hydrate gate to avoid SSR mismatch
   useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 500);
-    return () => clearTimeout(t);
+    setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    const key = `agentDetailSkeleton:${id ?? "global"}`;
+    const alreadyShown =
+      typeof window !== "undefined" && localStorage.getItem(key) === "1";
+
+    if (alreadyShown) {
+      setIsLoading(false);
+      return;
+    }
+
+    // First visit: keep skeleton for at least 500ms, then disable for the future
+    const t = setTimeout(() => {
+      setIsLoading(false);
+      localStorage.setItem(key, "1");
+    }, 500);
+
+    return () => clearTimeout(t);
+  }, [mounted, id]);
 
   // Mock data - in real app, fetch based on id
   const agent = {
@@ -49,11 +72,7 @@ export default function AgentDetailPage({ params }) {
     recentActivity: [
       { type: "success", event: "API call completed", time: "2 minutes ago" },
       { type: "success", event: "User interaction", time: "5 minutes ago" },
-      {
-        type: "success",
-        event: "Knowledge base query",
-        time: "12 minutes ago",
-      },
+      { type: "success", event: "Knowledge base query", time: "12 minutes ago" },
       { type: "error", event: "Guardrail triggered", time: "18 minutes ago" },
       { type: "success", event: "Model inference", time: "25 minutes ago" },
     ],
@@ -71,6 +90,7 @@ export default function AgentDetailPage({ params }) {
         return "bg-gray-500";
     }
   };
+
   const separatorVariants = {
     hidden: { scaleX: 0, originX: 0 },
     visible: (i) => ({
@@ -84,24 +104,7 @@ export default function AgentDetailPage({ params }) {
     }),
   };
 
-  // ---- Skeleton blocks (JSX) ----
-  const HeaderSkeleton = () => (
-    <div className="flex items-center justify-between">
-      <div className="flex gap-3 items-center">
-        <Skeleton className="h-6 w-6 rounded-full" />
-        <div className="space-y-2">
-          <Skeleton className="h-6 w-56" />
-          <Skeleton className="h-4 w-72" />
-        </div>
-      </div>
-      <div className="flex items-center gap-3">
-        <Skeleton className="h-9 w-24" />
-        <Skeleton className="h-9 w-24" />
-        <Skeleton className="h-9 w-28" />
-      </div>
-    </div>
-  );
-
+  // Skeleton cards
   const InfoCardSkeleton = () => (
     <Card>
       <CardHeader>
@@ -210,17 +213,22 @@ export default function AgentDetailPage({ params }) {
     </Card>
   );
 
+  if (!mounted) {
+    // optional: avoid any flicker during SSR hydration
+    return null;
+  }
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="bg-background p-6">
-        <FadeUp>
+      <ScaleDown>
+        <div className="bg-background p-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-3">
               <LeftArrowAnim link={"/agents"} />
               <div>
                 <h1 className="text-xl font-medium">{agent.name}</h1>
-                <p className="text-sm text-gray-600 pl-0.5">
+                <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
                   {agent.description}
                 </p>
               </div>
@@ -261,14 +269,12 @@ export default function AgentDetailPage({ params }) {
               </Link>
             </div>
           </div>
-        </FadeUp>
-      </div>
+        </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-auto p-6 bg-background">
-        <div className="max-w-7xl mx-auto space-y-6">
-          {/* Top Cards Row */}
-          <FadeUp delay={0.02}>
+        {/* Main Content */}
+        <div className="flex-1 overflow-auto p-6 bg-background">
+          <div className="max-w-7xl mx-auto space-y-6">
+            {/* Top Cards Row */}
             <div className="grid grid-cols-3 gap-6">
               {isLoading ? (
                 <>
@@ -285,7 +291,7 @@ export default function AgentDetailPage({ params }) {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div>
-                        <h3 className="text-sm font-medium text-gray-700 mb-2">
+                        <h3 className="text-sm font-medium text-gray-700 mb-2 dark:text-foreground">
                           Status
                         </h3>
                         <Badge className="bg-badge-green text-white hover:bg-green-600">
@@ -294,7 +300,7 @@ export default function AgentDetailPage({ params }) {
                         </Badge>
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-700 mb-2">
+                        <h3 className="text-sm font-medium text-gray-700 mb-2 dark:text-foreground">
                           Tags
                         </h3>
                         <div className="flex flex-wrap gap-2">
@@ -302,7 +308,7 @@ export default function AgentDetailPage({ params }) {
                             <Badge
                               key={index}
                               variant="secondary"
-                              className="bg-transparent border border-black/20 font-light"
+                              className="bg-transparent border border-border-color-1 font-light"
                             >
                               {tag}
                             </Badge>
@@ -310,18 +316,20 @@ export default function AgentDetailPage({ params }) {
                         </div>
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-700 mb-1">
+                        <h3 className="text-sm font-medium text-gray-700 mb-1 dark:text-foreground">
                           Last Modified
                         </h3>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-foreground">
                           {agent.lastModified}
                         </p>
                       </div>
                       <div>
-                        <h3 className="text-sm font-medium text-gray-700 mb-1">
+                        <h3 className="text-sm font-medium text-gray-700 mb-1 dark:text-foreground">
                           Usage
                         </h3>
-                        <p className="text-sm text-gray-600">{agent.usage}</p>
+                        <p className="text-sm text-gray-600 dark:text-foreground">
+                          {agent.usage}
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
@@ -329,25 +337,25 @@ export default function AgentDetailPage({ params }) {
                   {/* Performance Metrics */}
                   <Card>
                     <CardHeader>
-                      <h2 className="text-xl font-medium">
-                        Performance Metrics
-                      </h2>
+                      <h2 className="text-xl font-medium">Performance Metrics</h2>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-3xl font-medium text-gray-900">
+                          <h3 className="text-3xl font-medium text-gray-900 dark:text-foreground">
                             <CountUp value={agent.metrics.totalRequests} />
                           </h3>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-gray-600 dark:text-foreground">
                             Total Requests
                           </p>
                         </div>
                         <div>
-                          <h3 className="text-3xl font-medium text-gray-900">
+                          <h3 className="text-3xl font-medium text-gray-900 dark:text-foreground">
                             <CountUp value={agent.metrics.avgResponse} />
                           </h3>
-                          <p className="text-sm text-gray-600">Avg. Response</p>
+                          <p className="text-sm text-gray-600 dark:text-foreground">
+                            Avg. Response
+                          </p>
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-4">
@@ -355,13 +363,17 @@ export default function AgentDetailPage({ params }) {
                           <h3 className="text-3xl font-medium text-green">
                             <CountUp value={agent.metrics.successRate} />
                           </h3>
-                          <p className="text-sm text-gray-600">Success Rate</p>
+                          <p className="text-sm text-gray-600 dark:text-foreground">
+                            Success Rate
+                          </p>
                         </div>
                         <div>
-                          <h3 className="text-3xl font-medium text-gray-900">
+                          <h3 className="text-3xl font-medium text-gray-900 dark:text-foreground">
                             <CountUp value={agent.metrics.activeUsers} />
                           </h3>
-                          <p className="text-sm text-gray-600">Active Users</p>
+                          <p className="text-sm text-gray-600 dark:text-foreground">
+                            Active Users
+                          </p>
                         </div>
                       </div>
                     </CardContent>
@@ -374,7 +386,7 @@ export default function AgentDetailPage({ params }) {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium text-gray-700">
+                        <h3 className="text-sm font-medium text-gray-700 dark:text-foreground">
                           Last Activity
                         </h3>
                         <p className="text-sm text-forground font-medium">
@@ -382,14 +394,14 @@ export default function AgentDetailPage({ params }) {
                         </p>
                       </div>
                       <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-medium text-gray-700">
+                        <h3 className="text-sm font-medium text-gray-700 dark:text-foreground">
                           Error Rate
                         </h3>
                         <p className="text-sm text-red-600 font-medium">
                           {agent.health.errorRate}
                         </p>
                       </div>
-                      <span className="w-full h-[1px] bg-black/20 block mt-8" />
+                      <span className="w-full h-[1px] bg-foreground/40 block mt-8" />
                       <div className="pt-4">
                         <div className="flex items-center gap-2 text-badge-green">
                           <div className="w-4.5 h-4.5 text-badge-green">
@@ -403,23 +415,22 @@ export default function AgentDetailPage({ params }) {
                 </>
               )}
             </div>
-          </FadeUp>
 
-          {/* Recent Activity */}
-          {isLoading ? (
-            <RecentActivitySkeleton />
-          ) : (
-            <Card className={"border-none"}>
-              <FadeUp delay={0.04}>
+            {/* Recent Activity */}
+            {isLoading ? (
+              <RecentActivitySkeleton />
+            ) : (
+              <Card className={"border-none"}>
                 <CardHeader>
                   <h2 className="text-xl font-semibold">Recent Activity</h2>
                 </CardHeader>
-              </FadeUp>
-              <CardContent>
-                <div className="space-y-4">
-                  {agent.recentActivity.map((activity, index) => (
-                    <FadeUp delay={0.06 + index * 0.08} key={index}>
-                      <div className="w-full flex flex-col gap-2 items-end group">
+                <CardContent>
+                  <div className="space-y-4">
+                    {agent.recentActivity.map((activity, index) => (
+                      <div
+                        key={index}
+                        className="w-full flex flex-col gap-2 items-end group"
+                      >
                         <div className="flex items-center justify-between py-4 w-full">
                           <div className="flex items-center gap-3">
                             <div
@@ -428,11 +439,11 @@ export default function AgentDetailPage({ params }) {
                                 getActivityColor(activity.type)
                               )}
                             />
-                            <span className="text-sm text-gray-900">
+                            <span className="text-sm text-gray-900 dark:text-foreground">
                               {activity.event}
                             </span>
                           </div>
-                          <span className="text-sm text-gray-500">
+                          <span className="text-sm text-gray-500 dark:text-foreground/70">
                             {activity.time}
                           </span>
                         </div>
@@ -441,19 +452,19 @@ export default function AgentDetailPage({ params }) {
                           initial="hidden"
                           animate="visible"
                           variants={separatorVariants}
-                          className="w-full h-[1px] bg-black/20"
+                          className="w-full h-[1px] bg-foreground/40"
                         >
                           <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
                         </motion.div>
                       </div>
-                    </FadeUp>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
-      </div>
+      </ScaleDown>
 
       {/* API Modal */}
       <ApiEndpointModal

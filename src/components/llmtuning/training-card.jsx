@@ -23,14 +23,14 @@ export function TrainingCard({ data, playKey }) {
     <Link href={`/agents/${id}`} className="block group">
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black py-4 pb-7"
+          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border group-hover:bg-active-card group-hover:text-white dark:group-hover:bg-sidebar-accent py-4 pb-7"
         )}
       >
         <CardHeader className="">
           <div className="flex items-center w-full justify-between">
             <div className="space-y-3">
               <div className="flex items-center gap-3 mt-4">
-                <h3 className="text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out">
+                <h3 className="text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
                   {name}
                 </h3>
                 <div className="flex flex-wrap gap-1">
@@ -39,7 +39,7 @@ export function TrainingCard({ data, playKey }) {
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full px-3.5 py-1 text-xs font-normal",
+                        "rounded-full px-3.5 py-1 text-xs font-normal dark:group-hover:bg-foreground",
                         tag.color === "yellow" &&
                           "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out",
                         tag.color === "blue" &&
@@ -60,7 +60,7 @@ export function TrainingCard({ data, playKey }) {
 
               <p
                 className={cn(
-                  "text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out"
+                  "text-sm text-gray-600 dark:text-foreground group-hover:text-white transition-all duration-500 ease-out"
                 )}
               >
                 {description}
@@ -71,7 +71,7 @@ export function TrainingCard({ data, playKey }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue dark:text-foreground hover:bg-stone-700 group-hover:text-white"
                 )}
               >
                 <Eye />
@@ -106,7 +106,7 @@ export function TrainingCard({ data, playKey }) {
 
             <div
               className={cn(
-                "flex justify-between text-sm mt-3 text-black/50 group-hover:text-white duration-500 ease-out"
+                "flex justify-between text-sm mt-3 text-foreground/50 group-hover:text-white duration-500 ease-out"
               )}
             >
               <p className="">Loss: {loss}</p>

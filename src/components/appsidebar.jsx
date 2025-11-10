@@ -140,6 +140,7 @@ export function AppSidebar() {
       return () => clearTimeout(timer);
     }
   }, []);
+  // console.log(shouldAnimate)
 
   return (
     <Sidebar collapsible="icon">

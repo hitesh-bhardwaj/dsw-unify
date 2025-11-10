@@ -6,7 +6,7 @@ import { Button } from '../ui/button'
 const LeftArrowAnim = ({link}) => {
   return (
    <>
-   <Link href={link} className="group inline-flex">
+   <Link href={link} className="group inline-flex dark:text-foreground">
   <Button variant="ghost" size="icon" className="shrink-0 w-fit -mt-0.5">
     <div className="relative w-4 h-4 overflow-hidden">
       <span

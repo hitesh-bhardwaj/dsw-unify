@@ -15,8 +15,9 @@ import { TemplateCard } from "@/components/template-card";
 import CreatePromptModal from "@/components/CreatePromptModal";
 import SearchBar from "@/components/search-bar";
 import RadioTabs from "@/components/common/RadioTabs";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
+import { ScaleDown } from "@/components/animations/Animations";
 
 // Mock data for prompts
 const prompts = [
@@ -117,16 +118,17 @@ export default function PromptsPage() {
   return (
     <>
       <div className="flex flex-col h-full overflow-hidden">
+    <ScaleDown>
         {/* Header section */}
         <div className="space-y-6 p-6 w-full h-full">
           {/* Title and CTAs */}
-          <FadeUp>
+          {/* <FadeUp> */}
             <div className="flex items-center justify-between">
               <div>
                 <h1 className="text-3xl font-medium text-foreground">
                   Prompt Library
                 </h1>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm dark:text-foreground text-black/60">
                   Manage and version your prompt templates and configurations
                 </p>
               </div>
@@ -153,8 +155,8 @@ export default function PromptsPage() {
                 </RippleButton>
               </div>
             </div>
-          </FadeUp>
-          <FadeUp delay={0.02}>
+          {/* </FadeUp> */}
+          {/* <FadeUp delay={0.02}> */}
             <div className="flex gap-3">
               <div className="relative flex-1">
                 <SearchBar
@@ -166,7 +168,7 @@ export default function PromptsPage() {
               <RippleButton className={"rounded-lg"}>
                 <Button
                   variant="outline"
-                  className="gap-2 border-black/30 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
+                  className="gap-2 border-border-color-1 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
                 >
                   <div className="w-4 h-4">
                     <Tune />
@@ -175,8 +177,8 @@ export default function PromptsPage() {
                 </Button>
               </RippleButton>
             </div>
-          </FadeUp>
-          <FadeUp delay={0.04}>
+          {/* </FadeUp> */}
+          {/* <FadeUp delay={0.04}> */}
             <RadioTabs
               items={[
                 { id: "prompts", label: "Prompts", icon: PromptsIcon },
@@ -185,12 +187,12 @@ export default function PromptsPage() {
               value={tab}
               onValueChange={setTab}
               activeClassName="  text-[#FF5722]"
-              inactiveClassName="border-transparent text-gray-700"
+              inactiveClassName="border-transparent dark:text-foreground text-black/70"
               dotColorClassName="bg-[#FF5722]"
               equalWidth={true}
             />
-          </FadeUp>
-          <FadeUp delay={0.06}>
+          {/* </FadeUp> */}
+          {/* <FadeUp delay={0.06}> */}
             <div className="flex-1 pt-0 h-fit w-full relative">
               <div
                 className={cn(
@@ -231,13 +233,14 @@ export default function PromptsPage() {
                     </div>
                   )}
                 </div>
-                {/* <div className="w-full h-120 rounded-xl border border-black/20 flex justify-center items-center">
+                {/* <div className="w-full h-120 rounded-xl border border-border-color-1 flex justify-center items-center">
                           <p>No Self Hosted available at this point </p>
                         </div> */}
               </div>
             </div>
-          </FadeUp>
+          {/* </FadeUp> */}
         </div>
+    </ScaleDown>
       </div>
       <CreatePromptModal open={createPrompt} onOpenChange={setCreatePrompt} />
     </>

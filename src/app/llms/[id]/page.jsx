@@ -6,21 +6,43 @@ import { ConfigureIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
 import CountUp from "@/components/animations/CountUp";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import LLMConfigurationGrid from "@/components/llm-configuration-grid";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ScaleDown } from "@/components/animations/Animations";
 
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
 
+  // show the metrics skeleton only once per LLM id
+  const [mounted, setMounted] = useState(false);
   const [showMetricsSkeleton, setShowMetricsSkeleton] = useState(true);
+
   useEffect(() => {
-    const t = setTimeout(() => setShowMetricsSkeleton(false), 500);
-    return () => clearTimeout(t);
+    setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const STORAGE_KEY = `LLMsDetail:metricsSkeletonShown:${id ?? "global"}`;
+    const alreadyShown = localStorage.getItem(STORAGE_KEY) === "1";
+
+    if (alreadyShown) {
+      setShowMetricsSkeleton(false);
+      return;
+    }
+
+    // First visit: keep skeleton for at least 500ms, then disable for the future
+    const t = setTimeout(() => {
+      setShowMetricsSkeleton(false);
+      localStorage.setItem(STORAGE_KEY, "1");
+    }, 500);
+
+    return () => clearTimeout(t);
+  }, [mounted, id]);
 
   const items = [
     {
@@ -28,7 +50,7 @@ export default function LLMsDetailPage({ params }) {
       value: "configuration",
       label: "Configuration",
       name: "Configuration",
-      render: () => <LLMConfigurationGrid  id={"configuration"}/>,
+      render: () => <LLMConfigurationGrid id={`configuration:${id}`} />,
     },
     {
       id: "usage-metric",
@@ -61,7 +83,7 @@ export default function LLMsDetailPage({ params }) {
 
   // Mock data
   const llm = {
-    id: id,
+    id,
     name: "GPT-4 Turbo",
     description: "OpenAI API Model | Version: 2024-04-09",
     status: "active",
@@ -71,11 +93,13 @@ export default function LLMsDetailPage({ params }) {
     cost: "$45.67",
   };
 
+  if (!mounted) return null;
+
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header */}
-      <div className="bg-background p-6 space-y-6 h-full">
-        <FadeUp>
+      <ScaleDown>
+        <div className="bg-background p-6 space-y-6 h-full">
           <div className="flex items-center justify-between mb-10">
             <div className="flex gap-3">
               <LeftArrowAnim link={"/llms"} />
@@ -86,7 +110,7 @@ export default function LLMsDetailPage({ params }) {
                     Active
                   </Badge>
                 </div>
-                <p className="text-sm text-gray-600 pl-0.5">
+                <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
                   {llm.description}
                 </p>
               </div>
@@ -102,16 +126,14 @@ export default function LLMsDetailPage({ params }) {
               </RippleButton>
             </div>
           </div>
-        </FadeUp>
 
-        {/* Metrics row with 500ms skeletons */}
-        <FadeUp delay={0.02}>
+          {/* Metrics row – skeleton only once per id */}
           {showMetricsSkeleton ? (
             <div className="w-full flex gap-4">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out"
+                  className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out"
                 >
                   <Skeleton className="h-8 w-28 mb-3" />
                   <Skeleton className="h-4 w-40" />
@@ -120,38 +142,36 @@ export default function LLMsDetailPage({ params }) {
             </div>
           ) : (
             <div className="w-full flex gap-4">
-              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium text-green">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium dark:text-foreground text-green">
                   <CountUp value={llm.request} duration={1.2} startOnView once />
                 </p>
-                <p className="text-black/60 text-sm ">Total Requests</p>
+                <p className="text-foreground/60 text-sm ">Total Requests</p>
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium text-badge-blue">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium dark:text-foreground text-badge-blue">
                   <CountUp value={llm.avgRes} duration={1.2} startOnView once />
                 </p>
-                <p className="text-black/60 text-sm">Avg. Response Time</p>
+                <p className="text-foreground/60 text-sm">Avg. Response Time</p>
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium text-yellow">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium dark:text-foreground text-yellow">
                   <CountUp value={llm.upTime} duration={1.2} startOnView once />
                 </p>
-                <p className="text-black/60 text-sm">Uptime</p>
+                <p className="text-foreground/60 text-sm">Uptime</p>
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-black/20 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium text-red">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-3xl font-medium dark:text-foreground text-red">
                   <CountUp value={llm.cost} duration={1.2} startOnView once />
                 </p>
-                <p className="text-black/60 text-sm">This Month Cost</p>
+                <p className="text-foreground/60 text-sm">This Month Cost</p>
               </div>
             </div>
           )}
-        </FadeUp>
 
-        <FadeUp delay={0.04}>
           <AnimatedTabsSection items={items} defaultValue="configuration" />
-        </FadeUp>
-      </div>
+        </div>
+      </ScaleDown>
     </div>
   );
 }

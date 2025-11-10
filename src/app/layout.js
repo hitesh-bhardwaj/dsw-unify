@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import LayoutTransition from "@/components/LayoutTransition";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${inter.variable} antialiased`}
       >
+        <LayoutTransition>
         {children}
+        </LayoutTransition>
       </body>
     </html>
   );

@@ -53,28 +53,72 @@ function SidebarProvider({
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
 
-  // This is the internal state of the sidebar.
-  // We use openProp and setOpenProp for control from outside the component.
-  const [_open, _setOpen] = React.useState(defaultOpen)
-  const open = openProp ?? _open
-  const setOpen = React.useCallback((value) => {
-    const openState = typeof value === "function" ? value(open) : value
-    if (setOpenProp) {
-      setOpenProp(openState)
-    } else {
-      _setOpen(openState)
-    }
+  const STORAGE_KEY = SIDEBAR_COOKIE_NAME; // "sidebar_state"
 
-    // This sets the cookie to keep the sidebar state.
-    document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
-  }, [setOpenProp, open])
+  const readPersistedOpen = React.useCallback(() => {
+    try {
+      // Prefer localStorage (SPA-friendly), fallback to cookie
+      if (typeof window !== "undefined") {
+        const ls = window.localStorage?.getItem(STORAGE_KEY)
+        if (ls === "true" || ls === "false") return ls === "true"
+      }
+      if (typeof document !== "undefined") {
+        const match = document.cookie
+          ?.split("; ")
+          .find((c) => c.startsWith(`${SIDEBAR_COOKIE_NAME}=`))
+        if (match) {
+          const v = match.split("=")[1]
+          if (v === "true" || v === "false") return v === "true"
+        }
+      }
+    } catch {}
+    return undefined
+  }, [])
+
+  // Initialize from persisted value if present; otherwise use defaultOpen
+  const initialOpen = (() => {
+    const persisted = readPersistedOpen()
+    return persisted ?? defaultOpen
+  })()
+
+  // Internal state (uncontrolled); if `openProp` is provided, it takes precedence
+  const [_open, _setOpen] = React.useState(initialOpen)
+  const open = openProp ?? _open
+
+  const persistOpen = React.useCallback((value) => {
+    try {
+      // cookie (your existing persistence)
+      document.cookie = `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      // localStorage mirror (helps SPA navigations)
+      window.localStorage?.setItem(STORAGE_KEY, String(value))
+    } catch {}
+  }, [])
+
+  // If this becomes a controlled component mid-lifecycle, keep persistence up to date
+  React.useEffect(() => {
+    if (openProp === undefined) return
+    persistOpen(openProp)
+  }, [openProp, persistOpen])
+
+  const setOpen = React.useCallback(
+    (value) => {
+      const next = typeof value === "function" ? value(open) : value
+      if (setOpenProp) {
+        setOpenProp(next)
+      } else {
+        _setOpen(next)
+      }
+      persistOpen(next)
+    },
+    [open, setOpenProp, persistOpen]
+  )
 
   // Helper to toggle the sidebar.
   const toggleSidebar = React.useCallback(() => {
-    return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
-  }, [isMobile, setOpen, setOpenMobile])
+    return isMobile ? setOpenMobile((o) => !o) : setOpen((o) => !o)
+  }, [isMobile, setOpen])
 
-  // Adds a keyboard shortcut to toggle the sidebar.
+  // Keyboard shortcut: ⌘/Ctrl + b
   React.useEffect(() => {
     const handleKeyDown = (event) => {
       if (
@@ -85,47 +129,55 @@ function SidebarProvider({
         toggleSidebar()
       }
     }
-
     window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown)
   }, [toggleSidebar])
 
-  // We add a state so that we can do data-state="expanded" or "collapsed".
-  // This makes it easier to style the sidebar with Tailwind classes.
+  // Re-read persisted state on mount in case SSR/defaults differed (avoid flicker)
+  React.useEffect(() => {
+    if (openProp !== undefined) return // controlled; don't override
+    const persisted = readPersistedOpen()
+    if (typeof persisted === "boolean") {
+      _setOpen(persisted)
+    }
+  }, [openProp, readPersistedOpen])
+
   const state = open ? "expanded" : "collapsed"
 
-  const contextValue = React.useMemo(() => ({
-    state,
-    open,
-    setOpen,
-    isMobile,
-    openMobile,
-    setOpenMobile,
-    toggleSidebar,
-  }), [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar])
+  const contextValue = React.useMemo(
+    () => ({
+      state,
+      open,
+      setOpen,
+      isMobile,
+      openMobile,
+      setOpenMobile,
+      toggleSidebar,
+    }),
+    [state, open, isMobile, openMobile, toggleSidebar, setOpen]
+  )
 
   return (
     <SidebarContext.Provider value={contextValue}>
       <TooltipProvider delayDuration={0}>
         <div
           data-slot="sidebar-wrapper"
-          style={
-            {
-              "--sidebar-width": SIDEBAR_WIDTH,
-              "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
-              ...style
-            }
-          }
+          style={{
+            "--sidebar-width": SIDEBAR_WIDTH,
+            "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+            ...style,
+          }}
           className={cn(
             "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
             className
           )}
-          {...props}>
+          {...props}
+        >
           {children}
         </div>
       </TooltipProvider>
     </SidebarContext.Provider>
-  );
+  )
 }
 
 function Sidebar({

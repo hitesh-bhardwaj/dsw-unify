@@ -32,7 +32,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
       <div className="block">
         <Card
           className={cn(
-            "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-black/30 pt-3 pb-8"
+            "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 pt-3 pb-8"
           )}
         >
           <CardHeader>
@@ -81,7 +81,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
     <Link href={`/agents/${id}`} className="block group">
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-black/30 group-hover:bg-active-card group-hover:text-white group-hover:border-black pt-3 pb-8"
+          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border group-hover:bg-active-card group-hover:text-white group-hover:border-black dark:group-hover:border-border-color-1 dark:group-hover:bg-sidebar-accent pt-3 pb-8"
         )}
       >
         <CardHeader>
@@ -89,7 +89,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
             <div className="space-y-3">
               <div className="flex items-center gap-2 mt-4">
                 {/* Name */}
-                <h3 className="text-xl font-medium text-black group-hover:text-white transition-all duration-500 ease-out">
+                <h3 className="text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
                   {name}
                 </h3>
 
@@ -100,7 +100,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full px-3.5 py-1 text-xs font-normal",
+                        "rounded-full px-3.5 py-1 text-xs font-normal dark:group-hover:bg-foreground",
                         tag.color === "yellow" &&
                           "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out",
                         tag.color === "blue" &&
@@ -116,7 +116,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                         tag.color === "sea-green" &&
                           "bg-badge-sea-green text-white group-hover:bg-background group-hover:text-black transition-all duration-500 ease-out",
                         tag.color === "transparent" &&
-                          "bg-transparent text-foreground border border-black/20 group-hover:bg-background group-hover:text-foreground transition-all duration-500 ease-out"
+                          "bg-transparent text-foreground border border-border-color-1 group-hover:bg-background group-hover:text-foreground dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out"
                       )}
                     >
                       {tag.label}
@@ -126,7 +126,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 group-hover:text-white transition-all duration-500 ease-out">
+              <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-white transition-all duration-500 ease-out">
                 {description}
               </p>
             </div>
@@ -137,7 +137,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 dark:text-foreground text-badge-blue hover:bg-stone-700 group-hover:text-white"
                 )}
               >
                 <Eye />
@@ -147,7 +147,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-6 w-6 flex items-center justify-center px-1 py-1 text-primary hover:bg-stone-700 group-hover:text-white"
+                  "h-6 w-6 flex items-center justify-center px-1 py-1 dark:text-foreground text-primary hover:bg-stone-700 group-hover:text-white"
                 )}
               >
                 <UploadIcon />
@@ -157,7 +157,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-6.5 w-6.5 flex items-center justify-center px-1 py-1 text-red hover:bg-stone-700 group-hover:text-white"
+                  "h-6.5 w-6.5 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-stone-700 group-hover:text-white"
                 )}
               >
                 <Bin />
@@ -174,7 +174,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
               <span>records</span>
             </div>
 
-            <div className="flex items-center text-black/60 group-hover:text-white duration-500 ease-out">
+            <div className="flex items-center text-foreground/60 group-hover:text-white duration-500 ease-out">
               <span>Created&nbsp;</span>
               <span>{createdBy}</span>
             </div>

@@ -44,7 +44,7 @@ function CopyWithTooltip({
           variant="outline"
           size="icon"
           onClick={handleClick}
-          className={`shrink-0 flex justify-center items-center cursor-pointer pr-0 py-5 px-5 min-w-8 bg-gray-100 rounded-lg border-black/20 ${className}`}
+          className={`shrink-0 flex justify-center items-center cursor-pointer pr-0 py-5 px-5 min-w-8 bg-gray-100 rounded-lg border-foreground/20 ${className}`}
           aria-label={ariaLabel || label}
         >
           <Copy className={iconClassName} />
@@ -291,7 +291,7 @@ const handleTabChange = (value) => {
                     <Input
                       value={agentId}
                       readOnly
-                      className="border border-black/20"
+                      className="border border-foreground/20"
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -311,7 +311,7 @@ const handleTabChange = (value) => {
                     <Input
                       value={apiKey}
                       readOnly
-                      className="border border-black/20"
+                      className="border border-foreground/20"
                     />
                     <CopyWithTooltip
                       text={apiKey}
@@ -334,7 +334,7 @@ const handleTabChange = (value) => {
                     <Input
                       value={endpointUrl}
                       readOnly
-                      className="border border-black/20"
+                      className="border border-foreground/20"
                     />
                     <CopyWithTooltip
                       text={endpointUrl}

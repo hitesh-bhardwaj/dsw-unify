@@ -246,15 +246,15 @@ export default function AnimatedTabsSection({
         value={active}
         {...(!isControlled && { defaultValue: defaultValue ?? first })}
         onValueChange={setActive}
-        className={`relative flex gap-4 bg-[#F6F6F6] p-1.5 rounded-lg border border-gray-200`}
+        className={`relative flex gap-4 bg-sidebar-accent p-1.5 rounded-lg border border-border-color-2 `}
       >
-        <TabsList className={`relative flex w-full gap-4 !p-0`} activeClassName={"border shadow-none"}>
+        <TabsList className={`relative flex w-full gap-4 !p-0 bg-transparent`} activeClassName={"border shadow-none"}>
           {items.map((i) => (
             <TabsTrigger
               key={i.value}
               value={i.value}
               onClick={() => setActive(i.value)}
-              className={cn(`rounded-lg transition-all font-normal duration-300 ease-out py-2 ${activeItem?.value === i.value ? "text-primary" : "text-black"}`)}
+              className={cn(`rounded-lg transition-all font-normal duration-300 ease-out py-2 ${activeItem?.value === i.value ? "text-primary" : "text-foreground"}`)}
             >
               {i.label ?? i.name ?? i.value}
             </TabsTrigger>

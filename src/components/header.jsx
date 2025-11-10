@@ -22,7 +22,7 @@ export function Header({ title = "Agents" }) {
       <div className="flex items-center gap-4">
         <SidebarTrigger />
         <Separator orientation="vertical" className={"h-8!"} />
-        <div className="flex items-center gap-2 text-sm hover:bg-sidebar-accent p-2 rounded-md duration-300">
+        <div className="flex items-center gap-2 text-sm py-2 rounded-md duration-300">
          
           {/* <span className="text-foreground">{title}</span> */}
           <Breadcrumbs/>

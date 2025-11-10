@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { UploadIcon } from "@/components/Icons";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import { FadeUp } from "@/components/animations/Animations";
+// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import DatasetsGrid from "@/components/llmtuning/datasets-grid";
 import TrainingJobsGrid from "@/components/llmtuning/training-jobs-grid";
+import { ScaleDown } from "@/components/animations/Animations";
 
 
 const datasets = [
@@ -100,9 +101,10 @@ export default function LLMFineTuning() {
   ];
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
+      <ScaleDown>
       <div className="space-y-6 p-6">
         {/* Title and CTA */}
-        <FadeUp>
+        {/* <FadeUp> */}
           <div className="flex items-center justify-between mb-10">
             <div className="w-fit flex gap-2">
               <LeftArrowAnim link={"/llms"} />
@@ -110,7 +112,7 @@ export default function LLMFineTuning() {
                 <h1 className="text-2xl font-medium text-foreground">
                   LLM Finetuning
                 </h1>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-foreground">
                   Manage datasets, train custom models, and deploy them for
                   inference
                 </p>
@@ -127,14 +129,15 @@ export default function LLMFineTuning() {
               </Link>
             </RippleButton>
           </div>
-        </FadeUp>
-        <FadeUp delay={0.04}>
+        {/* </FadeUp> */}
+        {/* <FadeUp delay={0.04}> */}
               <AnimatedTabsSection
                items={items}
                   // ctx={ctx}
                   defaultValue="datasets"/>
-                  </FadeUp>
+                  {/* </FadeUp> */}
       </div>
+      </ScaleDown>
     </div>
   );
 }
