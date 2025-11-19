@@ -385,7 +385,7 @@ export default function Home() {
               filteredWorkflowBuilder.length === 0 && (
                 <div className="text-center py-12">
                   <p className="text-muted-foreground text-lg">
-                    No features found matching "{query}"
+                    No features found matching &quot;{query}&quot;
                   </p>
                   <p className="text-sm text-muted-foreground mt-2">
                     Try searching for agents, models, data, or workflow

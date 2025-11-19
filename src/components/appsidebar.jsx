@@ -154,7 +154,7 @@ export function AppSidebar() {
                           <span className="text-nowrap">{item.name}</span>
                           <ChevronDown 
                             className={cn(
-                              "ml-auto h-4 w-4 transition-transform duration-200 group-data-[collapsible=icon]:hidden",
+                              "ml-auto h-4 w-4 transition-transform duration-500 ease-in-out group-data-[collapsible=icon]:hidden",
                               isExpanded && "rotate-180"
                             )}
                           />
@@ -178,12 +178,24 @@ export function AppSidebar() {
                     </SidebarMenuItem>
 
                     {/* Children */}
-                    {hasChildren && isExpanded && (
-                      <div className="ml-4 mt-1 space-y-1 group-data-[collapsible=icon]:hidden">
-                        {item.children.map((child) => {
+                    {hasChildren && (
+                      <div 
+                        className={cn(
+                          "ml-4 space-y-1 overflow-hidden transition-all duration-500 ease-in-out group-data-[collapsible=icon]:hidden",
+                          isExpanded ? "max-h-96 opacity-100 mt-1" : "max-h-0 opacity-0 mt-0"
+                        )}
+                      >
+                        {item.children.map((child, childIndex) => {
                           const isChildActive = pathname === child.href || pathname?.startsWith(child.href + "/");
                           return (
-                            <SidebarMenuItem key={child.name}>
+                            <SidebarMenuItem 
+                              key={child.name}
+                              className={cn(
+                                "transition-all duration-1000 ease-in-out",
+                                isExpanded ? "translate-y-0 opacity-100" : " opacity-0"
+                              )}
+                              
+                            >
                               <SidebarMenuButton
                                 size="lg"
                                 asChild
