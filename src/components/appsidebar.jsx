@@ -21,6 +21,7 @@ import logo from "../../public/unify-logo.png";
 import {
   AgentsIcon,
   GuardrailsIcon,
+  HomeBlock,
   HomeIcon,
   KnowledgeBaseIcon,
   LLMsIcon,
@@ -31,7 +32,7 @@ import {
 } from "./Icons";
 
 const navigation = [
-  { name: "Home", href: "/", icon: HomeIcon },
+  { name: "Home", href: "/", icon: HomeBlock },
   { name: "Agents", href: "/agents", icon: AgentsIcon },
   { name: "Prompts", href: "/prompts", icon: PromptsIcon },
   { name: "LLMs", href: "/llms", icon: LLMsIcon },

@@ -290,7 +290,7 @@ export default function Home() {
           </div>
 
           {/* Main Content - Scrollable */}
-          <div className="flex-1 overflow-auto p-6 pt-0 space-y-12">
+          <div className="flex-1 overflow-auto p-6 pt-0 space-y-12 mt-6">
             {/* Data Engineering Section */}
             {filteredDataEngineering.length > 0 && (
               <FadeUp delay={0.06}>
