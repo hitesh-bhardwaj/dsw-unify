@@ -15,9 +15,9 @@ export function MetricCard({ label, value, change, trend, className }) {
   const isPositive = change >= 0;
 
   return (
-    <Card className={cn("hover:shadow-lg transition-shadow", className)}>
-      <CardContent className="p-6">
-        <div className="flex items-start justify-between mb-4">
+    <Card className={cn("hover:shadow-lg transition-shadow py-0", className)}>
+      <CardContent className="p-5 flex items-end justify-between">
+        <div className="flex flex-col items-start justify-between mb-4">
           <div className="space-y-1">
             <p className="text-sm text-muted-foreground">{label}</p>
             <h3 className="text-3xl font-semibold tracking-tight">{value}</h3>
@@ -39,7 +39,7 @@ export function MetricCard({ label, value, change, trend, className }) {
         </div>
 
         {/* Sparkline Chart */}
-        <div className="h-16 w-full">
+        <div className="h-20 w-[50%]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={chartData}>
               <defs>

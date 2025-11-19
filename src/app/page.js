@@ -30,6 +30,10 @@ import {
   MemoriesIcon,
   GuardrailsIcon,
   TestingIcon,
+  SynthWave,
+  DataExplorerIcon,
+  DataVisualizationIcon,
+  DataValidationIcon,
 } from "@/components/Icons";
 
 // Mock data for metrics
@@ -63,28 +67,28 @@ const metricsData = [
 // Feature sections data
 const dataEngineeringFeatures = [
   {
-    icon: Database,
+    icon: SynthWave,
     title: "Data Ingestion",
     description:
       "Import and process data from multiple sources with automated validation and transformation pipelines",
     href: "/data-engineering/ingestion",
   },
   {
-    icon: Search,
+    icon: DataExplorerIcon,
     title: "Data Explorer",
     description:
       "Interactive data exploration and querying tools for understanding your datasets",
     href: "/data-engineering/explorer",
   },
   {
-    icon: BarChart3,
+    icon: DataVisualizationIcon,
     title: "Data Visualization",
     description:
       "Create charts, graphs, and dashboards for visual data analysis and insights",
     href: "/data-engineering/visualization",
   },
   {
-    icon: CheckCircle2,
+    icon: DataValidationIcon,
     title: "Data Validation",
     description:
       "Automated data quality checks, schema validation, and anomaly detection",
@@ -253,6 +257,15 @@ export default function Home() {
         <ScaleDown>
           {/* Header Section */}
           <div className="space-y-6 p-6">
+             {/* Search Bar */}
+            <FadeUp delay={0.03}>
+              <SearchBar
+                placeholder="Search features..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </FadeUp>
+            
             <FadeUp delay={0.02}>
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
@@ -264,14 +277,7 @@ export default function Home() {
               </div>
             </FadeUp>
 
-            {/* Search Bar */}
-            <FadeUp delay={0.03}>
-              <SearchBar
-                placeholder="Search features..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-            </FadeUp>
+           
 
             {/* Metrics Grid */}
             <FadeUp delay={0.04}>
@@ -293,7 +299,7 @@ export default function Home() {
                     title="Data Engineering"
                     description="Data ingestion, validation, exploration, and feature engineering tools"
                   />
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredDataEngineering.map((feature, index) => (
                       <FeatureCard key={index} {...feature} />
                     ))}
@@ -310,7 +316,7 @@ export default function Home() {
                     title="Feature Store"
                     description="End-to-end ML workflow from feature selection to model deployment"
                   />
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredFeatureStore.map((feature, index) => (
                       <FeatureCard key={index} {...feature} />
                     ))}
@@ -327,7 +333,7 @@ export default function Home() {
                     title="AI Studio"
                     description="End-to-end ML workflow from feature selection to model deployment"
                   />
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredAIStudio.map((feature, index) => (
                       <FeatureCard key={index} {...feature} />
                     ))}
@@ -344,7 +350,7 @@ export default function Home() {
                     title="Agent Studio"
                     description="Build and manage AI agents with comprehensive tooling"
                   />
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredAgentStudio.map((feature, index) => (
                       <FeatureCard key={index} {...feature} />
                     ))}
@@ -361,7 +367,7 @@ export default function Home() {
                     title="Workflow Builder"
                     description="Design and orchestrate agentic AI workflows for complex business processes"
                   />
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {filteredWorkflowBuilder.map((feature, index) => (
                       <FeatureCard key={index} {...feature} />
                     ))}
