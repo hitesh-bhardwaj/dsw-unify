@@ -18,18 +18,20 @@ import {
 import { useSidebar } from "@/components/ui/sidebar";
 import Image from "next/image";
 import logo from "../../public/unify-logo.png";
-import { 
-  AgentsIcon, 
-  GuardrailsIcon, 
-  KnowledgeBaseIcon, 
-  LLMsIcon, 
-  MemoriesIcon, 
-  PromptsIcon, 
-  TestingIcon, 
-  ToolsIcon 
+import {
+  AgentsIcon,
+  GuardrailsIcon,
+  HomeIcon,
+  KnowledgeBaseIcon,
+  LLMsIcon,
+  MemoriesIcon,
+  PromptsIcon,
+  TestingIcon,
+  ToolsIcon
 } from "./Icons";
 
 const navigation = [
+  { name: "Home", href: "/", icon: HomeIcon },
   { name: "Agents", href: "/agents", icon: AgentsIcon },
   { name: "Prompts", href: "/prompts", icon: PromptsIcon },
   { name: "LLMs", href: "/llms", icon: LLMsIcon },
@@ -40,8 +42,6 @@ const navigation = [
   { name: "Testing", href: "/testing", icon: TestingIcon},
   { name: "Console", href: "/console", icon: AgentsIcon},
   { name: "Use Cases", href: "/usecases", icon: PromptsIcon},
-
-
 ];
 
 // Store animation state outside component to persist across renders

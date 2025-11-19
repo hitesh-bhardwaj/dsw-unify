@@ -17,14 +17,12 @@ export function Header({ title = "Agents" }) {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between bg-background/50 px-6 sticky w-full top-0 z-10 backdrop-blur-sm">
+    <header className="flex h-16 items-center justify-between bg-background/70 px-6 sticky w-full top-0 z-100 backdrop-blur-md shadow-xs">
       {/* Left side - Trigger and Breadcrumb */}
       <div className="flex items-center gap-4">
         <SidebarTrigger />
         <Separator orientation="vertical" className={"h-8!"} />
         <div className="flex items-center gap-2 text-sm py-2 rounded-md duration-300">
-         
-          {/* <span className="text-foreground">{title}</span> */}
           <Breadcrumbs/>
         </div>
       </div>

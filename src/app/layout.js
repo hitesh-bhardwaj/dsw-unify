@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         className={`${inter.variable} antialiased`}
       >
         <LayoutTransition>
-        {children}
+          {children}
         </LayoutTransition>
       </body>
     </html>
