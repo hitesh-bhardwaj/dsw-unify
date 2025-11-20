@@ -6,53 +6,74 @@ import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useState } from "react";
-import {
-  SynthWave,
-  DataExplorerIcon,
-  DataVisualizationIcon,
-} from "@/components/Icons";
+import { Tune, SynthWave } from "@/components/Icons";
 
-import { QuickCards } from "@/components/AIstudio/QuickCards";
-
-const quickFeatures = [
+import { FeatureCard } from "@/components/feature-card";
+const Features = [
   {
+    id: 1,
+    name: "Calculate Age from DOB",
     icon: SynthWave,
-    title: "Define Your Use Case",
-    description:
-      "Start by creating a use case to organize your AI models and track business objectives",
-    href: "#",
+    description: "Calculates age in years from date of birth",
+    tags: [{ label: "demographics" }, { label: "age" }],
+    codeExamples: `def calculate_age(dob):
+    today = datetime.now()
+    return (today - dob).days // 365`,
+    lastUpdated: "2 Hours Ago",
+    variant: "light",
   },
   {
-    icon: DataExplorerIcon,
-    title: "Select Data",
-    description:
-      "Select your data sources and automatically create features with our guided wizard",
-    href: "#",
+    id: 2,
+    name: "One-Hot Encoding",
+    icon: SynthWave,
+    description: "Converts categorical variable into binary columns",
+    tags: [{ label: "encoding" }, { label: "categorical" }],
+    codeExamples: `def calculate_age(dob):
+    today = datetime.now()
+    return (today - dob).days // 365`,
+    lastUpdated: "2 days Ago",
+    lastUpdated: "18/01/2024",
+    variant: "light",
   },
   {
-    icon: DataVisualizationIcon,
-    title: "Train & Deploy",
-    description:
-      "Configure training parameters and let AutoML train and deploy your model automatically",
-    href: "#",
+    id: 3,
+    name: "Rolling Average 7 Days",
+    icon: SynthWave,
+    description: "Calculates 7-day rolling average for time series data",
+    tags: [{ label: "timeseries" }, { label: "aggregation" }],
+    codeExamples: `def calculate_age(dob):
+    today = datetime.now()
+    return (today - dob).days // 365`,
+    lastUpdated: "2 Hours Ago",
+    lastUpdated: "22/01/2024",
+    variant: "light",
+  },
+  {
+    id: 4,
+    name: "Sum Aggregation",
+    icon: SynthWave,
+    description: "Calculates sum of values grouped by key",
+    tags: [{ label: "aggregation" }, { label: "sum" }],
+    codeExamples: `def calculate_age(dob):
+    today = datetime.now()
+    return (today - dob).days // 365`,
+    lastUpdated: "4 Days Ago",
+    lastUpdated: "22/01/2024",
+    variant: "light",
   },
 ];
 
 const page = () => {
   const [query, setQuery] = useState("");
 
-  const filteredQuickFeature = quickFeatures.filter(
-    (f) =>
-      f.title.toLowerCase().includes(query.toLowerCase()) ||
-      f.description.toLowerCase().includes(query.toLowerCase())
+  const filteredFeatures = Features.filter((feature) =>
+    feature.name.toLowerCase().includes(query.toLowerCase())
   );
   return (
     <>
       <div className="flex flex-col h-full w-full overflow-hidden">
         <ScaleDown>
           <div className="space-y-6 p-6">
-          
-
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
@@ -72,23 +93,37 @@ const page = () => {
                 </RippleButton>
               </Link>
             </div>
-              <SearchBar
-              placeholder="Search features..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-
-            {filteredQuickFeature.length > 0 && (
-              //   <FadeUp delay={0.06}>
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {filteredQuickFeature.map((feature, index) => (
-                    <QuickCards key={index} {...feature} />
-                  ))}
-                </div>
+            <div className="flex gap-3">
+              <div className="relative flex-1">
+                <SearchBar
+                  placeholder="Search features..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
               </div>
-              //   </FadeUp>
-            )}
+              <RippleButton className={"rounded-lg"}>
+                <Button
+                  variant="outline"
+                  className="gap-2 border-border-color-1 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
+                >
+                  <div className="w-4 h-4">
+                    <Tune />
+                  </div>
+                  Filters
+                </Button>
+              </RippleButton>
+            </div>
+
+            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+              {filteredFeatures.map((feature) => (
+                <FeatureCard key={feature.id} feature={feature} />
+              ))}
+              {filteredFeatures.length === 0 && (
+                <div className="flex h-64 items-center justify-center text-gray-500">
+                  No Features found matching "{query}"
+                </div>
+              )}
+            </div>
           </div>
         </ScaleDown>
       </div>
