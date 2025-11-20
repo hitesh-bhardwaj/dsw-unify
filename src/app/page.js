@@ -258,15 +258,12 @@ export default function Home() {
           {/* Header Section */}
           <div className="space-y-6 p-6">
              {/* Search Bar */}
-            <FadeUp delay={0.03}>
               <SearchBar
                 placeholder="Search features..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-            </FadeUp>
             
-            <FadeUp delay={0.02}>
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
                   Overview
@@ -275,25 +272,21 @@ export default function Home() {
                   Key platform metrics and activity at a glance
                 </p>
               </div>
-            </FadeUp>
 
            
 
             {/* Metrics Grid */}
-            <FadeUp delay={0.04}>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {metricsData.map((metric, index) => (
                   <MetricCard key={index} {...metric} />
                 ))}
               </div>
-            </FadeUp>
           </div>
 
           {/* Main Content - Scrollable */}
           <div className="flex-1 overflow-auto p-6 pt-0 space-y-12 mt-6">
             {/* Data Engineering Section */}
             {filteredDataEngineering.length > 0 && (
-              <FadeUp delay={0.06}>
                 <div className="space-y-6">
                   <SectionHeader
                     title="Data Engineering"
@@ -305,12 +298,10 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
             )}
 
             {/* Feature Store Section */}
             {filteredFeatureStore.length > 0 && (
-              <FadeUp delay={0.08}>
                 <div className="space-y-6">
                   <SectionHeader
                     title="Feature Store"
@@ -322,12 +313,10 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
             )}
 
             {/* AI Studio Section */}
             {filteredAIStudio.length > 0 && (
-              <FadeUp delay={0.1}>
                 <div className="space-y-6">
                   <SectionHeader
                     title="AI Studio"
@@ -339,12 +328,10 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
             )}
 
             {/* Agent Studio Section */}
             {filteredAgentStudio.length > 0 && (
-              <FadeUp delay={0.12}>
                 <div className="space-y-6">
                   <SectionHeader
                     title="Agent Studio"
@@ -356,12 +343,10 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
             )}
 
             {/* Workflow Builder Section */}
             {filteredWorkflowBuilder.length > 0 && (
-              <FadeUp delay={0.14}>
                 <div className="space-y-6 pb-6">
                   <SectionHeader
                     title="Workflow Builder"
@@ -373,7 +358,6 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
             )}
 
             {/* No Results Message */}

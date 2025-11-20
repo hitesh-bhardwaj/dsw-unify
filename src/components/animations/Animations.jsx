@@ -45,7 +45,7 @@ export const ScaleDown = ({
       initial={{ opacity:0,scale:1.03 }}
       animate={{ opacity: 1, scale:1 }}
       exit={{opacity:0,scale:0.97}}
-      style={{ originY: 0.2, originX: 0.5 }}
+      style={{ originY: 0, originX: 0.5 }}
       transition={{
         duration,
         delay,
