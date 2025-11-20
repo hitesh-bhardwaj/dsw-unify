@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { AppLayout } from "@/components/app-layout";
-import { FadeUp } from "@/components/animations/Animations";
-import { SectionHeader } from "@/components/home/section-header";
-import { FeatureCard } from "@/components/home/feature-card";
+import { SectionHeader } from "@/components/Home/section-header";
+import { FeatureCard } from "@/components/Home/feature-card";
 import { ScaleDown } from "@/components/animations/Animations";
 import SearchBar from "@/components/search-bar";
 import {
@@ -57,7 +55,6 @@ const page = () => {
       <ScaleDown>
         <div className="space-y-6 p-6">
           {/* Search Bar */}
-          {/* <FadeUp delay={0.03}> */}
           <SectionHeader
             title="Data Engineering"
             description="Data ingestion, validation, exploration, and feature engineering tools"
@@ -67,12 +64,10 @@ const page = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {/* </FadeUp> */}
         </div>
 
         <div className="flex-1 overflow-auto p-6 pt-0 space-y-12">
           {filteredDataEngineering.length > 0 && (
-            <FadeUp delay={0.06}>
               <div className="space-y-6">
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredDataEngineering.map((feature, index) => (
@@ -80,7 +75,6 @@ const page = () => {
                   ))}
                 </div>
               </div>
-            </FadeUp>
           )}
         </div>
       </ScaleDown>

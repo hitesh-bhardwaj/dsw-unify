@@ -45,9 +45,10 @@ export const ThemeTogglerBtn = () => {
             className="text-foreground hover:text-foreground !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
           >
             {effectiveFixed === "dark" ? (
-              <Moon className="!h-5 !w-auto" />
-            ) : (
               <Sun className="!h-5 !w-auto" />
+              
+            ) : (
+              <Moon className="!h-5 !w-auto" />
             )}
           </button>
         );

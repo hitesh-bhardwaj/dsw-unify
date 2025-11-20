@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { AppLayout } from "@/components/app-layout";
-import { MetricCard } from "@/components/home/metric-card";
-import { FeatureCard } from "@/components/home/feature-card";
-import { SectionHeader } from "@/components/home/section-header";
+import { MetricCard } from "@/components/Home/metric-card";
+import { FeatureCard } from "@/components/Home/feature-card";
+import { SectionHeader } from "@/components/Home/section-header";
 import { ScaleDown, FadeUp } from "@/components/animations/Animations";
 import SearchBar from "@/components/search-bar";
 import {

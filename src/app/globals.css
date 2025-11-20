@@ -178,3 +178,12 @@ pre {
 }
 
 
+/* Hide scrollbar but keep scrollable */
+.no-sidebar-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-sidebar-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}

@@ -43,7 +43,7 @@ export function MetricCard({
   const gradientId = `gradient-${String(label).replace(/\s+/g, "-")}`;
 
   return (
-    <Card className={cn("hover:shadow-lg transition-shadow py-0 rounded-xl", className)}>
+    <Card className={cn("duration-300 py-0 rounded-xl", className)}>
       <CardContent className="p-5 flex items-end justify-between">
         <div className="flex flex-col items-start justify-between w-[70%] gap-4">
           <div className="space-y-2">

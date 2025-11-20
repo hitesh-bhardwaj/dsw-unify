@@ -20,7 +20,7 @@ export function FeatureCard({ icon: Icon, title, description, href, className })
     <CardWrapper>
       <Card
         className={cn(
-          "h-full transition-all duration-300 hover:bg-sidebar-accent group py-5 pb-10 hover:border-border-color-2",
+          "h-full transition-all duration-300 hover:bg-sidebar-accent dark:hover:bg-sidebar-accent group py-5 pb-10 hover:border-border-color-2",
           href && "cursor-pointer",
           className
         )}
