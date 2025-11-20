@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar } from "./Icons";
+import { Bin, Editor, Eye, SynthWave, Calendar } from "../Icons";
 
 const skeletonShownMap = new Map();
 export function FeatureCard({ feature, minSkeletonMs = 500 }) {
