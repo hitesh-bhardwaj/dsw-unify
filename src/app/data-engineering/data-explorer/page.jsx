@@ -9,8 +9,8 @@ import {
   DataExplorerIcon,
   DataVisualizationIcon,
 } from "@/components/Icons";
-import { FeatureCard } from "@/components/Home/feature-card";
-import { SectionHeader } from "@/components/Home/section-header";
+import { FeatureCard } from "@/components/home/feature-card";
+import { SectionHeader } from "@/components/home/section-header";
 
 const dataEngineeringFeatures = [
   {

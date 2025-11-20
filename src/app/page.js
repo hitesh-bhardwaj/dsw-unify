@@ -31,9 +31,9 @@ import {
   DataVisualizationIcon,
   DataValidationIcon,
 } from "@/components/Icons";
-import { SectionHeader } from "@/components/Home/section-header";
-import { MetricCard } from "@/components/Home/metric-card";
-import { FeatureCard } from "@/components/Home/feature-card";
+import { SectionHeader } from "@/components/home/section-header";
+import { MetricCard } from "@/components/home/metric-card";
+import { FeatureCard } from "@/components/home/feature-card";
 
 // Mock data for metrics
 const metricsData = [
