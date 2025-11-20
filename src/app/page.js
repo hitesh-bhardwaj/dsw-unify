@@ -2,16 +2,12 @@
 
 import { useState } from "react";
 import { AppLayout } from "@/components/app-layout";
-import { MetricCard } from "@/components/Home/metric-card";
-import { FeatureCard } from "@/components/Home/feature-card";
-import { SectionHeader } from "@/components/Home/section-header";
+// import { MetricCard } from "@/components/Home/metric-card";
+// import { FeatureCard } from "@/components/Home/feature-card";
+// import { SectionHeader } from "@/components/Home/section-header";
 import { ScaleDown, FadeUp } from "@/components/animations/Animations";
 import SearchBar from "@/components/search-bar";
 import {
-  Database,
-  Search,
-  BarChart3,
-  CheckCircle2,
   Wand2,
   Eye,
   Boxes,
@@ -35,6 +31,9 @@ import {
   DataVisualizationIcon,
   DataValidationIcon,
 } from "@/components/Icons";
+import { SectionHeader } from "@/components/Home/section-header";
+import { MetricCard } from "@/components/Home/metric-card";
+import { FeatureCard } from "@/components/Home/feature-card";
 
 // Mock data for metrics
 const metricsData = [

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { SectionHeader } from "@/components/Home/section-header";
-import { FeatureCard } from "@/components/Home/feature-card";
+// import { SectionHeader } from "@/components/Home/section-header";
+// import { FeatureCard } from "@/components/Home/feature-card";
 import { ScaleDown } from "@/components/animations/Animations";
 import SearchBar from "@/components/search-bar";
 import {
@@ -10,6 +10,8 @@ import {
   DataVisualizationIcon,
   DataValidationIcon,
 } from "@/components/Icons";
+import { SectionHeader } from "@/components/Home/section-header";
+import { FeatureCard } from "@/components/Home/feature-card";
 
 const dataEngineeringFeatures = [
   {

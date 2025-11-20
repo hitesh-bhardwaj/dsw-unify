@@ -28,7 +28,7 @@ export default function Tabs({
   barClassName,
   contentClassName,
   activeTextClassName = "text-[#FF5722]",
-  inactiveTextClassName = "text-foreground/70",
+  inactiveTextClassName = "text-foreground/80",
   renderContent = true,
 }) {
   // uncontrolled fallback -> first tab

@@ -443,7 +443,7 @@ export default function AgentDetailPage({ params }) {
                               {activity.event}
                             </span>
                           </div>
-                          <span className="text-sm text-gray-500 dark:text-foreground/70">
+                          <span className="text-sm text-gray-500 dark:text-foreground/80">
                             {activity.time}
                           </span>
                         </div>

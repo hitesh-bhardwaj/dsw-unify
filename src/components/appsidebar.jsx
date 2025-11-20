@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import {
@@ -16,6 +16,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubItem,
   SidebarRail,
+  useSidebar, // 👈 import this
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import logo from "../../public/unify-logo.png";
@@ -162,6 +163,9 @@ function TruncatedTextWithTooltip({ text }) {
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { state } = useSidebar(); // 👈 get sidebar state
+  const isCollapsed = state === "collapsed";
   const [shouldAnimate, setShouldAnimate] = useState(hasAnimatedGlobal);
   const [expandedItems, setExpandedItems] = useState({});
 
@@ -217,6 +221,8 @@ export function AppSidebar() {
                 const Icon = item.icon;
 
                 if (hasChildren) {
+                  const firstChild = item.children[0];
+
                   return (
                     <Collapsible
                       key={item.name}
@@ -240,6 +246,15 @@ export function AppSidebar() {
                               (isActive || hasActiveChild) &&
                                 "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                             )}
+                            onClick={(e) => {
+                              // 👇 When sidebar is collapsed, clicking a parent routes to its first child
+                              if (isCollapsed && firstChild?.href) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                router.push(firstChild.href);
+                              }
+                              // When expanded, do nothing special - Collapsible will handle open/close
+                            }}
                           >
                             <Icon size={30} className="!h-5 !w-auto" />
                             <span className="text-nowrap text-sm">
@@ -301,7 +316,6 @@ export function AppSidebar() {
                                       )}
                                     >
                                       <Link href={child.href}>
-                                        {/* Icon + truncated text (with tooltip only when truncated) */}
                                         {ChildIcon && (
                                           <ChildIcon className="!h-4 !w-4" />
                                         )}
@@ -321,6 +335,7 @@ export function AppSidebar() {
                   );
                 }
 
+                // items without children
                 return (
                   <SidebarMenuItem key={item.name}>
                     <SidebarMenuButton

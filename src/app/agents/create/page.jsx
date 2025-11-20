@@ -171,7 +171,7 @@ export default function CreateAgentPage() {
                       value={agentName}
                       onChange={(e) => setAgentName(e.target.value)}
                       placeholder="MY AI Assistant"
-                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/70 "
+                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/80 "
                     />
                   </div>
                   <div className="space-y-4">
@@ -182,7 +182,7 @@ export default function CreateAgentPage() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="A Helpful AI Assistant for..."
-                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/70"
+                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/80"
                     />
                   </div>
                 </div>

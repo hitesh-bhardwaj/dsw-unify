@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { Tune, SynthWave } from "@/components/Icons";
 
 import { FeatureCard } from "@/components/FeatureStore/feature-card";
+import TransformationModal from "@/components/FeatureStore/transformation-modal";
 const Features = [
   {
     id: 1,
@@ -28,9 +29,9 @@ const Features = [
     icon: SynthWave,
     description: "Converts categorical variable into binary columns",
     tags: [{ label: "encoding" }, { label: "categorical" }],
-    codeExamples: `def calculate_age(dob):
-    today = datetime.now()
-    return (today - dob).days // 365`,
+    codeExamples: `def one_hot_encode(column, categories):    
+     encoded = {} 
+     for cat in categories:`,
     lastUpdated: "2 days Ago",
     lastUpdated: "18/01/2024",
     variant: "light",
@@ -41,9 +42,9 @@ const Features = [
     icon: SynthWave,
     description: "Calculates 7-day rolling average for time series data",
     tags: [{ label: "timeseries" }, { label: "aggregation" }],
-    codeExamples: `def calculate_age(dob):
-    today = datetime.now()
-    return (today - dob).days // 365`,
+    codeExamples: `SELECT  
+      date, 
+      AVG(value) OVER (....`,
     lastUpdated: "2 Hours Ago",
     lastUpdated: "22/01/2024",
     variant: "light",
@@ -54,9 +55,9 @@ const Features = [
     icon: SynthWave,
     description: "Calculates sum of values grouped by key",
     tags: [{ label: "aggregation" }, { label: "sum" }],
-    codeExamples: `def calculate_age(dob):
-    today = datetime.now()
-    return (today - dob).days // 365`,
+    codeExamples: `SELECT  
+      group_key, 
+      SUM(value) as total...`,
     lastUpdated: "4 Days Ago",
     lastUpdated: "22/01/2024",
     variant: "light",
@@ -65,6 +66,7 @@ const Features = [
 
 const page = () => {
   const [query, setQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredFeatures = Features.filter((feature) =>
     feature.name.toLowerCase().includes(query.toLowerCase())
@@ -86,7 +88,7 @@ const page = () => {
 
               <Link href="#">
                 <RippleButton>
-                  <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <Button   onClick={() => setIsModalOpen(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                     <PlusIcon />
                     Create Transformation
                   </Button>
@@ -127,6 +129,10 @@ const page = () => {
           </div>
         </ScaleDown>
       </div>
+      <TransformationModal
+      open={isModalOpen}
+      onOpenChange={setIsModalOpen}
+      />
     </>
   );
 };

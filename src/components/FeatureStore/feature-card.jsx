@@ -7,7 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar } from "../Icons";
+import { Bin, Editor, Eye, Calendar } from "../Icons";
+import HotEncoding from "./HotEncoding";
 
 const skeletonShownMap = new Map();
 export function FeatureCard({ feature, minSkeletonMs = 500 }) {
@@ -23,6 +24,8 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   } = feature || {};
 
   const isDark = variant === "dark";
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // keep a skeleton up for at least `minSkeletonMs`
   const [showSkeleton, setShowSkeleton] = useState(() => {
@@ -45,8 +48,11 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   }
 
   return (
+      <>
+
     <div className="group w-full h-full">
       <Card
+      onClick={() => setIsModalOpen(true)}
         className={cn(
           "h-full flex flex-col justify-between transition-all duration-300 hover:bg-sidebar-accent group gap-0 py-5 hover:border-border-color-2 cursor-pointer "
         )}
@@ -151,6 +157,9 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
         </CardContent>
       </Card>
     </div>
+      <HotEncoding open={isModalOpen} onOpenChange={setIsModalOpen} />
+      
+    </>
   );
 }
 

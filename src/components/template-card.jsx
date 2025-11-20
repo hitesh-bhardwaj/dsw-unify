@@ -139,7 +139,7 @@ export function TemplateCard({ template }) {
             <span className={"text-foreground"}>{uses} uses</span>
           </div>
           <span className="font-medium ">Variables: </span>
-          <span className="text-black/60 dark:text-foreground/70">{variable}</span>
+          <span className="text-black/60 dark:text-foreground/80">{variable}</span>
           {/* Preview */}
         </CardContent>
       </Card>

@@ -130,12 +130,12 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
                       <p className="font-medium">{llm.accuracy}</p>
-                      <p className="text-black/60 dark:text-foreground/70">Accuracy</p>
+                      <p className="text-black/60 dark:text-foreground/80">Accuracy</p>
                     </div>
                     <div className="w-[1px] bg-foreground/40" />
                     <div className="w-[40%] h-full flex flex-col">
                       <p className="font-medium">{llm.latency}</p>
-                      <p className="text-black/60 dark:text-foreground/70">Latency</p>
+                      <p className="text-black/60 dark:text-foreground/80">Latency</p>
                     </div>
                   </div>
                 </div>
@@ -145,12 +145,12 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
                       <p className="font-medium">{llm.requests}</p>
-                      <p className="text-black/60 dark:text-foreground/70">Requests</p>
+                      <p className="text-black/60 dark:text-foreground/80">Requests</p>
                     </div>
                     <div className="w-[1px] bg-foreground/40" />
                     <div className="w-[40%] h-full flex flex-col">
                       <p className="font-medium">{llm.avgres}</p>
-                      <p className="text-black/60 dark:text-foreground/70">Avg. Response</p>
+                      <p className="text-black/60 dark:text-foreground/80">Avg. Response</p>
                     </div>
                   </div>
                 </div>

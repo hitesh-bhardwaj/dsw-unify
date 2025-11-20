@@ -467,12 +467,11 @@ function SidebarMenuItem({ className, ...props }) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button flex w-full text-sidebar-foreground items-center gap-2 overflow-hidden rounded-4xl p-4 text-left text-2xl outline-hidden ring-sidebar-ring transition-[width,height,padding,border] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-1 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-normal data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-primary data-[state=open]:hover:text-white group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-5 [&>svg]:shrink-0",
+  "peer/menu-button flex w-full text-sidebar-foreground items-center gap-2 overflow-hidden rounded-4xl p-4 text-left text-2xl outline-hidden ring-sidebar-ring transition-[width,height,padding,border] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-1 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-normal data-[active=true]:text-sidebar-accent-foreground  group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-5 [&>svg]:shrink-0",
   {
     variants: {
       variant: {
-        default:
-          "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         outline:
           "bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]",
       },
@@ -538,7 +537,12 @@ function SidebarMenuButton({
   );
 }
 
-function SidebarMenuAction({ className, asChild = false, showOnHover = false, ...props }) {
+function SidebarMenuAction({
+  className,
+  asChild = false,
+  showOnHover = false,
+  ...props
+}) {
   const Comp = asChild ? Slot : "button";
 
   return (
@@ -593,7 +597,10 @@ function SidebarMenuSkeleton({ className, showIcon = false, ...props }) {
       {...props}
     >
       {showIcon && (
-        <Skeleton className="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />
+        <Skeleton
+          className="size-4 rounded-md"
+          data-sidebar="menu-skeleton-icon"
+        />
       )}
       <Skeleton
         className="h-4 max-w-(--skeleton-width) flex-1"
