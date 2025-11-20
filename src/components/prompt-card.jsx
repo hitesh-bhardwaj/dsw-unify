@@ -51,7 +51,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
     <div className="group w-full h-full">
       <Card
         className={cn(
-          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5 border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 bg-background"
+          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5 border-border-color-1 group-hover:bg-sidebar-accent dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -60,13 +60,12 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
             <div className="flex items-center gap-3">
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground dark:bg-sidebar-accent group-hover:bg-background dark:group-hover:bg-background transition-all duration-500 ease-out",
-                 
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center p-4.5 text-white group-hover:text-black dark:group-hover:text-foreground transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
                   {icon ?? <SynthWave />}
@@ -75,12 +74,12 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
 
               <div className="flex items-center gap-1">
                 <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="text-xs">{rating}</span>
+                <span className="text-xs text-black dark:text-white">{rating}</span>
                 <Badge
                   variant="secondary"
                   className={cn(
                     "px-1.5 py-1 ml-1.5 rounded-sm border border-foreground text-foreground bg-transparent",
-                    "group-hover:border-white group-hover:text-white duration-500 ease-out"
+                    "  duration-500 ease-out"
                   )}
                 >
                   {version}
@@ -94,8 +93,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue",
-                  "hover:bg-stone-700 group-hover:text-white duration-500 ease-out"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 hover:bg-white  dark:text-white  group-hover:text-black dark:group-hover:text-white duration-500 ease-out dark:hover:bg-accent"
                 )}
               >
                 <Eye />
@@ -105,7 +103,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 size="icon"
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-stone-700 group-hover:text-white duration-500 ease-out"
+                  "hover:bg-white dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
                 )}
               >
                 <Copy className="!h-full !w-full" />
@@ -115,9 +113,8 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 size="icon"
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                  "hover:bg-stone-700 group-hover:text-white duration-500 ease-out"
-                )}
-              >
+                  "hover:bg-white dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                )}>
                 <Editor />
               </Button>
               <Button
@@ -125,7 +122,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 size="icon"
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                  "hover:bg-stone-700 group-hover:text-white duration-500 ease-out"
+                  "hover:bg-white dark:hover:bg-accent group-hover:text-red-600 duration-500 ease-out"
                 )}
               >
                 <Bin />
@@ -134,12 +131,12 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-medium mb-2">{name}</h3>
+          <h3 className="text-xl text-black dark:text-white font-medium mb-2">{name}</h3>
 
           {/* Description */}
           <p
             className={cn(
-              "text-sm mb-4 text-gray-600 dark:text-foreground dark:group-hover:text-foreground group-hover:text-background transition-all duration-500 ease-out"
+              "text-sm mb-4 text-gray-600 dark:text-foreground dark:group-hover:text-foreground  transition-all duration-500 ease-out"
             )}
           >
             {description}
@@ -152,18 +149,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-foreground",
-                  tag.color === "yellow" &&
-                    "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black ",
-                  tag.color === "blue" &&
-                    "bg-badge-blue text-white group-hover:bg-background group-hover:text-black",
-                  tag.color === "green" &&
-                    "bg-badge-mint text-foreground group-hover:bg-background group-hover:text-black",
-                  tag.color === "orange" &&
-                    "bg-transparent border-primary text-primary group-hover:text-white group-hover:border-white dark:group-hover:bg-transparent",
-                  tag.color === "orange" &&
-                    isDark &&
-                    "bg-transparent border border-white text-white group-hover:bg-background group-hover:text-black"
+                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
                 )}
               >
                 {tag.label}
@@ -175,8 +161,8 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
         <CardContent
           className={cn(
             isDark
-              ? "bg-background"
-              : "bg-sidebar-accent border-border-color-2 border dark:group-hover:bg-background",
+              ? "bg-white dark:bg-background"
+              : "bg-white border-border-color-2 dark:bg-background border dark:group-hover:bg-background",
             "w-[92%] mx-auto py-5 rounded-xl px-4 duration-500 ease-out"
           )}
         >
@@ -192,7 +178,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
               "rounded-lg p-3 text-xs duration-500 ease-out dark:group-hover:bg-sidebar-accent dark:text-white/80",
               isDark
                 ? "bg-sidebar-accent text-gray-600"
-                : "bg-background text-gray-600"
+                : "bg-sidebar-accent text-gray-600"
             )}
           >
             {preview}

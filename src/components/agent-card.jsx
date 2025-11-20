@@ -95,9 +95,9 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
   return (
     <Bounce>
       <Link href={`/agents/${id}`} className="block group">
-        <Card
+          <Card
           className={cn(
-            "overflow-hidden  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5"
+            "overflow-hidden hover:bg-sidebar-accent  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5"
           )}
         >
           <CardHeader className="">
@@ -105,12 +105,12 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground dark:bg-sidebar-accent dark:group-hover:bg-background group-hover:bg-white transition-all duration-500 ease-out "
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-sidebar-accent group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center  p-4.5 text-white group-hover:text-black dark:group-hover:text-foreground transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
                   {icon ?? <SynthWave />}
@@ -137,14 +137,14 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             </div>
 
             {/* Agent name */}
-            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out ">
+            <h3 className="mt-7 text-xl font-medium text-foreground  transition-all duration-500 ease-out ">
               {name}
             </h3>
 
             {/* Description */}
             <p
               className={cn(
-                "text-sm text-gray-600 dark:text-foreground group-hover:text-background dark-hover:text-foreground  transition-all duration-500 ease-out "
+                "text-sm text-gray-600 dark:text-foreground  dark-hover:text-foreground  transition-all duration-500 ease-out "
               )}
             >
               {description}
@@ -156,22 +156,11 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             <div className="mb-16 flex flex-wrap gap-1">
               {tags.map((tag, index) => (
                 <Badge
-                  key={index}
-                  variant="secondary"
-                  className={cn(
-                    "rounded-full px-3.5 py-1 text-xs font-normal",
-                    tag.color === "yellow" &&
-                      "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                    tag.color === "blue" &&
-                      "bg-badge-blue text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                    tag.color === "green" &&
-                      "bg-badge-mint text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                    tag.color === "orange" &&
-                      "bg-badge-yellow text-foreground group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out ",
-                    tag.color === "purple" &&
-                      "bg-purple-500 text-white group-hover:bg-white group-hover:text-black transition-all duration-500 ease-out "
-                  )}
-                >
+                key={index}
+                variant="secondary"
+                className={cn(
+                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                )}>
                   {tag.label}
                 </Badge>
               ))}
@@ -180,8 +169,8 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg p-3 text-sm py-6 dark:group-hover:bg-background duration-500 ease-out",
-                isDark ? "bg-background" : "bg-sidebar-accent border"
+                "flex items-center justify-between border border-color-2 rounded-lg p-3 text-sm py-6 dark:group-hover:bg-background duration-500 ease-out",
+                isDark ? "bg-background" : "bg-background  border border-color-2"
               )}
             >
               <div className="flex items-center gap-2 font-medium">
