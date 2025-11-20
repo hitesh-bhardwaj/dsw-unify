@@ -12,7 +12,7 @@ import { ViewCard } from "@/components/FeatureStore/view-card";
 const Features = [
   {
     id: 1,
-    name: "Policyholder Demographics",
+    name: "Claims Fraud Detection Service",
     icon: SynthWave,
     description:
       "Demographic features including age, location, credit score, marital status, and employment",
@@ -25,7 +25,7 @@ const Features = [
   },
   {
     id: 2,
-    name: "Claims History",
+    name: "Risk Assessment Service",
     icon: SynthWave,
     description:
       "Historical claims features with aggregations including claim frequency, amounts, and types",
@@ -37,7 +37,7 @@ const Features = [
   },
   {
     id: 3,
-    name: "Policy Details",
+    name: "Customer Churn Prediction Service",
     icon: SynthWave,
     description:
       "Policy-level features including coverage amounts, deductibles, premiums, and policy tenure",
@@ -49,7 +49,7 @@ const Features = [
   },
   {
     id: 4,
-    name: "Vehicle Information",
+    name: "Premium Pricing Service",
     icon: SynthWave,
     description:
       "Auto insurance vehicle features including make, model, year, mileage, and safety ratings",
@@ -62,7 +62,7 @@ const Features = [
   },
   {
     id: 5,
-    name: "Policy Details",
+    name: "Auto Insurance Underwriting Service",
     icon: SynthWave,
     description:
       "Home insurance property features including type, age, construction, location risk, and security",
@@ -75,7 +75,7 @@ const Features = [
   },
    {
     id: 6,
-    name: "Risk Factors",
+    name: "Home Insurance Underwriting Service",
     icon: SynthWave,
     description:
       "Comprehensive risk assessment features including driving record, credit score, and location hazards",
@@ -86,25 +86,13 @@ const Features = [
 
     variant: "light",
   },
-   {
-    id: 7,
-    name: "Payment History",
-    icon: SynthWave,
-    description:
-      "Payment behavior features including frequency, late payments, and payment methods",
-    tags: ["payment", "financial", "churn"],
-    featureNo: "12",
-    tablesCount: "2",
-    lastUpdated: "6 hours ago",
-
-    variant: "light",
-  },
+  
 ];
 
 const stats = [
-  { title: "Total Feature Views", value: 7 },
-  { title: "Total Features", value: 126 },
-  { title: "Total Tables", value: 18 },
+  { title: "Total Feature Services", value: 6 },
+  { title: "Total Featured Views", value: 21 },
+  { title: "Total Fatures", value: 400 },
 ];
 
 const page = () => {
@@ -121,10 +109,10 @@ const page = () => {
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
-                  Feature Views
+                  Feature Services
                 </h1>
                 <p className="text-sm dark:text-foreground text-black/60">
-                  Build and manage feature views from your data sources
+                  Group feature views for model consumption
                 </p>
               </div>
 
@@ -132,7 +120,7 @@ const page = () => {
                 <RippleButton>
                   <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                     <PlusIcon />
-                    Create Feature View
+                    Create Feature Service
                   </Button>
                 </RippleButton>
               </Link>

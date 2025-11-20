@@ -7,18 +7,20 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar } from "../Icons";
+import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout } from "../Icons";
 
 const skeletonShownMap = new Map();
-export function FeatureCard({ feature, minSkeletonMs = 500 }) {
+export function ViewCard({ feature, minSkeletonMs = 500 }) {
   const {
     id,
     name,
     description,
     icon: Icon,
-    tags = [],
+    tablesCount,
     lastUpdated,
-    codeExamples,
+    tags = [],
+    featureNo,
+    
     variant = "light",
   } = feature || {};
 
@@ -41,14 +43,14 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   }, [minSkeletonMs, id, showSkeleton]);
 
   if (showSkeleton) {
-    return <FeatureCardSkelton />;
+    return <ViewCardSkelton />;
   }
 
   return (
     <div className="group w-full h-full">
       <Card
         className={cn(
-          "h-full flex flex-col justify-between transition-all duration-300 hover:bg-sidebar-accent group gap-0 py-5 hover:border-border-color-2 cursor-pointer "
+          "h-full transition-all duration-300 hover:bg-sidebar-accent group gap-0 py-5 hover:border-border-color-2 cursor-pointer flex flex-col justify-between"
         )}
       >
         <CardHeader className="pb-2">
@@ -117,7 +119,7 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
         <CardContent
           className={cn(
             isDark ? "bg-background" : "bg-white dark:bg-background ",
-            "w-full mx-auto pt-5 space-y-4 group-hover:bg-sidebar-accent rounded-xl  duration-500 ease-out"
+            "w-full mx-auto pt-4 space-y-4 dark:group-hover:bg-sidebar-accent group-hover:bg-sidebar-accent rounded-xl  duration-500 ease-out"
           )}
         >
           <div className="flex flex-wrap gap-1 pt-2">
@@ -129,15 +131,29 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
                   "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
                 )}
               >
-                {tag.label}
+                {tag}
               </Badge>
             ))}
           </div>
 
-          {/* Formatted Code Block */}
-          <pre className="w-full whitespace-pre bg-white dark:bg-background border-border-color-2 border dark:group-hover:bg-background overflow-x-auto rounded-lg  text-foreground/80  py-5 px-4 text-xs font-mono ">
-            <code>{codeExamples}</code>
-          </pre>
+          <div
+            className={cn(
+              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6  duration-500 bg-white dark:bg-background dark:group-hover:bg-background ease-out group-hover:bg-white border border-border-color-2"
+            )}
+          >
+            <div className="flex items-center gap-2 ">
+              <div className="w-4 h-4">
+                <Calendar className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
+              </div>
+              <span className=" text-foreground text-xs">{featureNo} features</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4">
+                <FileTimeout className="text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " />
+              </div>
+              <span className=" text-foreground text-xs">{tablesCount} tables</span>
+            </div>
+          </div>
 
           <div className="flex items-center gap-2  pl-2">
             <div className="w-4 h-4">
@@ -154,7 +170,7 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   );
 }
 
-export function FeatureCardSkelton() {
+export function ViewCardSkelton() {
   return (
     <div className="group w-full h-full">
       <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
