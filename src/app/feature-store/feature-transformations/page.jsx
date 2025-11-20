@@ -8,7 +8,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Tune, SynthWave } from "@/components/Icons";
 
-import { FeatureCard } from "@/components/feature-store/feature-card";
+import { FeatureCard } from "@/components/FeatureStore/feature-card";
 const Features = [
   {
     id: 1,
