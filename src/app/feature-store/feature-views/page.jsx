@@ -8,6 +8,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Tune, SynthWave } from "@/components/Icons";
 import { ViewCard } from "@/components/FeatureStore/view-card";
+import ViewsModal from "@/components/FeatureStore/feature-view/ViewsModal";
 
 const Features = [
   {
@@ -108,7 +109,9 @@ const stats = [
 ];
 
 const page = () => {
+
   const [query, setQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredFeatures = Features.filter((feature) =>
     feature.name.toLowerCase().includes(query.toLowerCase())
@@ -130,7 +133,7 @@ const page = () => {
 
               <Link href="#">
                 <RippleButton>
-                  <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <Button onClick={() => setIsModalOpen(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                     <PlusIcon />
                     Create Feature View
                   </Button>
@@ -187,6 +190,11 @@ const page = () => {
           </div>
         </ScaleDown>
       </div>
+
+      <ViewsModal 
+      open={isModalOpen}
+            onOpenChange={setIsModalOpen}
+                />
     </>
   );
 };

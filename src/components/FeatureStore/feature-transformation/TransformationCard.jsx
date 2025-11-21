@@ -75,6 +75,12 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
     value: "details",
     label: "Details",
     name: "Details",
+    render: () => <DetailsTab
+                  description={description}
+                  inputParams={inputParams}
+                  lastUpdated={lastUpdated}
+                  createdAt={createdAt}
+                />
   },
   {
     id: "tab-code",
@@ -101,8 +107,8 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
       >
         <div className=" px-2 w-full h-fit">
           <DialogHeader>
-            <div className="flex justify-between pr-8 space-y-5 w-full">
-              <div className="space-y-5">
+            <div className="flex justify-between items-end pr-8 py-3  w-full">
+              <div className="flex flex-col">
                 <DialogTitle className="text-2xl font-medium">
                   {name}
                 </DialogTitle>
@@ -165,17 +171,6 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
               defaultValue={activeTab}
             />
 
-            {/* Render DetailsTab when the Details tab is active */}
-            {activeTab === "details" && (
-              <div className=" h-fit">
-                <DetailsTab
-                  description={description}
-                  inputParams={inputParams}
-                  lastUpdated={lastUpdated}
-                  createdAt={createdAt}
-                />
-              </div>
-            )}
           </div>
 
           {/* Custom scroll track + thumb */}
