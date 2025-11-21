@@ -7,8 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, Calendar } from "../Icons";
-import HotEncoding from "./HotEncoding";
+import { Bin, Editor, Eye, Calendar } from "../../Icons";
+import HotEncoding from "./TransformationCard";
 
 const skeletonShownMap = new Map();
 export function FeatureCard({ feature, minSkeletonMs = 500 }) {
@@ -17,6 +17,7 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
     name,
     description,
     icon: Icon,
+    inputParams,
     tags = [],
     lastUpdated,
     codeExamples,
@@ -32,6 +33,12 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
     // Only show skeleton if it hasn't been shown for this test before
     return !skeletonShownMap.has(id);
   });
+
+  const previewCode = codeExamples
+  ?.split("\n")
+  ?.slice(0, 3)
+  ?.join("\n");
+
 
   useEffect(() => {
     if (showSkeleton && id) {
@@ -122,8 +129,8 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
 
         <CardContent
           className={cn(
-            isDark ? "bg-background" : "bg-white dark:bg-background ",
-            "w-full mx-auto pt-5 space-y-4 group-hover:bg-sidebar-accent rounded-xl  duration-500 ease-out"
+            isDark ? "bg-background" : "bg-white dark:bg-background dark:group-hover:bg-sidebar-accent ",
+            "w-full mx-auto pt-5 space-y-4 group-hover:bg-sidebar-accent rounded-xl duration-300 "
           )}
         >
           <div className="flex flex-wrap gap-1 pt-2">
@@ -135,14 +142,14 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
                   "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
                 )}
               >
-                {tag.label}
+                {tag}
               </Badge>
             ))}
           </div>
 
           {/* Formatted Code Block */}
           <pre className="w-full whitespace-pre bg-white dark:bg-background border-border-color-2 border dark:group-hover:bg-background overflow-x-auto rounded-lg  text-foreground/80  py-5 px-4 text-xs font-mono ">
-            <code>{codeExamples}</code>
+            <code>{previewCode}</code>
           </pre>
 
           <div className="flex items-center gap-2  pl-2">
@@ -157,7 +164,7 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
         </CardContent>
       </Card>
     </div>
-      <HotEncoding open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <HotEncoding open={isModalOpen} onOpenChange={setIsModalOpen} feature={feature} />
       
     </>
   );

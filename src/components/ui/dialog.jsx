@@ -62,14 +62,14 @@ function DialogContent({
         )}
         {...props}>
         {children}
-        {showCloseButton && (
+        {/* {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
             className="ring-offset-background w-6 h-6 cursor-pointer focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-7 right-6 rounded-xs opacity-70  hover:opacity-100 focus:ring-0 focus:ring-offset-0 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:rotate-[90deg] duration-500 transition-all">
             <XIcon className="!w-full !h-full  "/>
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
-        )}
+        )} */}
       </DialogPrimitive.Content>
     </DialogPortal>
   );
@@ -77,15 +77,33 @@ function DialogContent({
 
 function DialogHeader({
   className,
+  showCloseButton = true,
   ...props
 }) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-2 text-center sm:text-left", className)}
-      {...props} />
+      className={cn(
+        "relative flex flex-col gap-2 text-center sm:text-left",
+        className
+      )}
+      {...props}
+    >
+      {props.children}
+
+      {showCloseButton && (
+        <DialogPrimitive.Close
+          data-slot="dialog-close"
+          className="ring-offset-background w-6 h-6 cursor-pointer focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-1.5 right-0 rounded-xs opacity-70 hover:opacity-100 focus:ring-0 focus:ring-offset-0 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 hover:rotate-[90deg] duration-500 transition-all"
+        >
+          <XIcon className="!w-full !h-full" />
+          <span className="sr-only">Close</span>
+        </DialogPrimitive.Close>
+      )}
+    </div>
   );
 }
+
 
 function DialogFooter({
   className,

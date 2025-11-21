@@ -8,19 +8,34 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { Tune, SynthWave } from "@/components/Icons";
 
-import { FeatureCard } from "@/components/FeatureStore/feature-card";
-import TransformationModal from "@/components/FeatureStore/transformation-modal";
+import { FeatureCard } from "@/components/FeatureStore/feature-transformation/feature-card";
+import TransformationModal from "@/components/FeatureStore/feature-transformation/transformation-modal";
 const Features = [
   {
     id: 1,
     name: "Calculate Age from DOB",
     icon: SynthWave,
     description: "Calculates age in years from date of birth",
-    tags: [{ label: "demographics" }, { label: "age" }],
+    tags: ["demographics","age"],
+ inputParams : [
+  {
+    name: "column",
+    type: "string",
+    required: "Yes",
+    description: "Column to encode",
+  },
+  {
+    name: "categories",
+    type: "array",
+    required: "Yes",
+    description: "List of categories",
+  },
+],
     codeExamples: `def calculate_age(dob):
     today = datetime.now()
     return (today - dob).days // 365`,
     lastUpdated: "2 Hours Ago",
+    createdAt:"2024-01-12",
     variant: "light",
   },
   {
@@ -28,12 +43,28 @@ const Features = [
     name: "One-Hot Encoding",
     icon: SynthWave,
     description: "Converts categorical variable into binary columns",
-    tags: [{ label: "encoding" }, { label: "categorical" }],
-    codeExamples: `def one_hot_encode(column, categories):    
-     encoded = {} 
-     for cat in categories:`,
+    tags: [ "encoding", "categorical"],
+     inputParams : [
+  {
+    name: "column",
+    type: "string",
+    required: "Yes",
+    description: "Column to encode",
+  },
+  {
+    name: "categories",
+    type: "array",
+    required: "Yes",
+    description: "List of categories",
+  },
+],
+    codeExamples: `def one_hot_encode(column, categories): 
+encoded = {} 
+for cat in categories: 
+encoded[f'{column}_{cat}'] = (column == cat).astype(int) 
+return encoded`,
     lastUpdated: "2 days Ago",
-    lastUpdated: "18/01/2024",
+    createdAt:"2024-01-12",
     variant: "light",
   },
   {
@@ -41,12 +72,26 @@ const Features = [
     name: "Rolling Average 7 Days",
     icon: SynthWave,
     description: "Calculates 7-day rolling average for time series data",
-    tags: [{ label: "timeseries" }, { label: "aggregation" }],
+    tags: ["timeseries", "aggregation"],
+     inputParams : [
+  {
+    name: "column",
+    type: "string",
+    required: "Yes",
+    description: "Column to encode",
+  },
+  {
+    name: "categories",
+    type: "array",
+    required: "Yes",
+    description: "List of categories",
+  },
+],
     codeExamples: `SELECT  
       date, 
       AVG(value) OVER (....`,
+          createdAt:"2024-01-12",
     lastUpdated: "2 Hours Ago",
-    lastUpdated: "22/01/2024",
     variant: "light",
   },
   {
@@ -54,12 +99,12 @@ const Features = [
     name: "Sum Aggregation",
     icon: SynthWave,
     description: "Calculates sum of values grouped by key",
-    tags: [{ label: "aggregation" }, { label: "sum" }],
+    tags: ["aggregation","sum"],
     codeExamples: `SELECT  
       group_key, 
       SUM(value) as total...`,
     lastUpdated: "4 Days Ago",
-    lastUpdated: "22/01/2024",
+        createdAt:"2024-01-12",
     variant: "light",
   },
 ];

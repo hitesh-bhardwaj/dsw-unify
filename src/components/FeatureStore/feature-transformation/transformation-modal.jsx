@@ -9,18 +9,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "../../ui/textarea";
 import {
   Select,
   SelectTrigger,
   SelectContent,
   SelectItem,
   SelectValue,
-} from "../ui/select";
-import { RippleButton } from "../ui/ripple-button";
-import { Button } from "../ui/button";
+} from "../../ui/select";
+import { RippleButton } from "../../ui/ripple-button";
+import { Button } from "../../ui/button";
 import { ChevronRight } from "lucide-react";
-import { LeftArrow } from "../Icons";
+import { LeftArrow } from "../../Icons";
 
 export default function TransformationModal({ open, onOpenChange }) {
   const [step, setStep] = useState(1);
@@ -65,11 +65,9 @@ export default function TransformationModal({ open, onOpenChange }) {
   }, [open]);
 
   const slideVariants = {
-    initialLeft: { opacity: 0, x: -20 },
-    initialRight: { opacity: 0, x: 20 },
-    animate: { opacity: 1, x: 0 },
-    exitLeft: { opacity: 0, x: -20 },
-    exitRight: { opacity: 0, x: 20 },
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
   };
 
   // Validate step 1 before moving ahead
@@ -174,16 +172,16 @@ export default function TransformationModal({ open, onOpenChange }) {
           </div>
         </DialogHeader>
 
-        <div className="w-full h-full relative overflow-hidden">
+        <div className="w-full h-full relative overflow-y-scroll overflow-x-hidden">
           <AnimatePresence mode="wait">
             {/* STEP 1 */}
             {step === 1 && (
               <motion.div
                 key="step-1"
                 className="w-full h-full absolute step-1"
-                initial="initialLeft"
+                initial="initial"
                 animate="animate"
-                exit="exitRight"
+                exit="exit"
                 variants={slideVariants}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
               >
@@ -312,9 +310,9 @@ export default function TransformationModal({ open, onOpenChange }) {
               <motion.div
                 key="step-2"
                 className="w-full h-full absolute step-2"
-                initial="initialRight"
+                initial="initial"
                 animate="animate"
-                exit="exitLeft"
+                exit="exit"
                 variants={slideVariants}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
               >
