@@ -1,41 +1,44 @@
 "use client";
+
+import React, { useState } from "react";
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon } from "@/components/Icons";
+import { PlusIcon, Tune, SynthWave } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
-import React, { useState } from "react";
-import { Tune, SynthWave } from "@/components/Icons";
 
 import { FeatureCard } from "@/components/FeatureStore/feature-transformation/feature-card";
-import TransformationModal from "@/components/FeatureStore/feature-transformation/transformation-modal";
+import StepFormModal from "@/components/common/StepModalForm";
+import BasicInfo from "@/components/FeatureStore/feature-transformation/create-transformation/BasicInfo";
+import TransformLogic from "@/components/FeatureStore/feature-transformation/create-transformation/TransformLogic";
+
 const Features = [
   {
     id: 1,
     name: "Calculate Age from DOB",
     icon: SynthWave,
     description: "Calculates age in years from date of birth",
-    tags: ["demographics","age"],
- inputParams : [
-  {
-    name: "column",
-    type: "string",
-    required: "Yes",
-    description: "Column to encode",
-  },
-  {
-    name: "categories",
-    type: "array",
-    required: "Yes",
-    description: "List of categories",
-  },
-],
+    tags: ["demographics", "age"],
+    inputParams: [
+      {
+        name: "column",
+        type: "string",
+        required: "Yes",
+        description: "Column to encode",
+      },
+      {
+        name: "categories",
+        type: "array",
+        required: "Yes",
+        description: "List of categories",
+      },
+    ],
     codeExamples: `def calculate_age(dob):
     today = datetime.now()
     return (today - dob).days // 365`,
     lastUpdated: "2 Hours Ago",
-    createdAt:"2024-01-12",
+    createdAt: "2024-01-12",
     variant: "light",
   },
   {
@@ -43,28 +46,28 @@ const Features = [
     name: "One-Hot Encoding",
     icon: SynthWave,
     description: "Converts categorical variable into binary columns",
-    tags: [ "encoding", "categorical"],
-     inputParams : [
-  {
-    name: "column",
-    type: "string",
-    required: "Yes",
-    description: "Column to encode",
-  },
-  {
-    name: "categories",
-    type: "array",
-    required: "Yes",
-    description: "List of categories",
-  },
-],
+    tags: ["encoding", "categorical"],
+    inputParams: [
+      {
+        name: "column",
+        type: "string",
+        required: "Yes",
+        description: "Column to encode",
+      },
+      {
+        name: "categories",
+        type: "array",
+        required: "Yes",
+        description: "List of categories",
+      },
+    ],
     codeExamples: `def one_hot_encode(column, categories): 
 encoded = {} 
 for cat in categories: 
 encoded[f'{column}_{cat}'] = (column == cat).astype(int) 
 return encoded`,
     lastUpdated: "2 days Ago",
-    createdAt:"2024-01-12",
+    createdAt: "2024-01-12",
     variant: "light",
   },
   {
@@ -73,24 +76,24 @@ return encoded`,
     icon: SynthWave,
     description: "Calculates 7-day rolling average for time series data",
     tags: ["timeseries", "aggregation"],
-     inputParams : [
-  {
-    name: "column",
-    type: "string",
-    required: "Yes",
-    description: "Column to encode",
-  },
-  {
-    name: "categories",
-    type: "array",
-    required: "Yes",
-    description: "List of categories",
-  },
-],
+    inputParams: [
+      {
+        name: "column",
+        type: "string",
+        required: "Yes",
+        description: "Column to encode",
+      },
+      {
+        name: "categories",
+        type: "array",
+        required: "Yes",
+        description: "List of categories",
+      },
+    ],
     codeExamples: `SELECT  
       date, 
       AVG(value) OVER (....`,
-          createdAt:"2024-01-12",
+    createdAt: "2024-01-12",
     lastUpdated: "2 Hours Ago",
     variant: "light",
   },
@@ -99,23 +102,39 @@ return encoded`,
     name: "Sum Aggregation",
     icon: SynthWave,
     description: "Calculates sum of values grouped by key",
-    tags: ["aggregation","sum"],
+    tags: ["aggregation", "sum"],
     codeExamples: `SELECT  
       group_key, 
       SUM(value) as total...`,
     lastUpdated: "4 Days Ago",
-        createdAt:"2024-01-12",
+    createdAt: "2024-01-12",
     variant: "light",
   },
 ];
 
-const page = () => {
+const Page = () => {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const steps = [
+    {
+      id: "basic",
+      label: "Basic Info",
+      required: true,
+      element: <BasicInfo setIsModalOpen={setIsModalOpen} />,
+    },
+    {
+      id: "logic",
+      label: "Transformation Logic",
+      required: false,
+      element: <TransformLogic />,
+    },
+  ];
 
   const filteredFeatures = Features.filter((feature) =>
     feature.name.toLowerCase().includes(query.toLowerCase())
   );
+
   return (
     <>
       <div className="flex flex-col h-full w-full overflow-hidden">
@@ -133,13 +152,17 @@ const page = () => {
 
               <Link href="#">
                 <RippleButton>
-                  <Button   onClick={() => setIsModalOpen(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <Button
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                  >
                     <PlusIcon />
                     Create Transformation
                   </Button>
                 </RippleButton>
               </Link>
             </div>
+
             <div className="flex gap-3">
               <div className="relative flex-1">
                 <SearchBar
@@ -174,12 +197,15 @@ const page = () => {
           </div>
         </ScaleDown>
       </div>
-      <TransformationModal
-      open={isModalOpen}
-      onOpenChange={setIsModalOpen}
+
+      <StepFormModal
+        title="Create Feature Transformation"
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        steps={steps}
       />
     </>
   );
 };
 
-export default page;
+export default Page;

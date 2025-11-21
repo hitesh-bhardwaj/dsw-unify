@@ -102,13 +102,13 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={
-          "w-[80%] left-1/2 -translate-x-1/2 top-1/2 h-[80%] flex flex-col"
+          "w-[80%] left-1/2 -translate-x-1/2 top-1/2 h-[80%] flex flex-col pt-10"
         }
       >
-        <div className=" px-2 w-full h-fit">
+        {/* <div className=" px-2 w-full h-fit"> */}
           <DialogHeader>
-            <div className="flex justify-between items-end pr-8 py-3  w-full">
-              <div className="flex flex-col">
+            <div className="flex justify-between items-start pr-8 pb-3  w-full">
+              <div className="space-y-3">
                 <DialogTitle className="text-2xl font-medium">
                   {name}
                 </DialogTitle>
@@ -161,7 +161,7 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
               </div>
             </div>
           </DialogHeader>
-        </div>
+        {/* </div> */}
         <TooltipProvider delayDuration={200}>
           {/* Scrollable content */}
           <div className="overflow-y-auto pr-2 overflow-hidden w-full h-full relative">

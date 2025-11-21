@@ -57,7 +57,6 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   return (
       <>
 
-    <div className="group w-full h-full">
       <Card
       onClick={() => setIsModalOpen(true)}
         className={cn(
@@ -163,7 +162,6 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
           </div>
         </CardContent>
       </Card>
-    </div>
       <HotEncoding open={isModalOpen} onOpenChange={setIsModalOpen} feature={feature} />
       
     </>
