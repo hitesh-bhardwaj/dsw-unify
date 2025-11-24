@@ -97,7 +97,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
       <Link href={`/agents/${id}`} className="block">
           <Card
           className={cn(
-            "overflow-hidden hover:bg-sidebar-accent  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5"
+            "overflow-hidden hover:bg-sidebar-accent group  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 dark:hover:bg-sidebar-accent hover:text-white hover:border-border-color-1 py-5"
           )}
         >
           <CardHeader className="">
@@ -105,7 +105,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-sidebar-accent group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
                 )}
               >
                 <span
