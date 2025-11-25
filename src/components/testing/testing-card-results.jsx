@@ -155,7 +155,7 @@ export function TestingCardResults({ test ,tab}) {
     <Link href={`/#`} className="block group" aria-label={`${name} test card`}>
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-3 !pb-1"
+           "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full"
         )}
       >
         <CardHeader>
@@ -163,7 +163,7 @@ export function TestingCardResults({ test ,tab}) {
             <div className="space-y-3">
               <div className="flex items-center gap-[3vw] mt-4">
                 {/* Agent name */}
-                <h3 className="text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
+                <h3 className="text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
                   {name}
                 </h3>
 
@@ -174,17 +174,7 @@ export function TestingCardResults({ test ,tab}) {
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out dark:group-hover:bg-foreground",
-                        tag.color === "yellow" &&
-                          "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
-                        tag.color === "blue" &&
-                          "bg-badge-blue text-white group-hover:bg-background group-hover:text-black",
-                        tag.color === "green" &&
-                          "bg-badge-green text-white group-hover:bg-background group-hover:text-black",
-                        tag.color === "orange" &&
-                          "bg-primary text-white group-hover:bg-background group-hover:text-black",
-                        tag.color === "red" &&
-                          "bg-red-500 text-white group-hover:bg-background group-hover:text-black"
+                           "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
                       )}
                     >
                       {tag.label}
@@ -194,7 +184,7 @@ export function TestingCardResults({ test ,tab}) {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-white transition-all duration-500 ease-out">
+              <p className="text-sm text-foreground/80 transition-all duration-500 ease-out">
                 {description}
               </p>
             </div>
@@ -203,7 +193,7 @@ export function TestingCardResults({ test ,tab}) {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white"
+                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-white "
                 aria-label="View"
               >
                 <Eye />
@@ -218,9 +208,9 @@ export function TestingCardResults({ test ,tab}) {
               <div className="flex items-center justify-between text-sm font-medium">
                 <div className="space-x-1">
                   <span className="text-primary">Tests:</span>
-                  <span>{tests}</span>
+                  <span className="text-black dark:text-white">{tests}</span>
                 </div>
-                <div className="space-x-1">
+                <div className="space-x-1 text-black dark:text-white">
                   <span className="text-primary">
                     {typeof successRate === "number"
                       ? `${successRate}%`
@@ -245,7 +235,7 @@ export function TestingCardResults({ test ,tab}) {
             </div>
 
             <div className="flex items-end justify-end p-3 text-sm py-6 group-hover:text-white">
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 text-black dark:text-white">
                 <span>Run on</span>
                 <span>{date},</span>
                 <span>{time}</span>

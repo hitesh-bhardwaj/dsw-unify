@@ -10,6 +10,7 @@ import SearchBar from "@/components/search-bar";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { cn } from "@/lib/utils";
 import { ScaleDown } from "@/components/animations/Animations";
+import KnowledgeBaseModal from "@/components/agent-studio/CreateKnowledgeBaseModal";
 
 const knowledgeBases = [
   {
@@ -35,6 +36,7 @@ const knowledgeBases = [
 
 export default function KnowledgePage() {
   const [query, setQuery] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredKb = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -56,8 +58,10 @@ export default function KnowledgePage() {
             </div>
 
             <RippleButton>
-              <Link href="/agents/create">
-                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+              <Link href="#">
+                <Button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <PlusIcon />
                   Add Knowledge Base
                 </Button>
@@ -93,6 +97,10 @@ export default function KnowledgePage() {
         </div>
       {/* </FadeUp> */}
       </ScaleDown>
+      <KnowledgeBaseModal 
+            open={isModalOpen}
+                  onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 }

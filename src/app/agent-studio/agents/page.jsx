@@ -14,47 +14,124 @@ import { RippleButton } from "@/components/ui/ripple-button";
 // Mock data for agents
 const agents = [
   {
-    id: "customer-support-agent",
-    name: "Customer Support Agent",
-    description: "Handles customer inquiries and support tickets",
+    id: "auto-claims-processing-agent",
+    name: "Auto Claims Processing Agent",
+    description: "Automates auto insurance claims intake, validation, and processing",
     status: "active",
     tags: [
-      { label: "Support", color: "yellow" },
-      { label: "Customer-Services", color: "blue" },
+      { label: "auto", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "processing", color: "gray" },
     ],
-    lastActivity: "2 Hours Ago",
-    requestCount: "1.2K Request",
+    lastActivity: "2 hours ago",
+    requestCount: "3.2k requests",
     variant: "light",
   },
   {
-    id: "content-writer-agent",
-    name: "Content Writer Agent",
-    description: "Generates blog posts and marketing content",
-    status: "draft",
+    id: "property-claims-agent",
+    name: "Property Claims Agent",
+    description: "Handles home and property damage claims assessment and processing",
+    status: "active",
     tags: [
-      { label: "Content", color: "yellow" },
-      { label: "Writing", color: "blue" },
-      { label: "Marketing", color: "green" },
+      { label: "property", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "home", color: "gray" },
     ],
-    lastActivity: "1 Day Ago",
-    requestCount: "340 Request",
+    lastActivity: "3 hours ago",
+    requestCount: "2.8k requests",
     variant: "light",
   },
   {
-    id: "data-analyst-agent",
-    name: "Data Analyst Agent",
-    description: "Analyzes data and generates insights",
+    id: "health-claims-adjudication-agent",
+    name: "Health Claims Adjudication Agent",
+    description: "Automates auto insurance claims intake, validation, and processing",
     status: "active",
     tags: [
-      { label: "Analytics", color: "orange" },
-      { label: "Data", color: "blue" },
-      { label: "Insights", color: "green" },
+      { label: "health", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "medical", color: "gray" },
     ],
-    lastActivity: "3 Day Ago",
-    requestCount: "890 Request",
+    lastActivity: "1 hour ago",
+    requestCount: "4.1k requests",
     variant: "light",
   },
+  {
+    id: "workers-comp-claims-agent",
+    name: "Workers Comp Claims Agent",
+    description:
+      "Handles home and property damage claims assessment and processing",
+    status: "active",
+    tags: [
+      { label: "property", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "home", color: "gray" },
+    ],
+    lastActivity: "3 hours ago",
+    requestCount: "2.8k requests",
+    variant: "light",
+  },
+  {
+    id: "life-insurance-claims-agent",
+    name: "Life Insurance Claims Agent",
+    description:
+      "Automates auto insurance claims intake, validation, and processing",
+    status: "active",
+    tags: [
+      { label: "health", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "medical", color: "gray" },
+    ],
+    lastActivity: "1 hour ago",
+    requestCount: "4.1k requests",
+    variant: "light",
+  },
+  {
+    id: "claims-status-inquiry-agent",
+    name: "Claims Status Inquiry Agent",
+    description:
+      "Automates auto insurance claims intake, validation, and processing",
+    status: "active",
+    tags: [
+      { label: "health", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "medical", color: "gray" },
+    ],
+    lastActivity: "1 hour ago",
+    requestCount: "4.1k requests",
+    variant: "light",
+  },
+  {
+    id: "auto-underwriting-agent",
+    name: "Auto Underwriting Agent",
+    description: "Handles home and property damage claims assessment and processing",
+    status: "active",
+    tags: [
+      { label: "property", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "home", color: "gray" },
+    ],
+    lastActivity: "3 hours ago",
+    requestCount: "2.8k requests",
+    variant: "light",
+  },
+  {
+    id: "home-insurance-underwriting-agent",
+    name: "Home Insurance Underwriting Agent",
+    description:
+      "Automates auto insurance claims intake, validation, and processing",
+    status: "active",
+    tags: [
+      { label: "health", color: "gray" },
+      { label: "claims", color: "gray" },
+      { label: "medical", color: "gray" },
+    ],
+    lastActivity: "1 hour ago",
+    requestCount: "4.1k requests",
+    variant: "light",
+  },
+ 
 ];
+
 
 export default function AgentsPage() {
   const [query, setQuery] = useState("");

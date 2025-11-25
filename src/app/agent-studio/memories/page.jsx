@@ -9,6 +9,7 @@ import SearchBar from "@/components/search-bar";
 // import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
+import AddMemoriesModal from "@/components/agent-studio/AddMemoriesModal";
 
 const memories = [
   {
@@ -51,6 +52,7 @@ const memories = [
 
 export default function MemoriesPage() {
   const [query, setQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const filteredMemories = memories.filter((memory) =>
     memory.name.toLowerCase().includes(query.toLowerCase())
@@ -60,9 +62,9 @@ export default function MemoriesPage() {
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header section */}
       <ScaleDown>
-      <div className="space-y-6 p-6">
-        {/* Title and CTA */}
-        {/* <FadeUp> */}
+        <div className="space-y-6 p-6">
+          {/* Title and CTA */}
+          {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Memories</h1>
@@ -71,8 +73,11 @@ export default function MemoriesPage() {
               </p>
             </div>
             <RippleButton>
-              <Link href="/agents/create">
-                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+              <Link href="#">
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                >
                   {/* <Plus className="h-4 w-4" /> */}
                   <PlusIcon />
                   Create Memory
@@ -80,16 +85,16 @@ export default function MemoriesPage() {
               </Link>
             </RippleButton>
           </div>
-        {/* </FadeUp> */}
-        {/* <FadeUp delay={0.02}> */}
+          {/* </FadeUp> */}
+          {/* <FadeUp delay={0.02}> */}
           <SearchBar
             placeholder="Search Memories..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        {/* </FadeUp> */}
-      </div>
-      {/* <FadeUp delay={0.04}> */}
+          {/* </FadeUp> */}
+        </div>
+        {/* <FadeUp delay={0.04}> */}
         <div className="flex-1 overflow-auto p-6 pt-0 w-full h-full">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {filteredMemories.map((memory) => (
@@ -103,7 +108,8 @@ export default function MemoriesPage() {
             </div>
           )}
         </div>
-      {/* </FadeUp> */}
+        {/* </FadeUp> */}
+        <AddMemoriesModal open={isModalOpen} onOpenChange={setIsModalOpen} />
       </ScaleDown>
     </div>
   );

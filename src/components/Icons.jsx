@@ -298,6 +298,14 @@ export const HomeIcon = ({ active, ...props }) => {
   );
 };
 
+export const TextFile = ({active, ...props}) => {
+  return (
+    <svg width="25" height="35" viewBox="0 0 35 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M33.625 27.125V21.4375C33.625 17.3989 30.3511 14.125 26.3125 14.125H23.0625C21.7163 14.125 20.625 13.0337 20.625 11.6875V8.4375C20.625 4.39892 17.3511 1.125 13.3125 1.125H9.25M17.375 20.625V33.625M23.875 27.125H10.875M14.125 1.125H3.5625C2.21631 1.125 1.125 2.21631 1.125 3.5625V40.9375C1.125 42.2837 2.21631 43.375 3.5625 43.375H31.1875C32.5337 43.375 33.625 42.2837 33.625 40.9375V20.625C33.625 9.85545 24.8946 1.125 14.125 1.125Z" stroke="#454C52" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  )
+}
+
 export const People = ({active, ...props}) => {
   return (
     <svg width="21" height="18" viewBox="0 0 21 24" fill="none" xmlns="http://www.w3.org/2000/svg">

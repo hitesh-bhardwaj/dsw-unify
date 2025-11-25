@@ -9,6 +9,7 @@ import SearchBar from "@/components/search-bar";
 // import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
+import AddGuardrailsModal from "@/components/agent-studio/AddGuardrails";
 
 const guardrails = [
   {
@@ -52,6 +53,8 @@ const guardrails = [
 
 export default function GuardrailsPage() {
   const [query, setQuery] = useState("");
+          const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const filteredGuardrails = guardrails.filter((guardrail) =>
     guardrail.name.toLowerCase().includes(query.toLowerCase())
@@ -75,8 +78,10 @@ export default function GuardrailsPage() {
               </p>
             </div>
             <RippleButton>
-            <Link href="/agents/create">
-              <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+            <Link href="#">
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                 {/* <Plus className="h-4 w-4" /> */}
                 <PlusIcon />
                 Create Guardrail
@@ -109,6 +114,10 @@ export default function GuardrailsPage() {
         </div>
       {/* </FadeUp> */}
       </ScaleDown>
+       <AddGuardrailsModal 
+                              open={isModalOpen}
+                                    onOpenChange={setIsModalOpen}
+                        />
     </div>
   );
 }

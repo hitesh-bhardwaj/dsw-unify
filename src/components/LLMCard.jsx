@@ -36,7 +36,7 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
 
   return (
     <Bounce>
-      <Link href={`/llms/${id}`} className="block  h-full">
+      <Link href={`/agent-studio/llms/${id}`} className="block  h-full">
         <Card
           className={cn(
             "overflow-hidden group hover:shadow-xl cursor-pointer transition-all hover:bg-sidebar-accent duration-500 ease-out",

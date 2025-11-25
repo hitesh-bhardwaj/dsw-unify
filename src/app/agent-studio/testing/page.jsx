@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
@@ -10,6 +11,7 @@ import AnimatedTabsSection from "@/components/common/TabsPane";
 import TestingSuitesGrid from "@/components/testing/testing-suites-grid";
 import TestingResultsGrid from "@/components/testing/testing-results-grid";
 import { ScaleDown } from "@/components/animations/Animations";
+import AddTestings from "@/components/agent-studio/AddTesting";
 
 const testsSuites = [
   {
@@ -103,6 +105,10 @@ const analyticsCardData = [
 ];
 
 export default function TestingPage() {
+
+          const [isModalOpen, setIsModalOpen] = useState(false);
+  
+
   const items = [
     {
       id: "test-suites",
@@ -140,7 +146,9 @@ export default function TestingPage() {
               </p>
             </div>
             <RippleButton>
-              <Link href="/agents/create">
+              <Link
+                onClick={() => setIsModalOpen(true)}
+              href="#">
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <PlusIcon />
                   Create Test Suite
@@ -158,6 +166,8 @@ export default function TestingPage() {
         {/* </FadeUp> */}
       </div>
       </ScaleDown>
+              <AddTestings open={isModalOpen} onOpenChange={setIsModalOpen} />
+      
     </div>
   );
 }

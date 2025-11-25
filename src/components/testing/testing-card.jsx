@@ -35,10 +35,10 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
   if (showSkeleton) return <TestingCardSkeleton />;
 
   return (
-    <div className="group">
+    <div className="">
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-3 !pb-1 !pl-0"
+          "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full"
         )}
       >
         <CardHeader>
@@ -46,7 +46,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
             <div className="space-y-3">
               <div className="flex items-center gap-2 mt-4">
                 {/* Name */}
-                <h3 className="text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
+                <h3 className="text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
                   {name}
                 </h3>
 
@@ -57,17 +57,8 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out dark:group-hover:bg-foreground",
-                        tag.color === "yellow" &&
-                          "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
-                        tag.color === "blue" &&
-                          "bg-badge-blue text-white group-hover:bg-background group-hover:text-black",
-                        tag.color === "green" &&
-                          "bg-badge-green text-white group-hover:bg-background group-hover:text-black",
-                        tag.color === "orange" &&
-                          "bg-primary text-white group-hover:bg-background group-hover:text-black",
-                        tag.color === "red" &&
-                          "bg-red-500 text-white group-hover:bg-background group-hover:text-black"
+                        "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                        
                       )}
                     >
                       {tag.label}
@@ -77,7 +68,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
               </div>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-white transition-all duration-500 ease-out">
+              <p className="text-sm text-foreground/80 transition-all duration-500 ease-out">
                 {description}
               </p>
             </div>
@@ -88,7 +79,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue hover:bg-stone-700 group-hover:text-white dark:text-foreground"
+                  "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-badge-blue hover:bg-white group-hover:text-badge-blue dark:text-foreground"
                 )}
               >
                 <Eye />
@@ -111,15 +102,15 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
         <CardContent>
           {/* Footer stats */}
           <div className="flex items-center justify-between text-sm py-4 group-hover:text-white">
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 text-black dark:text-white">
               <span>{tests}</span>
               <span>tests</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center text-black dark:text-white">
               <span>Agent:&nbsp;</span>
               <span>{agent}</span>
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center text-black dark:text-white">
               <span>Last run:&nbsp;</span>
               <span>{lastrun}</span>
             </div>

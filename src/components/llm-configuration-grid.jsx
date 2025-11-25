@@ -184,7 +184,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
               <div className="w-5 h-5 rounded-full bg-background border-3 border-foreground -ml-1 relative z-[2]" />
             </div>
           </div>
-
+                
           <div>
             <label className="text-sm text-[#111111] dark:text-foreground">
               Max Tokens

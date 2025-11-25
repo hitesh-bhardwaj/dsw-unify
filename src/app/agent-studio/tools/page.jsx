@@ -10,6 +10,7 @@ import SearchBar from "@/components/search-bar";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { cn } from "@/lib/utils";
 import { ScaleDown } from "@/components/animations/Animations";
+import AddToolModal from "@/components/agent-studio/CreateToolsModal";
 
 // Mock data for tools
 const tools = [
@@ -63,6 +64,8 @@ const uniqueTools = (() => {
 
 export default function ToolsPage() {
   const [query, setQuery] = useState("");
+      const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const filteredTools = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -93,8 +96,10 @@ export default function ToolsPage() {
               </p>
             </div>
             <RippleButton>
-              <Link href="/agents/create">
-                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+              <Link href="#">
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <PlusIcon />
                   Add Tools
                 </Button>
@@ -130,6 +135,10 @@ export default function ToolsPage() {
         </div>
       {/* </FadeUp> */}
       </ScaleDown>
+      <AddToolModal 
+                  open={isModalOpen}
+                        onOpenChange={setIsModalOpen}
+            />
     </div>
   );
 }

@@ -94,7 +94,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
   // Real content after 500ms
   return (
     <Bounce>
-      <Link href={`/agents/${id}`} className="block">
+      <Link href={`/agent-studio/agents/${id}`} className="block">
           <Card
           className={cn(
             "overflow-hidden hover:bg-sidebar-accent group  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 dark:hover:bg-sidebar-accent hover:text-white hover:border-border-color-1 py-5"

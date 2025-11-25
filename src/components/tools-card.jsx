@@ -39,20 +39,20 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
       <Link href={`/#`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5",
+            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full",
           )}
         >
           <CardHeader>
             <div className="flex items-start justify-between">
               {/* Icon */}
-              <div
+             <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground dark:bg-sidebar-accent dark:group-hover:bg-background transition-all duration-500 ease-out group-hover:bg-background",
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center p-4.5 text-white group-hover:text-black transition-all duration-500 ease-out dark:group-hover:text-foreground"
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
                   <SynthWave />
@@ -66,12 +66,12 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
               </div>
 
               {/* Status badge */}
-              <Badge
+               <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium",
+                  "rounded-full px-3 py-1 text-xs bg-white font-medium",
                   status === "active"
-                    ? "bg-badge-green text-white"
-                    : "bg-badge-sea-green text-white px-4 opacity-[0.8]"
+                    ? "border-badge-green dark:bg-background dark:text-white text-black"
+                    : "border-badge-sea-green dark:bg-background dark:text-foreground/80 text-black px-4 opacity-[0.8]"
                 )}
               >
                 {status === "active" ? "Active" : "Beta"}
@@ -79,12 +79,12 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
             </div>
 
             {/* Name */}
-            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
+            <h3 className="mt-7 text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
               {name}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-background dark-hover:text-foreground transition-all duration-500 ease-out">
+            <p className="text-sm text-foreground/80  dark-hover:text-foreground transition-all duration-500 ease-out">
               {description}
             </p>
           </CardHeader>
@@ -97,17 +97,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full px-3.5 py-1 text-xs font-normal transition-all duration-500 ease-out dark:group-hover:bg-foreground",
-                    tag.color === "yellow" &&
-                      "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
-                    tag.color === "blue" &&
-                      "bg-badge-blue text-white group-hover:bg-background group-hover:text-black",
-                    tag.color === "green" &&
-                      "bg-badge-mint text-foreground group-hover:bg-background group-hover:text-black",
-                    tag.color === "orange" &&
-                      "bg-badge-yellow text-foreground group-hover:bg-background group-hover:text-black",
-                    tag.color === "purple" &&
-                      "bg-purple-500 text-white group-hover:bg-background group-hover:text-black"
+                    "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
                   )}
                 >
                   {tag.label}

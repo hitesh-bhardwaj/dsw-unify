@@ -43,10 +43,10 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
 
   return (
     <Bounce>
-      <Link href={`/#`} className="block group h-full">
+      <Link href={`/#`} className="block  h-full">
         <Card
           className={cn(
-            "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full",
+            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full   ",
           )}
         >
           <CardHeader>
@@ -54,13 +54,12 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground dark:bg-sidebar-accent dark:group-hover:bg-background group-hover:bg-white transition-all duration-500 ease-out",
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center p-4.5 text-white group-hover:text-black transition-all duration-500 ease-out dark:group-hover:text-foreground"
-          
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
                   <SynthWave />
@@ -87,12 +86,12 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
             </div>
 
             {/* Name */}
-            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
+            <h3 className="mt-7 text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
               {name}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-background dark-hover:text-foreground transition-all duration-500 ease-out">
+            <p className="text-sm text-foreground/80  dark-hover:text-foreground transition-all duration-500 ease-out">
               {description}
             </p>
           </CardHeader>
