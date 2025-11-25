@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const Page = () => {s
+const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
