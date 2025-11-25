@@ -7,102 +7,102 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Tune, SynthWave } from "@/components/Icons";
-import { ViewCard } from "@/components/FeatureStore/view-card";
 import ViewsModal from "@/components/FeatureStore/feature-view/ViewsModal";
-
+import { UseCaseCard } from "@/components/usecases/usecase-card";
+import UseCaseModal from "@/components/usecases/UsecaseModal";
 const Features = [
   {
     id: 1,
-    name: "Policyholder Demographics",
+    name: "Claims Fraud Detection",
     icon: SynthWave,
     description:
-      "Demographic features including age, location, credit score, marital status, and employment",
-    tags: ["demographics", "policyholder", "underwriting"],
+      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
+    tags: ["claims", "fraud detection", "auto insurance"],
     // tags: [{ label: "demographics" }, { label: "age" }],
-    featureNo: "18",
-    lastUpdated: "2 days Ago",
-    tablesCount: "2",
+    models: "4",
+    lastUpdated: "January 15, 2025",
+    peopleCount: "2",
     createdAt:'2025-11-18',
     variant: "light",
   },
   {
     id: 2,
-    name: "Claims History",
+    name: "Risk Assessment & Underwriting",
     icon: SynthWave,
     description:
-      "Historical claims features with aggregations including claim frequency, amounts, and types",
+      "Automated risk scoring and premium calculation for policy underwriting decisions",
     tags: ["claims", "history", "fraud"],
-    featureNo: "24",
+    models: "3",
     lastUpdated: "5 hours ago",
-    tablesCount: "3",
-        createdAt:'2025-11-18',
+    peopleCount: "2",
+        createdAt:'December 8, 2024',
 
     variant: "light",
   },
   {
     id: 3,
-    name: "Policy Details",
+    name: "Customer Churn Prediction",
     icon: SynthWave,
     description:
-      "Policy-level features including coverage amounts, deductibles, premiums, and policy tenure",
+      "Predict policyholder churn and identify retention opportunities across all lines of business",
     tags: ["policy", "coverage", "premium"],
-    featureNo: "16",
-    tablesCount: "2",
-    lastUpdated: "1 day ago",
+    models: "2",
+    peopleCount: "1",
+    lastUpdated: "November 22, 2024",
         createdAt:'2025-11-18',
 
     variant: "light",
   },
   {
     id: 4,
-    name: "Vehicle Information",
+    name: "Claims Processing Automation",
     icon: SynthWave,
     description:
-      "Auto insurance vehicle features including make, model, year, mileage, and safety ratings",
+      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
     tags: ["auto", "vehicle", "risk"],
-    featureNo: "14",
-    tablesCount: "2",
-    lastUpdated: "3 Days Ago",
+    models: "4",
+    peopleCount: "3",
+    lastUpdated: "January 15, 2025",
         createdAt:'2025-11-18',
 
     variant: "light",
   },
   {
     id: 5,
-    name: "Policy Details",
+    name: "Subrogation Recovery",
     icon: SynthWave,
     description:
-      "Home insurance property features including type, age, construction, location risk, and security",
-    tags: ["property", "home", "risk"],
-    featureNo: "20",
-    tablesCount: "3",
-    lastUpdated: "1 week ago",
+      "Automated risk scoring and premium calculation for policy underwriting decisions",
+    tags: ["claims", "history", "fraud"],
+    models: "3",
+    peopleCount: "2",
+    lastUpdated: "December 8, 2024",
         createdAt:'2025-11-18',
     variant: "light",
   },
    {
     id: 6,
-    name: "Risk Factors",
+    name: "Premium Pricing Optimization",
     icon: SynthWave,
     description:
-      "Comprehensive risk assessment features including driving record, credit score, and location hazards",
-    tags: ["risk", "underwriting", "assessment"],
-    featureNo: "22",
-    tablesCount: "4",
-    lastUpdated: "4 days ago",
+      "Predict policyholder churn and identify retention opportunities across all lines of business",
+    tags: ["policy", "coverage", "premium"],
+    models: "2",
+    peopleCount: "1",
+    lastUpdated: "November 22, 2024",
         createdAt:'2025-11-18',
     variant: "light",
   },
    {
     id: 7,
-    name: "Payment History",
+    name: "Natural Catastrophe Modeling",
     icon: SynthWave,
     description:
-      "Payment behavior features including frequency, late payments, and payment methods",
-    tags: ["payment", "financial", "churn"],
-    featureNo: "12",
-    tablesCount: "2",
-    lastUpdated: "6 hours ago",
+      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
+    tags: ["claims", "fraud detection", "auto insurance"],
+    models: "4",
+    peopleCount: "3",
+    lastUpdated: "January 15, 2024",
         createdAt:'2025-11-18',
 
     variant: "light",
@@ -110,9 +110,9 @@ const Features = [
 ];
 
 const stats = [
-  { title: "Total Feature Views", value: 7 },
-  { title: "Total Features", value: 126 },
-  { title: "Total Tables", value: 18 },
+  { title: "Total Use Cases", value: 7, description:'Active business use cases' },
+  { title: "Total Models", value: 23, description:'Across all use cases' },
+  { title: "Total Contributors", value: 13, description:'Unique contributors' },
 ];
 
 const page = () => {
@@ -131,10 +131,10 @@ const page = () => {
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
-                  Feature Views
+                  Use Cases
                 </h1>
                 <p className="text-sm dark:text-foreground text-black/60">
-                  Build and manage feature views from your data sources
+                  Organize and manage your ML models by business use cases
                 </p>
               </div>
 
@@ -142,7 +142,7 @@ const page = () => {
                 <RippleButton>
                   <Button onClick={() => setIsModalOpen(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                     <PlusIcon />
-                    Create Feature View
+                    Create Use Cases
                   </Button>
                 </RippleButton>
               </Link>
@@ -152,13 +152,16 @@ const page = () => {
               {stats.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-6 border border-border-color-1 rounded-lg py-6 px-4 w-full"
+                  className="flex flex-col gap-3 border border-border-color-1 rounded-lg py-6 px-4 w-full"
                 >
                   <span className="text-sm text-foreground/80">
                     {item.title}
                   </span>
-                  <span className="text-4xl font-medium mt-2">
+                  <span className="text-4xl font-medium mt-1">
                     {item.value}
+                  </span>
+                  <span className="text-xs font-normal">
+                    {item.description}
                   </span>
                 </div>
               ))}
@@ -186,7 +189,7 @@ const page = () => {
 
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
               {filteredFeatures.map((feature) => (
-                <ViewCard key={feature.id} feature={feature} />
+                <UseCaseCard key={feature.id} feature={feature} />
               ))}
               {filteredFeatures.length === 0 && (
                 <div className="flex h-64 items-center justify-center text-gray-500">
@@ -198,7 +201,7 @@ const page = () => {
         </ScaleDown>
       </div>
 
-      <ViewsModal 
+      <UseCaseModal 
       open={isModalOpen}
             onOpenChange={setIsModalOpen}
                 />

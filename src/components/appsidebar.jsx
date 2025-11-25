@@ -34,6 +34,7 @@ import {
   PromptsIcon,
   TestingIcon,
   ToolsIcon,
+  AIStudioIcon,
 } from "./Icons";
 import {
   Collapsible,
@@ -98,6 +99,38 @@ const navigation = [
       },
     ],
   },
+   {
+    name: "AI Studio",
+    href: "ai-studio/quick-start",
+    icon: AIStudioIcon,
+    children: [
+      {
+        name: "Quick Start",
+        href: "/ai-studio/quick-start",
+        icon: AIStudioIcon,
+      },
+      {
+        name: "Use Cases",
+        href: "/ai-studio/use-cases",
+        icon: DataExplorerIcon,
+      },
+      {
+        name: "Model Development",
+        href: "/ai-studio/model-development",
+        icon: DataExplorerIcon,
+      },
+      {
+        name: "Monitoring",
+        href: "/ai-studio/monitoring",
+        icon: DataExplorerIcon,
+      },
+      {
+        name: "Inference",
+        href: "/ai-studio/inference",
+        icon: DataExplorerIcon,
+      },
+    ],
+  },
   { name: "Agents", href: "/agents", icon: AgentsIcon },
   { name: "Prompts", href: "/prompts", icon: PromptsIcon },
   { name: "LLMs", href: "/llms", icon: LLMsIcon },
@@ -122,6 +155,7 @@ let hasAnimatedGlobal = false;
  * ([&>span:last-child]:truncate) and shows a tooltip
  * ONLY if the text is actually truncated.
  */
+
 function TruncatedTextWithTooltip({ text }) {
   const spanRef = useRef(null);
   const [isTruncated, setIsTruncated] = useState(false);
@@ -164,7 +198,7 @@ function TruncatedTextWithTooltip({ text }) {
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { state } = useSidebar(); // 👈 get sidebar state
+  const { state } = useSidebar(); // get sidebar state
   const isCollapsed = state === "collapsed";
   const [shouldAnimate, setShouldAnimate] = useState(hasAnimatedGlobal);
   const [expandedItems, setExpandedItems] = useState({});

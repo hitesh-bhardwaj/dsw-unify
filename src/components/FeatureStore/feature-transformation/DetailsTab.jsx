@@ -26,9 +26,9 @@ export default function DetailsTab({
         <h3 className="text-lg font-medium pb-2">Input Parameters</h3>
         <div className=" rounded-lg overflow-hidden">
           <div className="w-full rounded-md   overflow-hidden">
-            <Table className="w-full text-xs border border-color-2">
-  <TableHeader className="bg-gray-100">
-    <TableRow>
+            <Table className="w-full text-xs border border-color-2 dark:hover:bg-background">
+  <TableHeader className="bg-sidebar-accent dark:hover:bg-sidebar-accent">
+    <TableRow className='dark:hover:bg-sidebar-accent'>
       <TableHead className="py-2 px-4 w-[25%]">Name</TableHead>
       <TableHead className="py-2 px-4 w-[25%]">Type</TableHead>
       <TableHead className="py-2 px-4 w-[25%]">Required</TableHead>
@@ -38,7 +38,7 @@ export default function DetailsTab({
 
   <TableBody>
     {inputParams?.map((row, i) => (
-      <TableRow key={i} className="text-foreground/80">
+      <TableRow key={i} className="text-foreground/80 dark:hover:bg-background">
         <TableCell className="py-2 px-4 w-[25%]">{row.name}</TableCell>
         <TableCell className="py-2 px-4 w-[25%]">{row.type}</TableCell>
         <TableCell className="py-2 px-4 w-[25%]">{row.required}</TableCell>
@@ -59,7 +59,7 @@ export default function DetailsTab({
       </div>
       <div className="w-full flex items-center justify-between text-sm text-foreground/80 pt-4">
         <div className="flex gap-4 items-center ">
-          <div className="w-10 h-10 border border-color-2 rounded-lg bg-gray-100   p-3">
+          <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
             <SynthWave />
           </div>
           <div>
@@ -70,7 +70,7 @@ export default function DetailsTab({
           </div>
         </div>
         <div className="flex gap-4 items-center ">
-          <div className="w-10 h-10 border border-color-2 rounded-lg bg-gray-100  p-3">
+          <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent  p-3">
             <SynthWave />
           </div>
           <div>

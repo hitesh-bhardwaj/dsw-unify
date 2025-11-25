@@ -262,9 +262,10 @@ export default function AnimatedTabsSection({
         </TabsList>
       </Tabs>
       
+      
       <div
         ref={containerRef}
-        className={contentClassName ?? "relative overflow-hidden mt-5"}
+        className={contentClassName ?? "relative overflow-hidden mt-5 "}
         style={{ position: "relative", height: 0 }}
       >
         <AnimatePresence initial={false} mode="wait" custom={directionRef.current}>

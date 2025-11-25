@@ -7,20 +7,19 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout } from "../Icons";
-import ViewsCardModal from "./feature-view/ViewsModalCard";
-
+import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People } from "../Icons";
+import ViewsCardModal from "../FeatureStore/feature-view/ViewsModalCard";
 const skeletonShownMap = new Map();
-export function ViewCard({ feature, minSkeletonMs = 500 }) {
+export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
   const {
     id,
     name,
     description,
     icon: Icon,
-    tablesCount,
+    peopleCount,
     lastUpdated,
     tags = [],
-    featureNo,
+    models,
     createdAt,
     
     variant = "light",
@@ -150,13 +149,13 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
               <div className="w-4 h-4">
                 <Calendar className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
               </div>
-              <span className=" text-foreground text-xs">{featureNo} features</span>
+              <span className=" text-foreground text-xs">{models} models</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-4 h-4">
-                <FileTimeout className="text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " />
+            <div className="flex items-center  justify-center gap-0">
+              <div className="w-7 h-7  flex items-center">
+                <People className="w-full h-full text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " />
               </div>
-              <span className=" text-foreground text-xs">{tablesCount} tables</span>
+              <span className=" text-foreground text-xs">{peopleCount}</span>
             </div>
           </div>
 
