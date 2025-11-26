@@ -18,7 +18,6 @@ const Features = [
     description:
       "Demographic features including age, location, credit score, marital status, and employment",
     tags: ["demographics", "policyholder", "underwriting"],
-    // tags: [{ label: "demographics" }, { label: "age" }],
     featureNo: "18",
     lastUpdated: "2 days Ago",
     tablesCount: "2",

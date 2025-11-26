@@ -1,38 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, Copy } from "lucide-react";
+import { Copy } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People } from "../Icons";
+
 const skeletonShownMap = new Map();
-import Link from "next/link";
-export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
+
+export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500 }) {
   const {
     id,
     name,
+    ModelSlug,
     description,
-    slug,
     icon: Icon,
-    peopleCount,
-    lastUpdated,
     tags = [],
-    models,
+    versions,
+    features,
+    status,
+    lastUpdated,
     createdAt,
-    
     variant = "light",
-  } = feature || {};
+  } = usecase || {};
 
   const isDark = variant === "dark";
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-  // keep a skeleton up for at least `minSkeletonMs`
+  // keep skeleton visible for minSkeletonMs
   const [showSkeleton, setShowSkeleton] = useState(() => {
-    // Only show skeleton if it hasn't been shown for this test before
     return !skeletonShownMap.has(id);
   });
 
@@ -46,13 +46,11 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
     }
   }, [minSkeletonMs, id, showSkeleton]);
 
-  if (showSkeleton) {
-    return <ViewCardSkelton />;
-  }
+  if (showSkeleton) return <UsecaseInternalCardSkeleton />;
 
   return (
     <div className="group w-full h-full">
-      <Link href={`/ai-studio/use-cases/${slug}`}>
+    <Link href={`/ai-studio/use-cases/${slug}/${ModelSlug}/`}>
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
@@ -61,9 +59,15 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
       >
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between mb-4">
-            {/* Icon, Rating, and Version */}
+            {/* Icon */}
+            <div className="flex gap-2 items-end">
+
             <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border #DCDCDC text-black transition-all dark:text-white dark:group-hover:text-black group-hover:bg-foreground group-hover:text-background duration-300 p-3">
               {Icon && <Icon className="h-6 w-6" />}
+            </div>
+            <p className={`text-xs border px-2 py-1 rounded-full ${status==='Deployed'? 'border-badge-green': 'border-red-500'}`}>
+                {status}
+            </p>
             </div>
 
             {/* Action buttons */}
@@ -72,12 +76,13 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1 ",
+                  "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1",
                   "hover:bg-white dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
                 )}
               >
                 <Eye />
               </Button>
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -88,6 +93,7 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
               >
                 <Copy className="!h-full !w-full" />
               </Button>
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -98,6 +104,7 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
               >
                 <Editor />
               </Button>
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -118,16 +125,15 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
           <p className="text-xs text-muted-foreground line-clamp-2">
             {description}
           </p>
-
-          {/* Tags */}
         </CardHeader>
 
         <CardContent
           className={cn(
-            isDark ? "bg-background" : "bg-white dark:bg-background ",
-            "w-full mx-auto pt-4 space-y-4 dark:group-hover:bg-sidebar-accent group-hover:bg-sidebar-accent rounded-xl  duration-500 ease-out"
+            isDark ? "bg-background" : "bg-white dark:bg-background",
+            "w-full mx-auto pt-4 space-y-4 dark:group-hover:bg-sidebar-accent group-hover:bg-sidebar-accent rounded-xl duration-500 ease-out"
           )}
         >
+          {/* Tags */}
           <div className="flex flex-wrap gap-1 pt-2">
             {tags.map((tag, index) => (
               <Badge
@@ -142,6 +148,7 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
             ))}
           </div>
 
+          {/* Versions + Features */}
           <div
             className={cn(
               "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6  duration-500 bg-white dark:bg-background dark:group-hover:bg-background ease-out group-hover:bg-white border border-border-color-2"
@@ -151,17 +158,18 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
               <div className="w-4 h-4">
                 <Calendar className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
               </div>
-              <span className=" text-foreground text-xs">{models} models</span>
+              <span className=" text-foreground text-xs">{versions} Versions</span>
             </div>
-            <div className="flex items-center  justify-center gap-0">
-              <div className="w-7 h-7  flex items-center">
-                <People className="w-full h-full text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " />
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4">
+                <People className="text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " />
               </div>
-              <span className=" text-foreground text-xs">{peopleCount}</span>
+              <span className=" text-foreground text-xs">{features} features</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2  pl-2">
+          {/* Last Updated */}
+           <div className="flex items-center gap-2  pl-2">
             <div className="w-4 h-4">
               <Calendar className="text-foreground/80 group-hover:text-foreground transition-all duration-500 ease-out  " />
             </div>
@@ -172,15 +180,17 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
           </div>
         </CardContent>
       </Card>
-      </Link>
+    </Link>
+
     </div>
   );
 }
 
-export function ViewCardSkelton() {
+/* ------------------ Skeleton Loader ------------------ */
+
+export function UsecaseInternalCardSkeleton() {
   return (
     <div className="group w-full h-full">
-      
       <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
@@ -188,6 +198,7 @@ export function ViewCardSkelton() {
               <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-black/30">
                 <Skeleton className="h-full w-full rounded" />
               </div>
+
               <div className="flex items-center gap-2">
                 <Skeleton className="h-4 w-20" />
                 <Skeleton className="h-5 w-10 rounded-sm" />
@@ -217,6 +228,7 @@ export function ViewCardSkelton() {
             <Skeleton className="h-4 w-20" />
             <Skeleton className="h-4 w-24" />
           </div>
+
           <div className="rounded-lg p-3">
             <Skeleton className="h-16 w-full rounded" />
           </div>
