@@ -156,7 +156,7 @@ export default function AgentsPage() {
               </p>
             </div>
 
-            <Link href="/agents/create">
+            <Link href="/agent-studio/agents/create">
               <RippleButton>
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <PlusIcon />
@@ -172,9 +172,6 @@ export default function AgentsPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {/* </FadeUp> */}
-
-          {/* <FadeUp delay={0.04}> */}
           <RadioTabs
             items={[
               { id: "prompts", label: "Prompts", icon: PromptsIcon },
@@ -187,12 +184,7 @@ export default function AgentsPage() {
             dotColorClassName="bg-[#FF5722]"
             equalWidth={true}
           />
-          {/* </FadeUp> */}
         </div>
-
-        {/* Agents grid */}
-
-        {/* <FadeUp delay={0.06}> */}
         <div className="flex-1 pt-0 px-6 h-fit w-full relative">
           <div
             className={cn(

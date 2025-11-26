@@ -7,13 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { AiGenerator, EditIcon, SettingIcon } from "@/components/Icons";
+import { AiGenerator, Bin, EditIcon, SettingIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import CountUp from "@/components/animations/CountUp";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { motion } from "framer-motion";
 import { ScaleDown } from "@/components/animations/Animations";
+import SearchBar from "@/components/search-bar";
 
 export default function AgentDetailPage({ params }) {
    const { id } = use(params);
@@ -52,8 +53,8 @@ export default function AgentDetailPage({ params }) {
   // Mock data - in real app, fetch based on id
   const agent = {
     id: id,
-    name: "Customer Support Agent",
-    description: "Handles customer inquiries and support tickets",
+    name: "Auto Claims Processing Agent",
+    description: "Automates auto insurance claims intake, validation, and processing",
     status: "active",
     tags: ["support", "customer-service"],
     lastModified: "2 Hours Ago",
@@ -77,6 +78,8 @@ export default function AgentDetailPage({ params }) {
       { type: "success", event: "Model inference", time: "25 minutes ago" },
     ],
   };
+
+    const [query, setQuery] = useState("");
 
   const getActivityColor = (type) => {
     switch (type) {
@@ -225,7 +228,7 @@ export default function AgentDetailPage({ params }) {
         <div className="bg-background p-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-3">
-              <LeftArrowAnim link={"/agents"} />
+              <LeftArrowAnim link={"/agent-studio/agents"} />
               <div>
                 <h1 className="text-xl font-medium">{agent.name}</h1>
                 <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
@@ -234,6 +237,18 @@ export default function AgentDetailPage({ params }) {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <RippleButton>
+                <Button
+                  variant="outline"
+                  onClick={() => setApiModalOpen(true)}
+                  className="gap-2 text-foreground border border-primary"
+                >
+                  <div className="!w-4 text-red-500">
+                    <Bin/>
+                  </div>
+                  Delete
+                </Button>
+              </RippleButton>
               <RippleButton>
                 <Button
                   variant="outline"
@@ -257,7 +272,7 @@ export default function AgentDetailPage({ params }) {
                   Test
                 </Button>
               </RippleButton>
-              <Link href={`/agents/${id}/edit`}>
+              <Link href={`/agent-studio/agents/${id}/edit`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                     <div className="!w-4">
@@ -270,6 +285,14 @@ export default function AgentDetailPage({ params }) {
             </div>
           </div>
         </div>
+        <div className="p-6 py-3">
+         <SearchBar
+                    placeholder="Search Agents..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                  </div>
+        
 
         {/* Main Content */}
         <div className="flex-1 overflow-auto p-6 bg-background">
@@ -294,7 +317,7 @@ export default function AgentDetailPage({ params }) {
                         <h3 className="text-sm font-medium text-gray-700 mb-2 dark:text-foreground">
                           Status
                         </h3>
-                        <Badge className="bg-badge-green text-white hover:bg-green-600">
+                        <Badge className="bg-transparent border border-badge-green text-black">
                           {agent.status.charAt(0).toUpperCase() +
                             agent.status.slice(1)}
                         </Badge>
@@ -360,7 +383,7 @@ export default function AgentDetailPage({ params }) {
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <h3 className="text-3xl font-medium text-green">
+                          <h3 className="text-3xl font-medium">
                             <CountUp value={agent.metrics.successRate} />
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-foreground">
@@ -397,14 +420,14 @@ export default function AgentDetailPage({ params }) {
                         <h3 className="text-sm font-medium text-gray-700 dark:text-foreground">
                           Error Rate
                         </h3>
-                        <p className="text-sm text-red-600 font-medium">
+                        <p className="text-sm font-medium">
                           {agent.health.errorRate}
                         </p>
                       </div>
                       <span className="w-full h-[1px] bg-foreground/40 block mt-8" />
                       <div className="pt-4">
-                        <div className="flex items-center gap-2 text-badge-green">
-                          <div className="w-4.5 h-4.5 text-badge-green">
+                        <div className="flex items-center gap-2 ">
+                          <div className="w-4.5 h-4.5 ">
                             <SettingIcon />
                           </div>
                           <span className="text-sm">System Operational</span>

@@ -28,7 +28,6 @@ const prompts = [
     rating: 4.8,
     version: "v3",
     tags: [
-      { label: "Customer Service", color: "yellow" },
       { label: "Customer-Service", color: "blue" },
       { label: "Empathy", color: "green" },
       { label: "+1 more", color: "orange" },
@@ -46,9 +45,8 @@ const prompts = [
     rating: 4.3,
     version: "v2",
     tags: [
-      { label: "Technical Writing", color: "yellow" },
-      { label: "Technical-Writing", color: "blue" },
-      { label: "Documentation", color: "green" },
+      { label: "Customer-Service", color: "blue" },
+      { label: "Empathy", color: "green" },
       { label: "+1 more", color: "orange" },
     ],
     uses: "890",
@@ -64,9 +62,8 @@ const prompts = [
     rating: 4.9,
     version: "v1",
     tags: [
-      { label: "Development", color: "yellow" },
-      { label: "Code-Review", color: "blue" },
-      { label: "Development", color: "green" },
+      { label: "Customer-Service", color: "blue" },
+      { label: "Empathy", color: "green" },
       { label: "+1 more", color: "orange" },
     ],
     uses: "156",
@@ -202,7 +199,7 @@ export default function PromptsPage() {
                     : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
                 )}
               >
-                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 items-stretch">
+                <div className="grid gap-6 grid-cols-3 md:grid-cols-2 lg:grid-cols-3 items-stretch">
                   {filteredPrompts.map((prompt) => (
                     <PromptCard key={prompt.id} prompt={prompt} />
                   ))}

@@ -175,13 +175,13 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             >
               <div className="flex items-center gap-2 font-medium">
                 <div className="w-4 h-4">
-                  <Calendar className="text-primary group-hover:text-foreground transition-all duration-500 ease-out dark:text-foreground " />
+                  <Calendar className="text-primary transition-all duration-500 ease-out dark:text-foreground " />
                 </div>
                 <span className=" text-foreground">{lastActivity}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4">
-                  <FileTimeout className="text-badge-blue group-hover:text-foreground transition-all duration-500 ease-out dark:text-foreground " />
+                  <FileTimeout className="text-badge-blue  transition-all duration-500 ease-out dark:text-foreground " />
                 </div>
                 <span className="font-medium text-foreground">{requestCount}</span>
               </div>

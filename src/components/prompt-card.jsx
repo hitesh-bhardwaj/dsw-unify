@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave } from "./Icons";
+import Link from "next/link";
 
 const skeletonShownMap = new Map();
 export function PromptCard({ prompt, minSkeletonMs = 500 }) {
@@ -48,6 +49,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
   }
 
   return (
+    <Link href={`/agent-studio/prompts/${id}`}>
     <div className="group w-full h-full">
       <Card
         className={cn(
@@ -130,17 +132,19 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
             </div>
           </div>
 
+<div className="flex flex-col gap-3 mb-5">
           {/* Title */}
           <h3 className="text-xl text-black dark:text-white font-medium mb-2">{name}</h3>
 
           {/* Description */}
           <p
             className={cn(
-              "text-sm mb-4 text-gray-600 dark:text-foreground dark:group-hover:text-foreground  transition-all duration-500 ease-out"
+              "text-sm mb-5 text-gray-600 dark:text-foreground dark:group-hover:text-foreground  transition-all duration-500 ease-out"
             )}
           >
             {description}
           </p>
+          </div>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-1">
@@ -186,6 +190,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
         </CardContent>
       </Card>
     </div>
+    </Link>
   );
 }
 

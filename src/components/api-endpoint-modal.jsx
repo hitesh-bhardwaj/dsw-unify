@@ -285,19 +285,27 @@ const handleTabChange = (value) => {
 
               <div className="space-y-6 py-8">
                 {/* Agent ID and Status */}
-                <div className="flex w-full h-fit gap-2">
+                <div className="flex w-full h-fit gap-15">
                   <div className="flex flex-col gap-2 w-full">
                     <label className="text-sm text-foreground">Agent ID</label>
+                    <div className="flex gap-2 w-full">
                     <Input
                       value={agentId}
                       readOnly
                       className="border border-foreground/20"
                     />
+                    <CopyWithTooltip
+                      text={apiKey}
+                      aria-label="Copy API key"
+                      className="pr-0 py-5 px-5"
+                      iconClassName="w-full h-full"
+                    />
+                    </div>
                   </div>
                   <div className="flex flex-col gap-2">
                     <label className="text-sm text-foreground">Status</label>
                     <div>
-                      <Badge className="bg-badge-green rounded-md px-7 py-3 text-white hover:bg-green-600">
+                      <Badge className="border border-badge-green rounded-lg px-7 py-3 bg-transparent text-foreground">
                         Active
                       </Badge>
                     </div>
