@@ -16,6 +16,7 @@ import Details from "@/components/usecases/versions/Details";
 import Explainability from "@/components/usecases/versions/Explainability";
 import Monitoring from "@/components/usecases/versions/Monitoring";
 import { LineGraph, PlusIcon, Tune, RocketIcon } from "@/components/Icons";
+import Inference from "@/components/usecases/versions/Inference";
 import Link from "next/link";
 
 const page = () => {
@@ -63,7 +64,7 @@ const page = () => {
       label: "Inference",
       name: "Inference",
       render: () => (
-        <EmptyCard>No Inference data available at this point</EmptyCard>
+        <Inference />
       ),
     },
   ];
