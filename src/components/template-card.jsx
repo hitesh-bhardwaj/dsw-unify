@@ -102,13 +102,13 @@ export function TemplateCard({ template }) {
           </p>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1 mt-7">
             {tags.map((tag, index) => (
               <Badge
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out group-hover:border-transparent dark:group-hover:bg-background"
                 )}
               >
                 {tag.label}
@@ -124,8 +124,10 @@ export function TemplateCard({ template }) {
           <div className={`flex items-center justify-between mb-3 `}>
             <span className={"text-foreground"}>{uses} uses</span>
           </div>
+          <div className="bg-sidebar-accent p-3 rounded-md">
           <span className="font-medium ">Variables: </span>
           <span className="text-black/60 dark:text-foreground/80">{variable}</span>
+          </div>
           {/* Preview */}
         </CardContent>
       </Card>

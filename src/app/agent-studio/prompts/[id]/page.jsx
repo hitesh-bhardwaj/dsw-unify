@@ -1,33 +1,24 @@
 "use client";
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
-import { AiGenerator, Bin, EditIcon, SparklesIcon } from "@/components/Icons";
-import ApiEndpointModal from "@/components/api-endpoint-modal";
+import { AiGenerator, Bin, EditIcon} from "@/components/Icons";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
-import PromptCardGrid from "@/components/prompt-card-grid";
 import { ScaleDown } from "@/components/animations/Animations";
-import { ArrowRight } from "lucide-react";
+import PromptContentGrid from "@/components/prompt-content-grid";
+import PromptMetadataGrid from "@/components/prompt-metadata-grid";
+import PromptUsageGrid from "@/components/prompt-usage-grid";
 
 export default function CreateAgentPage() {
-  const [apiModalOpen, setApiModalOpen] = useState(false);
-  const [agentName, setAgentName] = useState("");
-  const [description, setDescription] = useState("");
-
   const items = [
     {
       id: "content",
       value: "content",
       label: "Content",
       name: "Content",
-      render: () =>  <EmptyCard children={"Content configuration coming soon..."} />,
+      render: () =>  <PromptContentGrid/>,
     },
     {
       id: "metadata",
@@ -35,7 +26,7 @@ export default function CreateAgentPage() {
       label: "Metadata",
       name: "Metadata",
       render: () => (
-        <EmptyCard children={"Metadata configuration coming soon..."} />
+        <PromptMetadataGrid/>
       ),
     },
     {
@@ -44,7 +35,7 @@ export default function CreateAgentPage() {
       label: "Usage",
       name: "Usage",
       render: () => (
-        <EmptyCard children={"Usage configuration coming soon..."} />
+        <PromptUsageGrid/>
       ),
     },
   ];
@@ -60,9 +51,9 @@ export default function CreateAgentPage() {
               <LeftArrowAnim link={"/agents"} />
 
               <div className="space-y-2">
-                <h1 className="text-2xl font-medium">Edit Agent: Auto Claims Processing Agent</h1>
+                <h1 className="text-2xl font-medium">Customer Support Assistant</h1>
                 <p className="text-sm text-gray-600  dark:text-foreground">
-                  Modify your existing agent configuration
+                  Helpful and empathetic customer service responses
                 </p>
               </div>
             </div>
@@ -72,7 +63,7 @@ export default function CreateAgentPage() {
                   variant="outline"
                   className="gap-2 text-foreground border border-primary"
                 >
-                  <div className="!w-4">
+                  <div className="!w-4 text-red-500">
                     <Bin />
                   </div>
                  Delete
@@ -95,7 +86,7 @@ export default function CreateAgentPage() {
                     <div className="!w-4">
                       <EditIcon className={"text-white"} />
                     </div>
-                    Save Agent
+                    Edit
                   </Button>
                 </RippleButton>
               </Link>

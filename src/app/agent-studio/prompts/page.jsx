@@ -80,7 +80,9 @@ const templates = [
     description: "Standard template for customer service agents",
     tags: [
       { label: "Customer Service", color: "yellow" },
-      { label: "3 Variables", color: "blue" },
+      { label: "Empathy", color: "blue" },
+      { label: "+1 more", color: "orange" },
+
     ],
     uses: "45",
     variable: "company_name, product_name, support_level",
@@ -92,7 +94,9 @@ const templates = [
     description: "Template for technical question answering",
     tags: [
       { label: "Technical", color: "yellow" },
-      { label: "3 Variables", color: "blue" },
+      { label: "Empathy", color: "blue" },
+      { label: "+1 more", color: "orange" },
+
     ],
     uses: "32",
     variable: "domain, expertise_level, response_format",
