@@ -10,9 +10,14 @@ export default function CardDetails({ data = [] }) {
         >
           <span className="text-sm text-foreground/80">{item.title}</span>
 
-          <span className="text-2xl font-medium mt-1">{item.value}</span>
-
-          <span className="text-xs font-normal">{item.description}</span>
+          {item.description ? (
+            <>
+              <span className="text-2xl font-medium mt-1">{item.value}</span>
+              <span className="text-xs font-normal">{item.description}</span>
+            </>
+          ) : (
+            <span className="text-xl font-medium mt-2">{item.value}</span>
+          )}
         </div>
       ))}
     </div>

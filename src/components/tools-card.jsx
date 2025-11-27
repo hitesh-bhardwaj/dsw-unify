@@ -36,7 +36,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
 
   return (
     <Bounce>
-      <Link href={`/#`} className="block group h-full">
+      <Link href={`/agent-studio/tools/${id}`} className="block group h-full">
         <Card
           className={cn(
             "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full",
