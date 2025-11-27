@@ -13,6 +13,7 @@ import SearchBar from "@/components/search-bar";
 import { Badge } from "@/components/ui/badge";
 import { EditIcon, PlusIcon, Tune } from "@/components/Icons";
 import Link from "next/link";
+import CardDetails from "@/components/CardDetails";
 
 const page = () => {
   const { id } = useParams();
@@ -143,24 +144,8 @@ const page = () => {
                 </Link>
               </div>
             </div>
-            <div className="w-full  flex items-center justify-between gap-4">
-              {versionsData.stats.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col gap-3 border border-border-color-1 rounded-lg py-6 px-4 w-full"
-                >
-                  <span className="text-sm text-foreground/80">
-                    {item.title}
-                  </span>
-                  <span className="text-2xl font-medium mt-1">
-                    {item.value}
-                  </span>
-                  <span className="text-xs font-normal">
-                    {item.description}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <CardDetails data={versionsData.stats} />
+
             <div className="space-y-4">
               <h2 className="text-2xl font-medium">Versions</h2>
 

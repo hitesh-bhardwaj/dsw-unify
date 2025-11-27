@@ -80,8 +80,8 @@ const page = () => {
     usage: "1.2K Request",
     stats: [
       { title: "Owner", value: "Shivam Thakkar" },
-      { title: "Created", value: "January 16,2025" },
-      { title: "Updated", value: "January 16,2025" },
+      { title: "Created", value: "January 16, 2025" },
+      { title: "Updated", value: "January 16, 2025" },
 
       { title: "Accuracy", value: "96.5%" },
     ],
@@ -106,7 +106,7 @@ const page = () => {
                   <div className="flex gap-3 items-center">
                     <h1 className="text-xl font-medium">{versionsData.name}</h1>
 
-                    <div className="flex flex-wrap gap-1 ">deployed</div>
+                    <div className="flex flex-wrap py-0.5  px-2 border border-badge-green text-xs rounded-full">{versionsData.status}</div>
                   </div>
                   <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
                     {versionsData.description}

@@ -1197,6 +1197,17 @@ export const ConfigureIcon = () => {
   );
 };
 
+export const UploadFile = () => {
+  return (
+    <>
+      <svg width="40" height="40" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.25 30.875V25.1875C42.25 21.1489 38.9761 17.875 34.9375 17.875H31.6875C30.3413 17.875 29.25 16.7837 29.25 15.4375V12.1875C29.25 8.14892 25.9761 4.875 21.9375 4.875H17.875M26 24.375V37.375M32.5 30.875H19.5M22.75 4.875H12.1875C10.8413 4.875 9.75 5.96631 9.75 7.3125V44.6875C9.75 46.0337 10.8413 47.125 12.1875 47.125H39.8125C41.1587 47.125 42.25 46.0337 42.25 44.6875V24.375C42.25 13.6054 33.5196 4.875 22.75 4.875Z" stroke="#454C52" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+    </>
+  )
+}
+
 export const UploadIcon = () => {
   return (
     <>

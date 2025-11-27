@@ -1,0 +1,20 @@
+"use client";
+
+export default function CardDetails({ data = [] }) {
+  return (
+    <div className="w-full flex items-center justify-between gap-4">
+      {data.map((item, index) => (
+        <div
+          key={index}
+          className="flex flex-col gap-3 border border-border-color-1 rounded-lg py-6 px-4 w-full"
+        >
+          <span className="text-sm text-foreground/80">{item.title}</span>
+
+          <span className="text-2xl font-medium mt-1">{item.value}</span>
+
+          <span className="text-xs font-normal">{item.description}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
