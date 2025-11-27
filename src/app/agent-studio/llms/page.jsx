@@ -180,7 +180,7 @@ export default function LLMsPage() {
             </div>
             <div className="gap-2 flex">
               <RippleButton>
-                <Link href={"/llms/llm-finetuning"}>
+                <Link href={"/agent-studio/llms/llm-finetuning"}>
                   <Button
                     variant="outline"
                     className="gap-2 text-foreground border border-primary"
@@ -246,7 +246,7 @@ export default function LLMsPage() {
                     <div className="w-13 h-12">
                       <span
                         className={cn(
-                          "w-full h-full flex justify-center items-center p-3.5 text-background bg-foreground rounded-lg -mt-1"
+                          "w-full h-full flex justify-center items-center p-3.5 text-foreground bg-sidebar-accent rounded-lg -mt-1"
                         )}
                       >
                         <SynthWave />

@@ -44,7 +44,7 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
           )}
         >
           <CardHeader>
-            <div className="flex items-start justify-between">
+            <div className="flex items-end gap-2">
               {/* Icon */}
               <div
                 className={cn(
@@ -72,14 +72,14 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
                 className={cn(
                   "rounded-full px-3 py-1 text-xs font-medium ",
                   status === "active"
-                    ? "bg-badge-green text-white"
+                    ? "bg-transparent text-foreground border border-badge-green"
                     : "bg-[#DEDEDE] text-foreground px-4 dark:bg-foreground dark:text-background"
                 )}
               >
                 {status === "active" ? "Active" : "Draft"}
               </Badge>
               ) : (
-                <Badge className="rounded-full px-3 py-1 text-xs font-medium text-white bg-badge-sea-green">
+                <Badge className="rounded-full px-3 py-1 text-xs font-medium text-foreground bg-transparent border border-[#2563FB]">
                   Deploying
                 </Badge>
               )}
@@ -98,13 +98,13 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
 
           <CardContent>
             {/* Tags */}
-            <div className="mb-10 flex flex-wrap gap-1 ">
+            <div className="mb-10 flex flex-wrap gap-1 mt-7">
               {tags.map((tag, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
                   className={cn(
-                   "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                   "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all group-hover:border-transparent duration-500 ease-out dark:group-hover:bg-background"
                     
                   )}
                 >

@@ -222,7 +222,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
           </CardHeader>
 
           <div className="space-y-3">
-            <p className="text-sm">Request Over Time</p>
+            <p className="text-sm text-gray-600">Request Over Time</p>
 
             <div className="w-full h-fit bg-sidebar-accent rounded-xl overflow-hidden">
               <ChartContainer config={chartConfig} className="h-30 w-full px-6 pt-8">
@@ -250,7 +250,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
           </div>
 
           <div className="space-y-3">
-            <p>Top Application</p>
+            <p className="text-gray-600 text-sm">Top Application</p>
             <div className="w-full h-fit rounded-xl bg-sidebar-accent space-y-2 p-4 text-sm">
               <div className="w-full flex justify-between">
                 <p>Customer Support Agent</p>

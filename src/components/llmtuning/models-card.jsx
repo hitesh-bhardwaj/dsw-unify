@@ -3,15 +3,16 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Bin, UploadIcon } from "../Icons";
+import { Bin, RocketIcon, UploadIcon } from "../Icons";
 import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { RippleButton } from "../ui/ripple-button";
 
 const skeletonShownMap = new Map();
 
-export function DataSet({ data , minSkeletonMs = 500 }) {
-   const { id, name, description, tags = [], records, createdBy } = data;
+export function ModelsCard({ data , minSkeletonMs = 500 }) {
+   const { id, name, description, tags = [], records, createdBy, response , deployed} = data;
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this test before
     return !skeletonShownMap.has(id);
@@ -105,7 +106,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                         tag.color === "blue" &&
                           "bg-badge-blue text-white  transition-all duration-500 ease-out",
                         tag.color === "green" &&
-                          "bg-badge-green text-white  transition-all duration-500 ease-out",
+                          "bg-transparent text-foreground  transition-all duration-500 ease-out border border-badge-green",
                         tag.color === "mint" &&
                           "bg-transparent text-foreground transition-all duration-500 ease-out border border-badge-mint",
                         tag.color === "orange" &&
@@ -136,31 +137,21 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 dark:text-foreground text-badge-blue hover:bg-stone-700"
-                )}
-              >
-                <Eye />
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-6 w-6 flex items-center justify-center px-1 py-1 dark:text-foreground text-primary hover:bg-stone-700"
-                )}
-              >
-                <UploadIcon />
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
                   "h-6.5 w-6.5 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-stone-700"
                 )}
               >
                 <Bin />
               </Button>
+               <RippleButton>
+             
+                <Button href="/#" className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <div className="w-4 h-4">
+                    <RocketIcon className="text-white" />
+                  </div>
+                  {deployed ? "Undeploy":"Deploy"}
+                </Button>
+              
+            </RippleButton>
             </div>
           </div>
         </CardHeader>
@@ -171,6 +162,11 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
             <div className="flex items-center gap-1">
               <span>{records}</span>
               <span>records</span>
+            </div>
+             <div className="flex items-center gap-1">
+            <span>Avg response: </span>
+              <span>{response}</span>
+             
             </div>
 
             <div className="flex items-center text-foreground/60 duration-500 ease-out">

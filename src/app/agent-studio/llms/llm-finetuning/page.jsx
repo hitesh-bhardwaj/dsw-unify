@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { UploadIcon } from "@/components/Icons";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import DatasetsGrid from "@/components/llmtuning/datasets-grid";
 import TrainingJobsGrid from "@/components/llmtuning/training-jobs-grid";
 import { ScaleDown } from "@/components/animations/Animations";
-
+import ModelsGrid from "@/components/llmtuning/models-grid";
+import InferenceGrid from "@/components/llmtuning/inference-grid";
 
 const datasets = [
   {
@@ -62,6 +62,35 @@ const TrainingJobs = [
     date: "22/01/2024",
   },
 ];
+const Models = [
+  {
+    id: "customer-support-v1",
+    name: "Customer-Support-v1",
+    description: "Customer support model training",
+    tags: [
+      { label: "Deployed", color: "green" },
+    ],
+    records: "1,250",
+    createdBy: "20/01/2024",
+    response:"1.2s",
+    variant: "light",
+    deployed:true
+  },
+  {
+    id: "tech-assistant-v2",
+    name: "tech-assistant-v2",
+    description: "Technical assistant model",
+    tags: [
+      { label: "Ready", color: "transparent" },
+    ],
+    records: "3400",
+    createdBy: "22/01/2024",
+    response:"-",
+    variant: "light",
+     deployed:false
+  },
+];
+
 
 export default function LLMFineTuning() {
    const items = [
@@ -71,8 +100,7 @@ export default function LLMFineTuning() {
       label: "Datasets",
       name: "Datasets",
       render: () =>
-          <DatasetsGrid items={datasets}/>
-         
+          <DatasetsGrid items={datasets}/>   
     },
     {
       id: "training-jobs",
@@ -88,7 +116,7 @@ export default function LLMFineTuning() {
       label: "Models",
       name: "Models",
      render: () =>
-          <EmptyCard children={"Models configuration coming soon..."}/>
+          <ModelsGrid items={Models}/>
     },
     {
       id: "inference",
@@ -96,7 +124,7 @@ export default function LLMFineTuning() {
       label: "Inference",
       name: "Inference",
      render: () =>
-          <EmptyCard children={"Inference configuration coming soon..."}/>
+          <InferenceGrid/>
     }
   ];
   return (

@@ -34,8 +34,6 @@ export default function LLMsDetailPage({ params }) {
       setShowMetricsSkeleton(false);
       return;
     }
-
-    // First visit: keep skeleton for at least 500ms, then disable for the future
     const t = setTimeout(() => {
       setShowMetricsSkeleton(false);
       localStorage.setItem(STORAGE_KEY, "1");
@@ -102,11 +100,11 @@ export default function LLMsDetailPage({ params }) {
         <div className="bg-background p-6 space-y-6 h-full">
           <div className="flex items-center justify-between mb-10">
             <div className="flex gap-3">
-              <LeftArrowAnim link={"/llms"} />
+              <LeftArrowAnim link={"/agent-studio/llms"} />
               <div className="space-y-2">
                 <div className="w-fit flex gap-2 items-center">
                   <h1 className="text-xl font-medium">{llm.name}</h1>
-                  <Badge className="py-1 text-xs font-medium bg-badge-green text-white">
+                  <Badge className="py-1 text-xs font-medium bg-transparent text-foreground border border-badge-green">
                     Active
                   </Badge>
                 </div>
@@ -142,29 +140,32 @@ export default function LLMsDetailPage({ params }) {
             </div>
           ) : (
             <div className="w-full flex gap-4">
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium dark:text-foreground text-green">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-foreground/60 text-sm ">Total Requests</p>
+                <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={llm.request} duration={1.2} startOnView once />
                 </p>
-                <p className="text-foreground/60 text-sm ">Total Requests</p>
+                
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium dark:text-foreground text-badge-blue">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-foreground/60 text-sm">Avg. Response Time</p>
+                <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={llm.avgRes} duration={1.2} startOnView once />
                 </p>
-                <p className="text-foreground/60 text-sm">Avg. Response Time</p>
+                
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium dark:text-foreground text-yellow">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-foreground/60 text-sm">Uptime</p>
+                <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={llm.upTime} duration={1.2} startOnView once />
                 </p>
-                <p className="text-foreground/60 text-sm">Uptime</p>
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out countUpContainer">
-                <p className="text-3xl font-medium dark:text-foreground text-red">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-1 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+                <p className="text-foreground/60 text-sm">This Month Cost</p>
+
+                <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={llm.cost} duration={1.2} startOnView once />
                 </p>
-                <p className="text-foreground/60 text-sm">This Month Cost</p>
               </div>
             </div>
           )}
