@@ -147,7 +147,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
           </div>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1 mt-5">
             {tags.map((tag, index) => (
               <Badge
                 key={index}
