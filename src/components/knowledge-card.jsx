@@ -100,7 +100,7 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-10 dark:group-hover:bg-background duration-500 ease-out bg-sidebar-accent border-border-color-2 border"
+                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 dark:group-hover:bg-background duration-500 ease-out bg-sidebar-accent border-border-color-2 border"
               )}
             >
               <div className="flex flex-col items-start gap-1 font-medium">
