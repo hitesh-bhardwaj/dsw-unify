@@ -122,7 +122,7 @@ const TransformLogic = ({ goNext, goBack, isLastStep }) => {
             <RippleButton>
               <Button
                 className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
-                onClick={handleNextOrSubmit}
+                // onClick={handleNextOrSubmit}
               >
                 {isLastStep ? "Create Transformation" : "Next Step"}
                 <div className="w-4 h-auto">

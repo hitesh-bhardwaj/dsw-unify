@@ -57,6 +57,7 @@ export default function StepFormModal({ open, onOpenChange, steps = [] ,title}) 
       isLastStep: currentStepIndex === totalSteps - 1,
       stepId: id,
       stepIndex: currentStepIndex,
+      onCloseModal: () => onOpenChange(false),
     });
   };
 

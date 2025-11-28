@@ -102,8 +102,7 @@ const Features = [
     featureNo: "12",
     tablesCount: "2",
     lastUpdated: "6 hours ago",
-        createdAt:'2025-11-18',
-
+    createdAt:'2025-11-18',
     variant: "light",
   },
 ];
@@ -114,10 +113,13 @@ const stats = [
   { title: "Total Tables", value: 18 },
 ];
 
+ 
+
 const page = () => {
 
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isStepModalOpen, setIsStepModalOpen] = useState(false);
 
   const filteredFeatures = Features.filter((feature) =>
     feature.name.toLowerCase().includes(query.toLowerCase())
@@ -172,6 +174,7 @@ const page = () => {
               </div>
               <RippleButton className={"rounded-lg "}>
                 <Button
+
                   variant="outline"
                   className="gap-2 w-36 border-border-color-1 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
                 >
@@ -201,6 +204,8 @@ const page = () => {
       open={isModalOpen}
             onOpenChange={setIsModalOpen}
                 />
+
+     
     </>
   );
 };

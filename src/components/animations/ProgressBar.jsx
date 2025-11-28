@@ -27,7 +27,7 @@ export default function AnimatedProgressBar({
   playKey,
   duration = 1.2,
   delay = 0,
-  ease = "easeInOut",
+  ease = "easeOut",
   inViewAmount = 0.4,
   inViewMargin = "-10% 0px -10% 0px",
   className,
