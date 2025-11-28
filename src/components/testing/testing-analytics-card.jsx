@@ -13,7 +13,7 @@ export function TestingAnalyticsCard({ cards, tab }) {
         <div className="flex items-center w-full justify-between">
           <div className="space-y-3">
             <div className="flex items-center gap-[3vw]">
-              <h3 className="text-sm font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out">
+              <h3 className="text-sm font-medium text-foreground/80 group-hover:text-white transition-all duration-500 ease-out">
                 {heading}
               </h3>
             </div>

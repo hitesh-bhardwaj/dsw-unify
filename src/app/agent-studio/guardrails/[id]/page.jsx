@@ -1,4 +1,5 @@
 "use client";
+
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -8,15 +9,15 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
-import Overviews from "@/components/agent-studio/tools/Overviews";
+import GuardrailsOverviews from "@/components/agent-studio/guardrails/GuardrailsOverview";
 
 const toolsData = {
-  id: "web-search",
-  name: "Web Search",
-  description: "Search the web for current information",
-  status: "active",
-  variant: "light",
+  id: "content-safety",
+  name: "Content Safety",
+  description: "Prevents harmful or inappropriate content generation",
 };
+
+
 
 const items = [
   {
@@ -24,7 +25,7 @@ const items = [
     value: "overview",
     label: "Overview",
     name: "Overview",
-    render: () => <Overviews />,
+    render: () => <GuardrailsOverviews />,
   },
   {
     id: "configuration",
@@ -32,15 +33,15 @@ const items = [
     label: "Configuration",
     name: "Configuration",
     render: () => (
-      <EmptyCard children={"Models configuration coming soon..."} />
+      <EmptyCard children={"Coming soon..."} />
     ),
   },
   {
-    id: "usage",
-    value: "usage",
-    label: "Usage",
-    name: "Usage",
-    render: () => <EmptyCard children={"Tools usage coming soon..."} />,
+    id: "activity",
+    value: "activity",
+    label: "Activity",
+    name: "Activity",
+    render: () => <EmptyCard children={"Coming soon..."} />,
   },
 ];
 
@@ -54,7 +55,7 @@ export default function Page() {
           <div className="flex items-center justify-between">
             <div className="flex gap-3">
               <LeftArrowAnim link={"/agent-studio/tools"} />
-              <div>
+              <div className="space-y-1">
                 <h1 className="text-xl font-medium">{toolsData.name}</h1>
                 <p className="text-sm text-foreground/80 pl-0.5 dark:text-foreground">
                   {toolsData.description}
@@ -72,18 +73,6 @@ export default function Page() {
                     <Bin />
                   </div>
                   Delete
-                </Button>
-              </RippleButton>
-
-              <RippleButton>
-                <Button
-                  variant="outline"
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4">
-                    <AiGenerator />
-                  </div>
-                  Test
                 </Button>
               </RippleButton>
 
@@ -105,6 +94,8 @@ export default function Page() {
           // ctx={ctx}
           defaultValue="overview"
         />
+
+       
       </ScaleDown>
     </div>
   );

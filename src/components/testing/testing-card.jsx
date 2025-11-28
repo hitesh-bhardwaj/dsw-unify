@@ -9,13 +9,22 @@ import { AiGenerator } from "../Icons";
 import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { RippleButton } from "../ui/ripple-button";
+import { Bin } from "../Icons";
 
 // Track which tests have already shown their skeleton
 const skeletonShownMap = new Map();
 
 export function TestingCard({ test, minSkeletonMs = 500 }) {
-  const { id, name, description, tags = [], tests, agent, lastrun, variant = "light" } =
-    test || {};
+  const {
+    id,
+    name,
+    description,
+    tags = [],
+    tests,
+    agent,
+    lastrun,
+    variant = "light",
+  } = test || {};
 
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this test before
@@ -57,8 +66,12 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
                       key={index}
                       variant="secondary"
                       className={cn(
-                        "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
-                        
+                        "rounded-full border px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background",
+
+                        // Conditional border color
+                        tag.color === "green" && "border-badge-green",
+                        tag.color === "orange" && "border-primary",
+                        tag.color === "red" && "border-red-500"
                       )}
                     >
                       {tag.label}
@@ -79,11 +92,22 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-badge-blue hover:bg-white group-hover:text-badge-blue dark:text-foreground"
+                  "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
                 )}
               >
                 <Eye />
               </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-red-500 hover:bg-white  dark:text-foreground dark:hover:text-black"
+                )}
+              >
+                <Bin />
+              </Button>
+
               <RippleButton>
                 <Button
                   variant="outline"
@@ -102,15 +126,15 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
         <CardContent>
           {/* Footer stats */}
           <div className="flex items-center justify-between text-sm py-4 group-hover:text-white">
-            <div className="flex items-center gap-1 text-black dark:text-white">
+            <div className="flex items-center gap-1 text-foreground/80">
               <span>{tests}</span>
               <span>tests</span>
             </div>
-            <div className="flex items-center text-black dark:text-white">
+            <div className="flex items-center text-foreground/80">
               <span>Agent:&nbsp;</span>
               <span>{agent}</span>
             </div>
-            <div className="flex items-center text-black dark:text-white">
+            <div className="flex items-center text-foreground/80">
               <span>Last run:&nbsp;</span>
               <span>{lastrun}</span>
             </div>

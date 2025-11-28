@@ -35,7 +35,7 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "var(--primary)",
+    color: "var(--badge-blue)",
   },
 };
 
@@ -52,8 +52,8 @@ const TestingGraph = ({tab}) => {
     <>
       <Card className={"!pb-0 bg-sidebar-accent"}>
         <CardHeader>
-          <CardTitle>Test Performance Over Time</CardTitle>
-          <CardDescription>
+          <CardTitle className='text-xl'>Test Performance Over Time</CardTitle>
+          <CardDescription className='text-xs text-foreground/80'>
             Success rates and response times for the last 30 days
           </CardDescription>
         </CardHeader>

@@ -18,13 +18,18 @@ const Breadcrumbs = () => {
   // Split pathname and filter out empty strings
   const segments = pathname.split('/').filter(segment => segment !== '')
   
-  // Function to format segment names (e.g., 'add-document' -> 'Add Document')
-  const formatSegment = (segment) => {
-    return segment
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ')
-  }
+const formatSegment = (segment) => {
+  const formatted = segment
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+
+  // Limit to 20 characters with ellipsis
+  return formatted.length > 20 
+    ? formatted.substring(0, 20) + "..."
+    : formatted
+}
+
   
   // Build breadcrumb items
   const breadcrumbItems = segments.map((segment, index) => {

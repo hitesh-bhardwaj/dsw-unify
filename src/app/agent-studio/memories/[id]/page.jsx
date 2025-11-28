@@ -9,7 +9,7 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
-import Overviews from "@/components/memories/Overviews";
+import Overviews from "@/components/agent-studio/memories/Overviews";
 
 const toolsData = {
   id: "user-preference",

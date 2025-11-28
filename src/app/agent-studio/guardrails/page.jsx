@@ -55,7 +55,6 @@ export default function GuardrailsPage() {
   const [query, setQuery] = useState("");
           const [isModalOpen, setIsModalOpen] = useState(false);
 
-
   const filteredGuardrails = guardrails.filter((guardrail) =>
     guardrail.name.toLowerCase().includes(query.toLowerCase())
   );
