@@ -131,7 +131,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
       label: "Data Source",
       render: () => (
         <motion.div
-          className="flex flex-col space-y-6"
+          className="flex flex-col space-y-4"
           variants={slide}
           initial="initial"
           animate="animate"
@@ -140,7 +140,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
           {/* INPUT FIELDS */}
           <div className="flex flex-col gap-3">
             <label className="text-sm text-foreground">
-              Knowledge Base Name*
+              Knowledge Base Name
             </label>
             <Input
               value={kbName}
@@ -161,7 +161,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               value={description}
               placeholder="Describe what this knowledge base contains..."
               onChange={(e) => setDescription(e.target.value)}
-              className={`border placeholder:text-xs h-32 placeholder:text-foreground/80 ${
+              className={`border placeholder:text-xs h-28 placeholder:text-foreground/80 ${
                 errors.description ? "border-red-500" : "border-foreground/20"
               }`}
             />
@@ -221,7 +221,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[80%] h-[80%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 py-6">
+      <DialogContent className="w-[50%] h-[90%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 py-6">
         <DialogHeader className="justify-center pb-4">
           <DialogTitle className="text-2xl font-medium">
             Add Knowledge Base

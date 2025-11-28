@@ -43,14 +43,14 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
 
   return (
     <Bounce>
-      <Link href={`/#`} className="block  h-full">
+      <Link href={`/agent-studio/knowledge-bases/${id}`} className="block  h-full">
         <Card
           className={cn(
             "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full   ",
           )}
         >
           <CardHeader>
-            <div className="flex items-start justify-between">
+            <div className="flex items-end gap-3">
               {/* Icon */}
               <div
                 className={cn(
@@ -77,8 +77,8 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
                 className={cn(
                   "rounded-full px-3 py-1 text-xs font-medium",
                   status === "active"
-                    ? "bg-badge-green text-white"
-                    : "bg-badge-sea-green text-white px-4 opacity-[0.8]"
+                    ? "text-foreground border border-badge-green bg-transparent"
+                    : "text-foreground px-4 border border-badge-sea-green bg-transparent"
                 )}
               >
                 {status === "active" ? "Synced" : "Syncing"}
@@ -100,7 +100,7 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 dark:group-hover:bg-background duration-500 ease-out bg-sidebar-accent border-border-color-2 border"
+                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 dark:group-hover:bg-background duration-500 ease-out border-border-color-2 border"
               )}
             >
               <div className="flex flex-col items-start gap-1 font-medium">
