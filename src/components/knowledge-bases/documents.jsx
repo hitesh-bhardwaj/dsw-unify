@@ -83,9 +83,6 @@ export default function Documents() {
                <span>{item.time}</span>
                </p>
                 </div>
-
-
-             
             </div>
             <div className="">
                 <Download className="w-5"/>

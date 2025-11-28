@@ -17,6 +17,7 @@ import Link from "next/link";
 import { RefreshCcw } from "lucide-react";
 import Activity from "@/components/knowledge-bases/activity";
 import Settings from "@/components/knowledge-bases/settings";
+import StorageStrategy from "@/components/knowledge-bases/storage-strategy";
 
 export default function KnowledgeBaseDetailPage({ params }) {
   const { id } = use(params);
@@ -61,7 +62,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
       label: "Storage Strategy",
       name: "Storage Strategy",
       render: () => (
-        <EmptyCard children={"Usage Metric configuration coming soon..."} />
+        <StorageStrategy/>
       ),
     },
     {
