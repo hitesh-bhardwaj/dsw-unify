@@ -96,8 +96,8 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
+                  "hover:bg-white dark:hover:bg-accent duration-500 ease-out"
                 )}
               >
                 <Editor />

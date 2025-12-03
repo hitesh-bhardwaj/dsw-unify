@@ -95,7 +95,7 @@ export function TestingCardResults({ test ,tab}) {
               <div className="flex items-center justify-between text-sm font-medium">
                 <div className="space-x-1">
                   <span className="text-primary">Tests:</span>
-                  <span className="">{tests}</span>
+                  <span className="group-hover:text-foreground ">{tests}</span>
                 </div>
                 <div className="space-x-1 ">
                   <span className="text-primary">

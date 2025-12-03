@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { SynthWave } from "@/components/Icons";
+import { CreateManuallyIcon, RegenerateIcon, SynthWave } from "@/components/Icons";
 import StepFormModal from "@/components/common/StepModalForm";
 import BasicInfo from "./ViewsStepForm/BasicInfo";
 import SelectTables from "./ViewsStepForm/SelectTables";
@@ -80,14 +80,14 @@ export default function ViewsModal({ open, onOpenChange, onSelect }) {
       title: "Auto Create Features",
       description:
         "Quickly generate features by selecting tables. Our system will automatically create features from all columns.",
-      icon: <SynthWave className="w-6 h-6 text-primary" />,
+      icon: <RegenerateIcon className="w-6 h-6 text-foreground" />,
     },
     {
       id: "manual",
       title: "Create Manually",
       description:
         "Full control over feature creation. Select specific columns, define joins, and apply transformations.",
-      icon: <SynthWave className="w-6 h-6 text-primary" />,
+      icon: <CreateManuallyIcon className="w-6 h-6 text-foreground" />,
     },
   ];
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { SynthWave } from "@/components/Icons";
+import { ActiveIcon, Calendar, DocumentIcon, FeaturesIcon, FeatureTransformationIcon, SynthWave, TablesIcon } from "@/components/Icons";
 
 const Overview = ({
   description,
@@ -25,7 +25,7 @@ const Overview = ({
           <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-color-2">
             <div className=" p-4 flex gap-4 items-center">
               <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <SynthWave />
+                <FeaturesIcon/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Features</div>
@@ -35,7 +35,7 @@ const Overview = ({
 
             <div className=" p-4 flex gap-4 items-center">
               <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <SynthWave />
+                <TablesIcon/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Tables</div>
@@ -45,7 +45,7 @@ const Overview = ({
 
             <div className=" p-4 flex gap-4 items-center">
               <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <SynthWave />
+               <FeatureTransformationIcon/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">
@@ -71,7 +71,7 @@ const Overview = ({
           <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-color-2">
             <div className=" p-4 flex gap-4 items-center">
               <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <SynthWave />
+                <DocumentIcon/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Created</div>
@@ -81,7 +81,7 @@ const Overview = ({
 
             <div className=" p-4 flex gap-4 items-center">
               <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <SynthWave />
+               <Calendar/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Last Modified</div>
@@ -93,7 +93,7 @@ const Overview = ({
 
             <div className=" p-4 flex gap-4 items-center">
               <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <SynthWave />
+                <ActiveIcon/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Status</div>

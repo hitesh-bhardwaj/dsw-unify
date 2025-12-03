@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People } from "../Icons";
+import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People, DataEngineeringIcon } from "../Icons";
 const skeletonShownMap = new Map();
 import Link from "next/link";
 export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
@@ -148,8 +148,8 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
             )}
           >
             <div className="flex items-center gap-2 ">
-              <div className="w-4 h-4">
-                <Calendar className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
+              <div className="w-4 h-4 text-primary">
+                <DataEngineeringIcon className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
               </div>
               <span className=" text-foreground text-xs">{models} models</span>
             </div>

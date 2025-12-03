@@ -94,7 +94,7 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
     value: "history",
     label: "History",
     name: "History",
-    render: () => <EmptyCard>No History is available at this point</EmptyCard>,
+    render: () => <EmptyCard>Version History coming soon.</EmptyCard>,
   },
 ];
 
@@ -142,8 +142,8 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
+                    "hover:bg-white dark:hover:bg-accent  duration-500 ease-out"
                   )}
                 >
                   <Editor />

@@ -1,6 +1,6 @@
 "use client";
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon } from "@/components/Icons";
+import { PlusIcon, UseCasesIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -14,7 +14,7 @@ const Features = [
     id: 1,
     slug: 'claims-fraud-detection',
     name: "Claims Fraud Detection",
-    icon: SynthWave,
+    icon: UseCasesIcon,
     description:
       "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
     tags: ["claims", "fraud detection", "auto insurance"],
@@ -28,7 +28,7 @@ const Features = [
     id: 2,
     name: "Risk Assessment & Underwriting",
     slug:'risk-assessment-underwriting',
-    icon: SynthWave,
+    icon: UseCasesIcon,
     description:
       "Automated risk scoring and premium calculation for policy underwriting decisions",
     tags: ["claims", "history", "fraud"],
@@ -43,7 +43,7 @@ const Features = [
     id: 3,
     name: "Customer Churn Prediction",
     slug:'customer-churn-prediction',
-    icon: SynthWave,
+    icon: UseCasesIcon,
     description:
       "Predict policyholder churn and identify retention opportunities across all lines of business",
     tags: ["policy", "coverage", "premium"],
@@ -58,7 +58,7 @@ const Features = [
     id: 4,
     name: "Claims Processing Automation",
     slug:'claims-processing-automation',
-    icon: SynthWave,
+    icon: UseCasesIcon,
     description:
       "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
     tags: ["auto", "vehicle", "risk"],
@@ -73,7 +73,7 @@ const Features = [
     id: 5,
     name: "Subrogation Recovery",
     slug:'subrogation-recovery',
-    icon: SynthWave,
+    icon: UseCasesIcon,
     description:
       "Automated risk scoring and premium calculation for policy underwriting decisions",
     tags: ["claims", "history", "fraud"],
@@ -87,7 +87,7 @@ const Features = [
     id: 6,
     name: "Premium Pricing Optimization",
     slug:'premium-pricing-ptimization',
-    icon: SynthWave,
+    icon: UseCasesIcon,
     description:
       "Predict policyholder churn and identify retention opportunities across all lines of business",
     tags: ["policy", "coverage", "premium"],
@@ -101,8 +101,7 @@ const Features = [
     id: 7,
     name: "Natural Catastrophe Modeling",
     slug: "natural-catastrophe-modeling",
-
-    icon: SynthWave,
+    icon: UseCasesIcon,
     description:
       "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
     tags: ["claims", "fraud detection", "auto insurance"],

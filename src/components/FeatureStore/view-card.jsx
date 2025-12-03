@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout } from "../Icons";
+import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, FeaturesIcon, TablesIcon } from "../Icons";
 import ViewsCardModal from "./feature-view/ViewsModalCard";
 
 const skeletonShownMap = new Map();
@@ -91,8 +91,8 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
+                  "hover:bg-white dark:hover:bg-accent  duration-500 ease-out"
                 )}
               >
                 <Editor />
@@ -147,14 +147,16 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
             )}
           >
             <div className="flex items-center gap-2 ">
-              <div className="w-4 h-4">
-                <Calendar className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
+              <div className="w-5 h-5">
+                {/* <Calendar className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " /> */}
+                <FeaturesIcon className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground"/>
               </div>
               <span className=" text-foreground text-xs">{featureNo} features</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4">
-                <FileTimeout className="text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " />
+              <div className="w-5 h-5">
+                {/* <FileTimeout className="text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " /> */}
+                <TablesIcon className="text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground "/>
               </div>
               <span className=" text-foreground text-xs">{tablesCount} tables</span>
             </div>

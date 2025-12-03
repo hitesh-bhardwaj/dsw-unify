@@ -1,6 +1,6 @@
 "use client"
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon } from "@/components/Icons";
+import { DefineUseCasesIcon, PlusIcon, SelectDataIcon, TrainAndDeployIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -16,21 +16,21 @@ import { QuickCards } from "@/components/AIstudio/QuickCards";
 
 const quickFeatures = [
   {
-    icon: SynthWave,
+    icon: DefineUseCasesIcon,
     title: "Define Your Use Case",
     description:
       "Start by creating a use case to organize your AI models and track business objectives",
     href: "#",
   },
   {
-    icon: DataExplorerIcon,
+    icon: SelectDataIcon,
     title: "Select Data",
     description:
       "Select your data sources and automatically create features with our guided wizard",
     href: "#",
   },
   {
-    icon: DataVisualizationIcon,
+    icon: TrainAndDeployIcon,
     title: "Train & Deploy",
     description:
       "Configure training parameters and let AutoML train and deploy your model automatically",

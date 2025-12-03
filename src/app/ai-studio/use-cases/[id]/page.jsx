@@ -5,7 +5,7 @@ import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
-import { SynthWave } from "@/components/Icons";
+import { DataEngineeringIcon, SynthWave } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import UsecaseInternalCard from "@/components/usecases/UsecaseInternalCard";
 import SearchBar from "@/components/search-bar";
@@ -67,7 +67,7 @@ const page = () => {
       id: 1,
       ModelSlug:'fraud-detector',
       name: "Fraud Detector",
-      icon: SynthWave,
+      icon: DataEngineeringIcon,
       description:
         "Advanced fraud detection using ensemble methods and anomaly detection",
       tags: ["fraud", "classification", "ensemble"],
@@ -83,7 +83,7 @@ const page = () => {
       name: "Claims Anomaly Detector",
     ModelSlug:'claims-anomaly-etector',
 
-      icon: SynthWave,
+      icon: DataEngineeringIcon,
       description:
         "Unsupervised anomaly detection for suspicious claim patterns",
       ModelSlug:'unsupervised-anomaly-detection-for-suspicious-claim-patterns',
@@ -99,7 +99,7 @@ const page = () => {
       id: 3,
       name: "Fraud Risk Scorer",
       ModelSlug:'fraud-risk-scorer',
-      icon: SynthWave,
+      icon: DataEngineeringIcon,
       description: "Risk scoring model for fraud probability assessment",
       tags: ["anomaly detection", "unsupervised"],
       versions: 4,
@@ -112,7 +112,7 @@ const page = () => {
     {
       id: 4,
       name: "Pattern Recognition Model",
-      icon: SynthWave,
+      icon: DataEngineeringIcon,
       ModelSlug:'pattern-recognition-model',
       description: "Pattern recognition for identifying fraud indicators",
       tags: ["pattern recognition", "deep learning"],

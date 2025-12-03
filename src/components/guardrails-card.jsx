@@ -11,7 +11,7 @@ import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
 export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
-  const {id, name, description, status, tags = [], triggers } = memories || {};
+  const {id, name, description, status, tags = [], triggers ,icon} = memories || {};
 
   // Keep skeleton visible for at least `minSkeletonMs`
  const [showSkeleton, setShowSkeleton] = useState(() => {
@@ -49,10 +49,10 @@ export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-3.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
-                  <SynthWave />
+                  {icon}
                 </span>
                 <span
                   className={cn(

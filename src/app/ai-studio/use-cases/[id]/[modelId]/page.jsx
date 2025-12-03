@@ -5,13 +5,12 @@ import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
-import { SynthWave } from "@/components/Icons";
+import {VersionsIcon } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import VersionUsecaseCard from "@/components/usecases/VersionUsecaseCard";
 import SearchBar from "@/components/search-bar";
-
 import { Badge } from "@/components/ui/badge";
-import { EditIcon, PlusIcon, Tune } from "@/components/Icons";
+import {PlusIcon, Tune } from "@/components/Icons";
 import Link from "next/link";
 import CardDetails from "@/components/CardDetails";
 
@@ -23,7 +22,7 @@ const page = () => {
     id: 1,
     name: "V3",
     versionSlug:'version-3',
-    icon: SynthWave,
+    icon: VersionsIcon,
     description: "Latest version with improved ensemble methods and feature engineering",
     tags: ["fraud", "classification", "ensemble"],
     versions: 3,
@@ -38,7 +37,7 @@ const page = () => {
     id: 2,
     name: "V2",
     versionSlug:'version-2',
-    icon: SynthWave,
+    icon: VersionsIcon,
     description: "Previous production version with gradient boosting",
     tags: ["fraud", "classification"],
     versions: 2,
@@ -53,7 +52,7 @@ const page = () => {
     id: 3,
     name: "V1",
     versionSlug:'version-1',
-    icon: SynthWave,
+    icon: VersionsIcon,
     description: "Initial version with basic random forest classifier",
     tags: ["fraud", "classification", "baseline"],
     versions: 1,

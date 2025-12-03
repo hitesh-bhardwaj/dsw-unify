@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon, Tune, SynthWave } from "@/components/Icons";
+import { PlusIcon, Tune, FeatureTransformationIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -17,7 +17,7 @@ const Features = [
   {
     id: 1,
     name: "Calculate Age from DOB",
-    icon: SynthWave,
+    icon: FeatureTransformationIcon,
     description: "Calculates age in years from date of birth",
     tags: ["demographics", "age"],
     inputParams: [
@@ -44,7 +44,7 @@ const Features = [
   {
     id: 2,
     name: "One-Hot Encoding",
-    icon: SynthWave,
+    icon: FeatureTransformationIcon,
     description: "Converts categorical variable into binary columns",
     tags: ["encoding", "categorical"],
     inputParams: [
@@ -73,7 +73,7 @@ return encoded`,
   {
     id: 3,
     name: "Rolling Average 7 Days",
-    icon: SynthWave,
+    icon: FeatureTransformationIcon,
     description: "Calculates 7-day rolling average for time series data",
     tags: ["timeseries", "aggregation"],
     inputParams: [
@@ -100,7 +100,7 @@ return encoded`,
   {
     id: 4,
     name: "Sum Aggregation",
-    icon: SynthWave,
+    icon: FeatureTransformationIcon,
     description: "Calculates sum of values grouped by key",
     tags: ["aggregation", "sum"],
     codeExamples: `SELECT  

@@ -1,41 +1,39 @@
 "use client";
 import React, { useState } from "react";
-// import { SectionHeader } from "@/components/Home/section-header";
-// import { FeatureCard } from "@/components/Home/feature-card";
 import { ScaleDown } from "@/components/animations/Animations";
 import SearchBar from "@/components/search-bar";
 import {
   SynthWave,
-  DataExplorerIcon,
-  DataVisualizationIcon,
-  DataValidationIcon,
+  RelationalDataIcon,
+  StreamingDataIcon,
+  ObjectStoreIcon,
 } from "@/components/Icons";
 import { SectionHeader } from "@/components/home/section-header";
 import { FeatureCard } from "@/components/home/feature-card";
 
 const dataEngineeringFeatures = [
   {
-    icon: SynthWave,
+    icon: RelationalDataIcon,
     title: "Relational Data",
     description:
       "Ingest data from SQL databases like PostgreSQL, MySQL, and Oracle",
     href: "/data-engineering/ingestion",
   },
   {
-    icon: DataExplorerIcon,
+    icon: SynthWave,
     title: "Graph Data",
     description:
       "Ingest graph data from Neo4j, Amazon Neptune, and other graph stores",
     href: "/data-engineering/explorer",
   },
   {
-    icon: DataVisualizationIcon,
+    icon: StreamingDataIcon,
     title: "Streaming Data",
     description: "Ingest real-time data from Kafka, Kinesis, and event streams",
     href: "/data-engineering/visualization",
   },
   {
-    icon: DataValidationIcon,
+    icon: ObjectStoreIcon,
     title: "Object Store",
     description:
       "Ingest files from S3, Azure Blob, Google Cloud Storage, and more",

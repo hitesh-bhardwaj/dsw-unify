@@ -36,7 +36,7 @@ export default function Explainability() {
             playKey={item.value} 
             className="w-full"
             trackClassName="w-full bg-gray-200 h-2 rounded-full relative overflow-hidden"
-            barClassName="bg-[#FF6A00] h-full absolute top-0 left-0 z-[5] rounded-full"
+            barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
           />
         </div>
       ))}

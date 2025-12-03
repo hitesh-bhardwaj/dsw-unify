@@ -50,7 +50,7 @@ const TestingGraph = ({tab}) => {
     }, [tab]);
   return (
     <>
-      <Card className={"!pb-0 bg-sidebar-accent"}>
+      <Card className={"!pb-0"}>
         <CardHeader>
           <CardTitle className='text-xl'>Test Performance Over Time</CardTitle>
           <CardDescription className='text-xs text-foreground/80'>

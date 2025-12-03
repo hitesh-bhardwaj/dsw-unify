@@ -54,7 +54,7 @@ export default function Page() {
         <div className="bg-background pb-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-3">
-              <LeftArrowAnim link={"/agent-studio/tools"} />
+              <LeftArrowAnim link={"/agent-studio/guardrails"} />
               <div className="space-y-1">
                 <h1 className="text-xl font-medium">{toolsData.name}</h1>
                 <p className="text-sm text-foreground/80 pl-0.5 dark:text-foreground">

@@ -1,6 +1,6 @@
 "use client";
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon } from "@/components/Icons";
+import { FeatureServicesIcon, PlusIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -13,7 +13,7 @@ const Features = [
   {
     id: 1,
     name: "Claims Fraud Detection Service",
-    icon: SynthWave,
+    icon: FeatureServicesIcon,
     description:
       "Demographic features including age, location, credit score, marital status, and employment",
     tags: ["demographics", "policyholder", "underwriting"],
@@ -26,7 +26,7 @@ const Features = [
   {
     id: 2,
     name: "Risk Assessment Service",
-    icon: SynthWave,
+    icon: FeatureServicesIcon,
     description:
       "Historical claims features with aggregations including claim frequency, amounts, and types",
     tags: ["claims", "history", "fraud"],
@@ -38,7 +38,7 @@ const Features = [
   {
     id: 3,
     name: "Customer Churn Prediction Service",
-    icon: SynthWave,
+    icon: FeatureServicesIcon,
     description:
       "Policy-level features including coverage amounts, deductibles, premiums, and policy tenure",
     tags: ["policy", "coverage", "premium"],
@@ -50,7 +50,7 @@ const Features = [
   {
     id: 4,
     name: "Premium Pricing Service",
-    icon: SynthWave,
+    icon: FeatureServicesIcon,
     description:
       "Auto insurance vehicle features including make, model, year, mileage, and safety ratings",
     tags: ["auto", "vehicle", "risk"],
@@ -63,7 +63,7 @@ const Features = [
   {
     id: 5,
     name: "Auto Insurance Underwriting Service",
-    icon: SynthWave,
+    icon: FeatureServicesIcon,
     description:
       "Home insurance property features including type, age, construction, location risk, and security",
     tags: ["property", "home", "risk"],
@@ -76,7 +76,7 @@ const Features = [
    {
     id: 6,
     name: "Home Insurance Underwriting Service",
-    icon: SynthWave,
+    icon: FeatureServicesIcon,
     description:
       "Comprehensive risk assessment features including driving record, credit score, and location hazards",
     tags: ["risk", "underwriting", "assessment"],

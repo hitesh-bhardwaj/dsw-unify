@@ -1,34 +1,32 @@
 "use client";
 import React, { useState } from "react";
-// import { SectionHeader } from "@/components/Home/section-header";
-// import { FeatureCard } from "@/components/Home/feature-card";
 import { ScaleDown } from "@/components/animations/Animations";
 import SearchBar from "@/components/search-bar";
 import {
   SynthWave,
-  DataExplorerIcon,
-  DataVisualizationIcon,
+  RelationalVectorDataIcon,
+  ObjectStorageIcon,
 } from "@/components/Icons";
 import { FeatureCard } from "@/components/home/feature-card";
 import { SectionHeader } from "@/components/home/section-header";
 
 const dataEngineeringFeatures = [
   {
-    icon: SynthWave,
+    icon: RelationalVectorDataIcon,
     title: "Relational & Vector Data",
     description:
       "Explore SQL databases and vector embeddings with powerful query tools",
     href: "/data-engineering/ingestion",
   },
   {
-    icon: DataExplorerIcon,
+    icon: SynthWave,
     title: "Graph Data",
     description:
       "Visualize and explore graph relationships and network structures",
     href: "/data-engineering/explorer",
   },
   {
-    icon: DataVisualizationIcon,
+    icon: ObjectStorageIcon,
     title: "Object Storage",
     description: "Browse and analyze files stored in cloud object storage",
     href: "/data-engineering/visualization",

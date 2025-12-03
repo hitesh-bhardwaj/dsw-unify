@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusIcon } from "@/components/Icons";
+import { GuardrailsIcon, PlusIcon } from "@/components/Icons";
 import { GuardrailsCard } from "@/components/guardrails-card";
 import SearchBar from "@/components/search-bar";
 // import { FadeUp } from "@/components/animations/Animations";
@@ -17,6 +17,7 @@ const guardrails = [
     name: "Content Safety",
     description: "Prevents harmful or inappropriate content generation",
     status: "active",
+    icon:<GuardrailsIcon/>,
     tags: [
       { label: "output", color: "yellow" },
       { label: "high", color: "blue" },
@@ -29,6 +30,7 @@ const guardrails = [
     name: "PII Detection",
     description: "Detects and blocks personally identifiable information",
     status: "active",
+        icon:<GuardrailsIcon/>,
     tags: [
       { label: "input", color: "yellow" },
       { label: "high", color: "blue" },
@@ -41,6 +43,7 @@ const guardrails = [
     name: "Toxicity Filter",
     description: "Filters toxic language and hate speech",
     status: "active",
+       icon:<GuardrailsIcon/>,
     tags: [
       { label: "both", color: "yellow" },
       { label: "medium", color: "blue" },

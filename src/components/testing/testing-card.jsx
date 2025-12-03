@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { AiGenerator } from "../Icons";
+import { AiGenerator, RunTestsIcon } from "../Icons";
 import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { RippleButton } from "../ui/ripple-button";
@@ -114,7 +114,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
                   className="gap-2 text-white bg-primary !border-none duration-300 ease-out dark:hover:bg-primary "
                 >
                   <div className="!w-4">
-                    <AiGenerator />
+                    <RunTestsIcon/>
                   </div>
                   Run Tests
                 </Button>

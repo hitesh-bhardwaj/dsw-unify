@@ -1,5 +1,5 @@
 import React from "react";
-import { SynthWave } from "@/components/Icons";
+import { Calendar, DocumentIcon, SynthWave } from "@/components/Icons";
 import {
   Table,
   TableBody,
@@ -60,7 +60,7 @@ export default function DetailsTab({
       <div className="w-full flex items-center justify-between text-sm text-foreground/80 pt-4">
         <div className="flex gap-4 items-center ">
           <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-            <SynthWave />
+            <DocumentIcon/>
           </div>
           <div>
             <p className="font-medium text-xs">Created</p>
@@ -71,7 +71,7 @@ export default function DetailsTab({
         </div>
         <div className="flex gap-4 items-center ">
           <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent  p-3">
-            <SynthWave />
+          <Calendar/>
           </div>
           <div>
             <p className="font-medium text-xs">Last Modified</p>

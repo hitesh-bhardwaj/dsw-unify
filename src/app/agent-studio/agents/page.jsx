@@ -172,7 +172,7 @@ export default function AgentsPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <RadioTabs
+          {/* <RadioTabs
             items={[
               { id: "prompts", label: "Prompts", icon: PromptsIcon },
               { id: "templates", label: "Templates", icon: TemplatesIcon },
@@ -183,7 +183,7 @@ export default function AgentsPage() {
             inactiveClassName="border-transparent dark:text-foreground text-black/70"
             dotColorClassName="bg-[#FF5722]"
             equalWidth={true}
-          />
+          /> */}
         </div>
         <div className="flex-1 pt-0 px-6 h-fit w-full relative">
           <div

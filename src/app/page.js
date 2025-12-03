@@ -11,18 +11,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 
 import SearchBar from "@/components/search-bar";
+import { Workflow} from "lucide-react";
 import {
-  Wand2,
-  Eye,
-  Boxes,
-  Briefcase,
-  Cpu,
-  Activity,
-  Zap,
-  Workflow,
-} from "lucide-react";
-import {
-  AgentsIcon,
   PromptsIcon,
   LLMsIcon,
   KnowledgeBaseIcon,
@@ -30,10 +20,17 @@ import {
   MemoriesIcon,
   GuardrailsIcon,
   TestingIcon,
-  SynthWave,
   DataExplorerIcon,
   DataVisualizationIcon,
   DataValidationIcon,
+  DataIngestionIcon2,
+  FeatureTransformationIcon,
+  FeatureViewsIcon,
+  FeatureServicesIcon,
+  UseCasesIcon,
+  MonitoringIcon,
+  InferenceIcon,
+  AgentStudioIcon,
 } from "@/components/Icons";
 import { SectionHeader } from "@/components/home/section-header";
 import { MetricCard } from "@/components/home/metric-card";
@@ -142,7 +139,7 @@ const metricsData = [
 // Feature sections data
 const dataEngineeringFeatures = [
   {
-    icon: SynthWave,
+    icon: DataIngestionIcon2,
     title: "Data Ingestion",
     description:
       "Import and process data from multiple sources with automated validation and transformation pipelines",
@@ -173,21 +170,21 @@ const dataEngineeringFeatures = [
 
 const featureStoreFeatures = [
   {
-    icon: Wand2,
+    icon: FeatureTransformationIcon,
     title: "Feature Transformations",
     description:
       "Build reusable transformation library for feature engineering workflows",
     href: "/feature-store/transformations",
   },
   {
-    icon: Eye,
+    icon: FeatureViewsIcon,
     title: "Feature Views",
     description:
       "Create and manage feature views from tables with transformations and logical grouping",
     href: "/feature-store/views",
   },
   {
-    icon: Boxes,
+    icon: FeatureServicesIcon,
     title: "Feature Services",
     description:
       "Combine feature views into services for model consumption and deployment",
@@ -197,27 +194,27 @@ const featureStoreFeatures = [
 
 const aiStudioFeatures = [
   {
-    icon: Briefcase,
+    icon: UseCasesIcon,
     title: "Use Cases",
     description:
       "Browse and manage ML use cases with their associated models and workflows",
     href: "/usecases",
   },
   {
-    icon: Cpu,
+    icon: DataValidationIcon,
     title: "Model Development",
     description: "Access Jupyter IDE for model development and experimentation",
     href: "/ai-studio/development",
   },
   {
-    icon: Activity,
+    icon: MonitoringIcon,
     title: "Monitoring",
     description:
       "Real-time monitoring, drift detection, and performance tracking for deployed models",
     href: "/ai-studio/monitoring",
   },
   {
-    icon: Zap,
+    icon: InferenceIcon,
     title: "Inference",
     description:
       "Run model inference directly from the GUI with batch and real-time options",
@@ -227,7 +224,7 @@ const aiStudioFeatures = [
 
 const agentStudioFeatures = [
   {
-    icon: AgentsIcon,
+    icon: AgentStudioIcon,
     title: "Agents",
     description: "Build, deploy, and manage your AI agents",
     href: "/agents",

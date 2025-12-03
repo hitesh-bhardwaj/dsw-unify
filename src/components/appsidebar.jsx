@@ -35,6 +35,21 @@ import {
   TestingIcon,
   ToolsIcon,
   AIStudioIcon,
+  AgentStudioIcon,
+  WorkFlowBuilderIcon,
+  SettingIcon,
+  SettingsIcon,
+  DataIngestionIcon2,
+  DataVisualizationIcon,
+  DataValidationIcon,
+  FeatureTransformationIcon,
+  FeatureViewsIcon,
+  FeatureServicesIcon,
+  QuickStartIcon,
+  UseCasesIcon,
+  InferenceIcon,
+  MonitoringIcon,
+  ModelDevelopmentIcon,
 } from "./Icons";
 import {
   Collapsible,
@@ -58,7 +73,7 @@ const navigation = [
       {
         name: "Data Ingestion",
         href: "/data-engineering/data-ingestion",
-        icon: DataIngestionIcon,
+        icon: DataIngestionIcon2,
       },
       {
         name: "Data Explorer",
@@ -67,13 +82,13 @@ const navigation = [
       },
       {
         name: "Data Visualization",
-        href: "/data-engineering/data-visualization",
-        icon: DataExplorerIcon,
+        href: "/#",
+        icon: DataVisualizationIcon,
       },
       {
         name: "Data Validation",
-        href: "/data-engineering/data-validation",
-        icon: DataExplorerIcon,
+        href: "/#",
+        icon: DataValidationIcon,
       },
     ],
   },
@@ -85,17 +100,17 @@ const navigation = [
       {
         name: "Feature Transformations",
         href: "/feature-store/feature-transformations",
-        icon: DataIngestionIcon,
+        icon: FeatureTransformationIcon,
       },
       {
         name: "Feature Views",
         href: "/feature-store/feature-views",
-        icon: DataExplorerIcon,
+        icon: FeatureViewsIcon,
       },
       {
         name: "Feature Services",
         href: "/feature-store/feature-services",
-        icon: DataExplorerIcon,
+        icon: FeatureServicesIcon,
       },
     ],
   },
@@ -107,39 +122,39 @@ const navigation = [
       {
         name: "Quick Start",
         href: "/ai-studio/quick-start",
-        icon: AIStudioIcon,
+        icon: QuickStartIcon,
       },
       {
         name: "Use Cases",
         href: "/ai-studio/use-cases",
-        icon: DataExplorerIcon,
+        icon: UseCasesIcon,
       },
       {
         name: "Model Development",
-        href: "/ai-studio/model-development",
-        icon: DataExplorerIcon,
+        href: "/#",
+        icon: ModelDevelopmentIcon,
       },
       {
         name: "Monitoring",
         href: "/ai-studio/monitoring",
-        icon: DataExplorerIcon,
+        icon: MonitoringIcon,
       },
       {
         name: "Inference",
         href: "/ai-studio/inference",
-        icon: DataExplorerIcon,
+        icon: InferenceIcon,
       },
     ],
   },
   {
   name: "Agent Studio",
   href: "/agent-studio",
-  icon: AgentsIcon,
+  icon: AgentStudioIcon,
   children: [
     {
       name: "Agents",
       href: "/agent-studio/agents",
-      icon: AgentsIcon,
+      icon: AgentStudioIcon,
     },
     {
       name: "Prompts",
@@ -190,8 +205,10 @@ const navigation = [
   // { name: "Memories", href: "/memories", icon: MemoriesIcon },
   // { name: "Guardrails", href: "/guardrails", icon: GuardrailsIcon },
   // { name: "Testing", href: "/testing", icon: TestingIcon },
-  { name: "Console", href: "/console", icon: AgentsIcon },
-  { name: "Use Cases", href: "/usecases", icon: PromptsIcon },
+  // { name: "Console", href: "/console", icon: AgentsIcon },
+  // { name: "Use Cases", href: "/usecases", icon: PromptsIcon },
+  { name: "Workflow Builder", href: "/#", icon: WorkFlowBuilderIcon },
+  { name: "Settings", href: "/#", icon: SettingsIcon },
 ];
 
 // Store animation state outside component to persist across renders

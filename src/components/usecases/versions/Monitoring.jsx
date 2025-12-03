@@ -25,7 +25,7 @@ const Monitoring = () => {
   ];
 
   const chartConfig = {
-    desktop: { label: "Desktop", color: "var(--primary)" },
+    desktop: { label: "Desktop", color: "var(--badge-blue)" },
   };
 
   const metrics = [

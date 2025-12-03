@@ -63,7 +63,7 @@ export default function AddTestings({ open, onOpenChange }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[80%] h-[80%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 pt-8">
+      <DialogContent className="w-[60%] h-[80%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 pt-8">
         <DialogHeader className="justify-center pb-4">
           <DialogTitle className="text-2xl font-medium">
             Create Test Suite

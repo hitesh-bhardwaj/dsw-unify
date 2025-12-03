@@ -1,12 +1,12 @@
 "use client";
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon } from "@/components/Icons";
+import { FeatureViewsIcon, PlusIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Tune, SynthWave } from "@/components/Icons";
+import { Tune} from "@/components/Icons";
 import { ViewCard } from "@/components/FeatureStore/view-card";
 import ViewsModal from "@/components/FeatureStore/feature-view/ViewsModal";
 
@@ -14,7 +14,7 @@ const Features = [
   {
     id: 1,
     name: "Policyholder Demographics",
-    icon: SynthWave,
+    icon: FeatureViewsIcon,
     description:
       "Demographic features including age, location, credit score, marital status, and employment",
     tags: ["demographics", "policyholder", "underwriting"],
@@ -27,7 +27,7 @@ const Features = [
   {
     id: 2,
     name: "Claims History",
-    icon: SynthWave,
+    icon: FeatureViewsIcon,
     description:
       "Historical claims features with aggregations including claim frequency, amounts, and types",
     tags: ["claims", "history", "fraud"],
@@ -41,7 +41,7 @@ const Features = [
   {
     id: 3,
     name: "Policy Details",
-    icon: SynthWave,
+    icon: FeatureViewsIcon,
     description:
       "Policy-level features including coverage amounts, deductibles, premiums, and policy tenure",
     tags: ["policy", "coverage", "premium"],
@@ -55,7 +55,7 @@ const Features = [
   {
     id: 4,
     name: "Vehicle Information",
-    icon: SynthWave,
+    icon: FeatureViewsIcon,
     description:
       "Auto insurance vehicle features including make, model, year, mileage, and safety ratings",
     tags: ["auto", "vehicle", "risk"],
@@ -69,7 +69,7 @@ const Features = [
   {
     id: 5,
     name: "Policy Details",
-    icon: SynthWave,
+    icon: FeatureViewsIcon,
     description:
       "Home insurance property features including type, age, construction, location risk, and security",
     tags: ["property", "home", "risk"],
@@ -82,7 +82,7 @@ const Features = [
    {
     id: 6,
     name: "Risk Factors",
-    icon: SynthWave,
+    icon: FeatureViewsIcon,
     description:
       "Comprehensive risk assessment features including driving record, credit score, and location hazards",
     tags: ["risk", "underwriting", "assessment"],
@@ -95,7 +95,7 @@ const Features = [
    {
     id: 7,
     name: "Payment History",
-    icon: SynthWave,
+    icon: FeatureViewsIcon,
     description:
       "Payment behavior features including frequency, late payments, and payment methods",
     tags: ["payment", "financial", "churn"],

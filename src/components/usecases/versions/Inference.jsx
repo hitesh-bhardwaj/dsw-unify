@@ -557,7 +557,7 @@ export default function Inference() {
                       {/* No Fraud (green) */}
                       <Bar
                         dataKey="noFraud"
-                        fill="#f76809"
+                        fill="#2563FB"
                         radius={[5, 5, 0, 0]}
                         barSize={28}
                         animationBegin={0}
@@ -569,7 +569,7 @@ export default function Inference() {
                       {/* Fraud (red) */}
                       <Bar
                         dataKey="fraud"
-                        fill="#f76809"
+                        fill="#A6C0FF"
                         radius={[5, 5, 0, 0]}
                         barSize={28}
                         animationBegin={0}
@@ -612,7 +612,7 @@ export default function Inference() {
                         playKey={item.value}
                         className="w-full"
                         trackClassName="w-full bg-sidebar-accent h-2 rounded-full relative overflow-hidden"
-                        barClassName="bg-[#FF6A00] h-full absolute top-0 left-0 z-[5] rounded-full"
+                        barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
                       />
                     </div>
                   ))}

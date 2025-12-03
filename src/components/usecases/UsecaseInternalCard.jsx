@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People } from "../Icons";
+import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People, FeaturesIcon, VersionsIcon } from "../Icons";
 
 const skeletonShownMap = new Map();
 
@@ -156,13 +156,13 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
           >
             <div className="flex items-center gap-2 ">
               <div className="w-4 h-4">
-                <Calendar className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
+                <VersionsIcon className="text-badge-blue  transition-all duration-500 ease-out dark:text-foreground " />
               </div>
               <span className=" text-foreground text-xs">{versions} Versions</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4">
-                <People className="text-badge-blue group-hover:text-badge-blue transition-all duration-500 ease-out dark:text-foreground " />
+                <FeaturesIcon className="text-primary transition-all duration-500 ease-out dark:text-foreground " />
               </div>
               <span className=" text-foreground text-xs">{features} features</span>
             </div>
