@@ -45,8 +45,8 @@ const guardrails = [
     status: "active",
        icon:<GuardrailsIcon/>,
     tags: [
-      { label: "both", color: "yellow" },
-      { label: "medium", color: "blue" },
+      { label: "api", color: "yellow" },
+      { label: "search", color: "blue" },
     ],
     triggers: "08",
     variant: "light",

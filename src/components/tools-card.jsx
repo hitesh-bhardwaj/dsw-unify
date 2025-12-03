@@ -39,11 +39,11 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/tools/${id}`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full",
+            "overflow-hidden gap-20 group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full",
           )}
         >
           <CardHeader>
-            <div className="flex items-start justify-between">
+            <div className="flex items-end justify-start gap-2">
               {/* Icon */}
              <div
                 className={cn(
@@ -90,19 +90,23 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
           </CardHeader>
 
           <CardContent>
+
+            <div className="border border-border-color-2 h-full w-full rounded-lg flex px-5  min-h-20 items-center">
+
             {/* Tags */}
-            <div className="mb-16 flex flex-wrap gap-1">
+            <div className=" h-fit flex flex-wrap gap-1">
               {tags.map((tag, index) => (
                 <Badge
-                  key={index}
-                  variant="secondary"
-                  className={cn(
-                    "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
-                  )}
+                key={index}
+                variant="secondary"
+                className={cn(
+                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                )}
                 >
                   {tag.label}
                 </Badge>
               ))}
+              </div>
             </div>
           </CardContent>
         </Card>

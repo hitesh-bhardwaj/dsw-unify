@@ -89,13 +89,19 @@ const Recent = [
   {
     content: "Mistral 7B Instruct deployment completed",
     recentActivity: "30 minutes ago",
+        color:'green',
+
   },
   {
     content: "GPT-4 Turbo deployment completed",
     recentActivity: "2 hours ago",
+        color:'green',
+
   },
-  { content: "Llama 2 7B deployment started", recentActivity: "4 hours ago" },
-  { content: "Custom Insurance Model retrained", recentActivity: "1 day ago" },
+  { content: "Llama 2 7B deployment started", recentActivity: "4 hours ago",   color:'green',
+ },
+  { content: "Custom Insurance Model retrained", recentActivity: "1 day ago",   color:'red',
+ },
 ];
 
 export default function LLMsPage() {
@@ -248,14 +254,8 @@ export default function LLMsPage() {
                     key={id}
                     className="w-full h-fit flex gap-6 items-center group "
                   >
-                    <div className="w-13 h-12">
-                      <span
-                        className={cn(
-                          "w-full h-full flex justify-center items-center p-3.5 text-foreground bg-sidebar-accent rounded-lg -mt-1"
-                        )}
-                      >
-                        <SynthWave />
-                      </span>
+                    <div className="w-3 h-3">
+                      <div className={`h-full w-full rounded-full ${recent.color==='green'? 'bg-badge-green': 'bg-red-500'}`} />
                     </div>
                     <div className="flex flex-col w-full">
                       <div className="w-full flex justify-between items-center pt-5 pb-8">

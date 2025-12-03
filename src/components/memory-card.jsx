@@ -37,11 +37,11 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/memories/${id}`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full"
+            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 gap-20 h-full"
           )}
         >
           <CardHeader>
-            <div className="flex items-start justify-between">
+            <div className="flex items-end justify-start gap-2">
               {/* Icon */}
              <div
                 className={cn(
@@ -88,8 +88,11 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
           </CardHeader>
 
           <CardContent>
+
+            <div className="border border-border-color-2 h-full w-full rounded-lg flex px-5 py-2  min-h-20  items-center">
+
             {/* Tags */}
-            <div className="mb-8 flex flex-wrap gap-1">
+            <div className=" flex flex-wrap gap-1">
               {tags.map((tag, index) => (
                 <Badge
                   key={index}
@@ -103,9 +106,8 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
                 </Badge>
               ))}
             </div>
-
-            {/* Footer stats */}
-            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4 bg-background border group-hover:bg-background  duration-500 ease-out ">
+            <div className="w-16 h-[0.2px] bg-border-color-3 rotate-90" />
+            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4   duration-500 ease-out ">
               <div className="flex flex-col items-start gap-1">
                 <span className="text-foreground font-medium text-lg">
                   {entries}
@@ -113,6 +115,11 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
                 <span className="text-gray-600 dark:text-foreground/60">Entries</span>
               </div>
             </div>
+                        </div>
+
+
+            {/* Footer stats */}
+            
           </CardContent>
         </Card>
       </Link>

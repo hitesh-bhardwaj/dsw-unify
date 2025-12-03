@@ -22,7 +22,7 @@ const tools = [
     status: "active",
     tags: [
       { label: "api", color: "yellow" },
-      { label: "api", color: "blue" },
+      { label: "search", color: "blue" },
     ],
     variant: "light",
   },

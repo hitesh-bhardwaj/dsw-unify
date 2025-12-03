@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { SynthWave } from "./Icons";
+import { TriggerIcon } from "./Icons";
 import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
@@ -33,14 +33,14 @@ export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
 
   return (
     <Bounce>
-      <Link href={`/agent-studio/guardrails/${id}`} className="block group h-full">
+      <Link href={`/agent-studio/guardrails/${id}`} className="block  h-full">
         <Card
           className={cn(
            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full"
           )}
         >
           <CardHeader>
-            <div className="flex items-start justify-between">
+            <div className="flex items-end justify-start gap-2">
               {/* Icon */}
              <div
                 className={cn(
@@ -87,8 +87,11 @@ export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
           </CardHeader>
 
           <CardContent>
+
+          <div className="border border-border-color-2 h-full w-full rounded-lg flex px-5 py-2  min-h-20  items-center">
+
             {/* Tags */}
-            <div className="mb-8 flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1">
               {tags.map((tag, index) => (
                 <Badge
                   key={index}
@@ -102,13 +105,23 @@ export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
                 </Badge>
               ))}
             </div>
+                        <div className="w-16 h-[0.2px] bg-border-color-3 rotate-90" />
+                         <div className="flex  items-center justify-between  text-sm py-5  transition-all duration-500 ease-out">
+              <div className="flex justify-between gap-1 flex-col w-full">
+                <div className="flex gap-2">
+
+                  <TriggerIcon className='w-6 h-6' />
+
+                <span className="text-foreground font-medium">{triggers}</span>
+                </div>
+                   <span className="text-gray-600 dark:text-foreground/60">Triggers Today</span>
+
+              </div>
+
+            </div>
 
             {/* Footer stats */}
-            <div className="flex items-center justify-between rounded-lg px-4 text-sm py-8 bg-background transition-all duration-500 ease-out border group-hover:bg-background">
-              <div className="flex justify-between w-full">
-                <span className="text-gray-600 dark:text-foreground/60">Triggers Today:</span>
-                <span className="text-foreground font-medium">{triggers}</span>
-              </div>
+           
             </div>
           </CardContent>
         </Card>

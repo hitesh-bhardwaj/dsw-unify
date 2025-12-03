@@ -6,7 +6,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export function AppLayout({ children, title }) {
   return (
-    <div className="flex min-h-screen w-full overflow-hidden">
+    <div className="flex min-h-screen w-full ">
       <SidebarProvider defaultOpen={true}>
         <AppSidebar />
         <SidebarInset className="min-w-0">
