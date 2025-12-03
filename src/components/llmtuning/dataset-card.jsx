@@ -136,7 +136,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 dark:text-foreground text-badge-blue hover:bg-stone-700"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-stone-700"
                 )}
               >
                 <Eye />
@@ -146,7 +146,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-6 w-6 flex items-center justify-center px-1 py-1 dark:text-foreground text-primary hover:bg-stone-700"
+                  "h-6 w-6 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-stone-700"
                 )}
               >
                 <UploadIcon />

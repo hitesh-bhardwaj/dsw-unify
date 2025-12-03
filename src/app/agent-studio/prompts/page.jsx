@@ -26,6 +26,7 @@ const prompts = [
     name: "Customer Support Assistant",
     description: "Helpful and empathetic customer service responses",
     rating: 4.8,
+    icon:<PromptsIcon/>,
     version: "v3",
     tags: [
       { label: "Customer-Service", color: "blue" },
@@ -43,6 +44,7 @@ const prompts = [
     name: "Technical Documentation Writer",
     description: "Creates clear and comprehensive technical documentation",
     rating: 4.3,
+    icon:<PromptsIcon/>,
     version: "v2",
     tags: [
       { label: "Customer-Service", color: "blue" },
@@ -60,6 +62,7 @@ const prompts = [
     name: "Code Review Assistant",
     description: "Provides constructive code review feedback",
     rating: 4.9,
+    icon:<PromptsIcon/>,
     version: "v1",
     tags: [
       { label: "Customer-Service", color: "blue" },
@@ -78,6 +81,7 @@ const templates = [
     id: 1,
     name: "Customer Service Template",
     description: "Standard template for customer service agents",
+    icon:<TemplatesIcon/>,
     tags: [
       { label: "Customer Service", color: "yellow" },
       { label: "Empathy", color: "blue" },
@@ -92,6 +96,7 @@ const templates = [
     id: 2,
     name: "Technical Q&A Template",
     description: "Template for technical question answering",
+    icon:<TemplatesIcon/>,
     tags: [
       { label: "Technical", color: "yellow" },
       { label: "Empathy", color: "blue" },

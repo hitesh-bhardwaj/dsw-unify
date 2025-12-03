@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusIcon } from "@/components/Icons";
+import { MemoriesIcon, PlusIcon } from "@/components/Icons";
 import { MemoryCard } from "@/components/memory-card";
 import SearchBar from "@/components/search-bar";
 // import { FadeUp } from "@/components/animations/Animations";
@@ -16,6 +16,7 @@ const memories = [
     id: "user-preferences",
     name: "User Preferences",
     description: "Individual user preferences and settings",
+    icon:<MemoriesIcon/>,
     status: "active",
     tags: [
       { label: "session", color: "yellow" },
@@ -28,6 +29,7 @@ const memories = [
     id: "agent-learning",
     name: "Agent Learning",
     description: "Agent-specific learned behaviors and patterns",
+    icon:<MemoriesIcon/>,
     status: "active",
     tags: [
       { label: "agent", color: "yellow" },
@@ -40,6 +42,7 @@ const memories = [
     id: "organization-knowledge",
     name: "Organization Knowledge",
     description: "Company-wide shared knowledge and insights",
+    icon:<MemoriesIcon/>,
     status: "active",
     tags: [
       { label: "organiation", color: "yellow" },

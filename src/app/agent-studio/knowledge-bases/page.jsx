@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusIcon } from "@/components/Icons";
+import { KnowledgeBaseIcon, PlusIcon } from "@/components/Icons";
 import { KnowledgeCard } from "@/components/knowledge-card";
 import SearchBar from "@/components/search-bar";
 // import { FadeUp } from "@/components/animations/Animations";
@@ -16,6 +16,7 @@ const knowledgeBases = [
   {
     id: "company-documentation",
     name: "Company Documentation",
+    icon:<KnowledgeBaseIcon/>,
     description: "Internal company policies and procedures",
     status: "active",
     size: "2.3 GB",
@@ -25,6 +26,7 @@ const knowledgeBases = [
   {
     id: "product-knowledge-base",
     name: "Product Knowledge Base",
+    icon:<KnowledgeBaseIcon/>,
     description: "Product specifications and user guides",
     status: "draft",
     size: "890 MB",

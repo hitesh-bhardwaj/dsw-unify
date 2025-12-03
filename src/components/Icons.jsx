@@ -2165,5 +2165,33 @@ export const RunTestsIcon = ({ active, ...props }) => {
   );
 };
 
+export const APIIcon = ({ active, ...props }) => {
+  return (
+    <>
+<svg className={`api-icon ${props.className || ""} h-full w-full`}
+        data-active={active ?? props["data-active"]}  {...props} width="25" height="28" viewBox="0 0 25 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.2734 23.8948L20.5251 19.7081" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M4.04688 19.7081L11.2985 23.8948" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M3.05859 9.62244V17.9958" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M11.2985 3.72351L4.04688 7.91021" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M20.5251 7.91021L13.2734 3.72351" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M21.5117 17.9958V9.62244" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M12.2852 4.05913C13.1826 4.05913 13.9102 3.33159 13.9102 2.43413C13.9102 1.53667 13.1826 0.809128 12.2852 0.809128C11.3877 0.809128 10.6602 1.53667 10.6602 2.43413C10.6602 3.33159 11.3877 4.05913 12.2852 4.05913Z" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M12.2852 26.8091C13.1826 26.8091 13.9102 26.0816 13.9102 25.1841C13.9102 24.2867 13.1826 23.5591 12.2852 23.5591C11.3877 23.5591 10.6602 24.2867 10.6602 25.1841C10.6602 26.0816 11.3877 26.8091 12.2852 26.8091Z" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M2.43359 9.7466C3.33106 9.7466 4.05859 9.01906 4.05859 8.1216C4.05859 7.22413 3.33106 6.4966 2.43359 6.4966C1.53613 6.4966 0.808594 7.22413 0.808594 8.1216C0.808594 9.01906 1.53613 9.7466 2.43359 9.7466Z" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M2.43359 21.1217C3.33106 21.1217 4.05859 20.3941 4.05859 19.4967C4.05859 18.5992 3.33106 17.8717 2.43359 17.8717C1.53613 17.8717 0.808594 18.5992 0.808594 19.4967C0.808594 20.3941 1.53613 21.1217 2.43359 21.1217Z" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M22.1367 9.7466C23.0342 9.7466 23.7617 9.01906 23.7617 8.1216C23.7617 7.22413 23.0342 6.4966 22.1367 6.4966C21.2393 6.4966 20.5117 7.22413 20.5117 8.1216C20.5117 9.01906 21.2393 9.7466 22.1367 9.7466Z" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M22.1367 21.1217C23.0342 21.1217 23.7617 20.3941 23.7617 19.4967C23.7617 18.5992 23.0342 17.8717 22.1367 17.8717C21.2393 17.8717 20.5117 18.5992 20.5117 19.4967C20.5117 20.3941 21.2393 21.1217 22.1367 21.1217Z" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M9.67969 17.4873V12.5651C9.67969 11.6676 8.95217 10.9401 8.05469 10.9401C7.1572 10.9401 6.42969 11.6676 6.42969 12.5651V17.4873" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M6.42969 13.8091H9.67969" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M12.2852 13.8091H14.1006C14.8929 13.8091 15.5352 13.1669 15.5352 12.3746C15.5352 11.5824 14.8929 10.9401 14.1006 10.9401H12.2852V17.4873" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+<path d="M18.1406 10.1309V17.4873" stroke="black" strokeWidth="1.61826" strokeMiterlimit="10" className="current-stroke"/>
+</svg>
+
+
+    </>
+  );
+};
+
 
 

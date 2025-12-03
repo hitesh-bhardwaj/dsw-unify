@@ -402,7 +402,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                              playKey={'storage-strategy'}
                              className="w-full"
                              trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
-                             barClassName="bg-primaryw h-full absolute top-0 left-0 z-[5] rounded-full"
+                             barClassName="bg-primary  h-full absolute top-0 left-0 z-[5] rounded-full"
                            />                          
             </div>
           </div>

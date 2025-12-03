@@ -13,7 +13,7 @@ import { Bounce } from "./animations/Animations";
 const skeletonShownMap = new Map();
 
 export function LLMCard({ llm, minSkeletonMs = 500 }) {
-  const { id, name, description, status, tags = [] } = llm || {};
+  const { id, name, description, status, tags = [],icon } = llm || {};
 
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this LLM before
@@ -53,10 +53,10 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
-                  <SynthWave />
+                  {icon}
                 </span>
                 <span
                   className={cn(

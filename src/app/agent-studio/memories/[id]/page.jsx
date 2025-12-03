@@ -55,7 +55,7 @@ export default function Page() {
         <div className="bg-background pb-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-3">
-              <LeftArrowAnim link={"/agent-studio/tools"} />
+              <LeftArrowAnim link={"/agent-studio/memories"} />
               <div className="space-y-1">
                 <h1 className="text-xl font-medium">{toolsData.name}</h1>
                 <p className="text-sm text-foreground/80 pl-0.5 dark:text-foreground">
@@ -77,7 +77,7 @@ export default function Page() {
                 </Button>
               </RippleButton>
 
-              <RippleButton>
+              {/* <RippleButton>
                 <Button
                   variant="outline"
                   className="gap-2 text-foreground border border-primary"
@@ -87,7 +87,7 @@ export default function Page() {
                   </div>
                   Test
                 </Button>
-              </RippleButton>
+              </RippleButton> */}
 
               <Link href="#">
                 <RippleButton>

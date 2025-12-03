@@ -20,6 +20,7 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
     size,
     documentsCount,
     variant = "light",
+    icon
   } = agent || {};
 
   const isDark = variant === "dark";
@@ -59,10 +60,10 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
-                  <SynthWave />
+                  {icon}
                 </span>
                 <span
                   className={cn(

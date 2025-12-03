@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AgentCard } from "@/components/agent-card";
 import Link from "next/link";
-import { PlusIcon, PromptsIcon, TemplatesIcon } from "@/components/Icons";
+import { AgentStudioIcon, PlusIcon, PromptsIcon, TemplatesIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import RadioTabs from "@/components/common/RadioTabs";
 import { FadeUp, ScaleDown } from "@/components/animations/Animations";
@@ -17,6 +17,7 @@ const agents = [
     id: "auto-claims-processing-agent",
     name: "Auto Claims Processing Agent",
     description: "Automates auto insurance claims intake, validation, and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "auto", color: "gray" },
@@ -31,6 +32,7 @@ const agents = [
     id: "property-claims-agent",
     name: "Property Claims Agent",
     description: "Handles home and property damage claims assessment and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "property", color: "gray" },
@@ -45,6 +47,7 @@ const agents = [
     id: "health-claims-adjudication-agent",
     name: "Health Claims Adjudication Agent",
     description: "Automates auto insurance claims intake, validation, and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "health", color: "gray" },
@@ -60,6 +63,7 @@ const agents = [
     name: "Workers Comp Claims Agent",
     description:
       "Handles home and property damage claims assessment and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "property", color: "gray" },
@@ -75,6 +79,7 @@ const agents = [
     name: "Life Insurance Claims Agent",
     description:
       "Automates auto insurance claims intake, validation, and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "health", color: "gray" },
@@ -90,6 +95,7 @@ const agents = [
     name: "Claims Status Inquiry Agent",
     description:
       "Automates auto insurance claims intake, validation, and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "health", color: "gray" },
@@ -104,6 +110,7 @@ const agents = [
     id: "auto-underwriting-agent",
     name: "Auto Underwriting Agent",
     description: "Handles home and property damage claims assessment and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "property", color: "gray" },
@@ -119,6 +126,7 @@ const agents = [
     name: "Home Insurance Underwriting Agent",
     description:
       "Automates auto insurance claims intake, validation, and processing",
+    icon:<AgentStudioIcon/>,
     status: "active",
     tags: [
       { label: "health", color: "gray" },

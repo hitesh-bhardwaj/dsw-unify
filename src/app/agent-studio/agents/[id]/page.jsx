@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { AiGenerator, Bin, EditIcon, SettingIcon } from "@/components/Icons";
+import { AiGenerator, APIIcon, Bin, EditIcon, RunTestsIcon, SettingIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import CountUp from "@/components/animations/CountUp";
@@ -256,7 +256,7 @@ export default function AgentDetailPage({ params }) {
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
-                    <AiGenerator />
+                    <APIIcon/>
                   </div>
                   API
                 </Button>
@@ -267,7 +267,7 @@ export default function AgentDetailPage({ params }) {
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
-                    <AiGenerator />
+                    <RunTestsIcon/>
                   </div>
                   Test
                 </Button>

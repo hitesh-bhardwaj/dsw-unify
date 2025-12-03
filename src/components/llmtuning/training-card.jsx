@@ -20,7 +20,7 @@ export function TrainingCard({ data, playKey }) {
   } = data;
 
   return (
-    <Link href={`/agents/${id}`} className="block group">
+    <Link href={`/#`} className="block group">
       <Card
         className={cn(
           "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border  dark:group-hover:bg-sidebar-accent py-4 pb-7"
@@ -71,7 +71,7 @@ export function TrainingCard({ data, playKey }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-badge-blue dark:text-foreground hover:bg-stone-700"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground dark:text-foreground hover:bg-stone-700"
                 )}
               >
                 <Eye />
@@ -100,7 +100,7 @@ export function TrainingCard({ data, playKey }) {
                 playKey={playKey}
                 className="w-full"
                 trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
-                barClassName="bg-primary h-full absolute top-0 left-0 z-[5] rounded-full"
+                barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
               />
             </div>
 

@@ -26,7 +26,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
   ];
 
   const chartConfig = {
-    desktop: { label: "Desktop", color: "var(--primary)" },
+    desktop: { label: "Desktop", color: "var(--badge-blue)" },
   };
 
   const [animationId, setAnimationId] = useState(0);

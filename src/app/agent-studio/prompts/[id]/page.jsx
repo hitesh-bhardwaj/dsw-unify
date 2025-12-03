@@ -48,7 +48,7 @@ export default function CreateAgentPage() {
         {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="flex items-start gap-3">
-              <LeftArrowAnim link={"/agents"} />
+              <LeftArrowAnim link={"/agent-studio/prompts"} />
 
               <div className="space-y-2">
                 <h1 className="text-2xl font-medium">Customer Support Assistant</h1>

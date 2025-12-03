@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { PlusIcon } from "@/components/Icons";
+import { PlusIcon, ToolsIcon } from "@/components/Icons";
 import { ToolsCard } from "@/components/tools-card";
 import SearchBar from "@/components/search-bar";
 // import { FadeUp } from "@/components/animations/Animations";
@@ -18,6 +18,7 @@ const tools = [
     id: "web-search",
     name: "Web Search",
     description: "Search the web for current information",
+    icon:<ToolsIcon/>,
     status: "active",
     tags: [
       { label: "api", color: "yellow" },
@@ -29,6 +30,7 @@ const tools = [
     id: "calculator",
     name: "Calculator",
     description: "Perform mathematical calculations",
+    icon:<ToolsIcon/>,
     status: "active",
     tags: [
       { label: "function", color: "yellow" },
@@ -40,6 +42,7 @@ const tools = [
     id: "code-executor",
     name: "Code Executor",
     description: "Execute Python code safely",
+    icon:<ToolsIcon/>,
     status: "beta",
     tags: [
       { label: "sandbox", color: "yellow" },

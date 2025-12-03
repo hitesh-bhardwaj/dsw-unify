@@ -12,6 +12,7 @@ export function TemplateCard({ template }) {
     tags = [],
     variable,
     uses,
+    icon,
     variant = "light",
   } = template;
 
@@ -39,10 +40,10 @@ export function TemplateCard({ template }) {
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
                   )}
                 >
-                  <SynthWave />
+                  {icon}
                 </span>
               </div>
             </div>

@@ -7,6 +7,7 @@ import Link from "next/link";
 import {
   AiGenerator,
   DownloadIcon,
+  LLMsIcon,
   PlusIcon,
   SynthWave,
 } from "@/components/Icons";
@@ -24,6 +25,7 @@ const LLMs = [
     id: "gpt-4-turbo",
     name: "GPT-4 Turbo",
     description: "OpenAI API Model",
+    icon:<LLMsIcon/>,
     status: "active",
     tags: [
       { label: "general-purpose", color: "yellow" },
@@ -38,6 +40,7 @@ const LLMs = [
     id: "mistral-7B-instruct",
     name: "Mistral 7B Instruct",
     description: "Self-hosted Mistral Model",
+    icon:<LLMsIcon/>,
     status: "active",
     tags: [
       { label: "open-source", color: "yellow" },
@@ -52,6 +55,7 @@ const LLMs = [
     id: "llama-2-7B",
     name: "Llama 2 7B",
     description: "Self-hosted Open Source",
+    icon:<LLMsIcon/>,
     status: "active",
     tags: [
       { label: "open-source", color: "yellow" },
@@ -66,6 +70,7 @@ const LLMs = [
     id: "custom-insurance-model",
     name: "Custom Insurance Model",
     description: "Fine-tuned Model",
+    icon:<LLMsIcon/>,
     status: "active",
     tags: [
       { label: "fine-tuned", color: "yellow" },
