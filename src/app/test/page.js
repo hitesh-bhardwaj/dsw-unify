@@ -1,44 +1,27 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { AppLayout } from "@/components/app-layout";
-// import { MetricCard } from "@/components/Home/metric-card";
-// import { FeatureCard } from "@/components/Home/feature-card";
-// import { SectionHeader } from "@/components/Home/section-header";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 import SearchBar from "@/components/search-bar";
 import {
-  Wand2,
-  Eye,
-  Boxes,
-  Briefcase,
-  Cpu,
-  Activity,
-  Zap,
-  Workflow,
+  Wand2, Eye, Boxes, Briefcase, Cpu, Activity, Zap, Workflow,
 } from "lucide-react";
+
 import {
-  AgentsIcon,
-  PromptsIcon,
-  LLMsIcon,
-  KnowledgeBaseIcon,
-  ToolsIcon,
-  MemoriesIcon,
-  GuardrailsIcon,
-  TestingIcon,
-  SynthWave,
-  DataExplorerIcon,
-  DataVisualizationIcon,
-  DataValidationIcon,
+  AgentsIcon, PromptsIcon, LLMsIcon, KnowledgeBaseIcon, ToolsIcon,
+  MemoriesIcon, GuardrailsIcon, TestingIcon, SynthWave,
+  DataExplorerIcon, DataVisualizationIcon, DataValidationIcon,
 } from "@/components/Icons";
+
 import { SectionHeader } from "@/components/home/section-header";
 import { MetricCard } from "@/components/home/metric-card";
 import { FeatureCard } from "@/components/home/feature-card";
 
+/* ---------------- DATA (unchanged) ---------------- */
 
 const metricsData = [
   {
@@ -292,22 +275,15 @@ const workflowBuilderFeatures = [
   },
 ];
 
+
+/* ---------------- MetricsBoard FIXED ---------------- */
+
 function MetricsBoard({ metricsData, view, setView }) {
   const [items, setItems] = useState(metricsData);
   const scrollRef = useRef(null);
 
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
-
-  // DRAG/SCROLL refs
-  const isDown = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
-
-  // LERP for smooth scroll
-  const targetScroll = useRef(0);
-  const currentScroll = useRef(0);
-  const animationFrame = useRef(null);
 
   // Scroll handling
   const checkScroll = () => {
@@ -317,65 +293,15 @@ function MetricsBoard({ metricsData, view, setView }) {
     setShowRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
   };
 
-  const smoothScroll = () => {
-    const el = scrollRef.current;
-    if (!el) return;
-
-    // Lerp currentScroll towards targetScroll
-    currentScroll.current += (targetScroll.current - currentScroll.current) * 0.1;
-
-    // Stop small differences
-    if (Math.abs(targetScroll.current - currentScroll.current) < 0.5) {
-      currentScroll.current = targetScroll.current;
-    }
-
-    el.scrollLeft = currentScroll.current;
-    checkScroll();
-
-    animationFrame.current = requestAnimationFrame(smoothScroll);
-  };
-
-  const handleScrollClick = (dir) => {
+  const handleScroll = (dir) => {
     const el = scrollRef.current;
     if (!el) return;
     const amount = dir === "left" ? -300 : 300;
-    targetScroll.current = el.scrollLeft + amount;
-
-    // clamp target
-    targetScroll.current = Math.max(0, Math.min(targetScroll.current, el.scrollWidth - el.clientWidth));
+    el.scrollTo({ left: el.scrollLeft + amount, behavior: "smooth" });
+    setTimeout(checkScroll, 300);
   };
 
-  // Drag handling
-  const handleMouseDown = (e) => {
-    if (!scrollRef.current) return;
-    isDown.current = true;
-    scrollRef.current.classList.add("cursor-grabbing");
-    startX.current = e.pageX - scrollRef.current.offsetLeft;
-    scrollLeft.current = targetScroll.current = scrollRef.current.scrollLeft;
-  };
-
-  const handleMouseLeave = () => {
-    if (!scrollRef.current) return;
-    isDown.current = false;
-    scrollRef.current.classList.remove("cursor-grabbing");
-  };
-
-  const handleMouseUp = () => {
-    if (!scrollRef.current) return;
-    isDown.current = false;
-    scrollRef.current.classList.remove("cursor-grabbing");
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDown.current || !scrollRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1; // drag speed
-    targetScroll.current = scrollLeft.current - walk;
-    targetScroll.current = Math.max(0, Math.min(targetScroll.current, scrollRef.current.scrollWidth - scrollRef.current.clientWidth));
-  };
-
-  // Drag & drop for LIST
+  // Drag handling for list
   const dragIndex = useRef(null);
   const dragOver = useRef(null);
 
@@ -393,26 +319,21 @@ function MetricsBoard({ metricsData, view, setView }) {
     dragIndex.current = dragOver.current = null;
   };
 
-  useEffect(() => {
-    animationFrame.current = requestAnimationFrame(smoothScroll);
-    return () => cancelAnimationFrame(animationFrame.current);
-  }, []);
-
   return (
-    <motion.div layout='position' className="space-y-4 overflow-hidden  ">
+    <motion.div layout className="space-y-4 overflow-hidden">
       {/* Header */}
       <div className="flex items-end justify-between px-6">
         <div className="space-y-1">
-          <h1 className="text-3xl font-medium text-foreground">Overview</h1>
-          <p className="text-sm dark:text-foreground text-black/60">Key platform metrics and activity at a glance</p>
+          <h1 className="text-3xl font-medium">Overview</h1>
+          <p className="text-sm text-black/60">Key platform metrics and activity</p>
         </div>
 
         <div className="inline-flex border rounded-md overflow-hidden">
-          <button onClick={() => setView("grid")} className="px-3 py-1 cursor-pointer">
-            <LayoutGrid strokeWidth={1} className={`${view === "grid" ? "text-black" : "text-gray-400"}`} />
+          <button onClick={() => setView("grid")} className="px-3 py-1">
+            <LayoutGrid className={`${view === "grid" ? "text-black" : "text-gray-400"}`} />
           </button>
-          <button onClick={() => setView("list")} className="px-3 py-1 cursor-pointer">
-            <LayoutGrid strokeWidth={1} className={`${view === "list" ? "text-black" : "text-gray-400"}`} />
+          <button onClick={() => setView("list")} className="px-3 py-1">
+            <LayoutGrid className={`${view === "list" ? "text-black" : "text-gray-400"}`} />
           </button>
         </div>
       </div>
@@ -426,42 +347,37 @@ function MetricsBoard({ metricsData, view, setView }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
+            transition={{ duration: 0.5 }}
             className="relative"
           >
             {showLeft && (
               <button
-                onClick={() => handleScrollClick("left")}
-                className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black shadow-lg hover:bg-neutral-900 transition-colors flex items-center justify-center"
+                onClick={() => handleScroll("left")}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center"
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft />
               </button>
             )}
             {showRight && (
               <button
-                onClick={() => handleScrollClick("right")}
-                className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black flex items-center justify-center"
+                onClick={() => handleScroll("right")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black text-white flex items-center justify-center"
               >
-                <ChevronRight className="w-6 h-6 text-white" />
+                <ChevronRight />
               </button>
             )}
 
             <div
               ref={scrollRef}
               onScroll={checkScroll}
-              className="flex gap-4 overflow-x-auto px-6 cursor-grab select-none py-2 scrollbar-hide"
-              onMouseDown={handleMouseDown}
-              onMouseLeave={handleMouseLeave}
-              onMouseUp={handleMouseUp}
-              onMouseMove={handleMouseMove}
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              className="flex gap-4 overflow-x-auto px-6 py-2 scrollbar-hide"
             >
               {items.map((m, i) => (
                 <motion.div
-                  key={m.label}
-                  layoutId={`metric-${m.label}`}
+                  key={m.label}          // key must be consistent for FLIP
+                  layoutId={`metric-${m.label}`} // FLIP-like unique id
                   layout
-                  className="min-w-[280px]"
+                  className="min-w-[250px]"
                   transition={{ type: "spring", stiffness: 100, damping: 20 }}
                 >
                   <MetricCard {...m} />
@@ -478,12 +394,12 @@ function MetricsBoard({ metricsData, view, setView }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.1 }}
-            className="w-full grid grid-cols-4 gap-4 px-6"
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-4 gap-4 px-6"
           >
             {items.map((m, i) => (
               <motion.li
-                key={m.label}
+                key={m.label}            
                 layoutId={`metric-${m.label}`}
                 layout
                 draggable
@@ -494,9 +410,7 @@ function MetricsBoard({ metricsData, view, setView }) {
                 className="cursor-move"
                 transition={{ type: "spring", stiffness: 100, damping: 25 }}
               >
-                <div className="min-w-[280px]">
-                  <MetricCard {...m} />
-                </div>
+                <MetricCard {...m} />
               </motion.li>
             ))}
           </motion.ul>
@@ -507,6 +421,7 @@ function MetricsBoard({ metricsData, view, setView }) {
 }
 
 
+/* ---------------- Home Component (partial) ---------------- */
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -559,6 +474,7 @@ export default function Home() {
               <MetricsBoard metricsData={metricsData} view={view} setView={setView} />
             </motion.div>
 
+            {/* BELOW CONTENT */}
             <motion.div layout className="below-sections flex-1 overflow-auto p-6 pt-0 space-y-12 mt-6">
             {/* Data Engineering Section */}
             {filteredDataEngineering.length > 0 && (
