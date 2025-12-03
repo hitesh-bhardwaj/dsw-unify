@@ -31,6 +31,7 @@ import {
   MonitoringIcon,
   InferenceIcon,
   AgentStudioIcon,
+  ListIcon,
 } from "@/components/Icons";
 import { SectionHeader } from "@/components/home/section-header";
 import { MetricCard } from "@/components/home/metric-card";
@@ -408,8 +409,8 @@ function MetricsBoard({ metricsData, view, setView }) {
           <button onClick={() => setView("grid")} className="px-3 py-1 cursor-pointer">
             <LayoutGrid strokeWidth={1} className={`${view === "grid" ? "text-black" : "text-gray-400"}`} />
           </button>
-          <button onClick={() => setView("list")} className="px-3 py-1 cursor-pointer">
-            <LayoutGrid strokeWidth={1} className={`${view === "list" ? "text-black" : "text-gray-400"}`} />
+          <button onClick={() => setView("list")} className={`px-3 py-1 cursor-pointer ${view === "list" ? "text-black" : "text-gray-400"}`}>
+            <ListIcon strokeWidth={1} />
           </button>
         </div>
       </div>
@@ -534,8 +535,6 @@ export default function Home() {
       f.title.toLowerCase().includes(query.toLowerCase()) ||
       f.description.toLowerCase().includes(query.toLowerCase())
   );
-
-  /* ... same filters for other categories ... */
 
   return (
     <AppLayout title="Home">
