@@ -187,3 +187,32 @@ pre {
 .no-sidebar-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+
+/* Feature Card Gradient Hover Effect */
+.feature-card-hover-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card-hover-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/bg-hover.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 300ms;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.feature-card-hover-container:hover::before {
+  opacity: 1;
+}
+
+.feature-card-hover-container > * {
+  position: relative;
+  z-index: 1;
+}
