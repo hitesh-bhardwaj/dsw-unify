@@ -6,15 +6,19 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 
 export function AppLayout({ children, title }) {
   return (
-    <SidebarProvider defaultOpen={true}>
-      <AppSidebar />
-      <SidebarInset>
-        {/* Header */}
-        <Header title={title} />
+    <div className="flex min-h-screen w-full overflow-hidden">
+      <SidebarProvider defaultOpen={true}>
+        <AppSidebar />
+        <SidebarInset className="min-w-0">
+          {/* Header */}
+          <Header title={title} />
 
-        {/* Page content */}
-        <main className="flex-1 overflow-auto bg-background">{children}</main>
-      </SidebarInset>
-    </SidebarProvider>
+          {/* Page content */}
+          <main className="flex-1 overflow-auto bg-background min-w-0">
+            {children}
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   );
 }

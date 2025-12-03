@@ -43,11 +43,11 @@ export function MetricCard({
   const gradientId = `gradient-${String(label).replace(/\s+/g, "-")}`;
 
   return (
-    <Card className={cn("duration-300 py-0 rounded-xl", className)}>
+    <Card className={cn(" min-h-40 py-0 rounded-xl ", className)}>
       <CardContent className="p-5 flex items-end justify-between">
         <div className="flex flex-col items-start justify-between w-[70%] gap-4">
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">{label}</p>
+            <p className="text-sm  text-nowrap text-muted-foreground">{label}</p>
             <h3 className="text-3xl font-medium tracking-tight">{value}</h3>
           </div>
           <div className="w-full flex gap-2 text-badge-green ">
