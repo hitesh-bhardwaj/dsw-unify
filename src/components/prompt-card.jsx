@@ -15,6 +15,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
   const {
     id,
     name,
+    slug,
     description,
     icon,
     rating,
@@ -49,7 +50,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
   }
 
   return (
-    <Link href={`/agent-studio/prompts/${id}`}>
+    <Link href={`/agent-studio/prompts/${slug}`}>
     <div className="group w-full h-full">
       <Card
         className={cn(
@@ -149,7 +150,11 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10",
+                   {
+    "border-border-color-2": tag.color !== "red",
+    "border-primary": tag.color === "red",
+  }
                 )}
               >
                 {tag.label}

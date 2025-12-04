@@ -16,6 +16,17 @@ import { ScaleDown } from "@/components/animations/Animations";
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
 
+  function slugToTitle(slug) {
+  if (!slug) return "";
+  
+  return slug
+    .split("-")                
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
+    .join(" ");                
+}
+
+    const title = slugToTitle(id);
+
   // show the metrics skeleton only once per LLM id
   const [mounted, setMounted] = useState(false);
   const [showMetricsSkeleton, setShowMetricsSkeleton] = useState(true);
@@ -103,7 +114,7 @@ export default function LLMsDetailPage({ params }) {
               <LeftArrowAnim link={"/agent-studio/llms"} />
               <div className="space-y-2">
                 <div className="w-fit flex gap-2 items-center">
-                  <h1 className="text-xl font-medium">{llm.name}</h1>
+                  <h1 className="text-xl font-medium">{title}</h1>
                   <Badge className="py-1 text-xs font-medium bg-transparent text-foreground border border-badge-green">
                     Active
                   </Badge>

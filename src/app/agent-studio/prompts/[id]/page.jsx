@@ -10,6 +10,8 @@ import { ScaleDown } from "@/components/animations/Animations";
 import PromptContentGrid from "@/components/prompt-content-grid";
 import PromptMetadataGrid from "@/components/prompt-metadata-grid";
 import PromptUsageGrid from "@/components/prompt-usage-grid";
+import { usePathname } from "next/navigation";
+
 
 export default function CreateAgentPage() {
   const items = [
@@ -40,6 +42,22 @@ export default function CreateAgentPage() {
     },
   ];
 
+  const pathname = usePathname(); 
+  const slug = pathname.split("/").pop();
+
+  function slugToTitle(slug) {
+  if (!slug) return "";
+  
+  return slug
+    .split("-")                
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
+    .join(" ");                
+}
+
+    const title = slugToTitle(slug);
+
+
+
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header */}
@@ -51,7 +69,7 @@ export default function CreateAgentPage() {
               <LeftArrowAnim link={"/agent-studio/prompts"} />
 
               <div className="space-y-2">
-                <h1 className="text-2xl font-medium">Customer Support Assistant</h1>
+                <h1 className="text-2xl font-medium">{title}</h1>
                 <p className="text-sm text-gray-600  dark:text-foreground">
                   Helpful and empathetic customer service responses
                 </p>
@@ -102,7 +120,7 @@ export default function CreateAgentPage() {
             <AnimatedTabsSection
               items={items}
               // ctx={ctx}
-              defaultValue="prompt"
+              defaultValue="content"
             />
           {/* </FadeUp> */}
         </div>

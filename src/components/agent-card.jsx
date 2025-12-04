@@ -101,7 +101,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
           )}
         >
           <CardHeader className="">
-            <div className="flex items-start justify-between">
+            <div className="flex items-end justify-start gap-2">
               {/* Icon */}
               <div
                 className={cn(
@@ -124,12 +124,12 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
               </div>
 
               {/* Status badge */}
-              <Badge
+            <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium ",
+                  "rounded-full px-3 py-1 text-foreground text-xs font-medium ",
                   status === "active"
-                    ? "bg-badge-green text-white"
-                    : "bg-[#DEDEDE] text-foreground px-4 dark:bg-foreground dark:text-background"
+                    ? "border-badge-green bg-white dark:bg-sidebar-accent group-hover:bg-sidebar-accent"
+                    : " text-foreground px-4 "
                 )}
               >
                 {status === "active" ? "Active" : "Draft"}

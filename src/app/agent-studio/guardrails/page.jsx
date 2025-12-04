@@ -26,7 +26,7 @@ const guardrails = [
     variant: "light",
   },
   {
-    id: "p-detection",
+    id: "pii-detection",
     name: "PII Detection",
     description: "Detects and blocks personally identifiable information",
     status: "active",

@@ -30,6 +30,16 @@ export default function AgentDetailPage({ params }) {
     setMounted(true);
   }, []);
 
+  function slugToTitle(slug) {
+  if (!slug) return "";
+  
+  return slug
+    .split("-")                // break into words
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  // capitalize
+    .join(" ");                // rejoin with spaces
+}
+  const title = slugToTitle(id);
+
   useEffect(() => {
     if (!mounted) return;
     const key = `agentDetailSkeleton:${id ?? "global"}`;
@@ -230,7 +240,7 @@ export default function AgentDetailPage({ params }) {
             <div className="flex gap-3">
               <LeftArrowAnim link={"/agent-studio/agents"} />
               <div>
-                <h1 className="text-xl font-medium">{agent.name}</h1>
+                <h1 className="text-xl font-medium">{title}</h1>
                 <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
                   {agent.description}
                 </p>

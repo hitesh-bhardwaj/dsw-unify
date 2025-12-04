@@ -90,7 +90,6 @@ const Recent = [
     content: "Mistral 7B Instruct deployment completed",
     recentActivity: "30 minutes ago",
         color:'green',
-
   },
   {
     content: "GPT-4 Turbo deployment completed",

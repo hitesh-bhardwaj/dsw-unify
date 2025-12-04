@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Eye } from "lucide-react";
 import { Button } from "../ui/button";
 import AnimatedProgressBar from "../animations/ProgressBar";
+import { Checkbox } from "@/components/ui/checkbox"
+
 
 export function TrainingCard({ data, playKey }) {
   const {
@@ -13,6 +15,7 @@ export function TrainingCard({ data, playKey }) {
     description,
     tags = [],
     progress,
+    isCompleted,
     date,
     loss,
     width,
@@ -30,9 +33,14 @@ export function TrainingCard({ data, playKey }) {
           <div className="flex items-center w-full justify-between">
             <div className="space-y-3">
               <div className="flex items-center gap-3 mt-4">
+                <div className="flex flex-col gap-2">
+
+              {isCompleted===true && 
+              <Checkbox /> }
                 <h3 className="text-xl font-medium text-foreground  transition-all duration-500 ease-out">
                   {name}
                 </h3>
+              </div>
                 <div className="flex flex-wrap gap-1">
                   {tags.map((tag, index) => (
                     <Badge
