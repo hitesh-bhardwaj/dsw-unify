@@ -8,6 +8,13 @@ import { AppLayout } from "@/components/app-layout";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 
 
 import SearchBar from "@/components/search-bar";
@@ -397,8 +404,10 @@ function MetricsBoard({ metricsData, view, setView }) {
     return () => cancelAnimationFrame(animationFrame.current);
   }, []);
 
+  
+
   return (
-    <motion.div layout='position' className="space-y-4 overflow-hidden  ">
+    <motion.div layout='position' className="space-y-4 overflow-hidden">
       {/* Header */}
       <div className="flex items-end justify-between px-6">
         <div className="space-y-1">
@@ -406,14 +415,46 @@ function MetricsBoard({ metricsData, view, setView }) {
           <p className="text-sm dark:text-foreground text-black/60">Key platform metrics and activity at a glance</p>
         </div>
 
-        <div className="inline-flex  border rounded-md overflow-hidden py-2 px-4 gap-5">
-          <button onClick={() => setView("list")} className={`cursor-pointer `}>
-            <ListIcon className={`${view === "list" ? "opacity-100" : "opacity-[0.4]"}`}/>
-          </button>
-          <button onClick={() => setView("grid")} className={`cursor-pointer`}>
-            <GridIcon className={`${view === "grid" ? "opacity-100" : "opacity-[0.4]"}`} />
-          </button>
-        </div>
+        <TooltipProvider delayDuration={0}>
+  <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5">
+
+    {/* LIST BUTTON */}
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          onClick={() => setView("list")}
+          className="cursor-pointer"
+        >
+          <ListIcon
+            className={`${view === "list" ? "opacity-100" : "opacity-[0.4]"}`}
+          />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="top">
+        <p>List View</p>
+      </TooltipContent>
+    </Tooltip>
+
+    {/* GRID BUTTON */}
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <button
+          onClick={() => setView("grid")}
+          className="cursor-pointer"
+        >
+          <GridIcon
+            className={` ${view === "grid" ? "opacity-100" : "opacity-[0.4]"}`}
+          />
+        </button>
+      </TooltipTrigger>
+      <TooltipContent side="top">
+        <p>Grid View</p>
+      </TooltipContent>
+    </Tooltip>
+
+  </div>
+</TooltipProvider>
+
       </div>
 
       {/* Metrics Wrapper */}
