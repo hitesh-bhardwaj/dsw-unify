@@ -125,6 +125,9 @@ const page = () => {
     },
   ];
 
+    const params = useParams();
+  const { id: routeId, modelId } = params;
+
   return (
     <>
       <div className="flex flex-col h-full">

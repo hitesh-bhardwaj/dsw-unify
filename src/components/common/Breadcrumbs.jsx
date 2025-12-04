@@ -1,6 +1,5 @@
 
 'use client'
-
 import { usePathname } from 'next/navigation'
 import {
   Breadcrumb,
@@ -56,12 +55,9 @@ const Breadcrumbs = () => {
             </BreadcrumbLink>
           )}
         </BreadcrumbItem>
-
-        {/* Other segments */}
         {!isRoot &&
           breadcrumbItems.map((item, index) => (
             <div key={item.href} className="contents">
-              {/* No separator after home icon, only between segments */}
               {index > 0 && <BreadcrumbSeparator />}
               <BreadcrumbItem>
                 {item.isLast ? (
