@@ -93,7 +93,7 @@ const page = () => {
     },
   };
    const params = useParams();
-const { id: routeId, modelId } = params;
+const { id: routeId, modelId,versionId } = params;
 
   return (
     <>
@@ -103,7 +103,7 @@ const { id: routeId, modelId } = params;
           <div className="bg-background p-6 space-y-8">
             <div className="flex items-center justify-between">
               <div className="flex gap-3">
-                <LeftArrowAnim link={`/ai-studio/use-cases/${modelId}`}/>
+                <LeftArrowAnim link={`/ai-studio/use-cases/${routeId}/${modelId}`}/>
                 <div className="space-y-1">
                   <div className="flex gap-3 items-center">
                     <h1 className="text-xl font-medium">{versionsData.name}</h1>

@@ -148,14 +148,14 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
             )}
           >
             <div className="flex items-center gap-2 ">
-              <div className="w-4 h-4 text-primary">
-                <DataEngineeringIcon className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground " />
+              <div className="w-4 h-4 text-primary group-hover:text-white">
+                <DataEngineeringIcon className="text-primary  transition-all duration-300 dark:text-foreground " />
               </div>
               <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{models} models</span>
             </div>
             <div className="flex items-center  justify-center gap-0">
-              <div className="w-7 h-7  flex items-center">
-                <People className="w-full h-full text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground " />
+              <div className="w-7 h-7  flex items-center group-hover:!text-white text-badge-blue">
+                <People className="w-full h-full  group-hover:!text-white transition-all duration-300 dark:text-foreground " />
               </div>
               <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{peopleCount}</span>
             </div>

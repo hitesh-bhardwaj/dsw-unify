@@ -382,7 +382,7 @@ export function AppSidebar() {
                             }}
                           >
                             <Icon size={30} className={cn(
-                              "!h-5 !w-auto",  isExpanded && !isActive && !hasActiveChild && "text-primary")} />
+                              "!h-5 !w-auto")} />
                             <span className={cn(
                               "text-nowrap text-sm",
                               (isExpanded || hasActiveChild) && "font-medium"

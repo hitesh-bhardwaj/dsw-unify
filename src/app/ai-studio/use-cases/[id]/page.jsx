@@ -127,6 +127,16 @@ const page = () => {
 
     const params = useParams();
   const { id: routeId, modelId } = params;
+  function slugToTitle(slug) {
+  if (!slug) return "";
+  
+  return slug
+    .split("-")                
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
+    .join(" ");                
+}
+
+    const title = slugToTitle(id);
 
   return (
     <>
