@@ -37,7 +37,7 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/memories/${id}`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 gap-20 h-full"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-1 hover:border-white/20 !py-5 h-full"
           )}
         >
           <CardHeader>
@@ -45,12 +45,12 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
               {/* Icon */}
              <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center p-4"
                   )}
                 >
                   {icon}
@@ -66,10 +66,10 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
               {/* Status badge */}
              <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs bg-white font-medium",
+                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all duration-300 group-hover:text-white group-hover:border-white",
                   status === "active"
-                    ? "border-badge-green dark:bg-background dark:text-white text-black"
-                    : "border-badge-sea-green dark:bg-background dark:text-foreground/80 text-black px-4 opacity-[0.8]"
+                    ? "border-badge-green text-foreground"
+                    : "border-badge-sea-green text-foreground px-4 opacity-[0.8]"
                 )}
               >
                 {status === "active" ? "Active" : "Beta"}
@@ -77,49 +77,48 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
             </div>
 
             {/* Name */}
-            <h3 className="mt-7 text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
+            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
               {name}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-foreground/80 dark-hover:text-foreground  transition-all duration-500 ease-out">
+            <p className="text-sm text-foreground/80 group-hover:text-white/90 transition-colors duration-300">
               {description}
             </p>
           </CardHeader>
 
           <CardContent>
 
-            <div className="border border-border-color-2 h-full w-full rounded-lg flex px-5 py-2  min-h-20  items-center">
+            <div className="border border-border-color-2 group-hover:border-white/30 h-full w-full rounded-lg flex px-5 py-2 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
 
             {/* Tags */}
-            <div className=" flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1">
               {tags.map((tag, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
-                   
+                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
                   {tag.label}
                 </Badge>
               ))}
             </div>
-            <div className="w-16 h-[0.2px] bg-border-color-3 rotate-90" />
-            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4   duration-500 ease-out ">
+            <div className="w-16 h-[0.2px] bg-border-color-3 group-hover:bg-white/40 rotate-90 transition-colors duration-300" />
+            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4 duration-300">
               <div className="flex flex-col items-start gap-1">
-                <span className="text-foreground font-medium text-lg">
+                <span className="text-foreground font-medium text-lg group-hover:text-white transition-colors duration-300">
                   {entries}
                 </span>
-                <span className="text-gray-600 dark:text-foreground/60">Entries</span>
+                <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">Entries</span>
               </div>
             </div>
                         </div>
 
 
             {/* Footer stats */}
-            
+
           </CardContent>
         </Card>
       </Link>

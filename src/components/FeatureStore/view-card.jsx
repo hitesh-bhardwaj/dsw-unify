@@ -55,7 +55,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-          "feature-card-hover-container h-full transition-all duration-300 group gap-0 py-5 hover:border-white/20 cursor-pointer flex flex-col justify-between"
+          "feature-card-hover-container h-full flex flex-col justify-between transition-all duration-300 group gap-0 py-5 hover:border-white/20 cursor-pointer hover:shadow-md"
         )}
       >
         <CardHeader className="pb-2">
@@ -72,7 +72,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 size="icon"
                 className={cn(
                   "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1 ",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-white transition-colors duration-300"
+                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Eye />
@@ -82,7 +82,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 size="icon"
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-white transition-colors duration-300"
+                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Copy className="!h-full !w-full" />
@@ -92,7 +92,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 size="icon"
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-white transition-colors duration-300"
+                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Editor />
@@ -102,7 +102,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 size="icon"
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-white transition-colors duration-300"
+                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Bin />
@@ -133,7 +133,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                 )}
               >
                 {tag}
@@ -143,7 +143,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
 
           <div
             className={cn(
-              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 bg-white dark:bg-background group-hover:bg-white/10 group-hover:border-white/30 border border-border-color-2"
+              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30 border border-border-color-2"
             )}
           >
             <div className="flex items-center gap-2 ">

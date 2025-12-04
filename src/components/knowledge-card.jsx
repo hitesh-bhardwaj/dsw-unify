@@ -47,7 +47,7 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/knowledge-bases/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full   ",
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-1 hover:border-white/20 !py-5 h-full"
           )}
         >
           <CardHeader>
@@ -55,12 +55,12 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center p-4"
                   )}
                 >
                   {icon}
@@ -76,10 +76,10 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
               {/* Status badge */}
               <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium",
+                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 transition-all duration-300 group-hover:text-white group-hover:border-white",
                   status === "active"
-                    ? "text-foreground border border-badge-green bg-transparent"
-                    : "text-foreground px-4 border border-badge-sea-green bg-transparent"
+                    ? "text-foreground border border-badge-green"
+                    : "text-foreground px-4 border border-badge-sea-green"
                 )}
               >
                 {status === "active" ? "Synced" : "Syncing"}
@@ -87,12 +87,12 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
             </div>
 
             {/* Name */}
-            <h3 className="mt-7 text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
+            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
               {name}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-foreground/80  dark-hover:text-foreground transition-all duration-500 ease-out">
+            <p className="text-sm text-foreground/80 group-hover:text-white/90 transition-colors duration-300">
               {description}
             </p>
           </CardHeader>
@@ -101,23 +101,23 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 dark:group-hover:bg-background duration-500 ease-out border-border-color-2 border"
+                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 duration-300 border-border-color-2 border group-hover:border-white/30 transition-all"
               )}
             >
               <div className="flex flex-col items-start gap-1 font-medium">
-                <span className="text-foreground text-lg font-medium">
+                <span className="text-foreground text-lg font-medium group-hover:text-white transition-colors duration-300">
                   {size}
                 </span>
-                <span className="text-gray-600 dark:text-foreground/60">Size</span>
+                <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">Size</span>
               </div>
 
-              <Separator className="rotate-90 !w-12" />
+              <Separator className="rotate-90 !w-12 group-hover:bg-white/40 transition-colors duration-300" />
 
               <div className="flex flex-col items-start gap-1">
-                <span className="font-medium text-foreground text-lg">
+                <span className="font-medium text-foreground text-lg group-hover:text-white transition-colors duration-300">
                   {documentsCount}
                 </span>
-                <span className="text-gray-600 dark:text-foreground/60 ">Documents</span>
+                <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">Documents</span>
               </div>
             </div>
           </CardContent>

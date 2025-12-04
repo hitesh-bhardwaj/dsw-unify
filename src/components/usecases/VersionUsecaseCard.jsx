@@ -73,14 +73,14 @@ const { id: routeId, modelId } = params;
         <Card
           onClick={() => setIsModalOpen(true)}
           className={cn(
-            "h-full transition-all duration-300 hover:bg-sidebar-accent group gap-0 py-5 hover:border-border-color-2 cursor-pointer flex flex-col justify-between"
+            "feature-card-hover-container h-full transition-all duration-300 group gap-0 py-5 hover:border-white/20 cursor-pointer hover:shadow-md flex flex-col justify-between"
           )}
         >
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between mb-4">
               {/* Icon */}
               <div className="flex gap-2 items-end">
-                <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border #DCDCDC text-black transition-all dark:text-white dark:group-hover:text-black group-hover:bg-foreground group-hover:text-background duration-300 p-3">
+                <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
                   {Icon && <Icon className="h-6 w-6" />}
                 </div>
                 <p
@@ -101,7 +101,7 @@ const { id: routeId, modelId } = params;
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
+                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                   )}
                 >
                   <Eye />
@@ -112,7 +112,7 @@ const { id: routeId, modelId } = params;
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
+                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                   )}
                 >
                   <Copy className="!h-full !w-full" />
@@ -123,7 +123,7 @@ const { id: routeId, modelId } = params;
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                   )}
                 >
                   <Editor />
@@ -134,7 +134,7 @@ const { id: routeId, modelId } = params;
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-red-600 duration-500 ease-out"
+                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                   )}
                 >
                   <Bin />
@@ -143,18 +143,18 @@ const { id: routeId, modelId } = params;
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-medium mb-2">{name}</h3>
+            <h3 className="text-xl font-medium mb-2 group-hover:text-white transition-colors duration-300">{name}</h3>
 
             {/* Description */}
-            <p className="text-xs text-muted-foreground line-clamp-2">
+            <p className="text-xs text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
               {description}
             </p>
           </CardHeader>
 
           <CardContent
             className={cn(
-              isDark ? "bg-background" : "bg-white dark:bg-background",
-              "w-full mx-auto pt-4 space-y-4 dark:group-hover:bg-sidebar-accent group-hover:bg-sidebar-accent rounded-xl duration-500 ease-out"
+              isDark ? "bg-background" : "",
+              "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300"
             )}
           >
             {/* Tags */}
@@ -164,7 +164,7 @@ const { id: routeId, modelId } = params;
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
                   {tag}
@@ -175,28 +175,28 @@ const { id: routeId, modelId } = params;
             {/* Versions + Features */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg p-3 px-2 text-sm py-6  duration-500 bg-white dark:bg-background dark:group-hover:bg-background ease-out group-hover:bg-white border border-border-color-2"
+                "flex items-center justify-between rounded-lg p-3 px-2 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30 border border-border-color-2"
               )}
             >
               <div className="flex items-center gap-6 ">
                 <div className="w-5 h-5">
-                  <LineGraph className="text-primary group-hover:text-primary transition-all duration-500 ease-out dark:text-foreground " />
+                  <LineGraph className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className=" text-foreground text-xs">Accuracy:</p>
-                  <p className="text-badge-green">{accuracy}</p>
+                  <p className="text-foreground text-xs group-hover:text-white transition-colors duration-300">Accuracy:</p>
+                  <p className="text-badge-green group-hover:text-white transition-colors duration-300">{accuracy}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
                 <div className="flex gap-2 items-end">
                   <p
-                    className={`text-xs border px-3 flex gap-2 items-center py-2 rounded-full ${
+                    className={`text-xs border px-3 flex gap-2 items-center py-2 rounded-full group-hover:text-white group-hover:border-white/30 transition-all duration-300 ${
                       status === "Deployed"
                         ? "border-primary"
                         : "border-primary"
                     }`}
                   >
-                    <RocketIcon className="w-5 h-5 text-black" />
+                    <RocketIcon className="w-5 h-5 text-black group-hover:text-white transition-colors duration-300" />
                     {status}
                   </p>
                 </div>
@@ -206,9 +206,9 @@ const { id: routeId, modelId } = params;
             {/* Last Updated */}
             <div className="flex items-center gap-2  pl-2">
               <div className="w-4 h-4">
-                <Calendar className="text-foreground/80 group-hover:text-foreground transition-all duration-500 ease-out  " />
+                <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300" />
               </div>
-              <span className=" text-foreground/80 text-xs ">
+              <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
                 {" "}
                 Updated {lastUpdated}
               </span>

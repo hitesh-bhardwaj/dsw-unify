@@ -23,10 +23,7 @@ export function TemplateCard({ template }) {
     <div className="group h-full">
       <Card
         className={cn(
-          "overflow-hidden transition-all hover:shadow-xl duration-500 ease-out py-5 border border-border-color-1 group-hover:bg-sidebar-accent dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 bg-background "
-          // isDark
-          //   ? "bg-active-card text-white border-black"
-          //   : "bg-background border border-border-color-1"
+          "feature-card-hover-container overflow-hidden transition-all hover:shadow-md duration-300 py-5 border border-border-color-1 hover:border-white/20 bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -35,12 +32,12 @@ export function TemplateCard({ template }) {
             <div className="flex items-center gap-3">
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center p-4"
                   )}
                 >
                   {icon}
@@ -54,10 +51,7 @@ export function TemplateCard({ template }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 hover:bg-white  dark:text-white  group-hover:text-black dark:group-hover:text-white duration-500 ease-out dark:hover:bg-accent "
-                  // isDark
-                  //   ? "text-white hover:bg-stone-700"
-                  //   : "text-badge-blue hover:bg-sidebar-accent"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Eye />
@@ -66,10 +60,7 @@ export function TemplateCard({ template }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1  text-foreground hover:bg-white group-hover:text-black dark:hover:bg-accent dark:group-hover:text-white dark:hover:text-white duration-500 ease-out "
-                  // isDark
-                  //   ? "text-white hover:bg-stone-700"
-                  //   : "text-foreground hover:bg-sidebar-accent"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Copy className="!h-full !w-full" />
@@ -78,10 +69,7 @@ export function TemplateCard({ template }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary  hover:bg-white group-hover:text-primary dark:hover:bg-accent duration-500 ease-out"
-                  // isDark
-                  //   ? "text-white hover:bg-stone-700"
-                  //   : "text-primary hover:bg-sidebar-accent"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Editor />
@@ -90,13 +78,12 @@ export function TemplateCard({ template }) {
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-medium mb-2 text-black dark:text-white ">{name}</h3>
+          <h3 className="text-xl font-medium mb-2 text-foreground group-hover:text-white transition-colors duration-300">{name}</h3>
 
           {/* Description */}
           <p
             className={cn(
-              "text-sm mb-4 text-gray-600 dark:text-foreground dark:group-hover:text-foreground  transition-all duration-500 ease-out"
-              // isDark ? "text-gray-300" : "text-gray-600"
+              "text-sm mb-4 text-gray-600 dark:text-foreground group-hover:text-white/90 transition-colors duration-300"
             )}
           >
             {description}
@@ -109,7 +96,7 @@ export function TemplateCard({ template }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out group-hover:border-transparent dark:group-hover:bg-background"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                 )}
               >
                 {tag.label}
@@ -119,15 +106,15 @@ export function TemplateCard({ template }) {
         </CardHeader>
 
         <CardContent
-          className={`group-hover:bg-white  dark:bg-background border border-border-color-2 bg-white group-hover:border group-hover:border-color-2 w-[92%] mx-auto py-5 rounded-xl px-4 text-foreground text-sm duration-500 ease-out   dark:group-hover:bg-background dark:border-color-2`}
+          className={`w-[92%] mx-auto py-5 rounded-xl px-4 text-foreground text-sm duration-300 ${isDark ? "bg-background" : ""}`}
         >
           {/* Usage stats */}
-          <div className={`flex items-center justify-between mb-3 `}>
-            <span className={"text-foreground"}>{uses} uses</span>
+          <div className={`flex items-center justify-between mb-3`}>
+            <span className={"text-foreground group-hover:text-white transition-colors duration-300"}>{uses} uses</span>
           </div>
-          <div className="bg-sidebar-accent p-3 rounded-md">
-          <span className="font-medium ">Variables: </span>
-          <span className="text-black/60 dark:text-foreground/80">{variable}</span>
+          <div className="bg-white/10 dark:bg-background dark:group-hover:bg-white/10 p-3 rounded-md border border-border-color-2 group-hover:border-white/30 transition-all duration-300">
+          <span className="font-medium text-foreground group-hover:text-white transition-colors duration-300">Variables: </span>
+          <span className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">{variable}</span>
           </div>
           {/* Preview */}
         </CardContent>

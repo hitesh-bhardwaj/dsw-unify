@@ -53,7 +53,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
     <div className="group w-full h-full">
       <Card
         className={cn(
-          "overflow-hidden w-full h-full transition-all hover:shadow-lg duration-500 ease-out py-5 border-border-color-1 group-hover:bg-sidebar-accent dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 bg-background"
+          "feature-card-hover-container overflow-hidden w-full h-full transition-all hover:shadow-md duration-300 py-5 border-border-color-1 hover:border-white/20 bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -62,12 +62,12 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
             <div className="flex items-center gap-3">
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4.5 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center p-4.5"
                   )}
                 >
                   {icon ?? <SynthWave />}
@@ -75,13 +75,12 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
               </div>
 
               <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="text-xs text-black dark:text-white">{rating}</span>
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 group-hover:fill-white group-hover:text-white transition-colors duration-300" />
+                <span className="text-xs text-foreground group-hover:text-white transition-colors duration-300">{rating}</span>
                 <Badge
                   variant="secondary"
                   className={cn(
-                    "px-1.5 py-1 ml-1.5 rounded-sm border border-foreground text-foreground bg-transparent",
-                    "  duration-500 ease-out"
+                    "px-1.5 py-1 ml-1.5 rounded-sm border border-foreground text-foreground bg-transparent group-hover:text-white group-hover:border-white transition-all duration-300"
                   )}
                 >
                   {version}
@@ -95,7 +94,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 hover:bg-white  dark:text-white  group-hover:text-black dark:group-hover:text-white duration-500 ease-out dark:hover:bg-accent"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Eye />
@@ -104,8 +103,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Copy className="!h-full !w-full" />
@@ -114,8 +112,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}>
                 <Editor />
               </Button>
@@ -123,8 +120,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                  "hover:bg-white dark:hover:bg-accent group-hover:text-red-600 duration-500 ease-out"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600 hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Bin />
@@ -134,12 +130,12 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
 
 <div className="flex flex-col gap-3 mb-5">
           {/* Title */}
-          <h3 className="text-xl text-black dark:text-white font-medium mb-2">{name}</h3>
+          <h3 className="text-xl text-foreground font-medium mb-2 group-hover:text-white transition-colors duration-300">{name}</h3>
 
           {/* Description */}
           <p
             className={cn(
-              "text-sm mb-5 text-gray-600 dark:text-foreground dark:group-hover:text-foreground  transition-all duration-500 ease-out"
+              "text-sm mb-5 text-gray-600 dark:text-foreground group-hover:text-white/90 transition-colors duration-300"
             )}
           >
             {description}
@@ -153,7 +149,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                 )}
               >
                 {tag.label}
@@ -164,25 +160,20 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
 
         <CardContent
           className={cn(
-            isDark
-              ? "bg-white dark:bg-background"
-              : "bg-white border-border-color-2 dark:bg-background border dark:group-hover:bg-background",
-            "w-[92%] mx-auto py-5 rounded-xl px-4 duration-500 ease-out"
+            isDark ? "bg-background" : "",
+            "w-[92%] mx-auto py-5 rounded-xl px-4 duration-300"
           )}
         >
           {/* Usage stats */}
           <div className="flex items-center justify-between text-sm mb-3">
-            <span className="text-foreground">{uses} uses</span>
-            <span className="text-foreground">Updates {lastUpdated}</span>
+            <span className="text-foreground group-hover:text-white transition-colors duration-300">{uses} uses</span>
+            <span className="text-foreground group-hover:text-white transition-colors duration-300">Updates {lastUpdated}</span>
           </div>
 
           {/* Preview */}
           <div
             className={cn(
-              "rounded-lg p-3 text-xs duration-500 ease-out dark:group-hover:bg-sidebar-accent dark:text-white/80",
-              isDark
-                ? "bg-sidebar-accent text-gray-600"
-                : "bg-sidebar-accent text-gray-600"
+              "rounded-lg p-3 text-xs duration-300 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-gray-600 dark:text-white/80 group-hover:text-white/80 border border-border-color-2 group-hover:border-white/30 transition-all"
             )}
           >
             {preview}

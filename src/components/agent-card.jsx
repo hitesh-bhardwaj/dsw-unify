@@ -97,7 +97,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/agents/${id}`} className="block">
           <Card
           className={cn(
-            "overflow-hidden hover:bg-sidebar-accent group  hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 dark:hover:bg-sidebar-accent hover:text-white hover:border-border-color-1 py-5"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-1 hover:border-white/20 py-5"
           )}
         >
           <CardHeader className="">
@@ -105,12 +105,12 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
               {/* Icon */}
               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 dark:bg-background group-hover:bg-black transition-all dark:group-hover:bg-white duration-500 ease-out "
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
                 )}
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center dark:group-hover:text-black p-4 text-black dark:text-white group-hover:text-white transition-all duration-500 ease-out "
+                    "w-full h-full flex justify-center items-center p-4"
                   )}
                 >
                   {icon}
@@ -137,14 +137,14 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             </div>
 
             {/* Agent name */}
-            <h3 className="mt-7 text-xl font-medium text-foreground  transition-all duration-500 ease-out ">
+            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
               {name}
             </h3>
 
             {/* Description */}
             <p
               className={cn(
-                "text-sm text-gray-600 dark:text-foreground  dark-hover:text-foreground  transition-all duration-500 ease-out "
+                "text-sm text-gray-600 dark:text-foreground group-hover:text-white/90 transition-colors duration-300"
               )}
             >
               {description}
@@ -159,7 +159,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                 )}>
                   {tag.label}
                 </Badge>
@@ -169,21 +169,20 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between border border-color-2 rounded-lg p-3 text-sm py-6 dark:group-hover:bg-background duration-500 ease-out",
-                isDark ? "bg-background" : "bg-background  border border-color-2"
+                "flex items-center justify-between border border-color-2 rounded-lg p-3 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30"
               )}
             >
               <div className="flex items-center gap-2 font-medium">
                 <div className="w-4 h-4">
-                  <Calendar className="text-primary transition-all duration-500 ease-out dark:text-foreground " />
+                  <Calendar className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground" />
                 </div>
-                <span className=" text-foreground">{lastActivity}</span>
+                <span className="text-foreground group-hover:text-white transition-colors duration-300">{lastActivity}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-4 h-4">
-                  <FileTimeout className="text-badge-blue  transition-all duration-500 ease-out dark:text-foreground " />
+                  <FileTimeout className="text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground" />
                 </div>
-                <span className="font-medium text-foreground">{requestCount}</span>
+                <span className="font-medium text-foreground group-hover:text-white transition-colors duration-300">{requestCount}</span>
               </div>
             </div>
           </CardContent>
