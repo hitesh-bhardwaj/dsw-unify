@@ -36,6 +36,11 @@ const documnetsData = [
   },
 ];
 
+/**
+ * Component to display a list of documents with upload and download options.
+ *
+ * @returns {React.JSX.Element} The rendered Documents component.
+ */
 export default function Documents() {
   return (
     <div className="w-full h-full mx-auto">

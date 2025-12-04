@@ -36,6 +36,11 @@ const sampleData = [
   },
 ];
 
+/**
+ * Component to display a preview of data in a table format.
+ *
+ * @returns {React.JSX.Element} The rendered DataPreview component.
+ */
 export default function DataPreview() {
   return (
     <div className="w-full mx-auto ">

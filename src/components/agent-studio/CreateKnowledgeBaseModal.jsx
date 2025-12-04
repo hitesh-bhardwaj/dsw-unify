@@ -26,6 +26,14 @@ import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import { LeftArrow, TextFile } from "@/components/Icons";
 
+/**
+ * Modal component for creating a new knowledge base.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback when the modal open state changes.
+ * @returns {React.JSX.Element} The rendered KnowledgeBaseModal component.
+ */
 export default function KnowledgeBaseModal({ open, onOpenChange }) {
   const [kbName, setKbName] = useState("");
   const [description, setDescription] = useState("");

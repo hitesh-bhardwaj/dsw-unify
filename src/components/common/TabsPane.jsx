@@ -6,6 +6,21 @@ import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { cn } from "@/lib/utils";
 
+/**
+ * AnimatedTabsSection component for switching between content sections with animations.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<{id: string, value: string, label?: string, name?: string, render?: function, component?: React.ComponentType}>} props.items - The items to display in the tabs.
+ * @param {any} [props.ctx] - Context object passed to the rendered components.
+ * @param {string} [props.defaultValue] - The default active tab value.
+ * @param {string} [props.value] - The controlled active tab value.
+ * @param {function} [props.onValueChange] - Callback when the active tab changes.
+ * @param {string} [props.className] - Additional class names for the container.
+ * @param {string} [props.listClassName] - Additional class names for the tab list.
+ * @param {string} [props.contentClassName] - Additional class names for the content area.
+ * @param {Object} [props.componentProps] - Props passed to the rendered components.
+ * @returns {React.JSX.Element} The rendered AnimatedTabsSection component.
+ */
 export default function AnimatedTabsSection({
   items,
   ctx,

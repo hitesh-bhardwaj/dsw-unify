@@ -11,6 +11,24 @@ import { Button } from "../ui/button";
 import { useRef } from "react";
 import AnimatedProgressBar from "../animations/ProgressBar";
 
+/**
+ * Component to display testing results in a card format.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.test - The test result data.
+ * @param {string} props.test.id - The ID of the test.
+ * @param {string} props.test.name - The name of the test.
+ * @param {string} props.test.description - The description of the test.
+ * @param {Array<{label: string, color: string}>} [props.test.tags=[]] - The tags associated with the test.
+ * @param {string|number} props.test.tests - The number of tests run.
+ * @param {string} props.test.date - The date the test was run.
+ * @param {string} props.test.time - The time the test was run.
+ * @param {number} props.test.width - The width percentage for the progress bar.
+ * @param {string|number} props.test.successRate - The success rate of the test.
+ * @param {"light"|"dark"} [props.test.variant="light"] - The variant of the card.
+ * @param {string} props.tab - The current tab key to trigger re-animation.
+ * @returns {React.JSX.Element} The rendered TestingCardResults component.
+ */
 export function TestingCardResults({ test ,tab}) {
   const {
     id,

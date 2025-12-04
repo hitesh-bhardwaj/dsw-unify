@@ -1,6 +1,13 @@
 import React from 'react'
 import { ModelsCard } from './models-card'
 
+/**
+ * Component to display a grid of model cards.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<Object>} props.items - An array of model data objects to be displayed.
+ * @returns {React.JSX.Element} The rendered ModelsGrid component.
+ */
 const ModelsGrid = ({items}) => {
   return (
     <>

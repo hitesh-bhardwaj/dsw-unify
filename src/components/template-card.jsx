@@ -5,6 +5,20 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Editor, Eye, SynthWave } from "./Icons";
 
+/**
+ * Component to display a card for a template.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.template - The template data.
+ * @param {string} props.template.name - The name of the template.
+ * @param {string} props.template.description - The description of the template.
+ * @param {Array<{label: string}>} [props.template.tags=[]] - The tags associated with the template.
+ * @param {string} props.template.variable - The variables used in the template.
+ * @param {string|number} props.template.uses - The number of uses.
+ * @param {React.ReactNode} props.template.icon - The icon for the template.
+ * @param {"light"|"dark"} [props.template.variant="light"] - The variant of the card.
+ * @returns {React.JSX.Element} The rendered TemplateCard component.
+ */
 export function TemplateCard({ template }) {
   const {
     name,

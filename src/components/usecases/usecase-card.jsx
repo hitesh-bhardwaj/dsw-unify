@@ -10,6 +10,26 @@ import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People, DataEngineeringIcon } from "../Icons";
 const skeletonShownMap = new Map();
 import Link from "next/link";
+
+/**
+ * Component to display a use case card.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.feature - The use case data.
+ * @param {string} props.feature.id - The ID of the use case.
+ * @param {string} props.feature.name - The name of the use case.
+ * @param {string} props.feature.description - The description of the use case.
+ * @param {string} props.feature.slug - The slug for the link.
+ * @param {React.ReactNode} props.feature.icon - The icon for the use case.
+ * @param {string|number} props.feature.peopleCount - The number of people involved.
+ * @param {string} props.feature.lastUpdated - The last updated timestamp or text.
+ * @param {Array<string>} [props.feature.tags=[]] - The tags associated with the use case.
+ * @param {string|number} props.feature.models - The number of models.
+ * @param {string} props.feature.createdAt - The creation timestamp or text.
+ * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered UseCaseCard component.
+ */
 export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
   const {
     id,
@@ -177,6 +197,11 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
   );
 }
 
+/**
+ * Skeleton component for UseCaseCard.
+ *
+ * @returns {React.JSX.Element} The rendered ViewCardSkelton component.
+ */
 export function ViewCardSkelton() {
   return (
     <div className="group w-full h-full">

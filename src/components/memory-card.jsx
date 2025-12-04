@@ -7,9 +7,26 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { SynthWave } from "./Icons";
+import { Separator } from "./ui/separator";
 import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a card for memory items.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.memories - The memory data object.
+ * @param {string} props.memories.id - The ID of the memory.
+ * @param {string} props.memories.name - The name of the memory.
+ * @param {string} props.memories.description - The description of the memory.
+ * @param {string} props.memories.status - The status of the memory (e.g., "active").
+ * @param {Array<{label: string}>} [props.memories.tags=[]] - The tags associated with the memory.
+ * @param {string|number} props.memories.entries - The number of entries.
+ * @param {React.ReactNode} props.memories.icon - The icon for the memory.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered MemoryCard component.
+ */
 export function MemoryCard({ memories, minSkeletonMs = 500 }) {
   const { id, name, description, status, tags = [], entries ,icon} = memories || {};
 
@@ -129,6 +146,11 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
 /* ---------------------------------------------
    Skeleton that mirrors the MemoryCard layout
 ---------------------------------------------- */
+/**
+ * Skeleton component for MemoryCard.
+ *
+ * @returns {React.JSX.Element} The rendered MemoryCardSkeleton component.
+ */
 export function MemoryCardSkeleton() {
   return (
     <Bounce>

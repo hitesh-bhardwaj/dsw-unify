@@ -10,6 +10,22 @@ import { TriggerIcon } from "./Icons";
 import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a card for guardrails.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.memories - The guardrail data.
+ * @param {string} props.memories.id - The ID of the guardrail.
+ * @param {string} props.memories.name - The name of the guardrail.
+ * @param {string} props.memories.description - The description of the guardrail.
+ * @param {string} props.memories.status - The status of the guardrail (e.g., "active").
+ * @param {Array<{label: string}>} [props.memories.tags=[]] - The tags associated with the guardrail.
+ * @param {string|number} props.memories.triggers - The trigger count or info.
+ * @param {React.ReactNode} props.memories.icon - The icon for the guardrail.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered GuardrailsCard component.
+ */
 export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
   const {id, name, description, status, tags = [], triggers ,icon} = memories || {};
 
@@ -133,6 +149,11 @@ export function GuardrailsCard({ memories, minSkeletonMs = 500 }) {
 /* ---------------------------------------------
    Skeleton that mirrors the GuardrailsCard layout
 ---------------------------------------------- */
+/**
+ * Skeleton component for GuardrailsCard.
+ *
+ * @returns {React.JSX.Element} The rendered GuardrailsCardSkeleton component.
+ */
 export function GuardrailsCardSkeleton() {
   return (
     <Bounce>

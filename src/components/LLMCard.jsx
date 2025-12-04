@@ -12,6 +12,26 @@ import { Bounce } from "./animations/Animations";
 // Track which LLMs have already shown their skeleton
 const skeletonShownMap = new Map();
 
+/**
+ * Component to display a card representing an LLM (Large Language Model).
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.llm - The LLM data object.
+ * @param {string} props.llm.id - The unique identifier of the LLM.
+ * @param {string} props.llm.name - The name of the LLM.
+ * @param {string} props.llm.description - The description of the LLM.
+ * @param {string} props.llm.status - The status of the LLM (e.g., "active").
+ * @param {Array<{label: string}>} [props.llm.tags=[]] - An array of tags associated with the LLM.
+ * @param {React.ReactNode} props.llm.icon - The icon for the LLM.
+ * @param {boolean} [props.llm.deploy] - Whether the LLM is currently deploying.
+ * @param {boolean} [props.llm.performance] - Whether to show performance stats instead of usage stats.
+ * @param {string|number} [props.llm.accuracy] - The accuracy of the LLM (if performance is true).
+ * @param {string|number} [props.llm.latency] - The latency of the LLM (if performance is true).
+ * @param {string|number} [props.llm.requests] - The number of requests (if performance is false).
+ * @param {string|number} [props.llm.avgres] - The average response time (if performance is false).
+ * @param {number} [minSkeletonMs=500] - The minimum time in milliseconds to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered LLMCard component.
+ */
 export function LLMCard({ llm, minSkeletonMs = 500 }) {
   const { id, name, description, status, tags = [],icon } = llm || {};
 
@@ -165,6 +185,11 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
 /* -----------------------------
    Skeleton that mirrors the card
 ------------------------------ */
+/**
+ * Skeleton component for the LLMCard.
+ *
+ * @returns {React.JSX.Element} The rendered LLMCardSkeleton component.
+ */
 export function LLMCardSkeleton() {
   return (
     <Bounce>

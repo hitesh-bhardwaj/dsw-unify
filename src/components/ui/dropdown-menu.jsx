@@ -6,24 +6,50 @@ import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * DropdownMenu component for creating dropdown menus.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DropdownMenu component.
+ */
 function DropdownMenu({
   ...props
 }) {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
 }
 
+/**
+ * DropdownMenuPortal component for rendering dropdown menu content into a portal.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DropdownMenuPortal component.
+ */
 function DropdownMenuPortal({
   ...props
 }) {
   return (<DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />);
 }
 
+/**
+ * DropdownMenuTrigger component for the trigger of the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DropdownMenuTrigger component.
+ */
 function DropdownMenuTrigger({
   ...props
 }) {
   return (<DropdownMenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />);
 }
 
+/**
+ * DropdownMenuContent component for the content of the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {number} [props.sideOffset=4] - The side offset of the content.
+ * @returns {React.JSX.Element} The rendered DropdownMenuContent component.
+ */
 function DropdownMenuContent({
   className,
   sideOffset = 4,
@@ -43,12 +69,27 @@ function DropdownMenuContent({
   );
 }
 
+/**
+ * DropdownMenuGroup component for grouping dropdown menu items.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DropdownMenuGroup component.
+ */
 function DropdownMenuGroup({
   ...props
 }) {
   return (<DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />);
 }
 
+/**
+ * DropdownMenuItem component for individual items in the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {boolean} [props.inset] - Whether the item is inset.
+ * @param {string} [props.variant="default"] - The variant of the item.
+ * @returns {React.JSX.Element} The rendered DropdownMenuItem component.
+ */
 function DropdownMenuItem({
   className,
   inset,
@@ -68,6 +109,15 @@ function DropdownMenuItem({
   );
 }
 
+/**
+ * DropdownMenuCheckboxItem component for checkbox items in the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.ReactNode} props.children - The content of the checkbox item.
+ * @param {boolean} props.checked - Whether the item is checked.
+ * @returns {React.JSX.Element} The rendered DropdownMenuCheckboxItem component.
+ */
 function DropdownMenuCheckboxItem({
   className,
   children,
@@ -94,12 +144,26 @@ function DropdownMenuCheckboxItem({
   );
 }
 
+/**
+ * DropdownMenuRadioGroup component for radio groups in the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DropdownMenuRadioGroup component.
+ */
 function DropdownMenuRadioGroup({
   ...props
 }) {
   return (<DropdownMenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />);
 }
 
+/**
+ * DropdownMenuRadioItem component for radio items in the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.ReactNode} props.children - The content of the radio item.
+ * @returns {React.JSX.Element} The rendered DropdownMenuRadioItem component.
+ */
 function DropdownMenuRadioItem({
   className,
   children,
@@ -124,6 +188,14 @@ function DropdownMenuRadioItem({
   );
 }
 
+/**
+ * DropdownMenuLabel component for labeling groups in the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {boolean} [props.inset] - Whether the label is inset.
+ * @returns {React.JSX.Element} The rendered DropdownMenuLabel component.
+ */
 function DropdownMenuLabel({
   className,
   inset,
@@ -138,6 +210,13 @@ function DropdownMenuLabel({
   );
 }
 
+/**
+ * DropdownMenuSeparator component for separating items in the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered DropdownMenuSeparator component.
+ */
 function DropdownMenuSeparator({
   className,
   ...props
@@ -150,6 +229,13 @@ function DropdownMenuSeparator({
   );
 }
 
+/**
+ * DropdownMenuShortcut component for displaying keyboard shortcuts.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered DropdownMenuShortcut component.
+ */
 function DropdownMenuShortcut({
   className,
   ...props
@@ -162,12 +248,27 @@ function DropdownMenuShortcut({
   );
 }
 
+/**
+ * DropdownMenuSub component for creating sub-menus in the dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DropdownMenuSub component.
+ */
 function DropdownMenuSub({
   ...props
 }) {
   return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />;
 }
 
+/**
+ * DropdownMenuSubTrigger component for the trigger of a sub-menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {boolean} [props.inset] - Whether the trigger is inset.
+ * @param {React.ReactNode} props.children - The content of the trigger.
+ * @returns {React.JSX.Element} The rendered DropdownMenuSubTrigger component.
+ */
 function DropdownMenuSubTrigger({
   className,
   inset,
@@ -189,6 +290,13 @@ function DropdownMenuSubTrigger({
   );
 }
 
+/**
+ * DropdownMenuSubContent component for the content of a sub-menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered DropdownMenuSubContent component.
+ */
 function DropdownMenuSubContent({
   className,
   ...props

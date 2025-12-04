@@ -11,6 +11,20 @@ import { ChevronDownIcon } from './Icons';
 import { BadgeCheck, Bell, CreditCard, LogOut, Sparkles } from 'lucide-react';
 import { Separator } from './ui/separator';
 
+/**
+ * Navigation user profile component with a dropdown menu.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.user - The user object containing details like avatar, name, and email.
+ * @param {string} props.user.name - The user's name.
+ * @param {string} props.user.email - The user's email.
+ * @param {string} props.user.avatar - The URL of the user's avatar image.
+ * @param {string} [props.side] - The side to render the popover.
+ * @param {number} [props.sideOffset] - The offset from the trigger.
+ * @param {string} [props.align] - The alignment of the popover.
+ * @param {number} [props.alignOffset] - The offset for alignment.
+ * @returns {React.JSX.Element} The rendered NavUser component.
+ */
 export const NavUser = ({
   user,
   side,
@@ -176,4 +190,4 @@ export const NavUser = ({
       </PopoverPanel>
     </Popover>
   );
-};
+}

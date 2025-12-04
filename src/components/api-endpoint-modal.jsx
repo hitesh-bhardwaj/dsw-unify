@@ -26,6 +26,16 @@ import {
 } from "@/components/ui/tooltip";
 import Tabs from "./common/Tabs";
 
+/**
+ * Component for copying text to clipboard with a tooltip feedback.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.text - The text to copy.
+ * @param {string} [props.className] - Additional class names for the button.
+ * @param {string} [props.iconClassName] - Additional class names for the icon.
+ * @param {string} [props.aria-label] - Aria label for the button.
+ * @returns {React.JSX.Element} The rendered CopyWithTooltip component.
+ */
 function CopyWithTooltip({
   text,
   className = "",
@@ -72,6 +82,15 @@ function CopyWithTooltip({
     },
   ];
 
+/**
+ * Modal for displaying API endpoint information and code examples.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback function when the open state changes.
+ * @param {string} [props.agentId="unnamed-agent"] - The ID of the agent.
+ * @returns {React.JSX.Element} The rendered ApiEndpointModal component.
+ */
 export default function ApiEndpointModal({
   open,
   onOpenChange,

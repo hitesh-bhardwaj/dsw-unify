@@ -13,6 +13,13 @@ import {
 import { Bar, BarChart } from "recharts";
 import { cn } from "@/lib/utils";
 
+/**
+ * Component to display a grid for LLM configuration and usage analytics.
+ *
+ * @param {Object} props - The component props.
+ * @param {number} [props.minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered LLMConfigurationGrid component.
+ */
 const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
   const chartData = [
     { month: "January", desktop: 156 },

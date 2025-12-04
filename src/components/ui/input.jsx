@@ -2,6 +2,14 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Input component for text input fields.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {string} [props.type] - The type of input.
+ * @returns {React.JSX.Element} The rendered Input component.
+ */
 function Input({
   className,
   type,

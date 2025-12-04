@@ -53,7 +53,25 @@ function CopyWithTooltip({
 }
 
 
-
+/**
+ * Modal component displaying details about a feature transformation, including details, code, and history.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback function when the open state changes.
+ * @param {Object} props.feature - The feature data object.
+ * @param {string} props.feature.id - The ID of the feature.
+ * @param {string} props.feature.name - The name of the feature.
+ * @param {string} props.feature.description - The description of the feature.
+ * @param {React.ReactNode} props.feature.icon - The icon for the feature.
+ * @param {Array} props.feature.inputParams - The input parameters for the feature.
+ * @param {Array<string>} [props.feature.tags=[]] - The tags associated with the feature.
+ * @param {string} props.feature.lastUpdated - The last updated timestamp or text.
+ * @param {string} props.feature.createdAt - The creation timestamp or text.
+ * @param {string} props.feature.codeExamples - The code examples for the feature.
+ * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
+ * @returns {React.JSX.Element} The rendered HotEncoding component.
+ */
 export default function HotEncoding({ open, onOpenChange, feature }) {
   const {
     id,

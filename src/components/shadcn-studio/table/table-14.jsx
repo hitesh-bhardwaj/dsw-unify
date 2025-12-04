@@ -62,6 +62,11 @@ const invoices = [
   }
 ]
 
+/**
+ * A demo component showcasing a table with rounded corners and pagination.
+ *
+ * @returns {React.JSX.Element} The rendered TableRoundedCornerDemo component.
+ */
 const TableRoundedCornerDemo = () => {
   return (
     <div className='w-full'>

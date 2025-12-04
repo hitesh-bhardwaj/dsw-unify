@@ -58,6 +58,12 @@ const console = [
   
 ];
 
+/**
+ * Console Page component.
+ * Displays a grid of console cards filtering by search query.
+ *
+ * @returns {React.JSX.Element} The rendered ConsolePage component.
+ */
 export default function ConsolePage() {
   const [query, setQuery] = useState("");
 

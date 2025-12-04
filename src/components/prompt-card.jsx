@@ -11,6 +11,26 @@ import { Bin, Editor, Eye, SynthWave } from "./Icons";
 import Link from "next/link";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a card for a prompt.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.prompt - The prompt data.
+ * @param {string} props.prompt.id - The ID of the prompt.
+ * @param {string} props.prompt.name - The name of the prompt.
+ * @param {string} props.prompt.description - The description of the prompt.
+ * @param {React.ReactNode} props.prompt.icon - The icon for the prompt.
+ * @param {string|number} props.prompt.rating - The rating of the prompt.
+ * @param {string} props.prompt.version - The version of the prompt.
+ * @param {Array<{label: string}>} [props.prompt.tags=[]] - The tags associated with the prompt.
+ * @param {string|number} props.prompt.uses - The number of uses.
+ * @param {string} props.prompt.lastUpdated - The last updated timestamp or text.
+ * @param {string} props.prompt.preview - The preview text of the prompt.
+ * @param {"light"|"dark"} [props.prompt.variant="light"] - The variant of the card.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered PromptCard component.
+ */
 export function PromptCard({ prompt, minSkeletonMs = 500 }) {
   const {
     id,
@@ -188,6 +208,11 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
 /* ---------------------------------------------
    Skeleton that mirrors the PromptCard layout
 ---------------------------------------------- */
+/**
+ * Skeleton component for PromptCard.
+ *
+ * @returns {React.JSX.Element} The rendered PromptCardSkeleton component.
+ */
 export function PromptCardSkeleton() {
   return (
     <div className="group w-full h-full">

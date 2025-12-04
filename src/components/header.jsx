@@ -8,6 +8,13 @@ import { FAQIcons, HomeIcon, NotificationsIcon } from "./Icons";
 import { ThemeTogglerBtn } from "./headerdark";
 import Breadcrumbs from "./common/Breadcrumbs";
 
+/**
+ * Header component containing navigation controls, breadcrumbs, theme toggle, notifications, help, and user profile.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.title="Agents"] - The title displayed in the header (currently unused but good for future extension).
+ * @returns {React.JSX.Element} The rendered Header component.
+ */
 export function Header({ title = "Agents" }) {
 
   const user = {

@@ -11,6 +11,25 @@ import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, FeaturesIcon, Table
 import ViewsCardModal from "./feature-view/ViewsModalCard";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a card for a feature view.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.feature - The feature view data.
+ * @param {string} props.feature.id - The ID of the feature view.
+ * @param {string} props.feature.name - The name of the feature view.
+ * @param {string} props.feature.description - The description of the feature view.
+ * @param {React.ReactNode} props.feature.icon - The icon for the feature view.
+ * @param {string|number} props.feature.tablesCount - The number of tables.
+ * @param {string} props.feature.lastUpdated - The last updated timestamp or text.
+ * @param {Array<string>} [props.feature.tags=[]] - The tags associated with the feature view.
+ * @param {string|number} props.feature.featureNo - The feature number.
+ * @param {string} props.feature.createdAt - The creation timestamp or text.
+ * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered ViewCard component.
+ */
 export function ViewCard({ feature, minSkeletonMs = 500 }) {
   const {
     id,
@@ -179,6 +198,11 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
   );
 }
 
+/**
+ * Skeleton component for ViewCard.
+ *
+ * @returns {React.JSX.Element} The rendered ViewCardSkelton component.
+ */
 export function ViewCardSkelton() {
   return (
     <div className="group w-full h-full">

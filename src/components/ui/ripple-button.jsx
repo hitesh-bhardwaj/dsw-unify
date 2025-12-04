@@ -6,6 +6,21 @@ import { motion } from 'motion/react';
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 
+/**
+ * RippleButton component providing a ripple effect on click.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.RefObject} ref - Ref for the button element.
+ * @param {string} [props.circColor] - The color of the ripple circle.
+ * @param {React.ReactNode} props.children - The children to render.
+ * @param {function} [props.onClick] - Callback when the button is clicked.
+ * @param {string} [props.className] - Additional class names.
+ * @param {"default"|"destructive"|"outline"|"secondary"|"ghost"|"link"} [props.variant] - The button variant.
+ * @param {"default"|"sm"|"lg"|"icon"} [props.size] - The button size.
+ * @param {number} [props.scale=10] - The scale of the ripple effect.
+ * @param {Object} [props.transition] - Transition settings for the ripple effect.
+ * @returns {React.JSX.Element} The rendered RippleButton component.
+ */
 function RippleButton({
   ref,
   circColor,

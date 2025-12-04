@@ -23,6 +23,14 @@ import {
 } from "@/components/ui/select";
 import { LeftArrow } from "@/components/Icons";
 
+/**
+ * Modal for adding new guardrails.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback when the modal open state changes.
+ * @returns {React.JSX.Element} The rendered AddGuardrailsModal component.
+ */
 export default function AddGuardrailsModal({ open, onOpenChange }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

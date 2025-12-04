@@ -135,6 +135,11 @@ const chartConfig = {
   },
 }
 
+/**
+ * Interactive area chart component displaying visitors data.
+ *
+ * @returns {React.JSX.Element} The rendered ChartAreaInteractive component.
+ */
 export function ChartAreaInteractive() {
   const [timeRange, setTimeRange] = React.useState("90d")
 

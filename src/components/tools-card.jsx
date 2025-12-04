@@ -10,6 +10,21 @@ import { SynthWave } from "./Icons";
 import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a card for tools.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.tools - The tool data.
+ * @param {string} props.tools.id - The ID of the tool.
+ * @param {string} props.tools.name - The name of the tool.
+ * @param {string} props.tools.description - The description of the tool.
+ * @param {string} props.tools.status - The status of the tool (e.g., "active").
+ * @param {Array<{label: string}>} [props.tools.tags=[]] - The tags associated with the tool.
+ * @param {React.ReactNode} props.tools.icon - The icon for the tool.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered ToolsCard component.
+ */
 export function ToolsCard({ tools, minSkeletonMs = 500 }) {
   const {id,name, description, status, tags = [],icon } = tools || {};
 
@@ -116,6 +131,11 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
 /* ---------------------------------------------
    Skeleton that mirrors the ToolsCard layout
 ---------------------------------------------- */
+/**
+ * Skeleton component for ToolsCard.
+ *
+ * @returns {React.JSX.Element} The rendered ToolsCardSkeleton component.
+ */
 export function ToolsCardSkeleton() {
   return (
     <Bounce>

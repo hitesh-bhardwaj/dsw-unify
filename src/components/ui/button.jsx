@@ -37,6 +37,16 @@ const buttonVariants = cva(
   }
 );
 
+/**
+ * Button component with various styles and sizes.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {"default"|"destructive"|"outline"|"secondary"|"ghost"|"link"} [props.variant="default"] - The button variant.
+ * @param {"default"|"sm"|"lg"|"icon"|"icon-sm"|"icon-lg"} [props.size="default"] - The button size.
+ * @param {boolean} [props.asChild=false] - Whether to render as a child component.
+ * @returns {React.JSX.Element} The rendered Button component.
+ */
 function Button({ className, variant, size, asChild = false, ...props }) {
   const Comp = asChild ? Slot : "button";
 

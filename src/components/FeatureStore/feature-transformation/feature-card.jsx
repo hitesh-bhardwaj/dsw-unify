@@ -11,6 +11,24 @@ import { Bin, Editor, Eye, Calendar } from "../../Icons";
 import HotEncoding from "./TransformationCard";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a card for a feature transformation.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.feature - The feature data.
+ * @param {string} props.feature.id - The ID of the feature.
+ * @param {string} props.feature.name - The name of the feature.
+ * @param {string} props.feature.description - The description of the feature.
+ * @param {React.ReactNode} props.feature.icon - The icon for the feature.
+ * @param {Array} props.feature.inputParams - The input parameters for the feature.
+ * @param {Array<string>} [props.feature.tags=[]] - The tags associated with the feature.
+ * @param {string} props.feature.lastUpdated - The last updated timestamp or text.
+ * @param {string} props.feature.codeExamples - The code examples for the feature.
+ * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered FeatureCard component.
+ */
 export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   const {
     id,
@@ -168,6 +186,11 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   );
 }
 
+/**
+ * Skeleton component for FeatureCard.
+ *
+ * @returns {React.JSX.Element} The rendered FeatureCardSkelton component.
+ */
 export function FeatureCardSkelton() {
   return (
     <div className="group w-full h-full">

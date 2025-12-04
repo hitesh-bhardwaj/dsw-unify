@@ -5,6 +5,12 @@ import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { ThemeToggler } from "@/components/animate-ui/primitives/effects/theme-toggler";
 
+/**
+ * A button component that toggles the application's theme between light and dark modes.
+ * It uses the `next-themes` hook to manage theme state and the `ThemeToggler` component for transition effects.
+ *
+ * @returns {React.JSX.Element} The rendered ThemeTogglerBtn component.
+ */
 export const ThemeTogglerBtn = () => {
   const { theme, resolvedTheme, setTheme } = useTheme();
   const [dir, setDir] = useState("");

@@ -3,6 +3,13 @@ import { LeftArrow } from '../Icons'
 import Link from 'next/link'
 import { Button } from '../ui/button'
 
+/**
+ * Animated left arrow component that slides on hover.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.link - The URL to link to.
+ * @returns {React.JSX.Element} The rendered LeftArrowAnim component.
+ */
 const LeftArrowAnim = ({link}) => {
   return (
    <>
@@ -35,4 +42,4 @@ const LeftArrowAnim = ({link}) => {
   )
 }
 
-export default LeftArrowAnim
+export default LeftArrowAnim;

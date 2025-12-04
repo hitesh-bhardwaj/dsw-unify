@@ -11,6 +11,22 @@ import { RippleButton } from "../ui/ripple-button";
 
 const skeletonShownMap = new Map();
 
+/**
+ * Component to display a model card.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.data - The model data.
+ * @param {string} props.data.id - The ID of the model.
+ * @param {string} props.data.name - The name of the model.
+ * @param {string} props.data.description - The description of the model.
+ * @param {Array<{label: string, color: string}>} [props.data.tags=[]] - The tags associated with the model.
+ * @param {string|number} props.data.records - The number of records.
+ * @param {string} props.data.createdBy - The creator of the model.
+ * @param {string} props.data.response - The average response time.
+ * @param {boolean} props.data.deployed - Whether the model is deployed.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered ModelsCard component.
+ */
 export function ModelsCard({ data , minSkeletonMs = 500 }) {
    const { id, name, description, tags = [], records, createdBy, response , deployed} = data;
   const [showSkeleton, setShowSkeleton] = useState(() => {

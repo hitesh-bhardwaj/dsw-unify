@@ -23,6 +23,14 @@ import {
 } from "@/components/ui/select";
 import { LeftArrow } from "@/components/Icons";
 
+/**
+ * Modal component for creating new memories.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback when the modal open state changes.
+ * @returns {React.JSX.Element} The rendered AddMemoriesModal component.
+ */
 export default function AddMemoriesModal({ open, onOpenChange }) {
   const [memoryName, setMemoryName] = useState("");
   const [description, setDescription] = useState("");

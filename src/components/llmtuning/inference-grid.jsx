@@ -7,6 +7,12 @@ import { SparklesIcon } from "../Icons";
 import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 
+/**
+ * Component for testing model inference.
+ * Allows users to input model details, temperature, and a message to send a test request.
+ *
+ * @returns {React.JSX.Element} The rendered InferenceGrid component.
+ */
 const InferenceGrid = () => {
   const [systemPrompt, setSystemPrompt] = useState("");
   const [query, setQuery] = useState("");

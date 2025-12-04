@@ -4,6 +4,18 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import CountUp from "../animations/CountUp";
 
+/**
+ * Component to display analytics for testing in a card format.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.cards - The analytics data for the card.
+ * @param {string} props.cards.heading - The heading of the card.
+ * @param {string|number} props.cards.progress - The progress value to display.
+ * @param {string} props.cards.remarks - The remarks or additional info.
+ * @param {boolean} props.cards.positive - Whether the trend is positive.
+ * @param {string} props.tab - The current tab key to trigger re-animation.
+ * @returns {React.JSX.Element} The rendered TestingAnalyticsCard component.
+ */
 export function TestingAnalyticsCard({ cards, tab }) {
   const { heading, progress, remarks, positive } = cards;
 

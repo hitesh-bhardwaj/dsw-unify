@@ -10,6 +10,20 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const skeletonShownMap = new Map();
 
+/**
+ * Component to display a dataset card.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.data - The dataset data.
+ * @param {string} props.data.id - The ID of the dataset.
+ * @param {string} props.data.name - The name of the dataset.
+ * @param {string} props.data.description - The description of the dataset.
+ * @param {Array<{label: string, color: string}>} [props.data.tags=[]] - The tags associated with the dataset.
+ * @param {string|number} props.data.records - The number of records in the dataset.
+ * @param {string} props.data.createdBy - The creator of the dataset.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered DataSet component.
+ */
 export function DataSet({ data , minSkeletonMs = 500 }) {
    const { id, name, description, tags = [], records, createdBy } = data;
   const [showSkeleton, setShowSkeleton] = useState(() => {

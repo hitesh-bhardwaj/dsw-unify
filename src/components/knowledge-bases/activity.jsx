@@ -10,6 +10,12 @@ const recentActivity= [
       { type: "success", event: "Updated 12 documents", time: "1 day ago" },
       { type: "success", event: "Sync completed", time: "2 days ago" },
     ]
+
+/**
+ * Component to display a list of recent activities.
+ *
+ * @returns {React.JSX.Element} The rendered Activity component.
+ */
 const Activity = () => {
 
     const getActivityColor = (type) => {

@@ -2,6 +2,13 @@
 import React from 'react'
 import { DataSet } from './dataset-card'
 
+/**
+ * Component to display a grid of datasets.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<Object>} props.items - An array of dataset objects to be displayed.
+ * @returns {React.JSX.Element} The rendered DatasetsGrid component.
+ */
 const DatasetsGrid = ({items}) => {
   return (
       <>

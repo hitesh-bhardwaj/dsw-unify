@@ -6,30 +6,61 @@ import { XIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Sheet component for displaying content in a side sheet.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered Sheet component.
+ */
 function Sheet({
   ...props
 }) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />;
 }
 
+/**
+ * SheetTrigger component for toggling the sheet.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered SheetTrigger component.
+ */
 function SheetTrigger({
   ...props
 }) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />;
 }
 
+/**
+ * SheetClose component for closing the sheet.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered SheetClose component.
+ */
 function SheetClose({
   ...props
 }) {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />;
 }
 
+/**
+ * SheetPortal component for rendering the sheet into a portal.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered SheetPortal component.
+ */
 function SheetPortal({
   ...props
 }) {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />;
 }
 
+/**
+ * SheetOverlay component for the sheet's overlay background.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered SheetOverlay component.
+ */
 function SheetOverlay({
   className,
   ...props
@@ -45,6 +76,15 @@ function SheetOverlay({
   );
 }
 
+/**
+ * SheetContent component for the content of the sheet.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.ReactNode} props.children - The content of the sheet.
+ * @param {"top"|"bottom"|"left"|"right"} [props.side="right"] - The side the sheet slides in from.
+ * @returns {React.JSX.Element} The rendered SheetContent component.
+ */
 function SheetContent({
   className,
   children,
@@ -80,6 +120,13 @@ function SheetContent({
   );
 }
 
+/**
+ * SheetHeader component for the sheet header.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered SheetHeader component.
+ */
 function SheetHeader({
   className,
   ...props
@@ -92,6 +139,13 @@ function SheetHeader({
   );
 }
 
+/**
+ * SheetFooter component for the sheet footer.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered SheetFooter component.
+ */
 function SheetFooter({
   className,
   ...props
@@ -104,6 +158,13 @@ function SheetFooter({
   );
 }
 
+/**
+ * SheetTitle component for the sheet title.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered SheetTitle component.
+ */
 function SheetTitle({
   className,
   ...props
@@ -116,6 +177,13 @@ function SheetTitle({
   );
 }
 
+/**
+ * SheetDescription component for the sheet description.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered SheetDescription component.
+ */
 function SheetDescription({
   className,
   ...props

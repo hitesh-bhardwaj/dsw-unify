@@ -5,6 +5,13 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * TooltipProvider component to wrap tooltips.
+ *
+ * @param {Object} props - The component props.
+ * @param {number} [props.delayDuration=0] - The delay before showing the tooltip.
+ * @returns {React.JSX.Element} The rendered TooltipProvider component.
+ */
 function TooltipProvider({
   delayDuration = 0,
   ...props
@@ -12,6 +19,12 @@ function TooltipProvider({
   return (<TooltipPrimitive.Provider data-slot="tooltip-provider" delayDuration={delayDuration} {...props} />);
 }
 
+/**
+ * Tooltip component.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered Tooltip component.
+ */
 function Tooltip({
   ...props
 }) {
@@ -22,12 +35,27 @@ function Tooltip({
   );
 }
 
+/**
+ * TooltipTrigger component.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered TooltipTrigger component.
+ */
 function TooltipTrigger({
   ...props
 }) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
+/**
+ * TooltipContent component for the tooltip content.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {number} [props.sideOffset=0] - The side offset of the content.
+ * @param {React.ReactNode} props.children - The content of the tooltip.
+ * @returns {React.JSX.Element} The rendered TooltipContent component.
+ */
 function TooltipContent({
   className,
   sideOffset = 0,

@@ -9,6 +9,20 @@ import { getStrictContext } from '@/lib/get-strict-context';
 const [ParticlesProvider, useParticles] =
   getStrictContext('ParticlesContext');
 
+/**
+ * Particles container component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.RefObject} ref - Ref for the container.
+ * @param {boolean} [props.animate=true] - Whether to animate the particles.
+ * @param {boolean} [props.asChild=false] - Whether to render as a child component.
+ * @param {boolean} [props.inView=false] - Whether to trigger animation only when in view.
+ * @param {string} [props.inViewMargin='0px'] - Margin for in-view detection.
+ * @param {boolean} [props.inViewOnce=true] - Whether to trigger in-view animation only once.
+ * @param {React.ReactNode} props.children - The content to be wrapped.
+ * @param {Object} [props.style] - Inline styles.
+ * @returns {React.JSX.Element} The rendered Particles component.
+ */
 function Particles({
   ref,
   animate = true,
@@ -33,6 +47,24 @@ function Particles({
   );
 }
 
+/**
+ * Particles effect component to render individual particles.
+ *
+ * @param {Object} props - The component props.
+ * @param {"top"|"bottom"|"left"|"right"} [props.side='top'] - The side to emit particles from.
+ * @param {"start"|"center"|"end"} [props.align='center'] - Alignment along the side.
+ * @param {number} [props.count=6] - Number of particles.
+ * @param {number} [props.radius=30] - Radius of particle spread.
+ * @param {number} [props.spread=360] - Spread angle in degrees.
+ * @param {number} [props.duration=0.8] - Animation duration in seconds.
+ * @param {number} [props.holdDelay=0.05] - Delay between particles.
+ * @param {number} [props.sideOffset=0] - Offset from the side.
+ * @param {number} [props.alignOffset=0] - Offset for alignment.
+ * @param {number} [props.delay=0] - Initial delay.
+ * @param {Object} [props.transition] - Transition settings.
+ * @param {Object} [props.style] - Inline styles.
+ * @returns {React.JSX.Element} The rendered ParticlesEffect component.
+ */
 function ParticlesEffect({
   side = 'top',
   align = 'center',

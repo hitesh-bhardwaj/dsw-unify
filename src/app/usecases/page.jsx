@@ -115,6 +115,16 @@ const repeatedData = Array.from({ length: 4 }).flatMap((_, block) =>
 function parseDate(d) { return new Date(d).getTime(); }
 function compareValues(a, b) { if (a === b) return 0; return a < b ? -1 : 1; }
 
+/**
+ * Helper function to sort rows by key and direction.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.active - Whether the sort button is active.
+ * @param {"asc"|"desc"} props.dir - The sort direction.
+ * @param {function} props.onClick - The click handler.
+ * @param {string} props.label - The label for accessibility.
+ * @returns {React.JSX.Element} The rendered SortButton component.
+ */
 function SortButton({ active, dir, onClick, label }) {
   return (
     <button
@@ -131,6 +141,12 @@ function SortButton({ active, dir, onClick, label }) {
 }
 
 /* ---------- Page ---------- */
+/**
+ * Use Cases Page component.
+ * Displays a table of use cases with pagination, sorting, and search.
+ *
+ * @returns {React.JSX.Element} The rendered UseCasesPage component.
+ */
 export default function UseCasesPage() {
   const [rows, setRows] = useState(repeatedData);
   const [query, setQuery] = useState("");

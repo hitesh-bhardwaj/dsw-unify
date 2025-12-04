@@ -4,6 +4,11 @@ import { Textarea } from "./ui/textarea";
 import { Badge } from "./ui/badge";
 import { cn } from "@/lib/utils";
 
+/**
+ * Component to display and edit prompt metadata such as name, category, description, and tags.
+ *
+ * @returns {React.JSX.Element} The rendered PromptMetadataGrid component.
+ */
 const PromptMetadataGrid = () => {
   const [systemPrompt, setSystemPrompt] = useState("");
   const [namePrompt, setNamePrompt] = useState("");

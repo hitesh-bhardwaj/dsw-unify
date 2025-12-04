@@ -9,7 +9,16 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-// DetailsTab integrated into HotEncoding
+/**
+ * Component to display details of a feature transformation.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.description - The description of the transformation.
+ * @param {Array<{name: string, type: string, required: string, description: string}>} props.inputParams - The input parameters for the transformation.
+ * @param {string} props.lastUpdated - The last updated date.
+ * @param {string} props.createdAt - The creation date.
+ * @returns {React.JSX.Element} The rendered DetailsTab component.
+ */
 export default function DetailsTab({
   description,
   inputParams,

@@ -6,6 +6,23 @@ import { Eye } from "lucide-react";
 import { Button } from "../ui/button";
 import AnimatedProgressBar from "../animations/ProgressBar";
 
+/**
+ * Component to display a training card with details about a training job.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.data - The training job data.
+ * @param {string} props.data.id - The ID of the training job.
+ * @param {string} props.data.name - The name of the training job.
+ * @param {string} props.data.description - The description of the training job.
+ * @param {Array<{label: string, color: string}>} [props.data.tags=[]] - The tags associated with the training job.
+ * @param {string|number} props.data.progress - The progress of the training job (in steps).
+ * @param {string} props.data.date - The start date of the training job.
+ * @param {string|number} props.data.loss - The loss value of the training job.
+ * @param {number} props.data.width - The width percentage for the progress bar.
+ * @param {string} props.data.successRate - The success rate of the training job.
+ * @param {string|number} props.playKey - A key to trigger re-animation of the progress bar.
+ * @returns {React.JSX.Element} The rendered TrainingCard component.
+ */
 export function TrainingCard({ data, playKey }) {
   const {
     id,

@@ -215,11 +215,12 @@ const navigation = [
 let hasAnimatedGlobal = false;
 
 /**
- * Helper: renders a span that is truncated by parent CSS
- * ([&>span:last-child]:truncate) and shows a tooltip
- * ONLY if the text is actually truncated.
+ * Helper component to render text truncated by CSS and show a tooltip if truncated.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.text - The text to display.
+ * @returns {React.JSX.Element} The rendered TruncatedTextWithTooltip component.
  */
-
 function TruncatedTextWithTooltip({ text }) {
   const spanRef = useRef(null);
   const [isTruncated, setIsTruncated] = useState(false);
@@ -259,6 +260,11 @@ function TruncatedTextWithTooltip({ text }) {
   );
 }
 
+/**
+ * Main AppSidebar component for navigation.
+ *
+ * @returns {React.JSX.Element} The rendered AppSidebar component.
+ */
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();

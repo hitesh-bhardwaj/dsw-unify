@@ -1,8 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Unify Agentic AI
+
+Unify Agentic AI is a comprehensive platform for building, deploying, and managing autonomous AI agents. This repository contains the frontend application built with Next.js, offering a rich user interface for managing various aspects of the AI lifecycle, including data engineering, feature stores, AI studios, and agent management.
+
+## Features
+
+- **Data Engineering**: Tools for data ingestion, exploration, visualization, and validation.
+- **Feature Store**: Manage feature transformations, views, and services.
+- **AI Studio**: A suite for quick starts, use cases, model development, monitoring, and inference.
+- **Agent Studio**: Build and manage agents, prompts, LLMs, knowledge bases, tools, memories, guardrails, and testing.
+- **Workflow Builder**: Design complex workflows integrating agents and models.
+- **Console**: Centralized dashboard for monitoring and management.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (v18 or later recommended)
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1.  Clone the repository:
+    ```bash
+    git clone <repository-url>
+    cd dsw-unify
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    # or
+    yarn install
+    # or
+    pnpm install
+    # or
+    bun install
+    ```
+
+### Running the Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
@@ -18,7 +55,53 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Building for Production
+
+To build the application for production:
+
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+# or
+bun build
+```
+
+To start the production server:
+
+```bash
+npm run start
+# or
+yarn start
+# or
+pnpm start
+# or
+bun start
+```
+
+## Project Structure
+
+- `src/app`: Contains the Next.js app router pages and layouts.
+- `src/components`: Reusable React components organized by feature (e.g., `agent-studio`, `feature-store`, `ui`).
+- `src/hooks`: Custom React hooks.
+- `src/lib`: Utility functions and libraries.
+- `public`: Static assets like images and icons.
+
+## Documentation
+
+The codebase is thoroughly documented with JSDoc comments. You can explore individual component files to understand their props and functionality.
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org) - React framework for production.
+- [React](https://reactjs.org) - JavaScript library for building user interfaces.
+- [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework.
+- [Radix UI](https://www.radix-ui.com) - Unstyled, accessible UI primitives.
+- [Framer Motion](https://www.framer.com/motion) - Animation library for React.
+- [Recharts](https://recharts.org) - Composable charting library for React.
+- [Lucide React](https://lucide.dev) - Icon library.
 
 ## Learn More
 

@@ -22,6 +22,14 @@ import { Button } from "../../ui/button";
 import { ChevronRight } from "lucide-react";
 import { LeftArrow } from "../../Icons";
 
+/**
+ * Modal component for creating a new feature transformation.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback function when the open state changes.
+ * @returns {React.JSX.Element} The rendered TransformationModal component.
+ */
 export default function TransformationModal({ open, onOpenChange }) {
   const [step, setStep] = useState(1);
 

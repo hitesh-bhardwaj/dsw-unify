@@ -6,6 +6,27 @@ function cx(...args) {
   return args.filter(Boolean).join(" ");
 }
 
+/**
+ * RadioTabs component for selecting between multiple options with a visual indicator.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<{id: string, label: string, icon?: React.ReactNode, disabled?: boolean}>} [props.items=[]] - The items to display in the tabs.
+ * @param {string} [props.defaultValue] - The default selected value.
+ * @param {string} [props.value] - The controlled selected value.
+ * @param {function} [props.onValueChange] - Callback when the selected value changes.
+ * @param {string} [props.className] - Additional class names for the container.
+ * @param {string} [props.groupClassName] - Additional class names for the radio group.
+ * @param {string} [props.buttonClassName] - Additional class names for the radio buttons.
+ * @param {string} [props.dotColorClassName="bg-[#FF5722]"] - Class name for the active dot color.
+ * @param {string} [props.activeClassName=" text-[#FF5722]"] - Class name for the active tab text.
+ * @param {string} [props.inactiveClassName="border-transparent text-gray-700"] - Class name for inactive tab text.
+ * @param {boolean} [props.equalWidth=true] - Whether tabs should have equal width.
+ * @param {string} [props.ariaLabel="Radio tabs"] - Aria label for the radio group.
+ * @param {string} [props.indicatorClassName] - Class name for the sliding indicator.
+ * @param {number} [props.indicatorOffsetX=0] - Horizontal offset for the indicator.
+ * @param {number} [props.indicatorInset=6] - Inset for the indicator.
+ * @returns {React.JSX.Element} The rendered RadioTabs component.
+ */
 export default function RadioTabs({
   items = [],
   defaultValue,

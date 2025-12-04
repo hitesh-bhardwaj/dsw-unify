@@ -23,6 +23,14 @@ import {
 } from "@/components/ui/select";
 import { LeftArrow } from "@/components/Icons";
 
+/**
+ * Modal for adding a new tool.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback when the modal open state changes.
+ * @returns {React.JSX.Element} The rendered AddToolModal component.
+ */
 export default function AddToolModal({ open, onOpenChange }) {
   const [toolName, setToolName] = useState("");
   const [description, setDescription] = useState("");

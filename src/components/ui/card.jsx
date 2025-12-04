@@ -2,6 +2,13 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Card component for grouping content.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered Card component.
+ */
 function Card({
   className,
   ...props
@@ -17,6 +24,13 @@ function Card({
   );
 }
 
+/**
+ * CardHeader component for the card header.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered CardHeader component.
+ */
 function CardHeader({
   className,
   ...props
@@ -32,6 +46,13 @@ function CardHeader({
   );
 }
 
+/**
+ * CardTitle component for the card title.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered CardTitle component.
+ */
 function CardTitle({
   className,
   ...props
@@ -44,6 +65,13 @@ function CardTitle({
   );
 }
 
+/**
+ * CardDescription component for the card description.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered CardDescription component.
+ */
 function CardDescription({
   className,
   ...props
@@ -56,6 +84,13 @@ function CardDescription({
   );
 }
 
+/**
+ * CardAction component for card actions.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered CardAction component.
+ */
 function CardAction({
   className,
   ...props
@@ -71,6 +106,13 @@ function CardAction({
   );
 }
 
+/**
+ * CardContent component for the card content.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered CardContent component.
+ */
 function CardContent({
   className,
   ...props
@@ -78,6 +120,13 @@ function CardContent({
   return (<div data-slot="card-content" className={cn("px-5", className)} {...props} />);
 }
 
+/**
+ * CardFooter component for the card footer.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered CardFooter component.
+ */
 function CardFooter({
   className,
   ...props

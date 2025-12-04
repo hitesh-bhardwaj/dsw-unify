@@ -23,6 +23,29 @@ import {
 
 const skeletonShownMap = new Map();
 
+/**
+ * Component to display a versioned use case card.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.usecase - The use case data.
+ * @param {string} props.usecase.id - The ID of the use case.
+ * @param {string} props.usecase.name - The name of the use case.
+ * @param {string} props.usecase.ModelSlug - The model slug.
+ * @param {string} props.usecase.description - The description of the use case.
+ * @param {string|number} props.usecase.accuracy - The accuracy of the version.
+ * @param {string} props.usecase.versionSlug - The version slug.
+ * @param {React.ReactNode} props.usecase.icon - The icon for the use case.
+ * @param {Array<string>} [props.usecase.tags=[]] - The tags associated with the use case.
+ * @param {string|number} props.usecase.versions - The number of versions.
+ * @param {string|number} props.usecase.features - The number of features.
+ * @param {string} props.usecase.status - The status of the use case.
+ * @param {string} props.usecase.lastUpdated - The last updated timestamp or text.
+ * @param {string} props.usecase.createdAt - The creation timestamp or text.
+ * @param {"light"|"dark"} [props.usecase.variant="light"] - The variant of the card.
+ * @param {string} props.slug - The slug for the link.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered VersionUsecaseCard component.
+ */
 export default function VersionUsecaseCard({
   usecase,
   slug,
@@ -222,6 +245,11 @@ const { id: routeId, modelId } = params;
 
 /* ------------------ Skeleton Loader ------------------ */
 
+/**
+ * Skeleton component for UsecaseInternalCard.
+ *
+ * @returns {React.JSX.Element} The rendered UsecaseInternalCardSkeleton component.
+ */
 export function UsecaseInternalCardSkeleton() {
   return (
     <div className="group w-full h-full">

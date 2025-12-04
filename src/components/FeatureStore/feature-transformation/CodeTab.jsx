@@ -1,6 +1,13 @@
 import { Copy } from "lucide-react";
 import { useState } from "react";
 
+/**
+ * Component to display and copy Python code examples.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.codeExamples - The Python code to display.
+ * @returns {React.JSX.Element} The rendered PythonCodeBlock component.
+ */
 export default function PythonCodeBlock({ codeExamples }) {
   const [copied, setCopied] = useState(false);
 

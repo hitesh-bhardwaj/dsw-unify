@@ -5,6 +5,13 @@ import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Tabs component for managing tabbed content.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered Tabs component.
+ */
 function Tabs({
   className,
   ...props
@@ -17,6 +24,13 @@ function Tabs({
   );
 }
 
+/**
+ * TabsList component for the list of tab triggers.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered TabsList component.
+ */
 function TabsList({
   className,
   ...props
@@ -32,6 +46,13 @@ function TabsList({
   );
 }
 
+/**
+ * TabsTrigger component for switching tabs.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered TabsTrigger component.
+ */
 function TabsTrigger({
   className,
   ...props
@@ -47,6 +68,13 @@ function TabsTrigger({
   );
 }
 
+/**
+ * TabsContent component for the content of a tab.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered TabsContent component.
+ */
 function TabsContent({
   className,
   ...props

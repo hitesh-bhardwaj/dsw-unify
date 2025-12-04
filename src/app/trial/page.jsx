@@ -72,6 +72,12 @@ const LLMs = [
   },
 ];
 
+/**
+ * Page component for LLMs management.
+ * Displays LLMs in a grid/tab view with search functionality.
+ *
+ * @returns {React.JSX.Element} The rendered LLMsPage component.
+ */
 export default function LLMsPage() {
   const [query, setQuery] = useState("");
 
