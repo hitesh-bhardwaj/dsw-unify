@@ -148,7 +148,7 @@ const navigation = [
   },
   {
   name: "Agent Studio",
-  href: "/agent-studio",
+  href: "/agent-studio/agents",
   icon: AgentStudioIcon,
   children: [
     {
