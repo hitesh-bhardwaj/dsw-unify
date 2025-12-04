@@ -81,12 +81,10 @@ const page = () => {
     {
       id: 2,
       name: "Claims Anomaly Detector",
-    ModelSlug:'claims-anomaly-etector',
-
       icon: DataEngineeringIcon,
       description:
         "Unsupervised anomaly detection for suspicious claim patterns",
-      ModelSlug:'unsupervised-anomaly-detection-for-suspicious-claim-patterns',
+      ModelSlug:'claims-anomaly-detector',
       tags: ["anomaly detection", "unsupervised"],
       versions: 2,
       features: 24,
@@ -124,9 +122,6 @@ const page = () => {
       variant: "light",
     },
   ];
-
-    const params = useParams();
-  const { id: routeId, modelId } = params;
   function slugToTitle(slug) {
   if (!slug) return "";
   
@@ -149,7 +144,7 @@ const page = () => {
                 <LeftArrowAnim link={"/ai-studio/use-cases/"} />
                 <div className="space-y-1">
                   <div className="flex gap-3 items-center">
-                    <h1 className="text-xl font-medium">{usecase.name}</h1>
+                    <h1 className="text-xl font-medium">{title}</h1>
 
                     <div className="flex flex-wrap gap-1 ">
                       {usecase.tags.map((tag, index) => (
