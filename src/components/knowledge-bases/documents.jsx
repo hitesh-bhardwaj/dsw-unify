@@ -42,7 +42,7 @@ export default function Documents() {
         <div className="w-full flex items-center justify-between mt-4">
       <h2 className="text-lg font-semibold my-2">Documents</h2>
       <RippleButton>
-                <Link href={"/#"}>
+                <Link href={"#"}>
                   <Button
                     variant="outline"
                     className="gap-2 text-foreground border border-primary"

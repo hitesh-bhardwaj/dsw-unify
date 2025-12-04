@@ -32,6 +32,7 @@ import {
   InferenceIcon,
   AgentStudioIcon,
   ListIcon,
+  GridIcon,
 } from "@/components/Icons";
 import { SectionHeader } from "@/components/home/section-header";
 import { MetricCard } from "@/components/home/metric-card";
@@ -144,28 +145,28 @@ const dataEngineeringFeatures = [
     title: "Data Ingestion",
     description:
       "Import and process data from multiple sources with automated validation and transformation pipelines",
-    href: "/data-engineering/ingestion",
+    href: "/data-engineering/data-ingestion",
   },
   {
     icon: DataExplorerIcon,
     title: "Data Explorer",
     description:
       "Interactive data exploration and querying tools for understanding your datasets",
-    href: "/data-engineering/explorer",
+    href: "/data-engineering/data-explorer",
   },
   {
     icon: DataVisualizationIcon,
     title: "Data Visualization",
     description:
       "Create charts, graphs, and dashboards for visual data analysis and insights",
-    href: "/data-engineering/visualization",
+    href: "#",
   },
   {
     icon: DataValidationIcon,
     title: "Data Validation",
     description:
       "Automated data quality checks, schema validation, and anomaly detection",
-    href: "/data-engineering/validation",
+    href: "#",
   },
 ];
 
@@ -175,21 +176,21 @@ const featureStoreFeatures = [
     title: "Feature Transformations",
     description:
       "Build reusable transformation library for feature engineering workflows",
-    href: "/feature-store/transformations",
+    href: "/feature-store/feature-transformations",
   },
   {
     icon: FeatureViewsIcon,
     title: "Feature Views",
     description:
       "Create and manage feature views from tables with transformations and logical grouping",
-    href: "/feature-store/views",
+    href: "/feature-store/feature-views",
   },
   {
     icon: FeatureServicesIcon,
     title: "Feature Services",
     description:
       "Combine feature views into services for model consumption and deployment",
-    href: "/feature-store/services",
+    href: "/feature-store/feature-views",
   },
 ];
 
@@ -199,13 +200,13 @@ const aiStudioFeatures = [
     title: "Use Cases",
     description:
       "Browse and manage ML use cases with their associated models and workflows",
-    href: "/usecases",
+    href: "/ai-studio/use-cases",
   },
   {
     icon: DataValidationIcon,
     title: "Model Development",
     description: "Access Jupyter IDE for model development and experimentation",
-    href: "/ai-studio/development",
+    href: "#",
   },
   {
     icon: MonitoringIcon,
@@ -228,49 +229,49 @@ const agentStudioFeatures = [
     icon: AgentStudioIcon,
     title: "Agents",
     description: "Build, deploy, and manage your AI agents",
-    href: "/agents",
+    href: "/agent-studio/agents",
   },
   {
     icon: PromptsIcon,
     title: "Prompts",
     description: "Manage and test your prompt templates and configurations",
-    href: "/prompts",
+    href: "/agent-studio/prompts",
   },
   {
     icon: LLMsIcon,
     title: "LLMs",
     description: "Configure and manage large language models for your agents",
-    href: "/llms",
+    href: "/agent-studio/llms",
   },
   {
     icon: KnowledgeBaseIcon,
     title: "Knowledge Bases",
     description: "Create and manage knowledge bases for agent context",
-    href: "/knowledge-bases",
+    href: "/agent-studio/knowledge-bases",
   },
   {
     icon: ToolsIcon,
     title: "Tools",
     description: "Define and manage tools that agents can use",
-    href: "/tools",
+    href: "/agent-studio/tools",
   },
   {
     icon: MemoriesIcon,
     title: "Memories",
     description: "Configure agent memory and context retention",
-    href: "/memories",
+    href: "/agent-studio/memories",
   },
   {
     icon: GuardrailsIcon,
     title: "Guardrails",
     description: "Set up safety and compliance guardrails for agents",
-    href: "/guardrails",
+    href: "/agent-studio/guardrails",
   },
   {
     icon: TestingIcon,
     title: "Testing",
     description: "Test and validate agent behavior and responses",
-    href: "/testing",
+    href: "/agent-studio/testing",
   },
 ];
 
@@ -286,7 +287,7 @@ const workflowBuilderFeatures = [
     title: "Build Workflow",
     description:
       "Create agentic AI workflows that integrate agents, models, and business-specific use cases",
-    href: "/workflow-builder",
+    href: "#",
   },
 ];
 
@@ -405,21 +406,21 @@ function MetricsBoard({ metricsData, view, setView }) {
           <p className="text-sm dark:text-foreground text-black/60">Key platform metrics and activity at a glance</p>
         </div>
 
-        <div className="inline-flex border rounded-md overflow-hidden">
-          <button onClick={() => setView("grid")} className="px-3 py-1 cursor-pointer">
-            <LayoutGrid strokeWidth={1} className={`${view === "grid" ? "text-black" : "text-gray-400"}`} />
+        <div className="inline-flex  border rounded-md overflow-hidden py-2 px-4 gap-5">
+          <button onClick={() => setView("list")} className={`cursor-pointer `}>
+            <ListIcon className={`${view === "list" ? "opacity-100" : "opacity-[0.4]"}`}/>
           </button>
-          <button onClick={() => setView("list")} className={`px-3 py-1 cursor-pointer ${view === "list" ? "text-black" : "text-gray-400"}`}>
-            <ListIcon strokeWidth={1} />
+          <button onClick={() => setView("grid")} className={`cursor-pointer`}>
+            <GridIcon className={`${view === "grid" ? "opacity-100" : "opacity-[0.4]"}`} />
           </button>
         </div>
       </div>
 
       {/* Metrics Wrapper */}
       <AnimatePresence mode="popLayout">
-        {view === "grid" && (
+        {view === "list" && (
           <motion.div
-            key="grid"
+            key="list"
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -469,9 +470,9 @@ function MetricsBoard({ metricsData, view, setView }) {
           </motion.div>
         )}
 
-        {view === "list" && (
+        {view === "grid" && (
           <motion.ul
-            key="list"
+            key="grid"
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -508,7 +509,7 @@ function MetricsBoard({ metricsData, view, setView }) {
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const [view, setView] = useState("grid");
+  const [view, setView] = useState("list");
 
   const filteredDataEngineering = dataEngineeringFeatures.filter(
     (f) =>

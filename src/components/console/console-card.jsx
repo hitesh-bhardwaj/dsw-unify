@@ -33,7 +33,7 @@ export function ConsoleCard({ memories, minSkeletonMs = 500 }) {
 
   return (
     <Bounce>
-      <Link href={`/#`} className="block group h-full">
+      <Link href={`#`} className="block group h-full">
         <Card
           className={cn(
             "overflow-hidden h-full hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5"

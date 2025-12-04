@@ -79,7 +79,7 @@ export function ModelsCard({ data , minSkeletonMs = 500 }) {
 
 
   return (
-    <Link href={`/#`} className="block group">
+    <Link href={`#`} className="block group">
       <Card
         className={cn(
           "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border  dark:group-hover:border-border-color-1 dark:group-hover:bg-sidebar-accent pt-3 pb-8"
@@ -137,14 +137,14 @@ export function ModelsCard({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-6.5 w-6.5 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-stone-700"
+                  "h-6.5 w-6.5 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-sidebar-accent"
                 )}
               >
                 <Bin />
               </Button>
                <RippleButton>
              
-                <Button href="/#" className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                <Button href="#" className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <div className="w-4 h-4">
                     <RocketIcon className="text-white" />
                   </div>

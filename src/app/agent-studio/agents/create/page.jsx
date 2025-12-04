@@ -134,7 +134,7 @@ export default function CreateAgentPage() {
                   Test
                 </Button>
               </RippleButton>
-              <Link href={`/agents/edit`}>
+              <Link href={`#`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                     <div className="!w-4">

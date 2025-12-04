@@ -139,7 +139,7 @@ export default function LLMsPage() {
                 <div className="!w-4"><DownloadIcon /></div>
                 Import Model
               </Button>
-              <Link href="/#">
+              <Link href="#">
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 duration-300">
                   <PlusIcon /> Deploy New Model
                 </Button>

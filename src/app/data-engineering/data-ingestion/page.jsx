@@ -17,27 +17,27 @@ const dataEngineeringFeatures = [
     title: "Relational Data",
     description:
       "Ingest data from SQL databases like PostgreSQL, MySQL, and Oracle",
-    href: "/data-engineering/ingestion",
+    href: "#",
   },
   {
     icon: SynthWave,
     title: "Graph Data",
     description:
       "Ingest graph data from Neo4j, Amazon Neptune, and other graph stores",
-    href: "/data-engineering/explorer",
+    href: "#",
   },
   {
     icon: StreamingDataIcon,
     title: "Streaming Data",
     description: "Ingest real-time data from Kafka, Kinesis, and event streams",
-    href: "/data-engineering/visualization",
+    href: "#",
   },
   {
     icon: ObjectStoreIcon,
     title: "Object Store",
     description:
       "Ingest files from S3, Azure Blob, Google Cloud Storage, and more",
-    href: "/data-engineering/validation",
+    href: "#",
   },
 ];
 

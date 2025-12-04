@@ -80,7 +80,7 @@ export default function CreateAgentPage() {
                  Copy
                 </Button>
               </RippleButton>
-              <Link href={`agent-studio/agents/edit`}>
+              <Link href={`#`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                     <div className="!w-4">

@@ -16,20 +16,20 @@ const dataEngineeringFeatures = [
     title: "Relational & Vector Data",
     description:
       "Explore SQL databases and vector embeddings with powerful query tools",
-    href: "/data-engineering/ingestion",
+    href: "#",
   },
   {
     icon: SynthWave,
     title: "Graph Data",
     description:
       "Visualize and explore graph relationships and network structures",
-    href: "/data-engineering/explorer",
+    href: "#",
   },
   {
     icon: ObjectStorageIcon,
     title: "Object Storage",
     description: "Browse and analyze files stored in cloud object storage",
-    href: "/data-engineering/visualization",
+    href: "#",
   },
 ];
 

@@ -78,7 +78,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
 
 
   return (
-    <Link href={`/#`} className="block group">
+    <Link href={`#`} className="block group">
       <Card
         className={cn(
           "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border  dark:group-hover:border-border-color-1 dark:group-hover:bg-sidebar-accent pt-3 pb-8"
@@ -136,7 +136,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-stone-700"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-sidebar-accent"
                 )}
               >
                 <Eye />
@@ -146,7 +146,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-6 w-6 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-stone-700"
+                  "h-6 w-6 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-sidebar-accent"
                 )}
               >
                 <UploadIcon />
@@ -156,7 +156,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-6.5 w-6.5 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-stone-700"
+                  "h-6.5 w-6.5 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-sidebar-accent"
                 )}
               >
                 <Bin />

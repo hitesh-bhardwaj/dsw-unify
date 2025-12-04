@@ -121,7 +121,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
             </div>
             <div className="flex items-center gap-3">
                 <RippleButton>
-                <Link href={"/#"}>
+                <Link href={"#"}>
                   <Button
                     variant="outline"
                     className="gap-2 text-foreground border border-primary"
@@ -134,7 +134,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
                 </Link>
               </RippleButton>
               <RippleButton>
-                <Link href={"/#"}>
+                <Link href={"#"}>
                   <Button
                     variant="outline"
                     className="gap-2 text-foreground border border-primary"

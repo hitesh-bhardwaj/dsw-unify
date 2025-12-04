@@ -135,7 +135,7 @@ export default function LLMFineTuning() {
         {/* <FadeUp> */}
           <div className="flex items-center justify-between mb-10">
             <div className="w-fit flex gap-2">
-              <LeftArrowAnim link={"/llms"} />
+              <LeftArrowAnim link={"/agent-studio/llms"} />
               <div className="space-y-2">
                 <h1 className="text-2xl font-medium text-foreground">
                   LLM Finetuning
@@ -147,7 +147,7 @@ export default function LLMFineTuning() {
               </div>
             </div>
             <RippleButton>
-              <Link href="/agents/create">
+              <Link href="#">
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <div className="w-4 h-4">
                     <UploadIcon />

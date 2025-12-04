@@ -82,12 +82,12 @@ const navigation = [
       },
       {
         name: "Data Visualization",
-        href: "/#",
+        href: "#",
         icon: DataVisualizationIcon,
       },
       {
         name: "Data Validation",
-        href: "/#",
+        href: "#",
         icon: DataValidationIcon,
       },
     ],
@@ -131,7 +131,7 @@ const navigation = [
       },
       {
         name: "Model Development",
-        href: "/#",
+        href: "#",
         icon: ModelDevelopmentIcon,
       },
       {
@@ -207,8 +207,8 @@ const navigation = [
   // { name: "Testing", href: "/testing", icon: TestingIcon },
   // { name: "Console", href: "/console", icon: AgentsIcon },
   // { name: "Use Cases", href: "/usecases", icon: PromptsIcon },
-  { name: "Workflow Builder", href: "/#", icon: WorkFlowBuilderIcon },
-  { name: "Settings", href: "/#", icon: SettingsIcon },
+  { name: "Workflow Builder", href: "#", icon: WorkFlowBuilderIcon },
+  { name: "Settings", href: "#", icon: SettingsIcon },
 ];
 
 // Store animation state outside component to persist across renders
