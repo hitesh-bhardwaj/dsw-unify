@@ -128,7 +128,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
                 className={cn(
                   "rounded-full px-3 py-1 text-foreground text-xs font-medium ",
                   status === "active"
-                    ? "border-badge-green bg-white dark:bg-sidebar-accent group-hover:bg-sidebar-accent"
+                    ? "border-badge-green bg-transparent dark:bg-sidebar-accent group-hover:border-white group-hover:text-white duration-300 "
                     : " text-foreground px-4 "
                 )}
               >

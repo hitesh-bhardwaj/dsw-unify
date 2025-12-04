@@ -76,7 +76,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
               </div>
 
               <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400 group-hover:fill-white group-hover:text-white transition-colors duration-300" />
+                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400  transition-colors duration-300" />
                 <span className="text-xs text-foreground group-hover:text-white transition-colors duration-300">{rating}</span>
                 <Badge
                   variant="secondary"
