@@ -307,6 +307,7 @@ const workflowBuilderFeatures = [
  * @param {function} props.setView - Function to set the view mode.
  * @returns {React.JSX.Element} The rendered MetricsBoard component.
  */
+
 function MetricsBoard({ metricsData, view, setView }) {
   const [items, setItems] = useState(metricsData);
   const scrollRef = useRef(null);
@@ -336,10 +337,8 @@ function MetricsBoard({ metricsData, view, setView }) {
     const el = scrollRef.current;
     if (!el) return;
 
-    // Lerp currentScroll towards targetScroll
     currentScroll.current += (targetScroll.current - currentScroll.current) * 0.1;
 
-    // Stop small differences
     if (Math.abs(targetScroll.current - currentScroll.current) < 0.5) {
       currentScroll.current = targetScroll.current;
     }
@@ -356,7 +355,6 @@ function MetricsBoard({ metricsData, view, setView }) {
     const amount = dir === "left" ? -300 : 300;
     targetScroll.current = el.scrollLeft + amount;
 
-    // clamp target
     targetScroll.current = Math.max(0, Math.min(targetScroll.current, el.scrollWidth - el.clientWidth));
   };
 
@@ -385,7 +383,7 @@ function MetricsBoard({ metricsData, view, setView }) {
     if (!isDown.current || !scrollRef.current) return;
     e.preventDefault();
     const x = e.pageX - scrollRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1; // drag speed
+    const walk = (x - startX.current) * 1;
     targetScroll.current = scrollLeft.current - walk;
     targetScroll.current = Math.max(0, Math.min(targetScroll.current, scrollRef.current.scrollWidth - scrollRef.current.clientWidth));
   };
@@ -408,62 +406,64 @@ function MetricsBoard({ metricsData, view, setView }) {
     dragIndex.current = dragOver.current = null;
   };
 
+  // 🍀 FIX 1: Start animation on mount
   useEffect(() => {
     animationFrame.current = requestAnimationFrame(smoothScroll);
     return () => cancelAnimationFrame(animationFrame.current);
   }, []);
 
-  
+  // 🍀 FIX 2: Restart smooth scroll when switching back to LIST
+  useEffect(() => {
+    if (view === "list") {
+      cancelAnimationFrame(animationFrame.current);
+      animationFrame.current = requestAnimationFrame(smoothScroll);
+
+      if (scrollRef.current) {
+        currentScroll.current = scrollRef.current.scrollLeft;
+        targetScroll.current = currentScroll.current;
+        checkScroll();
+      }
+    } else {
+      cancelAnimationFrame(animationFrame.current);
+    }
+  }, [view]);
 
   return (
-    <motion.div layout='position' className="space-y-4 overflow-hidden">
+    <motion.div layout="position" className="space-y-4 overflow-hidden">
       {/* Header */}
       <div className="flex items-end justify-between px-6">
         <div className="space-y-1">
           <h1 className="text-3xl font-medium text-foreground">Overview</h1>
-          <p className="text-sm dark:text-foreground text-black/60">Key platform metrics and activity at a glance</p>
+          <p className="text-sm dark:text-foreground text-black/60">
+            Key platform metrics and activity at a glance
+          </p>
         </div>
 
         <TooltipProvider delayDuration={0}>
-  <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5">
+          <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button onClick={() => setView("list")} className="cursor-pointer">
+                  <ListIcon className={`${view === "list" ? "opacity-100" : "opacity-[0.4]"}`} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>List View</p>
+              </TooltipContent>
+            </Tooltip>
 
-    {/* LIST BUTTON */}
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          onClick={() => setView("list")}
-          className="cursor-pointer"
-        >
-          <ListIcon
-            className={`${view === "list" ? "opacity-100" : "opacity-[0.4]"}`}
-          />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side="top">
-        <p>List View</p>
-      </TooltipContent>
-    </Tooltip>
-
-    {/* GRID BUTTON */}
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          onClick={() => setView("grid")}
-          className="cursor-pointer"
-        >
-          <GridIcon
-            className={` ${view === "grid" ? "opacity-100" : "opacity-[0.4]"}`}
-          />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side="top">
-        <p>Grid View</p>
-      </TooltipContent>
-    </Tooltip>
-
-  </div>
-</TooltipProvider>
-
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button onClick={() => setView("grid")} className="cursor-pointer">
+                  <GridIcon className={`${view === "grid" ? "opacity-100" : "opacity-[0.4]"}`} />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>Grid View</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </TooltipProvider>
       </div>
 
       {/* Metrics Wrapper */}
@@ -505,7 +505,7 @@ function MetricsBoard({ metricsData, view, setView }) {
               onMouseMove={handleMouseMove}
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {items.map((m, i) => (
+              {items.map((m) => (
                 <motion.div
                   key={m.label}
                   layoutId={`metric-${m.label}`}
@@ -554,6 +554,7 @@ function MetricsBoard({ metricsData, view, setView }) {
     </motion.div>
   );
 }
+
 
 
 
