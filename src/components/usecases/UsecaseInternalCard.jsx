@@ -86,7 +86,7 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
             <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
               {Icon && <Icon className="h-6 w-6" />}
             </div>
-            <p className={`text-xs border px-2 py-1 rounded-full ${status==='Deployed'? 'border-badge-green': 'border-red-500'}`}>
+            <p className={`text-xs border px-2 py-1 group-hover:border-white group-hover:text-white duration-300  rounded-full ${status==='Deployed'? 'border-badge-green': 'border-red-500'}`}>
                 {status}
             </p>
             </div>

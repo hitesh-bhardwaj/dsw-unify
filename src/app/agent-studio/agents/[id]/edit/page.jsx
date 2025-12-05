@@ -102,7 +102,7 @@ export default function CreateAgentPage() {
         {/* <FadeUp> */}
           <div className="flex items-center justify-between">
             <div className="flex items-start gap-3">
-              <LeftArrowAnim link={"/agents"} />
+              <LeftArrowAnim link={"/agent-studio/agents"} />
 
               <div className="space-y-2">
                 <h1 className="text-2xl font-medium">Edit Agent: Auto Claims Processing Agent</h1>
@@ -135,7 +135,7 @@ export default function CreateAgentPage() {
                   Test
                 </Button>
               </RippleButton>
-              <Link href={`agent-studio/agents/edit`}>
+              <Link href={`#`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                     <div className="!w-4">
@@ -199,7 +199,7 @@ export default function CreateAgentPage() {
             />
           {/* </FadeUp> */}
           <div className="flex items-end w-full justify-end">
-             <Link href={`agent-studio/agents/edit`}>
+             <Link href={`#`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                     

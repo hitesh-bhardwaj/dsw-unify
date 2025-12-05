@@ -45,6 +45,7 @@ const TrainingJobs = [
     description: "Customer support model training",
     tags: [{ label: "Completed", color: "green" }],
     progress: "1000/1000",
+    isCompleted:false,
     successRate: "100%",
     loss: "0.23",
     width: "w-[100%]",
@@ -53,6 +54,7 @@ const TrainingJobs = [
   {
     id: "tech-assistant-v2",
     name: "Tech-Assistant-v2",
+    isCompleted:true,
     description: "Technical assistant model training",
     tags: [{ label: "Running", color: "blue" }],
     progress: "450/800",

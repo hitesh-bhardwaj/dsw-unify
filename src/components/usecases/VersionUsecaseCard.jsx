@@ -107,7 +107,7 @@ const { id: routeId, modelId } = params;
                   {Icon && <Icon className="h-6 w-6" />}
                 </div>
                 <p
-                  className={`text-xs border px-2 py-1 rounded-full ${
+                  className={`text-xs border px-2 py-1 rounded-full group-hover:border-white group-hover:text-white duration-300 ${
                     status === "Deployed"
                       ? "border-badge-green"
                       : "border-red-500"

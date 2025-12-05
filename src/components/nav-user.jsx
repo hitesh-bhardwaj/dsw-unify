@@ -103,7 +103,7 @@ export const NavUser = ({
             </motion.div>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-1">
             <motion.div
               custom={1}
               initial="hidden"
@@ -114,7 +114,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 p-2 rounded-lg !cursor-pointer hover:!bg-sidebar-accent"
               custom={2}
               initial="hidden"
               animate="visible"
@@ -134,7 +134,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent"
               custom={4}
               initial="hidden"
               animate="visible"
@@ -145,7 +145,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent"
               custom={5}
               initial="hidden"
               animate="visible"
@@ -156,7 +156,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent"
               custom={6}
               initial="hidden"
               animate="visible"
@@ -176,7 +176,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 p-2 rounded-lg !cursor-pointer hover:!bg-sidebar-accent"
               custom={8}
               initial="hidden"
               animate="visible"

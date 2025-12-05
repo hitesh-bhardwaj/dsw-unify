@@ -114,7 +114,7 @@ const navigation = [
       },
     ],
   },
-   {
+  {
     name: "AI Studio",
     href: "ai-studio/quick-start",
     icon: AIStudioIcon,
@@ -147,52 +147,52 @@ const navigation = [
     ],
   },
   {
-  name: "Agent Studio",
-  href: "/agent-studio",
-  icon: AgentStudioIcon,
-  children: [
-    {
-      name: "Agents",
-      href: "/agent-studio/agents",
-      icon: AgentStudioIcon,
-    },
-    {
-      name: "Prompts",
-      href: "/agent-studio/prompts",
-      icon: PromptsIcon,
-    },
-    {
-      name: "LLMs",
-      href: "/agent-studio/llms",
-      icon: LLMsIcon,
-    },
-    {
-      name: "Knowledge Bases",
-      href: "/agent-studio/knowledge-bases",
-      icon: KnowledgeBaseIcon,
-    },
-    {
-      name: "Tools",
-      href: "/agent-studio/tools",
-      icon: ToolsIcon,
-    },
-    {
-      name: "Memories",
-      href: "/agent-studio/memories",
-      icon: MemoriesIcon,
-    },
-    {
-      name: "Guardrails",
-      href: "/agent-studio/guardrails",
-      icon: GuardrailsIcon,
-    },
-    {
-      name: "Testing",
-      href: "/agent-studio/testing",
-      icon: TestingIcon,
-    },
-  ],
-},
+    name: "Agent Studio",
+    href: "/agent-studio/agents",
+    icon: AgentStudioIcon,
+    children: [
+      {
+        name: "Agents",
+        href: "/agent-studio/agents",
+        icon: AgentStudioIcon,
+      },
+      {
+        name: "Prompts",
+        href: "/agent-studio/prompts",
+        icon: PromptsIcon,
+      },
+      {
+        name: "LLMs",
+        href: "/agent-studio/llms",
+        icon: LLMsIcon,
+      },
+      {
+        name: "Knowledge Bases",
+        href: "/agent-studio/knowledge-bases",
+        icon: KnowledgeBaseIcon,
+      },
+      {
+        name: "Tools",
+        href: "/agent-studio/tools",
+        icon: ToolsIcon,
+      },
+      {
+        name: "Memories",
+        href: "/agent-studio/memories",
+        icon: MemoriesIcon,
+      },
+      {
+        name: "Guardrails",
+        href: "/agent-studio/guardrails",
+        icon: GuardrailsIcon,
+      },
+      {
+        name: "Testing",
+        href: "/agent-studio/testing",
+        icon: TestingIcon,
+      },
+    ],
+  },
   // { name: "Agents", href: "/agents", icon: AgentsIcon },
   // { name: "Prompts", href: "/prompts", icon: PromptsIcon },
   // { name: "LLMs", href: "/llms", icon: LLMsIcon },
@@ -272,6 +272,7 @@ export function AppSidebar() {
   const isCollapsed = state === "collapsed";
   const [shouldAnimate, setShouldAnimate] = useState(hasAnimatedGlobal);
   const [expandedItems, setExpandedItems] = useState({});
+  const [expandedItem, setExpandedItem] = useState(null);
 
   useEffect(() => {
     if (!hasAnimatedGlobal) {
@@ -301,6 +302,27 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {navigation.map((item) => {
+                // const hasChildren =
+                //   Array.isArray(item.children) && item.children.length > 0;
+
+                // const isActive =
+                //   pathname === item.href ||
+                //   pathname?.startsWith(item.href + "/");
+
+                // const hasActiveChild =
+                //   hasChildren &&
+                //   (item.children || []).some(
+                //     (child) =>
+                //       pathname === child.href ||
+                //       pathname?.startsWith(child.href + "/")
+                //   );
+
+                // const userExpanded = expandedItems[item.name];
+                // const isExpanded =
+                //   typeof userExpanded === "boolean"
+                //     ? userExpanded
+                //     : hasActiveChild;
+
                 const hasChildren =
                   Array.isArray(item.children) && item.children.length > 0;
 
@@ -316,11 +338,9 @@ export function AppSidebar() {
                       pathname?.startsWith(child.href + "/")
                   );
 
-                const userExpanded = expandedItems[item.name];
+                // 👇 When nothing chosen manually, auto-expand the one that has an active child
                 const isExpanded =
-                  typeof userExpanded === "boolean"
-                    ? userExpanded
-                    : hasActiveChild;
+                  expandedItem !== null ? expandedItem === item.name : hasActiveChild;
 
                 const Icon = item.icon;
 
@@ -331,12 +351,21 @@ export function AppSidebar() {
                     <Collapsible
                       key={item.name}
                       open={isExpanded}
-                      onOpenChange={(openValue) =>
-                        setExpandedItems((prev) => ({
-                          ...prev,
-                          [item.name]: openValue,
-                        }))
-                      }
+                      // onOpenChange={(openValue) =>
+                      //   setExpandedItems((prev) => ({
+                      //     ...prev,
+                      //     [item.name]: openValue,
+                      //   }))
+                      // }
+                      onOpenChange={(openValue) => {
+                        if (openValue) {
+                          // open this one, close all others
+                          setExpandedItem(item.name);
+                        } else {
+                          // close it only if it's currently the active one
+                          setExpandedItem((prev) => (prev === item.name ? null : prev));
+                        }
+                      }}
                       className="group/collapsible"
                     >
                       <SidebarMenuItem>
@@ -348,20 +377,22 @@ export function AppSidebar() {
                             className={cn(
                               "cursor-pointer",
                               (isActive || hasActiveChild) &&
-                                "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                              "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                             )}
                             onClick={(e) => {
-                              // 👇 When sidebar is collapsed, clicking a parent routes to its first child
                               if (isCollapsed && firstChild?.href) {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 router.push(firstChild.href);
                               }
-                              // When expanded, do nothing special - Collapsible will handle open/close
                             }}
                           >
-                            <Icon size={30} className="!h-5 !w-auto" />
-                            <span className="text-nowrap text-sm">
+                            <Icon size={30} className={cn(
+                              "!h-5 !w-auto")} />
+                            <span className={cn(
+                              "text-nowrap text-sm",
+                              (isExpanded || hasActiveChild) && "font-medium"
+                            )}>
                               {item.name}
                             </span>
                             <ChevronDown
@@ -416,7 +447,7 @@ export function AppSidebar() {
                                       className={cn(
                                         "pl-8",
                                         isChildActive &&
-                                          "text-sidebar-primary data-[active=true]:text-sidebar-primary"
+                                        "text-sidebar-primary data-[active=true]:text-sidebar-primary"
                                       )}
                                     >
                                       <Link href={child.href}>
@@ -449,7 +480,7 @@ export function AppSidebar() {
                       tooltip={item.name}
                       className={cn(
                         isActive &&
-                          "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                        "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                       )}
                     >
                       <Link href={item.href}>

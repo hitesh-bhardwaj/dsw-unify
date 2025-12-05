@@ -162,7 +162,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature }) {
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
                   )}
                 >
                   <Copy className="!h-full !w-full" />
@@ -172,7 +172,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature }) {
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
                   )}
                 >
                   <Editor />
@@ -182,7 +182,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature }) {
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                    "hover:bg-white dark:hover:bg-accent group-hover:text-red-600 duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-red-600 duration-500 ease-out"
                   )}
                 >
                   <Bin />

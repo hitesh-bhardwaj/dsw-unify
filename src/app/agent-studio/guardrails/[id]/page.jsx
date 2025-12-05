@@ -48,6 +48,17 @@ const items = [
 export default function Page() {
   const { id } = useParams();
 
+  function slugToTitle(slug) {
+  if (!slug) return "";
+  
+  return slug
+    .split("-")                
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
+    .join(" ");                
+}
+
+    const title = slugToTitle(id);
+
   return (
     <div className="flex flex-col h-full p-6">
       <ScaleDown>
@@ -56,7 +67,7 @@ export default function Page() {
             <div className="flex gap-3">
               <LeftArrowAnim link={"/agent-studio/guardrails"} />
               <div className="space-y-1">
-                <h1 className="text-xl font-medium">{toolsData.name}</h1>
+                <h1 className="text-xl font-medium">{title}</h1>
                 <p className="text-sm text-foreground/80 pl-0.5 dark:text-foreground">
                   {toolsData.description}
                 </p>

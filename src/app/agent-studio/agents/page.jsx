@@ -140,11 +140,9 @@ const agents = [
  
 ];
 
-
 export default function AgentsPage() {
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState("prompts");
-
   const filteredAgents = agents.filter((agent) =>
     agent.name.toLowerCase().includes(query.toLowerCase())
   );

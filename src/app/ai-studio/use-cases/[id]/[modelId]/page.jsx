@@ -98,7 +98,18 @@ const page = () => {
    
     
   };
- 
+  const params = useParams();
+ const { id: routeId, modelId,versionId } = params;
+function slugToTitle(slug) {
+  if (!slug) return "";
+  
+  return slug
+    .split("-")                
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
+    .join(" ");                
+}
+
+    const title = slugToTitle(modelId);
 
   return (
     <>
@@ -108,10 +119,10 @@ const page = () => {
           <div className="bg-background p-6 space-y-8">
             <div className="flex items-center justify-between">
               <div className="flex gap-3">
-                <LeftArrowAnim link={"/ai-studio/use-cases/"} />
+                <LeftArrowAnim link={`/ai-studio/use-cases/${routeId}`} />
                 <div className="space-y-1">
                   <div className="flex gap-3 items-center">
-                    <h1 className="text-xl font-medium">{versionsData.name}</h1>
+                    <h1 className="text-xl font-medium">{title}</h1>
 
                     <div className="flex flex-wrap gap-1 ">
                       {versionsData.tags.map((tag, index) => (
