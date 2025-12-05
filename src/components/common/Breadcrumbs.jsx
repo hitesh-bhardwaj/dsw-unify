@@ -11,6 +11,11 @@ import {
 } from '@/components/ui/breadcrumb'
 import { HomeIcon } from '../Icons'
 
+/**
+ * Breadcrumbs component for displaying navigation path.
+ *
+ * @returns {React.JSX.Element} The rendered Breadcrumbs component.
+ */
 const Breadcrumbs = () => {
   const pathname = usePathname()
   const isRoot = pathname === '/'

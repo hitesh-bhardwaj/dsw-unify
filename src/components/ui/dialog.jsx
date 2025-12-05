@@ -6,30 +6,61 @@ import { XIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Dialog component.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered Dialog component.
+ */
 function Dialog({
   ...props
 }) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />;
 }
 
+/**
+ * DialogTrigger component.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DialogTrigger component.
+ */
 function DialogTrigger({
   ...props
 }) {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />;
 }
 
+/**
+ * DialogPortal component.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DialogPortal component.
+ */
 function DialogPortal({
   ...props
 }) {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />;
 }
 
+/**
+ * DialogClose component.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered DialogClose component.
+ */
 function DialogClose({
   ...props
 }) {
   return <DialogPrimitive.Close data-slot="dialog-close" {...props} />;
 }
 
+/**
+ * DialogOverlay component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered DialogOverlay component.
+ */
 function DialogOverlay({
   className,
   ...props
@@ -45,6 +76,15 @@ function DialogOverlay({
   );
 }
 
+/**
+ * DialogContent component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.ReactNode} props.children - The content of the dialog.
+ * @param {boolean} [props.showCloseButton=true] - Whether to show the close button.
+ * @returns {React.JSX.Element} The rendered DialogContent component.
+ */
 function DialogContent({
   className,
   children,
@@ -75,6 +115,15 @@ function DialogContent({
   );
 }
 
+/**
+ * DialogHeader component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {boolean} [props.showCloseButton=true] - Whether to show the close button.
+ * @param {React.ReactNode} props.children - The content of the header.
+ * @returns {React.JSX.Element} The rendered DialogHeader component.
+ */
 function DialogHeader({
   className,
   showCloseButton = true,
@@ -105,6 +154,13 @@ function DialogHeader({
 }
 
 
+/**
+ * DialogFooter component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered DialogFooter component.
+ */
 function DialogFooter({
   className,
   ...props
@@ -117,6 +173,13 @@ function DialogFooter({
   );
 }
 
+/**
+ * DialogTitle component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered DialogTitle component.
+ */
 function DialogTitle({
   className,
   ...props
@@ -129,6 +192,13 @@ function DialogTitle({
   );
 }
 
+/**
+ * DialogDescription component.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered DialogDescription component.
+ */
 function DialogDescription({
   className,
   ...props

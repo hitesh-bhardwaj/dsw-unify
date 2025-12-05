@@ -13,6 +13,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+/**
+ * Component to configure storage strategy settings.
+ *
+ * @returns {React.JSX.Element} The rendered StorageStrategy component.
+ */
 export default function StorageStrategy() {
   const [chunkingStrategy, setChunkingStrategy] = useState("");
   const [embeddingModel, setEmbeddingModel] = useState("");

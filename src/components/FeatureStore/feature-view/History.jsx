@@ -22,6 +22,11 @@ const historyData = [
   },
 ];
 
+/**
+ * Component to display the version history of a feature view.
+ *
+ * @returns {React.JSX.Element} The rendered History component.
+ */
 export default function History() {
   return (
     <div className="w-full h-full mx-auto">

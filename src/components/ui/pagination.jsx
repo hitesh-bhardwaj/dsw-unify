@@ -8,6 +8,13 @@ import {
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button";
 
+/**
+ * Pagination component for navigating between pages.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered Pagination component.
+ */
 function Pagination({
   className,
   ...props
@@ -22,6 +29,13 @@ function Pagination({
   );
 }
 
+/**
+ * PaginationContent component for the list of pagination items.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered PaginationContent component.
+ */
 function PaginationContent({
   className,
   ...props
@@ -34,12 +48,27 @@ function PaginationContent({
   );
 }
 
+/**
+ * PaginationItem component for individual pagination items.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered PaginationItem component.
+ */
 function PaginationItem({
   ...props
 }) {
   return <li data-slot="pagination-item" {...props} />;
 }
 
+/**
+ * PaginationLink component for pagination links.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {boolean} [props.isActive] - Whether the link is active.
+ * @param {string} [props.size="icon"] - The size of the button.
+ * @returns {React.JSX.Element} The rendered PaginationLink component.
+ */
 function PaginationLink({
   className,
   isActive,
@@ -59,6 +88,13 @@ function PaginationLink({
   );
 }
 
+/**
+ * PaginationPrevious component for the previous page link.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered PaginationPrevious component.
+ */
 function PaginationPrevious({
   className,
   ...props
@@ -75,6 +111,13 @@ function PaginationPrevious({
   );
 }
 
+/**
+ * PaginationNext component for the next page link.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered PaginationNext component.
+ */
 function PaginationNext({
   className,
   ...props
@@ -91,6 +134,13 @@ function PaginationNext({
   );
 }
 
+/**
+ * PaginationEllipsis component for indicating truncated pages.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered PaginationEllipsis component.
+ */
 function PaginationEllipsis({
   className,
   ...props

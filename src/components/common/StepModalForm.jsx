@@ -10,6 +10,16 @@ import {
 } from "@/components/ui/dialog";
 import { ChevronRight } from "lucide-react";
 
+/**
+ * Modal component for multi-step forms.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback when the modal open state changes.
+ * @param {Array<{id: string, label: string, element: React.ReactElement}>} [props.steps=[]] - The steps in the form.
+ * @param {string} [props.title] - The title of the modal.
+ * @returns {React.JSX.Element} The rendered StepFormModal component.
+ */
 export default function StepFormModal({ open, onOpenChange, steps = [] ,title}) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 

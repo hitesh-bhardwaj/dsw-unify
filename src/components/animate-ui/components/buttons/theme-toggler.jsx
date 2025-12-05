@@ -28,6 +28,19 @@ const getNextTheme = (effective, modes) => {
   return modes[(i + 1) % modes.length];
 };
 
+/**
+ * Button component to toggle between light, dark, and system themes.
+ *
+ * @param {Object} props - The component props.
+ * @param {"default"|"accent"|"destructive"|"outline"|"secondary"|"ghost"|"link"} [props.variant="default"] - The button variant.
+ * @param {"default"|"xs"|"sm"|"lg"} [props.size="default"] - The button size.
+ * @param {Array<"light"|"dark"|"system">} [props.modes=['light', 'dark', 'system']] - The available theme modes.
+ * @param {"ltr"|"rtl"} [props.direction="ltr"] - The animation direction.
+ * @param {function} [props.onImmediateChange] - Callback fired immediately upon theme change request.
+ * @param {function} [props.onClick] - Click handler for the button.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered ThemeTogglerButton component.
+ */
 function ThemeTogglerButton({
   variant = 'default',
   size = 'default',

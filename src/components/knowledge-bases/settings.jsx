@@ -8,6 +8,11 @@ import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
+/**
+ * Settings component for managing knowledge base settings.
+ *
+ * @returns {React.JSX.Element} The rendered Settings component.
+ */
 const Settings = () => {
   const [systemPrompt, setSystemPrompt] = useState("");
   const [modelPrompt, setModelPrompt] = useState("");

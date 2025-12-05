@@ -4,12 +4,25 @@ import { ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * Breadcrumb component for navigation.
+ *
+ * @param {Object} props - The component props.
+ * @returns {React.JSX.Element} The rendered Breadcrumb component.
+ */
 function Breadcrumb({
   ...props
 }) {
   return <nav aria-label="breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
+/**
+ * BreadcrumbList component for the list of breadcrumb items.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered BreadcrumbList component.
+ */
 function BreadcrumbList({
   className,
   ...props
@@ -25,6 +38,13 @@ function BreadcrumbList({
   );
 }
 
+/**
+ * BreadcrumbItem component for individual breadcrumb items.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered BreadcrumbItem component.
+ */
 function BreadcrumbItem({
   className,
   ...props
@@ -37,6 +57,14 @@ function BreadcrumbItem({
   );
 }
 
+/**
+ * BreadcrumbLink component for breadcrumb links.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} [props.asChild=false] - Whether to render as a child component.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered BreadcrumbLink component.
+ */
 function BreadcrumbLink({
   asChild,
   className,
@@ -52,6 +80,13 @@ function BreadcrumbLink({
   );
 }
 
+/**
+ * BreadcrumbPage component for the current page in the breadcrumb.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered BreadcrumbPage component.
+ */
 function BreadcrumbPage({
   className,
   ...props
@@ -67,6 +102,14 @@ function BreadcrumbPage({
   );
 }
 
+/**
+ * BreadcrumbSeparator component for separating breadcrumb items.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} [props.children] - The separator content.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered BreadcrumbSeparator component.
+ */
 function BreadcrumbSeparator({
   children,
   className,
@@ -84,6 +127,13 @@ function BreadcrumbSeparator({
   );
 }
 
+/**
+ * BreadcrumbEllipsis component for indicating hidden breadcrumb items.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered BreadcrumbEllipsis component.
+ */
 function BreadcrumbEllipsis({
   className,
   ...props
@@ -109,4 +159,5 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
+
 }

@@ -6,6 +6,12 @@ import { Textarea } from "./ui/textarea";
 import SearchBar from "./search-bar";
 import { Button } from "./ui/button";
 
+/**
+ * Component to display the prompt content grid.
+ * This component shows a static prompt content example.
+ *
+ * @returns {React.JSX.Element} The rendered PromptContentGrid component.
+ */
 const PromptContentGrid = () => {
   const [systemPrompt, setSystemPrompt] = useState("");
   const [query, setQuery] = useState("");

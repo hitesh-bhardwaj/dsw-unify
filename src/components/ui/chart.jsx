@@ -22,6 +22,16 @@ function useChart() {
   return context
 }
 
+/**
+ * ChartContainer component to provide context and styling for Recharts.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.id] - The unique identifier for the chart.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.ReactNode} props.children - The child components (Recharts).
+ * @param {Object} props.config - The chart configuration object.
+ * @returns {React.JSX.Element} The rendered ChartContainer component.
+ */
 function ChartContainer({
   id,
   className,
@@ -84,6 +94,25 @@ return color ? `  --color-${key}: ${color};` : null
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+/**
+ * ChartTooltipContent component for rendering custom tooltips.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} [props.active] - Whether the tooltip is active.
+ * @param {Array<Object>} [props.payload] - The data payload for the tooltip.
+ * @param {string} [props.className] - Additional class names.
+ * @param {"dot"|"line"|"dashed"} [props.indicator="dot"] - The indicator style.
+ * @param {boolean} [props.hideLabel=false] - Whether to hide the label.
+ * @param {boolean} [props.hideIndicator=false] - Whether to hide the indicator.
+ * @param {string} [props.label] - The label text.
+ * @param {Function} [props.labelFormatter] - Function to format the label.
+ * @param {string} [props.labelClassName] - Class name for the label.
+ * @param {Function} [props.formatter] - Function to format the value.
+ * @param {string} [props.color] - The color of the indicator.
+ * @param {string} [props.nameKey] - The key for the name in the payload.
+ * @param {string} [props.labelKey] - The key for the label in the payload.
+ * @returns {React.JSX.Element|null} The rendered ChartTooltipContent component or null.
+ */
 function ChartTooltipContent({
   active,
   payload,
@@ -218,6 +247,17 @@ function ChartTooltipContent({
 
 const ChartLegend = RechartsPrimitive.Legend
 
+/**
+ * ChartLegendContent component for rendering custom legends.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {boolean} [props.hideIcon=false] - Whether to hide the icon.
+ * @param {Array<Object>} [props.payload] - The data payload for the legend.
+ * @param {"top"|"bottom"|"middle"} [props.verticalAlign="bottom"] - The vertical alignment of the legend.
+ * @param {string} [props.nameKey] - The key for the name in the payload.
+ * @returns {React.JSX.Element|null} The rendered ChartLegendContent component or null.
+ */
 function ChartLegendContent({
   className,
   hideIcon = false,

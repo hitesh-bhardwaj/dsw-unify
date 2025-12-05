@@ -28,6 +28,14 @@ const CATEGORY_OPTIONS = [
   "HR",
 ];
 
+/**
+ * Modal component for creating a new prompt.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback function when the open state changes.
+ * @returns {React.JSX.Element} The rendered CreatePromptModal component.
+ */
 const CreatePromptModal = ({ open, onOpenChange }) => {
   const [category, setCategory] = useState();
   const [isOpen, setIsOpen] = useState(false)

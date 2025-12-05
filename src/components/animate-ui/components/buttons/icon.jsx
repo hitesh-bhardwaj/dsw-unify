@@ -41,6 +41,17 @@ const buttonVariants = cva(
   }
 );
 
+/**
+ * IconButton component with particle effect on click.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @param {function} [props.onClick] - Callback when button is clicked.
+ * @param {"default"|"accent"|"destructive"|"outline"|"secondary"|"ghost"|"link"} [props.variant="default"] - The button variant.
+ * @param {"default"|"xs"|"sm"|"lg"} [props.size="default"] - The button size.
+ * @param {React.ReactNode} props.children - The content of the button.
+ * @returns {React.JSX.Element} The rendered IconButton component.
+ */
 function IconButton({
   className,
   onClick,

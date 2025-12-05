@@ -56,6 +56,25 @@ function CopyWithTooltip({
   );
 }
 
+/**
+ * Modal component to display detailed information about a feature view, including overview, features, data preview, and history.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback function when the open state changes.
+ * @param {Object} props.feature - The feature view data.
+ * @param {string} props.feature.id - The ID of the feature view.
+ * @param {string} props.feature.name - The name of the feature view.
+ * @param {string} props.feature.description - The description of the feature view.
+ * @param {string} props.feature.createdAt - The creation timestamp or text.
+ * @param {React.ReactNode} props.feature.icon - The icon for the feature view.
+ * @param {string|number} props.feature.tablesCount - The number of tables.
+ * @param {string} props.feature.lastUpdated - The last updated timestamp or text.
+ * @param {Array<string>} [props.feature.tags=[]] - The tags associated with the feature view.
+ * @param {string|number} props.feature.featureNo - The feature number.
+ * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
+ * @returns {React.JSX.Element} The rendered ViewsCardModal component.
+ */
 export default function ViewsCardModal({ open, onOpenChange, feature }) {
   const {
     id,

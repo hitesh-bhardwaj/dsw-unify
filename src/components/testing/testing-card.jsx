@@ -14,6 +14,22 @@ import { Bin } from "../Icons";
 // Track which tests have already shown their skeleton
 const skeletonShownMap = new Map();
 
+/**
+ * Component to display a card for a test.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.test - The test data.
+ * @param {string} props.test.id - The ID of the test.
+ * @param {string} props.test.name - The name of the test.
+ * @param {string} props.test.description - The description of the test.
+ * @param {Array<{label: string, color: string}>} [props.test.tags=[]] - The tags associated with the test.
+ * @param {string|number} props.test.tests - The number of tests.
+ * @param {string} props.test.agent - The agent associated with the test.
+ * @param {string} props.test.lastrun - The last run time.
+ * @param {"light"|"dark"} [props.test.variant="light"] - The variant of the card.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered TestingCard component.
+ */
 export function TestingCard({ test, minSkeletonMs = 500 }) {
   const {
     id,
@@ -148,6 +164,11 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
 /* ---------------------------------------------
    Skeleton that mirrors the TestingCard layout
 ---------------------------------------------- */
+/**
+ * Skeleton component for TestingCard.
+ *
+ * @returns {React.JSX.Element} The rendered TestingCardSkeleton component.
+ */
 export function TestingCardSkeleton() {
   return (
     <div className="group">

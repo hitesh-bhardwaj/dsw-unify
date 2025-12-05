@@ -1,6 +1,13 @@
 import React from 'react'
 import { TrainingCard } from './training-card'
 
+/**
+ * Component to display a grid of training jobs.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<Object>} props.items - An array of training job data objects to be displayed.
+ * @returns {React.JSX.Element} The rendered TrainingJobsGrid component.
+ */
 const TrainingJobsGrid = ({items}) => {
   return (
     <>

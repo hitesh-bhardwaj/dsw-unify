@@ -23,6 +23,14 @@ import {
 } from "@/components/ui/select";
 import { LeftArrow } from "@/components/Icons";
 
+/**
+ * Modal component for creating new test suites.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback when the modal open state changes.
+ * @returns {React.JSX.Element} The rendered AddTestings component.
+ */
 export default function AddTestings({ open, onOpenChange }) {
   const [testSuiteName, setTestSuiteName] = useState("");
   const [description, setDescription] = useState("");

@@ -6,6 +6,11 @@ import { Textarea } from "./ui/textarea";
 import SearchBar from "./search-bar";
 import { Button } from "./ui/button";
 
+/**
+ * Component to display a grid of prompt cards with search and generation functionality.
+ *
+ * @returns {React.JSX.Element} The rendered PromptCardGrid component.
+ */
 const PromptCardGrid = () => {
   const [systemPrompt, setSystemPrompt] = useState("");
   const [query, setQuery] = useState("");

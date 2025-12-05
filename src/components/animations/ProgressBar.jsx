@@ -19,6 +19,28 @@ function toPercentString(v, fallback) {
   return "0%";
 }
 
+/**
+ * AnimatedProgressBar component for displaying progress bars with animations.
+ *
+ * @param {Object} props - The component props.
+ * @param {number|string} [props.value] - The current value of the progress bar.
+ * @param {number|string} [props.labelValue] - Optional label value to use for width if different from value.
+ * @param {boolean} [props.animateOnMount=true] - Whether to animate the progress bar when it mounts or enters view.
+ * @param {boolean} [props.resetOnExit=true] - Whether to reset the progress bar when it exits view.
+ * @param {string|number} [props.playKey] - A key that, when changed, triggers the animation.
+ * @param {number} [props.duration=1.2] - Animation duration in seconds.
+ * @param {number} [props.delay=0] - Animation delay in seconds.
+ * @param {string} [props.ease="easeOut"] - Easing function for the animation.
+ * @param {number} [props.inViewAmount=0.4] - Amount of the element visible before triggering animation.
+ * @param {string} [props.inViewMargin="-10% 0px -10% 0px"] - Margin for in-view detection.
+ * @param {string} [props.className] - Additional class names for the container.
+ * @param {string} [props.trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"] - Class names for the progress track.
+ * @param {string} [props.barClassName="bg-primary h-full absolute top-0 left-0 z-[5] rounded-full"] - Class names for the progress bar.
+ * @param {string} [props.ariaLabel="progress"] - Aria label for accessibility.
+ * @param {number} [props.min=0] - Minimum value.
+ * @param {number} [props.max=100] - Maximum value.
+ * @returns {React.JSX.Element} The rendered AnimatedProgressBar component.
+ */
 export default function AnimatedProgressBar({
   value,
   labelValue,

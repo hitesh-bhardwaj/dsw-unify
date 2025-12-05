@@ -5,6 +5,11 @@ import CountUp from './animations/CountUp'
 import { cn } from '@/lib/utils'
 import { Star } from 'lucide-react'
 
+/**
+ * Component to display prompt usage statistics.
+ *
+ * @returns {React.JSX.Element} The rendered PromptUsageGrid component.
+ */
 const PromptUsageGrid = () => {
   return (
     <>
@@ -56,4 +61,4 @@ const PromptUsageGrid = () => {
  )
 }
 
-export default PromptUsageGrid
+export default PromptUsageGrid;

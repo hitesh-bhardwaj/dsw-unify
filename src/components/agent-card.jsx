@@ -12,6 +12,23 @@ import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
 
+/**
+ * Component to display a card representing an agent.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.agent - The agent data object.
+ * @param {string} props.agent.id - The unique identifier of the agent.
+ * @param {string} props.agent.name - The name of the agent.
+ * @param {string} props.agent.description - The description of the agent.
+ * @param {React.ReactNode} props.agent.icon - The icon for the agent.
+ * @param {string} props.agent.status - The status of the agent (e.g., "active").
+ * @param {Array<{label: string}>} [props.agent.tags=[]] - An array of tags associated with the agent.
+ * @param {string} [props.agent.lastActivity] - The last activity timestamp or text.
+ * @param {string|number} [props.agent.requestCount] - The request count for the agent.
+ * @param {"light"|"dark"} [props.agent.variant="light"] - The variant of the card (light or dark mode).
+ * @param {number} [minSkeletonMs=500] - The minimum time in milliseconds to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered AgentCard component.
+ */
 export function AgentCard({ agent,minSkeletonMs = 500 }) {
   const {
     id,

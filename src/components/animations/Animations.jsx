@@ -11,6 +11,17 @@ import { motion } from "motion/react";
 //  * @param {number} yOffset - Distance to move from (in pixels)
 //  * @param {string} className - Additional CSS classes
 //  */
+/**
+ * FadeUp animation component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - Content to animate.
+ * @param {number} [props.delay=0] - Delay before animation starts (in seconds).
+ * @param {number} [props.duration=1] - Duration of animation (in seconds).
+ * @param {number} [props.yOffset=50] - Distance to move from (in pixels).
+ * @param {string} [props.className="w-full"] - Additional CSS classes.
+ * @returns {React.JSX.Element} The rendered FadeUp component.
+ */
 export const FadeUp = ({
   children,
   delay = 0,
@@ -34,6 +45,17 @@ export const FadeUp = ({
     </motion.div>
   );
 };
+
+/**
+ * ScaleDown animation component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - Content to animate.
+ * @param {number} [props.delay=0] - Delay before animation starts (in seconds).
+ * @param {number} [props.duration=0.2] - Duration of animation (in seconds).
+ * @param {string} [props.className="w-full"] - Additional CSS classes.
+ * @returns {React.JSX.Element} The rendered ScaleDown component.
+ */
 export const ScaleDown = ({
   children,
   delay = 0,
@@ -65,6 +87,17 @@ export const ScaleDown = ({
 //  * @param {number} delay - Initial delay before animations start
 //  * @param {string} className - Additional CSS classes
 //  */
+/**
+ * Container for staggered children animations.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - Child components to animate.
+ * @param {number} [props.staggerDelay=0.1] - Delay between each child animation.
+ * @param {number} [props.delay=0.5] - Initial delay before animations start.
+ * @param {number} [props.duration=0.8] - Duration of animation.
+ * @param {string} [props.className=""] - Additional CSS classes.
+ * @returns {React.JSX.Element} The rendered FadeUpStagger component.
+ */
 export const FadeUpStagger = ({
   children,
   staggerDelay = 0.1,
@@ -128,6 +161,13 @@ export const FadeUpStagger = ({
 //   );
 // };
 
+/**
+ * Bounce animation component for tap interactions.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - Content to animate.
+ * @returns {React.JSX.Element} The rendered Bounce component.
+ */
 export const Bounce = ({ children }) => {
   return (
     <>

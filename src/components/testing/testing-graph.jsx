@@ -39,6 +39,13 @@ const chartConfig = {
   },
 };
 
+/**
+ * Component to display a bar chart of testing performance over time.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.tab - The current tab key to trigger re-animation.
+ * @returns {React.JSX.Element} The rendered TestingGraph component.
+ */
 const TestingGraph = ({tab}) => {
   console.log(tab)
     const [animationId, setAnimationId] = useState(0);

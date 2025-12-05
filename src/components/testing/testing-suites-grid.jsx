@@ -1,6 +1,13 @@
 import React from 'react'
 import { TestingCard } from './testing-card'
 
+/**
+ * Component to display a grid of testing suites.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<Object>} props.items - An array of test suite objects to be displayed.
+ * @returns {React.JSX.Element} The rendered TestingSuitesGrid component.
+ */
 const TestingSuitesGrid = ({items}) => {
   return (
    <>

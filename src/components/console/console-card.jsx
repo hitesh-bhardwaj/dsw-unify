@@ -10,6 +10,20 @@ import { Bounce } from "../animations/Animations";
 import { SynthWave } from "../Icons";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a console card with details about a memory or item.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.memories - The memory or item data.
+ * @param {string} props.memories.id - The ID of the item.
+ * @param {string} props.memories.name - The name of the item.
+ * @param {string} props.memories.description - The description of the item.
+ * @param {string} props.memories.status - The status of the item (e.g., "active").
+ * @param {React.ReactNode} props.memories.icon - The icon for the item.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered ConsoleCard component.
+ */
 export function ConsoleCard({ memories, minSkeletonMs = 500 }) {
   const {id, name, description, status,icon} = memories || {};
 
@@ -97,6 +111,11 @@ export function ConsoleCard({ memories, minSkeletonMs = 500 }) {
 /* ---------------------------------------------
    Skeleton that mirrors the GuardrailsCard layout
 ---------------------------------------------- */
+/**
+ * Skeleton component for ConsoleCard.
+ *
+ * @returns {React.JSX.Element} The rendered GuardrailsCardSkeleton component.
+ */
 export function GuardrailsCardSkeleton() {
   return (
     <Bounce>

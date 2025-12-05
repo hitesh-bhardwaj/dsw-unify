@@ -7,17 +7,20 @@ function cx(...args) {
 }
 
 /**
- * Props:
- * - tabs: [{ id: string, label: ReactNode, content?: ReactNode }]
- * - defaultValue?: string
- * - value?: string (controlled)
- * - onValueChange?: (id) => void
- * - className?: string (wrapper)
- * - barClassName?: string (tab bar)
- * - contentClassName?: string
- * - activeTextClassName?: string
- * - inactiveTextClassName?: string
- * - renderContent?: boolean (default true)
+ * Tabs component with a sliding indicator.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<{id: string, label: React.ReactNode, content?: React.ReactNode}>} props.tabs - The tabs data.
+ * @param {string} [props.defaultValue] - The default active tab ID.
+ * @param {string} [props.value] - The controlled active tab ID.
+ * @param {function} [props.onValueChange] - Callback when the active tab changes.
+ * @param {string} [props.className] - Additional class names for the container.
+ * @param {string} [props.barClassName] - Additional class names for the tab bar.
+ * @param {string} [props.contentClassName] - Additional class names for the content area.
+ * @param {string} [props.activeTextClassName="text-[#FF5722]"] - Class name for active tab text.
+ * @param {string} [props.inactiveTextClassName="text-foreground/80"] - Class name for inactive tab text.
+ * @param {boolean} [props.renderContent=true] - Whether to render the content associated with the active tab.
+ * @returns {React.JSX.Element} The rendered Tabs component.
  */
 export default function Tabs({
   tabs,

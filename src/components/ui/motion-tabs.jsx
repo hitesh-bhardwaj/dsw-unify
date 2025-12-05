@@ -19,6 +19,17 @@ function useTabs() {
   return context
 }
 
+/**
+ * Tabs component for organizing content into multiple sections.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.defaultValue] - The default active tab value.
+ * @param {string} [props.value] - The active tab value (controlled).
+ * @param {function} [props.onValueChange] - Callback when the active tab changes.
+ * @param {React.ReactNode} props.children - The content of the tabs.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered Tabs component.
+ */
 function Tabs(
   {
     defaultValue,
@@ -78,6 +89,16 @@ function Tabs(
   );
 }
 
+/**
+ * TabsList component containing the tab triggers.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The tab triggers.
+ * @param {string} [props.className] - Additional class names.
+ * @param {string} [props.activeClassName] - Class name for the active indicator.
+ * @param {Object} [props.transition] - Transition settings.
+ * @returns {React.JSX.Element} The rendered TabsList component.
+ */
 function TabsList({
   children,
   className,
@@ -113,6 +134,15 @@ function TabsList({
   );
 }
 
+/**
+ * TabsTrigger component for switching tabs.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.value - The value associated with the tab.
+ * @param {React.ReactNode} props.children - The content of the trigger.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered TabsTrigger component.
+ */
 function TabsTrigger({
   ref,
   value,
@@ -151,6 +181,15 @@ function TabsTrigger({
   );
 }
 
+/**
+ * TabsContents component wrapper for tab content panels.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The tab contents.
+ * @param {string} [props.className] - Additional class names.
+ * @param {Object} [props.transition] - Transition settings.
+ * @returns {React.JSX.Element} The rendered TabsContents component.
+ */
 function TabsContents({
   children,
   className,
@@ -193,6 +232,15 @@ function TabsContents({
   );
 }
 
+/**
+ * TabsContent component for individual tab content.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The content.
+ * @param {string} props.value - The value associated with the tab.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered TabsContent component.
+ */
 function TabsContent({
   children,
   value,
@@ -217,4 +265,4 @@ function TabsContent({
   );
 }
 
-export { Tabs, TabsList, TabsTrigger, TabsContents, TabsContent, useTabs };
+export { Tabs, TabsList, TabsTrigger, TabsContents, TabsContent, useTabs }

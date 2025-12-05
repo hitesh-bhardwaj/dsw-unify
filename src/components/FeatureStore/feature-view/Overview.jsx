@@ -1,6 +1,17 @@
 import React from "react";
 import { ActiveIcon, Calendar, DocumentIcon, FeaturesIcon, FeatureTransformationIcon, SynthWave, TablesIcon } from "@/components/Icons";
 
+/**
+ * Component to display an overview of a feature view.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.description - The description of the feature view.
+ * @param {string|number} props.featureNo - The number of features.
+ * @param {string|number} props.tablesCount - The number of tables.
+ * @param {string} props.createdAt - The creation timestamp or text.
+ * @param {string} props.lastUpdated - The last updated timestamp or text.
+ * @returns {React.JSX.Element} The rendered Overview component.
+ */
 const Overview = ({
   description,
   featureNo,

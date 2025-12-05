@@ -18,6 +18,25 @@ function useMotionHighlight() {
   return context;
 }
 
+/**
+ * Component that adds a motion highlight effect to its children.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.RefObject} ref - Ref for the container element.
+ * @param {React.ReactNode} props.children - The children to render.
+ * @param {string} [props.value] - The controlled value of the highlighted item.
+ * @param {string} [props.defaultValue] - The default value of the highlighted item.
+ * @param {function} [props.onValueChange] - Callback when the highlighted item changes.
+ * @param {string} [props.className] - Additional class names for the highlight.
+ * @param {Object} [props.transition] - Transition settings for Framer Motion.
+ * @param {boolean} [props.hover=false] - Whether to highlight on hover.
+ * @param {boolean} [props.enabled=true] - Whether the highlight is enabled.
+ * @param {boolean} [props.controlledItems] - Whether items are controlled externally.
+ * @param {boolean} [props.disabled=false] - Whether the highlight is disabled.
+ * @param {number} [props.exitDelay=0.2] - Delay before the highlight exits.
+ * @param {"children"|"parent"} [props.mode="children"] - The mode of operation.
+ * @returns {React.JSX.Element} The rendered MotionHighlight component.
+ */
 function MotionHighlight(
   {
     ref,
@@ -201,6 +220,23 @@ function getNonOverridingDataAttributes(element, dataAttributes) {
   }, {});
 }
 
+/**
+ * Item component for MotionHighlight.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.RefObject} ref - Ref for the item element.
+ * @param {React.ReactNode} props.children - The children to render.
+ * @param {string} [props.id] - The unique identifier for the item.
+ * @param {string} [props.value] - The value of the item.
+ * @param {string} [props.className] - Additional class names.
+ * @param {Object} [props.transition] - Transition settings.
+ * @param {boolean} [props.disabled=false] - Whether the item is disabled.
+ * @param {string} [props.activeClassName] - Class names when active.
+ * @param {number} [props.exitDelay] - Delay before exit.
+ * @param {boolean} [props.asChild=false] - Whether to render as a child component.
+ * @param {boolean} [props.forceUpdateBounds] - Whether to force update bounds.
+ * @returns {React.JSX.Element} The rendered MotionHighlightItem component.
+ */
 function MotionHighlightItem({
   ref,
   children,

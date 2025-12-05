@@ -14,6 +14,14 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
 import { LeftArrow } from "@/components/Icons";
 
+/**
+ * Modal component for creating a new use case.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback function when the modal open state changes.
+ * @returns {React.JSX.Element} The rendered UsecaseModal component.
+ */
 export default function UsecaseModal({ open, onOpenChange }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

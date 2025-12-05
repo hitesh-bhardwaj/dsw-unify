@@ -298,6 +298,15 @@ const workflowBuilderFeatures = [
   },
 ];
 
+/**
+ * MetricsBoard component displaying key metrics in a list or grid view.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<Object>} props.metricsData - Array of metric data objects.
+ * @param {"list"|"grid"} props.view - The current view mode.
+ * @param {function} props.setView - Function to set the view mode.
+ * @returns {React.JSX.Element} The rendered MetricsBoard component.
+ */
 function MetricsBoard({ metricsData, view, setView }) {
   const [items, setItems] = useState(metricsData);
   const scrollRef = useRef(null);
@@ -548,6 +557,11 @@ function MetricsBoard({ metricsData, view, setView }) {
 
 
 
+/**
+ * Home page component displaying the main dashboard.
+ *
+ * @returns {React.JSX.Element} The rendered Home component.
+ */
 export default function Home() {
   const [query, setQuery] = useState("");
   const [view, setView] = useState("list");

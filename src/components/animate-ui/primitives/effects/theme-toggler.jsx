@@ -24,6 +24,18 @@ function getClipKeyframes(direction) {
   }
 }
 
+/**
+ * Component providing view transitions for theme toggling.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.theme - The current theme.
+ * @param {string} props.resolvedTheme - The resolved theme (e.g. 'light' or 'dark').
+ * @param {function} props.setTheme - Function to set the theme.
+ * @param {function} [props.onImmediateChange] - Callback fired immediately upon theme change request.
+ * @param {"ltr"|"rtl"|"ttb"|"btt"} [props.direction="ltr"] - The animation direction.
+ * @param {React.ReactNode | function} props.children - Children or render prop receiving theme state and toggle function.
+ * @returns {React.JSX.Element} The rendered ThemeToggler component.
+ */
 function ThemeToggler({
   theme,
   resolvedTheme,

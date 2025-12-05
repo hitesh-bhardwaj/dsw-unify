@@ -11,6 +11,23 @@ import { Separator } from "./ui/separator";
 import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
+
+/**
+ * Component to display a card for a knowledge base.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.agent - The agent data object containing knowledge base info.
+ * @param {string} props.agent.id - The ID of the knowledge base.
+ * @param {string} props.agent.name - The name of the knowledge base.
+ * @param {string} props.agent.description - The description of the knowledge base.
+ * @param {string} props.agent.status - The sync status (e.g., "active").
+ * @param {string} props.agent.size - The size of the knowledge base.
+ * @param {string|number} props.agent.documentsCount - The number of documents.
+ * @param {"light"|"dark"} [props.agent.variant="light"] - The variant of the card.
+ * @param {React.ReactNode} props.agent.icon - The icon for the knowledge base.
+ * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered KnowledgeCard component.
+ */
 export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
   const {
     id,
@@ -130,6 +147,11 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
 /* ---------------------------------------------
    Skeleton that mirrors the KnowledgeCard layout
 ---------------------------------------------- */
+/**
+ * Skeleton component for KnowledgeCard.
+ *
+ * @returns {React.JSX.Element} The rendered KnowledgeCardSkeleton component.
+ */
 export function KnowledgeCardSkeleton() {
   return (
     <Bounce>

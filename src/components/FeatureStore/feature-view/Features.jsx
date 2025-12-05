@@ -48,6 +48,11 @@ const features = [
   },
 ];
 
+/**
+ * Component to display the feature schema in a table.
+ *
+ * @returns {React.JSX.Element} The rendered Features component.
+ */
 export default function Features() {
   return (
     <div className="w-full mx-auto ">

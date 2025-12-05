@@ -10,6 +10,18 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
+/**
+ * Component to display a metric card with a label, value, change percentage, and trend chart.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.label - The label for the metric.
+ * @param {string|number} props.value - The value of the metric.
+ * @param {number} props.change - The percentage change.
+ * @param {Array<number>} props.trend - The trend data points for the chart.
+ * @param {string} [props.className] - Additional class names.
+ * @param {string} [props.color] - Optional custom color for the chart.
+ * @returns {React.JSX.Element} The rendered MetricCard component.
+ */
 export function MetricCard({
   label,
   value,

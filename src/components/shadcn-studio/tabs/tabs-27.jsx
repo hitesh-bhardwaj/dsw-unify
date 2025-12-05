@@ -33,6 +33,11 @@ const tabs = [
   }
 ]
 
+/**
+ * A demo component for animated tabs using framer-motion.
+ *
+ * @returns {React.JSX.Element} The rendered AnimatedTabsDemo component.
+ */
 const AnimatedTabsDemo = () => {
   return (
     <div className='w-full max-w-md'>

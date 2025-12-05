@@ -17,6 +17,15 @@ import FeatureCreation from "./ViewsStepForm/FeatureCreation";
 import DefineJoins from "./ViewsStepForm/DefineJoins";
 import SelectFeatures from "./ViewsStepForm/SelectFeatures";
 
+/**
+ * Modal component for creating a feature view, offering automated and manual creation options.
+ *
+ * @param {Object} props - The component props.
+ * @param {boolean} props.open - Whether the modal is open.
+ * @param {function} props.onOpenChange - Callback when the modal open state changes.
+ * @param {function} [props.onSelect] - Callback when a creation option is selected.
+ * @returns {React.JSX.Element} The rendered ViewsModal component.
+ */
 export default function ViewsModal({ open, onOpenChange, onSelect }) {
   const [showStepsModal, setShowStepsModal] = useState(false);
   const [selectedType, setSelectedType] = useState(null);

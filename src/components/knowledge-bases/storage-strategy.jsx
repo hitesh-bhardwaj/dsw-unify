@@ -15,6 +15,13 @@ import { cn } from "@/lib/utils";
 import AnimatedProgressBar from "../animations/ProgressBar";
 import { SynthWave } from "../Icons";
 
+/**
+ * Component to display the storage strategy and related analytics.
+ *
+ * @param {Object} props - The component props.
+ * @param {number} [props.minSkeletonMs=500] - The minimum time to show the skeleton loader.
+ * @returns {React.JSX.Element} The rendered StorageStrategy component.
+ */
 const StorageStrategy = ({ minSkeletonMs = 500 }) => {
   const chartData = [
     { month: "January", desktop: 156 },

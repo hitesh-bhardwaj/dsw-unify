@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * Component to display a list of card details.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<{title: string, value: string|number, description?: string}>} [props.data=[]] - An array of data objects to display in cards.
+ * @returns {React.JSX.Element} The rendered CardDetails component.
+ */
 export default function CardDetails({ data = [] }) {
   return (
     <div className="w-full flex items-center justify-between gap-4">

@@ -1,6 +1,13 @@
 import React from 'react'
 import { LLMCard } from './LLMCard'
 
+/**
+ * Component to display a grid of LLM cards.
+ *
+ * @param {Object} props - The component props.
+ * @param {Array<Object>} props.items - An array of LLM data objects to be displayed.
+ * @returns {React.JSX.Element} The rendered LLMGrid component.
+ */
 const LLMGrid = ({items}) => {
   return (
    <>

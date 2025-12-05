@@ -6,6 +6,13 @@ import { CircleIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * RadioGroup component for selecting one option from a set.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered RadioGroup component.
+ */
 function RadioGroup({
   className,
   ...props
@@ -18,6 +25,13 @@ function RadioGroup({
   );
 }
 
+/**
+ * RadioGroupItem component for an individual radio button.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered RadioGroupItem component.
+ */
 function RadioGroupItem({
   className,
   ...props

@@ -33,6 +33,15 @@ function mergeProps(childProps, slotProps) {
   return merged;
 }
 
+/**
+ * Slot component that merges props and refs onto its child,
+ * converting it to a motion component if it isn't already.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactElement} props.children - The child component to render.
+ * @param {React.Ref<any>} ref - Ref to be forwarded to the child.
+ * @returns {React.JSX.Element|null} The rendered component with merged props and ref.
+ */
 function Slot(
   {
     children,

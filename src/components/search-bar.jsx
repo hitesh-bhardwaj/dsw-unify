@@ -7,6 +7,17 @@ import { SearchIcon } from "./Icons";
 /* ---------- easing + hook ---------- */
 const defaultEase = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
 
+/**
+ * Hook to animate placeholder text like a typewriter.
+ *
+ * @param {string} text - The text to type out.
+ * @param {Object} [options] - Configuration options.
+ * @param {number} [options.baseSpeed=50] - Base typing speed in milliseconds.
+ * @param {number} [options.pauseMs=1000] - Pause duration before looping.
+ * @param {Function} [options.easing=defaultEase] - Easing function for typing speed variation.
+ * @param {boolean} [options.loop=true] - Whether to loop the animation.
+ * @returns {string} The currently animated placeholder text.
+ */
 export function useTypewriterPlaceholder(
   text,
   { baseSpeed = 50, pauseMs = 1000, easing = defaultEase, loop = true } = {}
@@ -56,6 +67,21 @@ export function useTypewriterPlaceholder(
 }
 
 /* ---------- reusable input ---------- */
+/**
+ * Input component with a typewriter placeholder effect.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.placeholderText - The placeholder text to animate.
+ * @param {string|number} [props.value] - The value of the input.
+ * @param {function} [props.onChange] - Callback when the input value changes.
+ * @param {string} [props.className] - Additional class names.
+ * @param {React.ReactNode} [props.icon] - Icon to display in the input.
+ * @param {number} [props.baseSpeed] - Base typing speed.
+ * @param {number} [props.pauseMs] - Pause duration.
+ * @param {Function} [props.easing] - Easing function.
+ * @param {boolean} [props.loop] - Whether to loop the animation.
+ * @returns {React.JSX.Element} The rendered TypewriterInput component.
+ */
 export function TypewriterInput({
   placeholderText,
   value,
@@ -97,6 +123,18 @@ export function TypewriterInput({
 }
 
 /* ---------- friendly wrapper (accepts both APIs) ---------- */
+/**
+ * SearchBar component with a typewriter effect placeholder.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.placeholder="Search Agents..."] - The placeholder text.
+ * @param {string} [props.value] - The controlled value.
+ * @param {function} [props.onChange] - The change handler.
+ * @param {string} [props.searchQuery] - Legacy prop for search query.
+ * @param {function} [props.setSearchQuery] - Legacy prop for setting search query.
+ * @param {string} [props.className] - Additional class names.
+ * @returns {React.JSX.Element} The rendered SearchBar component.
+ */
 export default function SearchBar({
   placeholder = "Search Agents...",
   // Preferred controlled API:

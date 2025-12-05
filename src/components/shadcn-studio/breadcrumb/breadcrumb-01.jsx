@@ -7,6 +7,11 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb'
 
+/**
+ * A demo component for Breadcrumb navigation.
+ *
+ * @returns {React.JSX.Element} The rendered BreadcrumbDemo component.
+ */
 const BreadcrumbDemo = () => {
   return (
     <Breadcrumb>

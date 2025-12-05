@@ -2,6 +2,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils"; // or replace with your own classnames helper
 
+/**
+ * A custom scrollable area component with a styled scrollbar.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} [props.className] - Class name for the outer container.
+ * @param {string} [props.viewportClassName] - Class name for the scrollable viewport.
+ * @param {React.ReactNode} props.children - The content to be scrolled.
+ * @param {number} [props.trackThickness=8] - The thickness of the scrollbar track.
+ * @param {number} [props.trackInset=8] - The inset of the scrollbar from the right edge.
+ * @param {number} [props.minThumbSize=32] - The minimum height of the scrollbar thumb.
+ * @returns {React.JSX.Element} The rendered CustomScrollArea component.
+ */
 export default function CustomScrollArea({
   className,
   viewportClassName,

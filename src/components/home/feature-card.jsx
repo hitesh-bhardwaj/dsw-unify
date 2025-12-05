@@ -5,6 +5,17 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Bounce } from "@/components/animations/Animations";
 import { cn } from "@/lib/utils";
 
+/**
+ * FeatureCard component for displaying feature highlights with an icon, title, and description.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ElementType} props.icon - The icon component to display.
+ * @param {string} props.title - The title of the feature card.
+ * @param {string} props.description - The description of the feature card.
+ * @param {string} [props.href] - The URL to link to (optional).
+ * @param {string} [props.className] - Additional class names for the card.
+ * @returns {React.JSX.Element} The rendered FeatureCard component.
+ */
 export function FeatureCard({ icon: Icon, title, description, href, className }) {
   const CardWrapper = href
     ? ({ children }) => (
