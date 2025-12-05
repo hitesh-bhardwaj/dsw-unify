@@ -214,7 +214,7 @@ export default function RadioTabs({
               {/* icon (if provided) */}
               <div className={`flex gap-2`}>
               {Icon ? (
-                <Icon className="!h-6 !w-auto" aria-hidden="true" />
+                <Icon className="!h-5 !w-auto" aria-hidden="true" />
               ) : (
                 icon || null
               )}

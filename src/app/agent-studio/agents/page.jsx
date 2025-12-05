@@ -148,7 +148,7 @@ export default function AgentsPage() {
   );
 
   return (
-    <div className="flex flex-col h-full w-full overflow-hidden">
+    <div className="flex flex-col h-full w-full overflow-hidden pb-5 ">
       <ScaleDown>
         {/* Header section */}
         <div className="space-y-6 p-6">
@@ -200,7 +200,7 @@ export default function AgentsPage() {
                 : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
             )}
           >
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+            <div className="grid gap-6  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
               {filteredAgents.map((agent) => (
                 <AgentCard key={agent.id} agent={agent} />
               ))}

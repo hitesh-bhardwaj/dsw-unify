@@ -205,10 +205,10 @@ export default function PromptsPage() {
             <div className="flex-1 pt-0 h-fit w-full relative">
               <div
                 className={cn(
-                  "relative inset-0  pt-0 transition-all h-full",
+                  "relative inset-0  pt-0 transition-all duration-700 ease-out h-full",
                   tab === "prompts"
-                    ? "translate-x-0 opacity-100 duration-500 ease-out"
-                    : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
+                    ? "opacity-100 "
+                    : "opacity-0 pointer-events-none "
                 )}
               >
                 <div className="grid gap-6 grid-cols-3 md:grid-cols-2 lg:grid-cols-3 items-stretch">
@@ -226,10 +226,10 @@ export default function PromptsPage() {
                 className={cn(
                   "absolute inset-0 pt-0 transition-all",
                   tab === "templates"
-                    ? "translate-x-0 opacity-100 duration-500 ease-out"
+                    ? "translate-x-0 opacity-100 duration-700 ease-out"
                     : tab === "prompts"
-                    ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-                    : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
+                    ? " opacity-0 pointer-events-none "
+                    : " opacity-0 pointer-events-none "
                 )}
               >
                 <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">

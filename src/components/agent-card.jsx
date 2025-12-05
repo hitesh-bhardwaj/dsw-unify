@@ -65,8 +65,8 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
     // Skeleton that mirrors the real card's structure
     return (
       <Bounce>
-        <div className="block">
-          <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 py-5">
+        <div className="block h-full">
+          <Card className="overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 py-5">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground/40 dark:bg-sidebar-accent">
@@ -154,7 +154,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
             </div>
 
             {/* Agent name */}
-            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
+            <h3 className="mt-7 h-15 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
               {name}
             </h3>
 
