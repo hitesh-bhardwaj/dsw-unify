@@ -1,22 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { Card, CardHeader } from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Bounce } from "@/components/animations/Animations";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useEffect, useState } from "react";
 
-/**
- * FeatureCard component for displaying feature highlights with an icon, title, and description.
- *
- * @param {Object} props - The component props.
- * @param {React.ElementType} props.icon - The icon component to display.
- * @param {string} props.title - The title of the feature card.
- * @param {string} props.description - The description of the feature card.
- * @param {string} [props.href] - The URL to link to (optional).
- * @param {string} [props.className] - Additional class names for the card.
- * @returns {React.JSX.Element} The rendered FeatureCard component.
- */
-export function FeatureCard({ icon: Icon, title, description, href, className }) {
+const skeletonShownMap = new Map();
+
+export function FeatureCard({
+  icon: Icon,
+  title,
+  description,
+  href,
+  className,
+  minSkeletonMs = 500,
+}) {
+  const id = title; // unique key for skeleton control
+
+  const [showSkeleton, setShowSkeleton] = useState(() => {
+    return !skeletonShownMap.has(id);
+  });
+
+  useEffect(() => {
+    if (showSkeleton && id) {
+      const t = setTimeout(() => {
+        setShowSkeleton(false);
+        skeletonShownMap.set(id, true);
+      }, minSkeletonMs);
+      return () => clearTimeout(t);
+    }
+  }, [showSkeleton, minSkeletonMs, id]);
+
+  if (showSkeleton) return <FeatureCardSkeleton />;
+
   const CardWrapper = href
     ? ({ children }) => (
         <Bounce>
@@ -42,6 +60,7 @@ export function FeatureCard({ icon: Icon, title, description, href, className })
               {Icon && <Icon className="h-6 w-6" />}
             </div>
           </div>
+
           <div className="space-y-4">
             <h3 className="text-xl font-medium leading-none tracking-tight group-hover:text-white transition-colors duration-300">
               {title}
@@ -53,5 +72,32 @@ export function FeatureCard({ icon: Icon, title, description, href, className })
         </CardHeader>
       </Card>
     </CardWrapper>
+  );
+}
+
+/*             FEATURE CARD SKELETON              */
+
+export function FeatureCardSkeleton() {
+  return (
+    <div className="group w-full h-full">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
+        <CardHeader className="space-y-6">
+          {/* Icon circle */}
+          <div className="flex items-center gap-3">
+            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-black/30">
+              <Skeleton className="h-full w-full rounded" />
+            </div>
+          </div>
+
+          {/* Title + description */}
+          <div className="space-y-4">
+            <Skeleton className="h-6 w-2/3" />
+            <Skeleton className="h-4 w-5/6" />
+          </div>
+        </CardHeader>
+
+        <CardContent />
+      </Card>
+    </div>
   );
 }

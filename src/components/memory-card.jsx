@@ -165,7 +165,7 @@ export function MemoryCardSkeleton() {
               </div>
 
               {/* Status badge placeholder */}
-              <div className="rounded-full text-xs font-medium bg-gray-200">
+              <div className="rounded-full text-xs font-medium bg-gray-200 dark:bg-background">
                 <Skeleton className="h-6 w-16" />
               </div>
             </div>
@@ -186,7 +186,7 @@ export function MemoryCardSkeleton() {
             </div>
 
             {/* Footer stats skeleton */}
-            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4 bg-gray-100 border">
+            <div className="flex items-center  justify-between rounded-lg p-3 text-sm py-4 bg-gray-100 dark:bg-background border">
               <div className="flex flex-col items-start gap-1">
                 <Skeleton className="h-6 w-16" />
                 <Skeleton className="h-4 w-12" />

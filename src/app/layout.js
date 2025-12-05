@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import LayoutTransition from "@/components/LayoutTransition";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,22 +16,36 @@ export const metadata = {
   description: "An AI agent framework to build and deploy autonomous AI agents with ease.",
 };
 
-/**
- * Root layout component for the application.
- *
- * @param {Object} props - The component props.
- * @param {React.ReactNode} props.children - The content to be rendered within the layout.
- * @returns {React.JSX.Element} The rendered RootLayout component.
- */
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} antialiased`}
-      >
-        <LayoutTransition>
-          {children}
-        </LayoutTransition>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+       <script
+       strategy="beforeInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      try {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+        // Always disable transitions briefly during boot
+        document.documentElement.classList.add('disable-transitions');
+        setTimeout(() => {
+          document.documentElement.classList.remove('disable-transitions');
+        }, 5000); // keep transitions disabled for first 50ms only
+      } catch (e) {}
+    `,
+  }}
+/>
+
+
+      </head>
+
+      <body className={`${inter.variable} antialiased`}>
+        <ThemeProvider attribute="class" defaultTheme="light">
+          <LayoutTransition>{children}</LayoutTransition>
+        </ThemeProvider>
       </body>
     </html>
   );

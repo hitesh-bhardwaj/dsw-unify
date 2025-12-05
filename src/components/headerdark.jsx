@@ -14,13 +14,20 @@ import { ThemeToggler } from "@/components/animate-ui/primitives/effects/theme-t
 export const ThemeTogglerBtn = () => {
   const { theme, resolvedTheme, setTheme } = useTheme();
   const [dir, setDir] = useState("");
+
+  // Read theme from localStorage on mount
   useEffect(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+    if (stored) {
+      setTheme(stored);
+    }
+
     const html = document.documentElement;
     const htmlIsDark = html.classList.contains("dark");
     if (htmlIsDark) {
       setDir("rtl");
-    } 
-  }, []);
+    }
+  }, [setTheme]);
 
   return (
     <ThemeToggler
@@ -37,12 +44,17 @@ export const ThemeTogglerBtn = () => {
         const effectiveFixed = htmlIsDark ? "dark" : effective;
         const nextTheme = effectiveFixed === "dark" ? "light" : "dark";
 
-
         return (
           <button
             onClick={() => {
               toggleTheme(nextTheme);
-              if (nextTheme == "dark") {
+
+              // Save theme only, as requested
+              if (typeof window !== "undefined") {
+                localStorage.setItem("theme", nextTheme);
+              }
+
+              if (nextTheme === "dark") {
                 setDir("rtl");
               } else {
                 setDir("ltr");
@@ -52,7 +64,6 @@ export const ThemeTogglerBtn = () => {
           >
             {effectiveFixed === "dark" ? (
               <Sun className="!h-5 !w-auto" />
-              
             ) : (
               <Moon className="!h-5 !w-auto" />
             )}
