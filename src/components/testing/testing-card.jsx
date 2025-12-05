@@ -127,7 +127,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
               <RippleButton>
                 <Button
                   variant="outline"
-                  className="gap-2 text-white bg-primary !border-none duration-300 ease-out hover:bg-primary hover:text-white"
+                  className="gap-2 text-white bg-primary !border-none duration-300 ease-out hover:bg-primary hover:text-white dark:bg-primary dark:hover:bg-primary"
                 >
                   <div className="!w-4">
                     <RunTestsIcon/>

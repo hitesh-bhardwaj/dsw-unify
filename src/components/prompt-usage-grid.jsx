@@ -16,7 +16,7 @@ const PromptUsageGrid = () => {
     <div className="grid grid-cols-3 gap-6">
                   <Card className={"!pb-0 !py-6  !rounded-lg"}>
                     <CardHeader>
-                      <h2 className="text-sm text-gray-600">Total Uses</h2>
+                      <h2 className="text-sm text-gray-600 dark:text-foreground">Total Uses</h2>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div>
@@ -29,7 +29,7 @@ const PromptUsageGrid = () => {
                   </Card>
                   <Card className={"!pb-0 !py-6 !rounded-lg"}>
                     <CardHeader>
-                      <h2 className="text-sm text-gray-600">Rating</h2>
+                      <h2 className="text-sm text-gray-600 dark:text-foreground">Rating</h2>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div>
@@ -43,7 +43,7 @@ const PromptUsageGrid = () => {
                   </Card>
                   <Card className={"!pb-0 !py-6  !rounded-lg"}>
                     <CardHeader>
-                      <h2 className="text-sm text-gray-600">Version</h2>
+                      <h2 className="text-sm text-gray-600 dark:text-foreground">Version</h2>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div>

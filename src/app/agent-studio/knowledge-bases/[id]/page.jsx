@@ -207,7 +207,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
             </div>
           )}
 
-          <AnimatedTabsSection items={items} defaultValue="configuration" />
+          <AnimatedTabsSection items={items} defaultValue="documents" />
         </div>
       </ScaleDown>
     </div>

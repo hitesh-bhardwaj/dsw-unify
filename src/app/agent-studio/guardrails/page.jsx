@@ -75,7 +75,7 @@ export default function GuardrailsPage() {
               <h1 className="text-3xl font-medium text-foreground">
                 Guardrails
               </h1>
-              <p className="mt-1 text-sm text-gray-600">
+              <p className="mt-1 text-sm text-gray-600 dark:text-foreground">
                 Manage safety and compliance guardrails
               </p>
             </div>

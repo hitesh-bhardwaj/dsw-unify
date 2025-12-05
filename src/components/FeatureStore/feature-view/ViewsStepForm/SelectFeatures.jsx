@@ -180,7 +180,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
                 </div>
 
                 {/* Feature Name */}
-                <div className="bg-gray-50 rounded-md p-3 border border-border-color-1">
+                <div className="bg-gray-50 rounded-md p-3 border border-border-color-1 dark:bg-background">
                   <p className="text-sm text-foreground font-medium">
                     {feature.featureName}
                   </p>

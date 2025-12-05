@@ -83,7 +83,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
               {/* Status badge */}
                <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 dark:bg-background border border-badge-green text-foreground group-hover:text-white group-hover:border-white transition-all duration-300",
+                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 dark:bg-background border border-badge-green text-foreground group-hover:text-white group-hover:border-white transition-all duration-300 dark:group-hover:bg-white/10",
                   status !== "active" && "border-badge-sea-green opacity-[0.8] px-4"
                 )}
               >

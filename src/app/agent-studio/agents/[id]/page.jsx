@@ -250,7 +250,6 @@ export default function AgentDetailPage({ params }) {
               <RippleButton>
                 <Button
                   variant="outline"
-                  onClick={() => setApiModalOpen(true)}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4 text-red-500">
@@ -327,7 +326,7 @@ export default function AgentDetailPage({ params }) {
                         <h3 className="text-sm font-medium text-gray-700 mb-2 dark:text-foreground">
                           Status
                         </h3>
-                        <Badge className="bg-transparent border border-badge-green text-black">
+                        <Badge className="bg-transparent border border-badge-green text-black dark:text-white">
                           {agent.status.charAt(0).toUpperCase() +
                             agent.status.slice(1)}
                         </Badge>

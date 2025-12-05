@@ -68,9 +68,9 @@ export function TrainingCard({ data, playKey }) {
                         tag.color === "yellow" &&
                           "bg-badge-yellow text-foreground  transition-all duration-500 ease-out",
                         tag.color === "blue" &&
-                          "bg-transparent text-foreground transition-all duration-500 ease-out border border-badge-blue",
+                          "bg-transparent text-foreground border border-badge-blue dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
                         tag.color === "green" &&
-                          "bg-transparent text-foreground  transition-all duration-500 ease-out border border-badge-green",
+                          "bg-transparent text-foreground border border-badge-green dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
                         tag.color === "orange" &&
                           "bg-primary text-white  transition-all duration-500 ease-out",
                         tag.color === "red" &&

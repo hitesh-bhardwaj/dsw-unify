@@ -71,7 +71,7 @@ export default function MemoriesPage() {
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Memories</h1>
-              <p className="mt-1 text-sm text-gray-600">
+              <p className="mt-1 text-sm text-gray-600 dark:text-foreground">
                 Manage agent memory systems
               </p>
             </div>

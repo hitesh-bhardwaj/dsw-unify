@@ -122,9 +122,9 @@ export function ModelsCard({ data , minSkeletonMs = 500 }) {
                         tag.color === "blue" &&
                           "bg-badge-blue text-white  transition-all duration-500 ease-out",
                         tag.color === "green" &&
-                          "bg-transparent text-foreground  transition-all duration-500 ease-out border border-badge-green",
+                          "bg-transparent text-foreground border border-badge-green dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
                         tag.color === "mint" &&
-                          "bg-transparent text-foreground transition-all duration-500 ease-out border border-badge-mint",
+                          "bg-transparent text-foreground  border border-badge-mint dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
                         tag.color === "orange" &&
                           "bg-primary text-white  transition-all duration-500 ease-out",
                         tag.color === "red" &&

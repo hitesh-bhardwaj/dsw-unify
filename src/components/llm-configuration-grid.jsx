@@ -182,7 +182,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
               <p>Temperature</p>
               <p>0.7</p>
             </div>
-            <div className="w-full h-[4px] bg-sidebar-accent rounded-full flex items-center">
+            <div className="w-full h-[4px] bg-sidebar-accent rounded-full flex items-center dark:bg-gray-700">
               <div
                 className={`h-full bg-primary rounded-full relative duration-700 ease-in-out ${
                   showProgress ? "w-[70%]" : "w-0"

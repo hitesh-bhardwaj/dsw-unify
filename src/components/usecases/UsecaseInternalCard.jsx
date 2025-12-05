@@ -177,13 +177,13 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
           >
             <div className="flex items-center gap-2 ">
               <div className="w-4 h-4">
-                <VersionsIcon className="text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground" />
+                <VersionsIcon className="text-badge-blue group-hover:text-white transition-all duration-300 " />
               </div>
               <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{versions} Versions</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4">
-                <FeaturesIcon className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground" />
+                <FeaturesIcon className="text-primary group-hover:text-white transition-all duration-300" />
               </div>
               <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{features} features</span>
             </div>

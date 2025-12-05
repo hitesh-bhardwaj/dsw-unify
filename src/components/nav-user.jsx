@@ -72,7 +72,7 @@ export const NavUser = ({
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <ChevronDownIcon className="!h-1.5 !w-auto" />
+            <ChevronDownIcon className="!h-1.5 !w-auto dark:text-white" />
           </motion.div>
         </button>}
       />
@@ -81,7 +81,7 @@ export const NavUser = ({
         sideOffset={sideOffset}
         align={align}
         alignOffset={alignOffset}
-        className="w-50 text-gray-600 text-sm"
+        className="w-50 text-gray-600 text-sm dark:text-white"
       >
         <div className="grid gap-4">
           <div className="space-y-2">
@@ -110,7 +110,7 @@ export const NavUser = ({
               animate="visible"
               variants={separatorVariants}
             >
-              <Separator className={"bg-black/10"} />
+              <Separator className={"bg-black/10 dark:bg-white/10"} />
             </motion.div>
 
             <motion.div
@@ -130,7 +130,7 @@ export const NavUser = ({
               animate="visible"
               variants={separatorVariants}
             >
-              <Separator className={"bg-black/10"} />
+              <Separator className={"bg-black/10 dark:bg-white/10"} />
             </motion.div>
 
             <motion.div
@@ -145,7 +145,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent"
+              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent "
               custom={5}
               initial="hidden"
               animate="visible"

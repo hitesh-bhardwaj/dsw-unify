@@ -39,7 +39,7 @@ export default function SelectTables({ goNext, goBack }) {
                 ${
                   selected === item.name
                     ? " bg-sidebar-accent"
-                    : "bg-white"
+                    : "bg-white dark:bg-sidebar-accent"
                 }`}
           >
             <div className="flex items-center gap-2">

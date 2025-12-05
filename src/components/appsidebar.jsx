@@ -50,6 +50,7 @@ import {
   InferenceIcon,
   MonitoringIcon,
   ModelDevelopmentIcon,
+  HomeIcon2,
 } from "./Icons";
 import {
   Collapsible,
@@ -64,7 +65,7 @@ import {
 } from "@/components/ui/tooltip";
 
 const navigation = [
-  { name: "Home", href: "/", icon: AgentsIcon },
+  { name: "Home", href: "/", icon: HomeIcon2 },
   {
     name: "Data Engineering",
     href: "/data-engineering",
@@ -101,6 +102,7 @@ const navigation = [
         name: "Feature Transformations",
         href: "/feature-store/feature-transformations",
         icon: FeatureTransformationIcon,
+
       },
       {
         name: "Feature Views",
@@ -149,12 +151,12 @@ const navigation = [
   {
     name: "Agent Studio",
     href: "/agent-studio/agents",
-    icon: AgentStudioIcon,
+    icon: AgentsIcon,
     children: [
       {
         name: "Agents",
         href: "/agent-studio/agents",
-        icon: AgentStudioIcon,
+        icon: AgentsIcon,
       },
       {
         name: "Prompts",
@@ -193,20 +195,7 @@ const navigation = [
       },
     ],
   },
-  // { name: "Agents", href: "/agents", icon: AgentsIcon },
-  // { name: "Prompts", href: "/prompts", icon: PromptsIcon },
-  // { name: "LLMs", href: "/llms", icon: LLMsIcon },
-  // {
-  //   name: "Knowledge Bases",
-  //   href: "/knowledge-bases",
-  //   icon: KnowledgeBaseIcon,
-  // },
-  // { name: "Tools", href: "/tools", icon: ToolsIcon },
-  // { name: "Memories", href: "/memories", icon: MemoriesIcon },
-  // { name: "Guardrails", href: "/guardrails", icon: GuardrailsIcon },
-  // { name: "Testing", href: "/testing", icon: TestingIcon },
-  // { name: "Console", href: "/console", icon: AgentsIcon },
-  // { name: "Use Cases", href: "/usecases", icon: PromptsIcon },
+
   { name: "Workflow Builder", href: "#", icon: WorkFlowBuilderIcon },
   { name: "Settings", href: "#", icon: SettingsIcon },
 ];

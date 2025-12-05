@@ -115,13 +115,13 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                       className={cn(
                         "rounded-full px-3.5 py-1 text-xs font-normal dark:group-hover:bg-foreground ",
                         tag.color === "yellow" &&
-                          "bg-transparent text-foreground  transition-all duration-500 ease-out border border-badge-yellow",
+                          "bg-transparent text-foreground border border-badge-yellow dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
                         tag.color === "blue" &&
                           "bg-badge-blue text-white  transition-all duration-500 ease-out",
                         tag.color === "green" &&
                           "bg-badge-green text-white  transition-all duration-500 ease-out",
                         tag.color === "mint" &&
-                          "bg-transparent text-foreground transition-all duration-500 ease-out border border-badge-mint",
+                          "bg-transparent text-foreground border border-badge-mint dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
                         tag.color === "orange" &&
                           "bg-primary text-white  transition-all duration-500 ease-out",
                         tag.color === "red" &&

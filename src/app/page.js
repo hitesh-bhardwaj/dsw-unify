@@ -481,17 +481,17 @@ function MetricsBoard({ metricsData, view, setView }) {
             {showLeft && (
               <button
                 onClick={() => handleScrollClick("left")}
-                className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black shadow-lg hover:bg-neutral-900 transition-colors flex items-center justify-center"
+                className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black shadow-lg hover:bg-neutral-900 transition-colors flex items-center justify-center dark:bg-white"
               >
-                <ChevronLeft className="w-6 h-6 text-white" />
+                <ChevronLeft className="w-6 h-6 text-white dark:text-black" />
               </button>
             )}
             {showRight && (
               <button
                 onClick={() => handleScrollClick("right")}
-                className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black flex items-center justify-center"
+                className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black flex items-center justify-center dark:bg-white"
               >
-                <ChevronRight className="w-6 h-6 text-white" />
+                <ChevronRight className="w-6 h-6 text-white dark:text-black" />
               </button>
             )}
 
