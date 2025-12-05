@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, Copy } from "lucide-react";
+import { Star } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave } from "./Icons";
 import Link from "next/link";
+import CopyButton from "./animate-ui/components/buttons/CopyButton";
 
 const skeletonShownMap = new Map();
 
@@ -127,7 +128,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
-                <Copy className="!h-full !w-full" />
+                <CopyButton />
               </Button>
               <Button
                 variant="ghost"

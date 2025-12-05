@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Copy } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,7 @@ import {
   LineGraph,
   RocketIcon,
 } from "../Icons";
+import CopyButton from "../animate-ui/components/buttons/CopyButton";
 
 const skeletonShownMap = new Map();
 
@@ -138,7 +138,7 @@ const { id: routeId, modelId } = params;
                     "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                   )}
                 >
-                  <Copy className="!h-full !w-full" />
+                  <CopyButton />
                 </Button>
 
                 <Button

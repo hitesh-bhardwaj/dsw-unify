@@ -58,7 +58,7 @@ export default function DataPreview() {
         </Button>
       </div>
 
-      <div className="border border-border-color-2 p-0 rounded-2xl">
+      <div className="border border-border-color-2 p-0 mt-4 rounded-2xl">
 
    
       

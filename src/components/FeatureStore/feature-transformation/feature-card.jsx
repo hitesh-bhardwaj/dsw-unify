@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, Copy } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, Calendar } from "../../Icons";
 import HotEncoding from "./TransformationCard";
+import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
 
 const skeletonShownMap = new Map();
 
@@ -108,7 +108,7 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
                   "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
-                <Copy className="!h-full !w-full" />
+                <CopyButton />
               </Button>
               <Button
                 variant="ghost"

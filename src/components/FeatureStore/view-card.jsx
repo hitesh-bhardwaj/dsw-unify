@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Star, Copy } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -9,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, FeaturesIcon, TablesIcon } from "../Icons";
 import ViewsCardModal from "./feature-view/ViewsModalCard";
+import CopyButton from "../animate-ui/components/buttons/CopyButton";
 
 const skeletonShownMap = new Map();
 
@@ -104,7 +104,7 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                   "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
-                <Copy className="!h-full !w-full" />
+                 <CopyButton />
               </Button>
               <Button
                 variant="ghost"

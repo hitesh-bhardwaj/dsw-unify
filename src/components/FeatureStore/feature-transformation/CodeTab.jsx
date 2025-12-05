@@ -1,4 +1,4 @@
-import { Copy } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 import { useState } from "react";
 
 /**
@@ -30,7 +30,11 @@ export default function PythonCodeBlock({ codeExamples }) {
           onClick={handleCopy}
           className={`flex items-center w-fit gap-2 text-xs p-3 border border-primary rounded-full hover:bg-muted transition ${copied ? '': 'cursor-pointer'}`}
         >
-          <Copy className="w-4 h-4" />
+          {copied ? (
+              <Check className="w-5 h-5 text-green-600" />
+            ) : (
+              <Copy className="w-5 h-5" />
+            )}
           {copied ? "Copied" : "Copy Code"}
         </button>
       </div>

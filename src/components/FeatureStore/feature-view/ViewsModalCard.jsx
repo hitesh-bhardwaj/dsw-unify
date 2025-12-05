@@ -24,6 +24,7 @@ import Overview from "./Overview";
 import Features from "./Features";
 import DataPreview from "./DataPreview";
 import History from "./History";
+import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
 
 function CopyWithTooltip({
   text,
@@ -165,7 +166,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature }) {
                     "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
                   )}
                 >
-                  <Copy className="!h-full !w-full" />
+                  <CopyButton />
                 </Button>
                 <Button
                   variant="ghost"

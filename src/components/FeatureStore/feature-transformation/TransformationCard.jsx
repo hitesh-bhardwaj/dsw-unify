@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Copy } from "lucide-react";
+import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
 import {
   Dialog,
   DialogContent,
@@ -45,6 +46,7 @@ function CopyWithTooltip({
           aria-label={ariaLabel || label}
         >
           <Copy className={iconClassName} />
+          {/* <CopyButton className={iconClassName} /> */}
         </Button>
       </TooltipTrigger>
       <TooltipContent>{label}</TooltipContent>
@@ -154,7 +156,7 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
                     "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
                   )}
                 >
-                  <Copy className="!h-full !w-full" />
+                  <CopyButton />
                 </Button>
                 <Button
                   variant="ghost"

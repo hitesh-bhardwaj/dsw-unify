@@ -25,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Tabs from "./common/Tabs";
+import CopyButton from "./animate-ui/components/buttons/CopyButton";
 
 /**
  * Component for copying text to clipboard with a tooltip feedback.
@@ -313,12 +314,10 @@ const handleTabChange = (value) => {
                       readOnly
                       className="border border-foreground/20"
                     />
-                    <CopyWithTooltip
-                      text={apiKey}
-                      aria-label="Copy API key"
-                      className="pr-0 py-5 px-5"
-                      iconClassName="w-full h-full"
-                    />
+                    <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
+
+                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={apiKey} />
+                    </button>
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
@@ -340,12 +339,10 @@ const handleTabChange = (value) => {
                       readOnly
                       className="border border-foreground/20"
                     />
-                    <CopyWithTooltip
-                      text={apiKey}
-                      aria-label="Copy API key"
-                      className="pr-0 py-5 px-5"
-                      iconClassName="w-full h-full"
-                    />
+                    <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
+
+                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={apiKey} />
+                    </button>
                   </div>
                   <p className="text-xs text-black/60">
                     *Keep your API key secure and don't share it publicly
@@ -363,12 +360,10 @@ const handleTabChange = (value) => {
                       readOnly
                       className="border border-foreground/20"
                     />
-                    <CopyWithTooltip
-                      text={endpointUrl}
-                      aria-label="Copy endpoint URL"
-                      className="pr-0 py-5 px-5"
-                      iconClassName="w-full h-full"
-                    />
+                    <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
+
+                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={endpointUrl} />
+                    </button>
                   </div>
                 </div>
 
@@ -387,10 +382,10 @@ const handleTabChange = (value) => {
           <code>{codeExamples[displayedTab]}</code>
         </pre>
         <div className="absolute right-2 top-2">
-          <CopyWithTooltip
-            text={codeExamples[displayedTab]}
-            aria-label={`Copy ${displayedTab} example`}
-          />
+          <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
+
+                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={codeExamples[displayedTab]} />
+                    </button>
         </div>
       </div>
     </div>      </div>

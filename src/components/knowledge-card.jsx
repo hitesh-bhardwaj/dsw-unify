@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { SynthWave } from "./Icons";
 import { Separator } from "./ui/separator";
 import { Bounce } from "./animations/Animations";
 
