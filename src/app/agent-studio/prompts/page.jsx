@@ -18,6 +18,8 @@ import RadioTabs from "@/components/common/RadioTabs";
 // import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
+import { motion, AnimatePresence } from "framer-motion";
+
 
 // Mock data for prompts
 const prompts = [
@@ -124,6 +126,13 @@ export default function PromptsPage() {
     template.name.toLowerCase().includes(query.toLowerCase())
   );
 
+  const fade = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+
   return (
     <>
       <div className="flex flex-col h-full overflow-hidden">
@@ -202,51 +211,58 @@ export default function PromptsPage() {
             />
           {/* </FadeUp> */}
           {/* <FadeUp delay={0.06}> */}
-            <div className="flex-1 pt-0 h-fit w-full relative">
-              <div
-                className={cn(
-                  "relative inset-0  pt-0 transition-all duration-700 ease-out h-full",
-                  tab === "prompts"
-                    ? "opacity-100 "
-                    : "opacity-0 pointer-events-none "
-                )}
-              >
-                <div className="grid gap-6 grid-cols-3 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-                  {filteredPrompts.map((prompt) => (
-                    <PromptCard key={prompt.id} prompt={prompt} />
-                  ))}
-                </div>
-                  {filteredPrompts.length === 0 && (
-                    <div className="flex h-64 items-center justify-center text-gray-500">
-                      No prompts found matching "{query}"
-                    </div>
-                  )}
-              </div>
-              <div
-                className={cn(
-                  "absolute inset-0 pt-0 transition-all",
-                  tab === "templates"
-                    ? "translate-x-0 opacity-100 duration-700 ease-out"
-                    : tab === "prompts"
-                    ? " opacity-0 pointer-events-none "
-                    : " opacity-0 pointer-events-none "
-                )}
-              >
-                <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-                  {filteredTemplates.map((template) => (
-                    <TemplateCard key={template.id} template={template} />
-                  ))}
-                  {filteredTemplates.length === 0 && (
-                    <div className="flex h-64 items-center justify-center text-gray-500">
-                      No templates found matching "{query}"
-                    </div>
-                  )}
-                </div>
-                {/* <div className="w-full h-120 rounded-xl border border-border-color-1 flex justify-center items-center">
-                          <p>No Self Hosted available at this point </p>
-                        </div> */}
-              </div>
+           <div className="flex-1 pt-0 h-fit w-full relative">
+  <AnimatePresence mode="wait">
+    {tab === "prompts" && (
+      <motion.div
+        key="prompts"
+        variants={fade}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration: 0.25 }}
+        className="pt-0"
+      >
+        <div className="grid gap-6 grid-cols-3 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+          {filteredPrompts.map((prompt) => (
+            <PromptCard key={prompt.id} prompt={prompt} />
+          ))}
+        </div>
+
+        {filteredPrompts.length === 0 && (
+          <div className="flex h-64 items-center justify-center text-gray-500">
+            No prompts found matching "{query}"
+          </div>
+        )}
+      </motion.div>
+    )}
+
+    {tab === "templates" && (
+      <motion.div
+        key="templates"
+        variants={fade}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration: 0.25 }}
+        className="pt-0"
+      >
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+          {filteredTemplates.map((template) => (
+            <TemplateCard key={template.id} template={template} />
+          ))}
+
+          {filteredTemplates.length === 0 && (
+            <div className="flex h-64 items-center justify-center text-gray-500">
+              No templates found matching "{query}"
             </div>
+          )}
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+</div>
+
           {/* </FadeUp> */}
         </div>
     </ScaleDown>
