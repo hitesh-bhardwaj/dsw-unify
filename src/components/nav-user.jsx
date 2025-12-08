@@ -63,7 +63,7 @@ export const NavUser = ({
   return (
     <Popover onOpenChange={setIsOpen}>
       <PopoverTrigger
-        render={<button className="flex items-center gap-2 rounded-lg hover:bg-sidebar-accent duration-300 p-2 transition-colors !cursor-pointer">
+        render={<button className="flex items-center gap-2 rounded-lg hover:bg-sidebar-accent transition-colors duration-200 ease-in-out p-2 !cursor-pointer">
           <Avatar className="h-10 w-10 rounded-full border-[3px] border-sidebar-primary">
             <AvatarImage src={user.avatar} alt={user.name} />
             <AvatarFallback className="rounded-lg">CN</AvatarFallback>
@@ -114,7 +114,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2 p-2 rounded-lg !cursor-pointer hover:!bg-sidebar-accent"
+              className="flex items-center gap-2 p-2 rounded-lg !cursor-pointer hover:!bg-sidebar-accent transition-colors duration-200 ease-in-out"
               custom={2}
               initial="hidden"
               animate="visible"
@@ -134,7 +134,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent"
+              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent transition-colors duration-200 ease-in-out"
               custom={4}
               initial="hidden"
               animate="visible"
@@ -145,7 +145,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent "
+              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent transition-colors duration-200 ease-in-out"
               custom={5}
               initial="hidden"
               animate="visible"
@@ -156,7 +156,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent"
+              className="flex items-center gap-2 !cursor-pointer !p-2 rounded-lg hover:!bg-sidebar-accent transition-colors duration-200 ease-in-out"
               custom={6}
               initial="hidden"
               animate="visible"
@@ -176,7 +176,7 @@ export const NavUser = ({
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-2 p-2 rounded-lg !cursor-pointer hover:!bg-sidebar-accent"
+              className="flex items-center gap-2 p-2 rounded-lg !cursor-pointer hover:!bg-sidebar-accent transition-colors duration-200 ease-in-out"
               custom={8}
               initial="hidden"
               animate="visible"

@@ -27,7 +27,7 @@ export default function CopyButton({ textToCopy }) {
         <TooltipTrigger asChild>
           <div
             onClick={handleCopy}
-            className="p-2 cursor-pointer transition duration-75 ease-in-out flex items-center justify-center"
+            className="p-2 cursor-pointer transition duration-200 ease-in-out flex items-center justify-center"
           >
             {copied ? (
               <Check className="w-5 h-5 text-green-600" />

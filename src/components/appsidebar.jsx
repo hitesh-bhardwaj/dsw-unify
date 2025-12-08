@@ -364,7 +364,7 @@ export function AppSidebar() {
                             isActive={isActive || hasActiveChild}
                             tooltip={item.name}
                             className={cn(
-                              "cursor-pointer",
+                              "cursor-pointer transition-colors duration-200 ease-in-out",
                               (isActive || hasActiveChild) &&
                               "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                             )}
@@ -386,7 +386,7 @@ export function AppSidebar() {
                             </span>
                             <ChevronDown
                               className={cn(
-                                "ml-auto !w-4 transition-transform duration-300 ease-in-out group-data-[collapsible=icon]:hidden",
+                                "ml-auto !w-4 transition-transform duration-200 ease-in-out group-data-[collapsible=icon]:hidden",
                                 isExpanded && "rotate-180"
                               )}
                             />
@@ -434,7 +434,7 @@ export function AppSidebar() {
                                       size="sm"
                                       isActive={isChildActive}
                                       className={cn(
-                                        "pl-8",
+                                        "pl-8 transition-colors duration-200 ease-in-out",
                                         isChildActive &&
                                         "text-sidebar-primary data-[active=true]:text-sidebar-primary"
                                       )}
@@ -468,6 +468,7 @@ export function AppSidebar() {
                       isActive={isActive}
                       tooltip={item.name}
                       className={cn(
+                        "transition-colors duration-200 ease-in-out",
                         isActive &&
                         "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                       )}
