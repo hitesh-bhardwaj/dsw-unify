@@ -2,17 +2,17 @@
 
 import React, { useState, useMemo } from "react";
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon, Tune, FeatureTransformationIcon } from "@/components/Icons";
+import { PlusIcon, FeatureTransformationIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
-
 import { FeatureCard } from "@/components/FeatureStore/feature-transformation/feature-card";
 import StepFormModal from "@/components/common/StepModalForm";
 import BasicInfo from "@/components/FeatureStore/feature-transformation/create-transformation/BasicInfo";
 import TransformLogic from "@/components/FeatureStore/feature-transformation/create-transformation/TransformLogic";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Features = [
   {
@@ -124,8 +124,7 @@ const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid"); 
-    const [sortOrder, setSortOrder] = useState("none");
-
+  const [sortOrder, setSortOrder] = useState("none");
 
   // Get all unique tags from features
   const availableTags = useMemo(() => {
@@ -237,22 +236,30 @@ if (sortOrder === "asc") {
               />
             </div>
 
-            <div
-              className={`items-stretch ${
-                view === "grid"
-                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "
-                  : "flex flex-col gap-5"
-              }`}
-            >
-              {filteredFeatures.map((feature) => (
-                <FeatureCard key={feature.id} view={view} feature={feature} />
-              ))}
-              {filteredFeatures.length === 0 && (
-                <div className="flex h-64 items-center justify-center text-gray-500">
-                  No Features found matching "{query}"
-                </div>
-              )}
-            </div>
+            
+            <AnimatePresence mode="wait">
+  <motion.div
+    key={view} // This triggers re-animation when view changes
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.3 }}
+    className={`items-stretch ${
+      view === "grid"
+        ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "
+        : "flex flex-col gap-5"
+    }`}
+  >
+    {filteredFeatures.map((feature) => (
+      <FeatureCard key={feature.id} view={view} feature={feature} />
+    ))}
+    {filteredFeatures.length === 0 && (
+      <div className="flex h-64 items-center justify-center text-gray-500">
+        No Features found matching "{query}"
+      </div>
+    )}
+  </motion.div>
+</AnimatePresence>
           </div>
         </ScaleDown>
       </div>
