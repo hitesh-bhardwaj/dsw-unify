@@ -90,8 +90,8 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1 ",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-white",
+                  "hover:bg-white/30  transition-all duration-300 opacity-0 group-hover:opacity-100"
                 )}
               >
                 <Eye />
@@ -100,18 +100,8 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-                )}
-              >
-                 <CopyButton />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1  text-white",
+                  "hover:bg-white/30  transition-all duration-300 opacity-0 group-hover:opacity-100"
                 )}
               >
                 <Editor />
@@ -120,8 +110,8 @@ export function ViewCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-white",
+                  "hover:bg-white/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
                 )}
               >
                 <Bin />

@@ -37,7 +37,7 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
   };
 
   return (
-    <div className="space-y-2 pb-10 pr-2">
+    <div className="space-y-2 pb-6 pr-2">
       {/* TITLE */}
       <h2 className="text-lg font-medium text-foreground">Basic Information</h2>
       <p className="text-xs text-foreground/80">

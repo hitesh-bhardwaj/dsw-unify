@@ -64,21 +64,21 @@ export default function Features() {
           <Table className="w-full text-xs rounded-2xl overflow-hidden ">
             <TableHeader className='' >
               <TableRow className='bg-sidebar-accent hover:bg-sidebar-accent '>
-                <TableHead className='px-3'>Feature Name</TableHead>
-                <TableHead className='px-3'>Source Column</TableHead>
-                <TableHead className='px-3'>Transformation</TableHead>
-                <TableHead className='px-3'>Data Type</TableHead>
-                <TableHead className='px-3'>Nullable</TableHead>
+                <TableHead className='px-3 pl-8 py-4'>Feature Name</TableHead>
+                <TableHead className='px-3 pl-8 py-4'>Source Column</TableHead>
+                <TableHead className='px-3 pl-8 py-4'>Transformation</TableHead>
+                <TableHead className='px-3 pl-8 py-4'>Data Type</TableHead>
+                <TableHead className='px-3 pl-8 py-4'>Nullable</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {features.map((f) => (
                 <TableRow key={f.feature_name} className="hover:bg-background">
-                  <TableCell className="p-3  whitespace-nowrap">{f.feature_name}</TableCell>
-                  <TableCell className="p-3  whitespace-nowrap">{f.source_column}</TableCell>
-                  <TableCell className="p-3  whitespace-nowrap">{f.transformation}</TableCell>
-                  <TableCell className="p-3  whitespace-nowrap">{f.data_type}</TableCell>
-                  <TableCell className="p-3  whitespace-nowrap">{f.nullable}</TableCell>
+                  <TableCell className="p-3 pl-8 py-4 whitespace-nowrap">{f.feature_name}</TableCell>
+                  <TableCell className="p-3 pl-8 py-4 whitespace-nowrap">{f.source_column}</TableCell>
+                  <TableCell className="p-3 pl-8 py-4 whitespace-nowrap">{f.transformation}</TableCell>
+                  <TableCell className="p-3 pl-8 py-4 whitespace-nowrap">{f.data_type}</TableCell>
+                  <TableCell className="p-3 pl-8 py-4 whitespace-nowrap">{f.nullable}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

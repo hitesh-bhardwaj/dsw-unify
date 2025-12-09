@@ -16,6 +16,10 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
         { id: "order_id", name: "order_id", type: "string" },
         { id: "payment_method", name: "payment_method", type: "string" },
         { id: "status", name: "status", type: "string" },
+        { id: "transaction_id", name: "transaction_id", type: "string" },
+        { id: "order_id", name: "order_id", type: "string" },
+        { id: "payment_method", name: "payment_method", type: "string" },
+        { id: "status", name: "status", type: "string" },
       ],
     },
   ]);
@@ -82,7 +86,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
   };
 
   return (
-    <div className="space-y-2 pb-10 pr-2">
+    <div className="space-y-2  pr-2">
       {/* TITLE */}
       <h2 className="text-lg font-medium text-foreground">Select Features</h2>
       <p className="text-xs text-foreground/80">
@@ -97,20 +101,20 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
             Available Columns
           </h3>
 
-          {availableTables.map((table) => (
+          {availableTables.map((table,index) => (
             <div
-              key={table.name}
-              className="border border-border-color-1 rounded-lg p-4"
+              key={index}
+              className="border border-border-color-1 rounded-lg p-4 "
             >
               <h4 className="text-sm font-medium text-foreground mb-3">
                 {table.name}
               </h4>
 
-              <div className="space-y-2 max-h-[500px] overflow-y-auto">
-                {table.columns.map((column) => (
+              <div className="space-y-2 max-h-[280px] overflow-y-auto">
+                {table.columns.map((column,index) => (
                   <div
-                    key={column.id}
-                    className={`border rounded-lg border-border-color-1 p-3 cursor-pointer transition-all ${
+                    key={index}
+                    className={`border rounded-lg border-border-color-1 p-3 cursor-pointer transition-all w-[95%] ${
                       selectedColumns.includes(column.id)
                         ? " "
                         : " "
@@ -164,7 +168,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
             {selectedFeatures.map((feature) => (
               <div
                 key={feature.id}
-                className="border border-border-color-1 rounded-lg p-4"
+                className="border border-border-color-1 rounded-lg p-4 "
               >
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-foreground/60 mb-3">
@@ -180,7 +184,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
                 </div>
 
                 {/* Feature Name */}
-                <div className="bg-gray-50 rounded-md p-3 border border-border-color-1 dark:bg-background">
+                <div className="bg-gray-50 rounded-md py-2 px-3 border border-border-color-1 dark:bg-background w-[85%]">
                   <p className="text-sm text-foreground font-medium">
                     {feature.featureName}
                   </p>

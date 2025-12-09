@@ -171,7 +171,7 @@ function TabsTrigger({
         onClick={() => handleValueChange(value)}
         data-state={activeValue === value ? 'active' : 'inactive'}
         className={cn(
-          'ring-offset-background  focus-visible:ring-ring data-[state=active]:text-primary z-[1] inline-flex size-full cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-sm font-medium whitespace-nowrap transition-transform focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ',
+          'ring-offset-background  data-[state=active]:text-primary z-[1] inline-flex size-full cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-sm font-medium whitespace-nowrap transition-transform  focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ',
           className
         )}
         {...props}>

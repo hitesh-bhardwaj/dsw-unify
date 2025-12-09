@@ -2,9 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import { AppLayout } from "@/components/app-layout";
-// import { MetricCard } from "@/components/Home/metric-card";
-// import { FeatureCard } from "@/components/Home/feature-card";
-// import { SectionHeader } from "@/components/Home/section-header";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,10 +35,22 @@ import {
   AgentStudioIcon,
   ListIcon,
   GridIcon,
+  Eye,
+  HomeIcon,
 } from "@/components/Icons";
 import { SectionHeader } from "@/components/home/section-header";
 import { MetricCard } from "@/components/home/metric-card";
 import { FeatureCard } from "@/components/home/feature-card";
+import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Card, CardHeader } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 
 
 const metricsData = [
@@ -306,12 +315,287 @@ const workflowBuilderFeatures = [
  * @returns {React.JSX.Element} The rendered MetricsBoard component.
  */
 
+// function MetricsBoard({ metricsData, view, setView }) {
+//   const [items, setItems] = useState(metricsData);
+//   const scrollRef = useRef(null);
+
+//   const [showLeft, setShowLeft] = useState(false);
+//   const [showRight, setShowRight] = useState(true);
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+
+//   // DRAG/SCROLL refs
+//   const isDown = useRef(false);
+//   const startX = useRef(0);
+//   const scrollLeft = useRef(0);
+
+//   // LERP for smooth scroll
+//   const targetScroll = useRef(0);
+//   const currentScroll = useRef(0);
+//   const animationFrame = useRef(null);
+
+//   // Scroll handling
+//   const checkScroll = () => {
+//     const el = scrollRef.current;
+//     if (!el) return;
+//     setShowLeft(el.scrollLeft > 0);
+//     setShowRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+//   };
+
+//   const smoothScroll = () => {
+//     const el = scrollRef.current;
+//     if (!el) return;
+
+//     currentScroll.current += (targetScroll.current - currentScroll.current) * 0.1;
+
+//     if (Math.abs(targetScroll.current - currentScroll.current) < 0.5) {
+//       currentScroll.current = targetScroll.current;
+//     }
+
+//     el.scrollLeft = currentScroll.current;
+//     checkScroll();
+
+//     animationFrame.current = requestAnimationFrame(smoothScroll);
+//   };
+
+//   const handleScrollClick = (dir) => {
+//     const el = scrollRef.current;
+//     if (!el) return;
+//     const amount = dir === "left" ? -300 : 300;
+//     targetScroll.current = el.scrollLeft + amount;
+
+//     targetScroll.current = Math.max(0, Math.min(targetScroll.current, el.scrollWidth - el.clientWidth));
+//   };
+
+//   // Drag handling
+//   const handleMouseDown = (e) => {
+//     if (!scrollRef.current) return;
+//     isDown.current = true;
+//     scrollRef.current.classList.add("cursor-grabbing");
+//     startX.current = e.pageX - scrollRef.current.offsetLeft;
+//     scrollLeft.current = targetScroll.current = scrollRef.current.scrollLeft;
+//   };
+
+//   const handleMouseLeave = () => {
+//     if (!scrollRef.current) return;
+//     isDown.current = false;
+//     scrollRef.current.classList.remove("cursor-grabbing");
+//   };
+
+//   const handleMouseUp = () => {
+//     if (!scrollRef.current) return;
+//     isDown.current = false;
+//     scrollRef.current.classList.remove("cursor-grabbing");
+//   };
+
+//   const handleMouseMove = (e) => {
+//     if (!isDown.current || !scrollRef.current) return;
+//     e.preventDefault();
+//     const x = e.pageX - scrollRef.current.offsetLeft;
+//     const walk = (x - startX.current) * 1;
+//     targetScroll.current = scrollLeft.current - walk;
+//     targetScroll.current = Math.max(0, Math.min(targetScroll.current, scrollRef.current.scrollWidth - scrollRef.current.clientWidth));
+//   };
+
+//   // Drag & drop for LIST
+//   const dragIndex = useRef(null);
+//   const dragOver = useRef(null);
+
+//   const handleDrop = () => {
+//     if (dragIndex.current === null || dragOver.current === null) return;
+//     if (dragIndex.current === dragOver.current) return;
+
+//     setItems((prev) => {
+//       const updated = [...prev];
+//       const [moved] = updated.splice(dragIndex.current, 1);
+//       updated.splice(dragOver.current, 0, moved);
+//       return updated;
+//     });
+
+//     dragIndex.current = dragOver.current = null;
+//   };
+
+//   // 🍀 FIX 1: Start animation on mount
+//   useEffect(() => {
+//     animationFrame.current = requestAnimationFrame(smoothScroll);
+//     return () => cancelAnimationFrame(animationFrame.current);
+//   }, []);
+
+//   // 🍀 FIX 2: Restart smooth scroll when switching back to LIST
+//   useEffect(() => {
+//     if (view === "list") {
+//       cancelAnimationFrame(animationFrame.current);
+//       animationFrame.current = requestAnimationFrame(smoothScroll);
+
+//       if (scrollRef.current) {
+//         currentScroll.current = scrollRef.current.scrollLeft;
+//         targetScroll.current = currentScroll.current;
+//         checkScroll();
+//       }
+//     } else {
+//       cancelAnimationFrame(animationFrame.current);
+//     }
+//   }, [view]);
+
+//   return (
+//     <>
+//     <motion.div layout="position" className="space-y-4 overflow-hidden">
+//       {/* Header */}
+//       <div className="flex items-end justify-between px-6">
+//         <div className="space-y-1">
+//           <h1 className="text-3xl font-medium text-foreground">Overview</h1>
+//           <p className="text-sm dark:text-foreground text-black/60">
+//             Key platform metrics and activity at a glance
+//           </p>
+//         </div>
+// <div className="space-x-3 flex items-center gap-1">
+
+//   <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border rounded-sm py-1.5 p-3 flex items-center gap-3 text-sm">
+//     <div className="h-5 w-5 text-[#111111]">
+//     <Eye/>
+//     </div>
+//     Manage Cards
+//   </Link>
+
+//         <TooltipProvider delayDuration={0}>
+//           <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5">
+//             <Tooltip>
+//               <TooltipTrigger asChild>
+//                 <button onClick={() => setView("list")} className="cursor-pointer">
+//                   <ListIcon className={`${view === "list" ? "opacity-100" : "opacity-[0.4]"}`} />
+//                 </button>
+//               </TooltipTrigger>
+//               <TooltipContent side="top">
+//                 <p>List View</p>
+//               </TooltipContent>
+//             </Tooltip>
+
+//             <Tooltip>
+//               <TooltipTrigger asChild>
+//                 <button onClick={() => setView("grid")} className="cursor-pointer">
+//                   <GridIcon className={`${view === "grid" ? "opacity-100" : "opacity-[0.4]"}`} />
+//                 </button>
+//               </TooltipTrigger>
+//               <TooltipContent side="top">
+//                 <p>Grid View</p>
+//               </TooltipContent>
+//             </Tooltip>
+//           </div>
+//         </TooltipProvider>
+//       </div>
+//       </div>
+
+//       {/* Metrics Wrapper */}
+//       <AnimatePresence mode="popLayout">
+//         {view === "list" && (
+//           <motion.div
+//             key="list"
+//             layout
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//             transition={{ duration: 0.1 }}
+//             className="relative"
+//           >
+//             {showLeft && (
+//               <button
+//                 onClick={() => handleScrollClick("left")}
+//                 className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black shadow-lg hover:bg-neutral-900 transition-colors flex items-center justify-center dark:bg-white"
+//               >
+//                 <ChevronLeft className="w-6 h-6 text-white dark:text-black" />
+//               </button>
+//             )}
+//             {showRight && (
+//               <button
+//                 onClick={() => handleScrollClick("right")}
+//                 className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black flex items-center justify-center dark:bg-white"
+//               >
+//                 <ChevronRight className="w-6 h-6 text-white dark:text-black" />
+//               </button>
+//             )}
+
+//             <div
+//               ref={scrollRef}
+//               onScroll={checkScroll}
+//               className="flex gap-4 overflow-x-auto px-6 cursor-grab select-none py-2 scrollbar-hide"
+//               onMouseDown={handleMouseDown}
+//               onMouseLeave={handleMouseLeave}
+//               onMouseUp={handleMouseUp}
+//               onMouseMove={handleMouseMove}
+//               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+//             >
+//               {items.map((m) => (
+//                 <motion.div
+//                   key={m.label}
+//                   layoutId={`metric-${m.label}`}
+//                   layout
+//                   className="min-w-[280px]"
+//                   transition={{ type: "spring", stiffness: 100, damping: 20 }}
+//                 >
+//                   <MetricCard {...m} />
+//                 </motion.div>
+//               ))}
+//             </div>
+//           </motion.div>
+//         )}
+
+//         {view === "grid" && (
+//           <motion.ul
+//             key="grid"
+//             layout
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//             transition={{ duration: 0.1 }}
+//             className="w-full grid grid-cols-4 gap-4 px-6"
+//           >
+//             {items.map((m, i) => (
+//               <motion.li
+//                 key={m.label}
+//                 layoutId={`metric-${m.label}`}
+//                 layout
+//                 draggable
+//                 onDragStart={() => (dragIndex.current = i)}
+//                 onDragEnter={() => (dragOver.current = i)}
+//                 onDragEnd={handleDrop}
+//                 onDragOver={(e) => e.preventDefault()}
+//                 className="cursor-move"
+//                 transition={{ type: "spring", stiffness: 100, damping: 25 }}
+//               >
+//                 <div className="min-w-[280px]">
+//                   <MetricCard {...m} />
+//                 </div>
+//               </motion.li>
+//             ))}
+//           </motion.ul>
+//         )}
+//       </AnimatePresence>
+//     </motion.div>
+//       <ManageCards open={isModalOpen} onOpenChange={setIsModalOpen}   metricsData={metricsData}
+//         cardVisibility={cardVisibility}
+//         setCardVisibility={setCardVisibility} />
+
+//     </>
+//   );
+// }
+
 function MetricsBoard({ metricsData, view, setView }) {
-  const [items, setItems] = useState(metricsData);
+  // Initialize visibility - all cards visible by default
+  const [cardVisibility, setCardVisibility] = useState(() => {
+    const initial = {};
+    metricsData.forEach((_, index) => {
+      initial[index] = true;
+    });
+    return initial;
+  });
+
+  // Filter visible items based on cardVisibility
+  const items = metricsData.filter((_, index) => cardVisibility[index]);
+
   const scrollRef = useRef(null);
 
   const [showLeft, setShowLeft] = useState(false);
   const [showRight, setShowRight] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // DRAG/SCROLL refs
   const isDown = useRef(false);
@@ -323,7 +607,10 @@ function MetricsBoard({ metricsData, view, setView }) {
   const currentScroll = useRef(0);
   const animationFrame = useRef(null);
 
-  // Scroll handling
+  // Drag & drop for LIST
+  const dragIndex = useRef(null);
+  const dragOver = useRef(null);
+
   const checkScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -352,11 +639,9 @@ function MetricsBoard({ metricsData, view, setView }) {
     if (!el) return;
     const amount = dir === "left" ? -300 : 300;
     targetScroll.current = el.scrollLeft + amount;
-
     targetScroll.current = Math.max(0, Math.min(targetScroll.current, el.scrollWidth - el.clientWidth));
   };
 
-  // Drag handling
   const handleMouseDown = (e) => {
     if (!scrollRef.current) return;
     isDown.current = true;
@@ -385,10 +670,6 @@ function MetricsBoard({ metricsData, view, setView }) {
     targetScroll.current = scrollLeft.current - walk;
     targetScroll.current = Math.max(0, Math.min(targetScroll.current, scrollRef.current.scrollWidth - scrollRef.current.clientWidth));
   };
-
-  // Drag & drop for LIST
-  const dragIndex = useRef(null);
-  const dragOver = useRef(null);
 
   const handleDrop = () => {
     if (dragIndex.current === null || dragOver.current === null) return;
@@ -427,6 +708,7 @@ function MetricsBoard({ metricsData, view, setView }) {
   }, [view]);
 
   return (
+    <>
     <motion.div layout="position" className="space-y-4 overflow-hidden">
       {/* Header */}
       <div className="flex items-end justify-between px-6">
@@ -436,6 +718,14 @@ function MetricsBoard({ metricsData, view, setView }) {
             Key platform metrics and activity at a glance
           </p>
         </div>
+<div className="space-x-3 flex items-center gap-1">
+
+  <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border rounded-sm py-1.5 p-3 flex items-center gap-3 text-sm">
+    <div className="h-5 w-5 text-[#111111]">
+    <Eye/>
+    </div>
+    Manage Cards
+  </Link>
 
         <TooltipProvider delayDuration={0}>
           <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5">
@@ -462,6 +752,7 @@ function MetricsBoard({ metricsData, view, setView }) {
             </Tooltip>
           </div>
         </TooltipProvider>
+      </div>
       </div>
 
       {/* Metrics Wrapper */}
@@ -550,6 +841,15 @@ function MetricsBoard({ metricsData, view, setView }) {
         )}
       </AnimatePresence>
     </motion.div>
+      <ManageCards 
+        open={isModalOpen} 
+        onOpenChange={setIsModalOpen}
+        metricsData={metricsData}
+        cardVisibility={cardVisibility}
+        setCardVisibility={setCardVisibility}
+      />
+
+    </>
   );
 }
 
@@ -707,5 +1007,78 @@ export default function Home() {
       </ScaleDown>
     </div>
   </AppLayout>
+  );
+}
+
+function ManageCards({ open, onOpenChange, metricsData, cardVisibility, setCardVisibility }) {
+  const slide = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
+
+  const handleToggle = (index) => {
+    setCardVisibility(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="w-[50%] h-[80%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 pt-8">
+        <DialogHeader className="justify-center pb-4">
+          <DialogTitle className="text-2xl font-medium">
+           Manage Overview Cards
+          </DialogTitle>
+          <p className="text-xs text-foreground/80">
+            Select which metrics you want to display on your overview dashboard. Drag cards to reorder them.
+          </p>
+        </DialogHeader>
+
+        <div className="w-full h-full overflow-y-auto pr-2 flex flex-col justify-between">
+          <motion.div
+            className="flex flex-col space-y-4"
+            variants={slide}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+
+       {metricsData.map((card,index)=>(
+      <Card
+      key={index}
+        className={cn(
+          "h-full transition-all duration-300 group py-4 rounded-sm ",
+          "cursor-pointer"
+        )}
+      >
+        <CardHeader className=" flex gap-4 items-center">
+          <div className="flex items-center gap-3">
+            <Checkbox 
+              checked={cardVisibility[index]}
+              onCheckedChange={() => handleToggle(index)}
+            /> 
+
+            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-sidebar-accent text-foreground transition-all group-hover:text-black  duration-300 p-3">
+              <HomeIcon/>
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <h3 className="text-sm font-medium leading-none tracking-tight transition-colors duration-300">
+            {card.label}
+            </h3>
+            <p className="text-xs text-muted-foreground line-clamp-2  transition-colors duration-300">
+              Current value: {card.value} (+{card.change}%)
+            </p>
+          </div>
+        </CardHeader>
+      </Card>
+       ))}
+          </motion.div>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

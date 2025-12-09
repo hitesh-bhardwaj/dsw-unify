@@ -65,30 +65,30 @@ export default function DataPreview() {
           <Table className="w-full text-xs border-none p-1 rounded-2xl overflow-hidden   dark:hover:bg-background">
             <TableHeader className=" bg-sidebar-accent ">
               <TableRow className="bg-sidebar-accent  hover:bg-sidebar-accent dark:hover:bg-sidebar-accent">
-                <TableHead className="w-1/5">customer_age</TableHead>
-                <TableHead className="w-1/5">is_premium</TableHead>
-                <TableHead className="w-1/5">total_spent</TableHead>
-                <TableHead className="w-1/5">order_count</TableHead>
-                <TableHead className="w-1/5">avg_order_value</TableHead>
+                <TableHead className="w-1/5 pl-8 py-4">customer_age</TableHead>
+                <TableHead className="w-1/5 pl-8 py-4">is_premium</TableHead>
+                <TableHead className="w-1/5 pl-8 py-4">total_spent</TableHead>
+                <TableHead className="w-1/5 pl-8 py-4">order_count</TableHead>
+                <TableHead className="w-1/5 pl-8 py-4">avg_order_value</TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
               {sampleData.map((row, index) => (
                 <TableRow key={index} className='dark:hover:bg-background hover:bg-white'>
-                  <TableCell className="py-3 px-4 w-1/5">
+                  <TableCell className=" px-4 w-1/5 pl-8 py-4">
                     {row.customer_age}
                   </TableCell>
-                  <TableCell className="py-3 px-4 w-1/5">
+                  <TableCell className=" px-4 w-1/5 pl-8 py-4">
                     {row.is_premium}
                   </TableCell>
-                  <TableCell className="py-3 px-4 w-1/5">
+                  <TableCell className=" px-4 w-1/5 pl-8 py-4">
                     {row.total_spent}
                   </TableCell>
-                  <TableCell className="py-3 px-4 w-1/5">
+                  <TableCell className=" px-4 w-1/5 pl-8 py-4">
                     {row.order_count}
                   </TableCell>
-                  <TableCell className="py-3 px-4 w-1/5">
+                  <TableCell className=" px-4 w-1/5 pl-8 py-4">
                     {row.avg_order_value}
                   </TableCell>
                 </TableRow>

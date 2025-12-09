@@ -30,17 +30,17 @@ const historyData = [
 export default function History() {
   return (
     <div className="w-full h-full mx-auto">
-      <h2 className="text-lg font-semibold my-2">Version History</h2>
+      <h2 className="text-lg font-semibold mt-2">Version History</h2>
 
       <div className="space-y-4 py-2">
         {historyData.map((item, index) => (
           <div
             key={index}
-            className="!border  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+            className="!border  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background py-6 text-xs flex justify-between items-center"
           >
-            <div>
-                <div className="flex gap-5">
-              <p className="font-semibold">
+            <div className="">
+                <div className="flex gap-4">
+              <p className="font-semibold text-sm">
                 {item.version}
                 {item.current && (
                     <span className="  ml-1">
@@ -49,16 +49,16 @@ export default function History() {
                 )}
               </p>
               {item.modified && (
-               <p className="text-foreground/80 text-xs ">Modified {item.modified}</p>
+               <p className="text-foreground/80 text-sm ">Modified {item.modified}</p>
               )}
               
               {item.created && (
-                <p className="text-foreground/80 text-xs">Created {item.created}</p>
+                <p className="text-foreground/80 text-sm">Created {item.created}</p>
               )}
                 </div>
 
 
-              <p className="text-foreground/80 mt-2 text-xs">{item.description}</p>
+              <p className="text-foreground/80 mt-3 text-xs">{item.description}</p>
             </div>
 
             {!item.current && (

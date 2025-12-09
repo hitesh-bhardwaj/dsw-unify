@@ -88,7 +88,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
         <RippleButton>
           <Button
             variant="outline"
-            className="gap-2 border-primary text-foreground "
+            className="gap-2 border-primary text-foreground !h-10 !px-5 "
             onClick={addJoin}
           >
             <div className="text-primary">
@@ -135,7 +135,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                   }
                 >
                   <SelectTrigger className="h-11 border-border-color-1 w-full">
-                    <SelectValue className='placeholder:text-xs' placeholder="Transactions" />
+                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem className='cursor-pointer' value="transactions">Transactions</SelectItem>
@@ -175,7 +175,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                   }
                 >
                   <SelectTrigger className="h-11 border-border-color-1 w-full">
-                    <SelectValue className='placeholder:text-xs' placeholder="Inner" />
+                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem classname='cursor-pointer' value="inner">Inner</SelectItem>
@@ -199,7 +199,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                   }
                 >
                   <SelectTrigger className="h-11 border-border-color-1 w-full">
-                    <SelectValue className='placeholder:text-xs' placeholder="User_events" />
+                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem classname='cursor-pointer' value="user_events">User_events</SelectItem>

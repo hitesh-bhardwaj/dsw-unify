@@ -34,18 +34,18 @@ export default function SelectTables({ goNext, goBack }) {
         {tables.map((item) => (
           <label
             key={item.name}
-            className={`border border-border-color-1 rounded-2xl p-4 cursor-pointer transition-all
-                flex flex-col justify-between h-24
+            className={`border border-border-color-1 rounded-lg p-4 cursor-pointer transition-all
+                flex flex-col justify-between h-22 hover:bg-sidebar-accent
                 ${
                   selected === item.name
-                    ? " bg-sidebar-accent"
-                    : "bg-white dark:bg-sidebar-accent"
+                    ? ""
+                    : "bg-white dark:bg-sidebar-accent "
                 }`}
           >
             <div className="flex items-center gap-2">
               <RadioGroupItem
                 value={item.name}
-                className="text-primary checked:bg-primary"
+                className="text-primary checked:bg-primary h-4.5 w-4.5 border-black/20"
               />
               <span
                 className={`text-sm font-medium ${

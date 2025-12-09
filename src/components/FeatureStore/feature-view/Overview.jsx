@@ -25,7 +25,7 @@ const Overview = ({
         {/* Description */}
         <div className="space-y-2">
           <div className="text-sm font-medium pb-2">Description</div>
-          <div className="border border-border-color-2 rounded-lg py-6 px-6 text-xs bg-white dark:bg-background">
+          <div className="border border-border-color-2 rounded-lg py-8 px-6 text-xs bg-white dark:bg-background">
             {description || "No description available"}
           </div>
         </div>
@@ -35,8 +35,8 @@ const Overview = ({
           <div className="text-sm font-medium">Details</div>
           <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-color-2">
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <FeaturesIcon/>
+              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent p-2.5">
+                <FeaturesIcon className="h-full w-full"/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Features</div>
@@ -45,8 +45,8 @@ const Overview = ({
             </div>
 
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-                <TablesIcon/>
+              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent p-2.5">
+                <TablesIcon className="h-full w-full"/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Tables</div>
@@ -71,7 +71,7 @@ const Overview = ({
         {/* Source Tables */}
         <div className="space-y-3">
           <div className="text-sm font-medium">Source Tables</div>
-          <div className="border border-border-color-2 rounded-lg py-6 px-6 text-xs bg-white dark:bg-background  text-foreground/60">
+          <div className="border border-border-color-2 rounded-lg py-8 px-6 text-xs bg-white dark:bg-background  text-foreground/60">
             No source tables
           </div>
         </div>
@@ -81,7 +81,7 @@ const Overview = ({
           <div className="text-sm font-medium">Metadata</div>
           <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-color-2">
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
+              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-2.5">
                 <DocumentIcon/>
               </div>
               <div className="space-y-1">
@@ -91,7 +91,7 @@ const Overview = ({
             </div>
 
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
+              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-2.5">
                <Calendar/>
               </div>
               <div className="space-y-1">
@@ -103,7 +103,7 @@ const Overview = ({
             </div>
 
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
+              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-2.5">
                 <ActiveIcon/>
               </div>
               <div className="space-y-1">

@@ -172,8 +172,8 @@ export default function ViewsCardModal({ open, onOpenChange, feature }) {
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-primary duration-500 ease-out"
+                    "h-7 w-7 flex items-center justify-center px-1 py-1",
+                    "hover:bg-sidebar-accent dark:hover:bg-accent duration-500 ease-out"
                   )}
                 >
                   <Editor />
