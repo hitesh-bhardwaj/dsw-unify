@@ -56,7 +56,7 @@ const page = () => {
         <div className="space-y-6 p-6">
           {/* Search Bar */}
           <SectionHeader
-            title="Data Engineering"
+            title="Data Ingestion"
             description="Data ingestion, validation, exploration, and feature engineering tools"
           />
           <SearchBar

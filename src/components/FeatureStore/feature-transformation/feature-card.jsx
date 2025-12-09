@@ -12,24 +12,7 @@ import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
 
 const skeletonShownMap = new Map();
 
-/**
- * Component to display a card for a feature transformation.
- *
- * @param {Object} props - The component props.
- * @param {Object} props.feature - The feature data.
- * @param {string} props.feature.id - The ID of the feature.
- * @param {string} props.feature.name - The name of the feature.
- * @param {string} props.feature.description - The description of the feature.
- * @param {React.ReactNode} props.feature.icon - The icon for the feature.
- * @param {Array} props.feature.inputParams - The input parameters for the feature.
- * @param {Array<string>} [props.feature.tags=[]] - The tags associated with the feature.
- * @param {string} props.feature.lastUpdated - The last updated timestamp or text.
- * @param {string} props.feature.codeExamples - The code examples for the feature.
- * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
- * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
- * @returns {React.JSX.Element} The rendered FeatureCard component.
- */
-export function FeatureCard({ feature, minSkeletonMs = 500 }) {
+export function FeatureCard({ feature, view, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -52,11 +35,7 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
     return !skeletonShownMap.has(id);
   });
 
-  const previewCode = codeExamples
-  ?.split("\n")
-  ?.slice(0, 3)
-  ?.join("\n");
-
+  const previewCode = codeExamples?.split("\n")?.slice(0, 3)?.join("\n");
 
   useEffect(() => {
     if (showSkeleton && id) {
@@ -73,115 +52,208 @@ export function FeatureCard({ feature, minSkeletonMs = 500 }) {
   }
 
   return (
-      <>
-
-      <Card
-      onClick={() => setIsModalOpen(true)}
-        className={cn(
-          "feature-card-hover-container h-full flex flex-col justify-between transition-all duration-300 group gap-0 py-5 hover:border-white/20 cursor-pointer hover:shadow-md"
-        )}
-      >
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between mb-4">
-            {/* Icon, Rating, and Version */}
-            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
-              {Icon && <Icon className="h-6 w-6" />}
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1 ",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-                )}
-              >
-                <Eye />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-                )}
-              >
-                <CopyButton />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-                )}
-              >
-                <Editor />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-                )}
-              >
-                <Bin />
-              </Button>
-            </div>
-          </div>
-
-          {/* Title */}
-          <h3 className="text-xl font-medium mb-2 group-hover:text-white transition-colors duration-300">{name}</h3>
-
-          {/* Description */}
-          <p className="text-xs text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
-            {description}
-          </p>
-
-          {/* Tags */}
-        </CardHeader>
-
-        <CardContent
+    <>
+      {view === "grid" && (
+        <Card
+          onClick={() => setIsModalOpen(true)}
           className={cn(
-            isDark ? "bg-background" : "",
-            "w-full mx-auto pt-5 space-y-4 rounded-xl duration-300 "
+            "feature-card-hover-container h-full flex flex-col justify-between transition-all duration-300 group gap-0 py-5 hover:border-white/20 cursor-pointer hover:shadow-md"
           )}
         >
-          <div className="flex flex-wrap gap-1 pt-2">
-            {tags.map((tag, index) => (
-              <Badge
-                key={index}
-                variant="secondary"
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between mb-4">
+              {/* Icon, Rating, and Version */}
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
+                {Icon && <Icon className="h-6 w-6" />}
+              </div>
+
+              {/* Action buttons */}
+              <div
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                  "flex items-center gap-1 transition-opacity duration-300",
+                  "opacity-0 pointer-events-none", // hidden by default
+                  "group-hover:opacity-100 group-hover:pointer-events-auto" // visible on hover
                 )}
               >
-                {tag}
-              </Badge>
-            ))}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1 ",
+                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  )}
+                >
+                  <Eye />
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
+                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  )}
+                >
+                  <Editor />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className={cn(
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-white",
+                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  )}
+                >
+                  <Bin />
+                </Button>
+              </div>
+            </div>
+
+            {/* Title */}
+            <h3 className="text-xl font-medium mb-2 group-hover:text-white transition-colors duration-300">
+              {name}
+            </h3>
+
+            {/* Description */}
+            <p className="text-xs text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
+              {description}
+            </p>
+
+            {/* Tags */}
+          </CardHeader>
+
+          <CardContent
+            className={cn(
+              isDark ? "bg-background" : "",
+              "w-full mx-auto pt-5 space-y-4 rounded-xl duration-300 "
+            )}
+          >
+            <div className="flex flex-wrap gap-1 pt-2">
+              {tags.map((tag, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className={cn(
+                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                  )}
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+
+            {/* Formatted Code Block */}
+            <pre className="w-full whitespace-pre dark:bg-background border-border-color-2 border overflow-x-auto rounded-lg text-foreground/80 group-hover:text-white/80 bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30 py-5 px-4 text-xs font-mono transition-all duration-300">
+              <code>{previewCode}</code>
+            </pre>
+
+            <div className="flex items-end gap-3 pl-2">
+              <div className="w-5 h-5">
+                <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300" />
+              </div>
+              <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
+                {" "}
+                Updated {lastUpdated}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {view === "list" && (
+        <Card
+          onClick={() => setIsModalOpen(true)}
+          className={cn(
+            "w-full cursor-pointer rounded-xl border border-orange-200 hover:shadow-md transition-all duration-300 px-6 py-6",
+            "bg-white dark:bg-background"
+          )}
+        >
+          {/* Top Row */}
+          <div className="flex items-start justify-between">
+            {/* LEFT: Icon + Title + Desc + Tags */}
+            <div className="flex flex-col w-full max-w-[75%]">
+              {/* Icon */}
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border p-3 mb-4">
+                {Icon && <Icon className="h-20 w-20" />}
+              </div>
+
+              {/* Title */}
+              <h3 className="text-2xl font-medium text-foreground mb-1">
+                {name}
+              </h3>
+
+              {/* Description */}
+              <p className="text-[15px] text-muted-foreground mb-3">
+                {description}
+              </p>
+
+              {/* Tags */}
+              <div className="flex gap-2 flex-wrap mb-4">
+                {tags.map((tag, index) => (
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="text-xs px-3 py-1 rounded-full bg-gray-100"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            {/* RIGHT: Hover Buttons */}
+            <div
+              className={cn(
+                "flex items-center gap-2 transition-opacity duration-300",
+                "opacity-0 pointer-events-none",
+                "group-hover:opacity-100 group-hover:pointer-events-auto"
+              )}
+            >
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Eye className="w-4 h-4" />
+              </Button>
+
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <Editor className="w-4 h-4" />
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 text-red-500"
+              >
+                <Bin className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
-          {/* Formatted Code Block */}
-          <pre className="w-full whitespace-pre dark:bg-background border-border-color-2 border overflow-x-auto rounded-lg text-foreground/80 group-hover:text-white/80 bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30 py-5 px-4 text-xs font-mono transition-all duration-300">
+          {/* Divider */}
+          <div className="border-t  border-border-color-2" />
+
+          {/* Code Block */}
+          <pre className="w-full text-foreground bg-sidebar-accent dark:bg-background border border-border-color-2 rounded-lg text-xs p-4 overflow-x-auto">
             <code>{previewCode}</code>
           </pre>
 
-          <div className="flex items-center gap-2 pl-2">
-            <div className="w-4 h-4">
-              <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300" />
-            </div>
-            <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
-              {" "}
-              Updated {lastUpdated}
-            </span>
+          {/* Footer */}
+          <div className="flex items-center gap-2 mt-4 text-xs text-muted-foreground">
+            <Calendar className="w-4 h-4" />
+            Updated {lastUpdated}
           </div>
-        </CardContent>
-      </Card>
-      <HotEncoding open={isModalOpen} onOpenChange={setIsModalOpen} feature={feature} />
-      
+
+          <HotEncoding
+            open={isModalOpen}
+            onOpenChange={setIsModalOpen}
+            feature={feature}
+          />
+        </Card>
+      )}
+
+      <HotEncoding
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        feature={feature}
+      />
     </>
   );
 }

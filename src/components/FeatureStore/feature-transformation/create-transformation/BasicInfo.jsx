@@ -61,7 +61,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
 
   return (
     <div className="w-full h-full step-1">
-      <div className="py-4 px-2 w-full h-full">
+      <div className=" px-2 w-full h-full">
         <div className="space-y-2">
           <h3 className="text-lg font-medium">Basic Information</h3>
           <p className="text-sm text-foreground/80">
@@ -69,7 +69,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
           </p>
         </div>
 
-        <div className="space-y-6 py-8">
+        <div className="space-y-6 py-7">
           {/* NAME */}
           <div className="flex w-full h-fit gap-2">
             <div className="flex flex-col gap-2 w-full">

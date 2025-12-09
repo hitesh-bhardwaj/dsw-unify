@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { ScaleDown } from "@/components/animations/Animations";
 import { PlusIcon, Tune, FeatureTransformationIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 
 import { FeatureCard } from "@/components/FeatureStore/feature-transformation/feature-card";
 import StepFormModal from "@/components/common/StepModalForm";
@@ -112,9 +113,28 @@ return encoded`,
   },
 ];
 
+const stats = [
+  { title: "Total Transformations", value: "04" },
+  { title: "Active Transformations", value: "04" },
+  { title: "Transformation Types", value: "07" },
+];
+
 const Page = () => {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid"); 
+    const [sortOrder, setSortOrder] = useState("none");
+
+
+  // Get all unique tags from features
+  const availableTags = useMemo(() => {
+    const tags = new Set();
+    Features.forEach((feature) => {
+      feature.tags?.forEach((tag) => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, []);
 
   const steps = [
     {
@@ -131,9 +151,26 @@ const Page = () => {
     },
   ];
 
-  const filteredFeatures = Features.filter((feature) =>
-    feature.name.toLowerCase().includes(query.toLowerCase())
+  let filteredFeatures = Features.filter((feature) => {
+  const matchesSearch = feature.name.toLowerCase().includes(query.toLowerCase());
+  const matchesTags =
+    selectedTags.length === 0 ||
+    selectedTags.some((tag) => feature.tags?.includes(tag));
+
+  return matchesSearch && matchesTags;
+});
+
+//  APPLY SORTING ONLY IF USER SELECTED SOMETHING
+if (sortOrder === "asc") {
+  filteredFeatures = [...filteredFeatures].sort((a, b) =>
+    a.name.localeCompare(b.name)
   );
+} else if (sortOrder === "desc") {
+  filteredFeatures = [...filteredFeatures].sort((a, b) =>
+    b.name.localeCompare(a.name)
+  );
+}
+
 
   return (
     <>
@@ -163,30 +200,52 @@ const Page = () => {
               </Link>
             </div>
 
+            <div className="w-full  flex items-center justify-between gap-4">
+              {stats.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-6 border border-border-color-1 rounded-lg py-6 px-4 w-full"
+                >
+                  <span className="text-sm text-foreground/80">
+                    {item.title}
+                  </span>
+                  <span className="text-4xl font-medium mt-2">
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+
             <div className="flex gap-3">
               <div className="relative flex-1">
                 <SearchBar
-                  placeholder="Search features..."
+                  placeholder="Search by name, description or code ..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
               </div>
-              <RippleButton className={"rounded-lg"}>
-                <Button
-                  variant="outline"
-                  className="gap-2 border-border-color-1 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
-                >
-                  <div className="w-4 h-4">
-                    <Tune />
-                  </div>
-                  Filters
-                </Button>
-              </RippleButton>
+            </div>
+            <div>
+              <FilterBar
+                selectedTags={selectedTags}
+                onTagsChange={setSelectedTags}
+                availableTags={availableTags}
+                view={view}
+                setView={setView}
+                sortOrder={sortOrder}
+                setSortOrder={setSortOrder}
+              />
             </div>
 
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+            <div
+              className={`items-stretch ${
+                view === "grid"
+                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "
+                  : "flex flex-col gap-5"
+              }`}
+            >
               {filteredFeatures.map((feature) => (
-                <FeatureCard key={feature.id} feature={feature} />
+                <FeatureCard key={feature.id} view={view} feature={feature} />
               ))}
               {filteredFeatures.length === 0 && (
                 <div className="flex h-64 items-center justify-center text-gray-500">

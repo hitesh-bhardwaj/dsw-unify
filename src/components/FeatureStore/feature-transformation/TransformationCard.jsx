@@ -153,21 +153,22 @@ export default function HotEncoding({ open, onOpenChange, feature }) {
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-accent  duration-500 ease-out"
                   )}
                 >
-                  <CopyButton />
+                  <Editor />
                 </Button>
                 <Button
                   variant="ghost"
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                    "hover:bg-sidebar-accent dark:hover:bg-accent  duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
                   )}
                 >
-                  <Editor />
+                  <CopyButton />
                 </Button>
+                
                 <Button
                   variant="ghost"
                   size="icon"
