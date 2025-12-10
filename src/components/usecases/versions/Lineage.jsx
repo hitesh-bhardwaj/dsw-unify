@@ -1,72 +1,118 @@
 "use client";
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Database } from 'lucide-react';
-import { RelationalVectorDataIcon } from '@/components/Icons';
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { RelationalVectorDataIcon } from "@/components/Icons";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 
 export default function Lineage() {
-
   return (
     <div className="border border-border-color-1 rounded-2xl space-y-8 py-6 pb-8 px-8">
-<div className="space-y-3">
+      <div className="space-y-3">
         <h2 className="text-xl font-medium">Data Lineage</h2>
-        <p className="text-sm text-foreground/80">Complete traceability from source data to deployed model</p>
-        </div>
-<CustomerPipelineDiagram/>
-    
+        <p className="text-sm text-foreground/80">
+          Complete traceability from source data to deployed model
+        </p>
+      </div>
+      <CustomerPipelineDiagram />
     </div>
-
   );
 }
 
-
-const PipelineNode = ({ title, subtitle, children, detailsContent }) => {
-  const [showDetails, setShowDetails] = useState(false);
+const PipelineNode = ({ title, subtitle, children }) => {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative">
-      <Card 
-        className="w-72 cursor-pointer transition-all !py-6"
-        onMouseEnter={() => setShowDetails(true)}
-        onMouseLeave={() => setShowDetails(false)}
-      >
-        <CardHeader className=" gap-4">
-          <div className="flex items-end gap-3 mb-2">
-            <div className="w-15 h-15 rounded-lg bg-sidebar-accent p-3 flex items-center justify-center border">
-                <RelationalVectorDataIcon className="w-7 h-7"/>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Card 
+          className="w-72 cursor-pointer transition-all !py-6"
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+        >
+          <CardHeader className="gap-4">
+            <div className="flex items-end gap-3 mb-2">
+              <div className="w-15 h-15 rounded-lg bg-sidebar-accent p-3 flex items-center justify-center border">
+                <RelationalVectorDataIcon className="w-7 h-7" />
+              </div>
+              <span className="text-xs border px-3 py-1 rounded-full text-gray-700">
+                {subtitle}
+              </span>
             </div>
-            <span className="text-xs border px-3 py-1 rounded-full text-gray-700">
-              {subtitle}
-            </span>
-          </div>
-          <h3 className="text-xl font-medium">{title}</h3>
-        </CardHeader>
-        {children && <CardContent>{children}</CardContent>}
-      </Card>
 
-      {detailsContent && showDetails && (
-        <div className="absolute top-0 left-full ml-8 z-10 animate-in fade-in slide-in-from-left-2 duration-200">
-          <Card className="w-96 shadow-2xl border-2">
-            <CardHeader>
-              <h3 className="text-2xl font-semibold mb-4">{title}</h3>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {detailsContent}
-            </CardContent>
-          </Card>
+            <h3 className="text-xl font-medium">{title}</h3>
+          </CardHeader>
+
+          {children && <CardContent>{children}</CardContent>}
+        </Card>
+      </PopoverTrigger>
+
+
+      <PopoverContent
+        align="center"
+        side="right"
+        sideOffset={16}
+        className="w-88 rounded-3xl p-6 shadow-md border border-border-color-1"
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
+        <div className="space-y-6">
+          <h2 className="text-2xl font-medium">{title}</h2>
+
+          <div className="space-y-4 text-[15px]">
+            <div>
+              <p className="text-foreground/80 text-xs">Source Type</p>
+              <p className="font-medium">PostgreSQL</p>
+            </div>
+
+            <div>
+              <p className="text-foreground/80 text-xs">Database</p>
+              <p className="font-medium">Customer_analytics</p>
+            </div>
+
+            <div>
+              <p className="text-foreground/80 text-xs">Host</p>
+              <p className="font-medium">prod-db.company.com</p>
+            </div>
+
+            <div>
+              <p className="text-foreground/80 text-xs">Tables</p>
+              <div className="flex flex-wrap gap-2 mt-2">
+                <span className="px-3 py-1  rounded-full border text-xs">
+                  customers
+                </span>
+                <span className="px-3 py-1  rounded-full border text-xs">
+                  transactions
+                </span>
+                <span className="px-3 py-1  rounded-full border text-xs">
+                  demographics
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-foreground/80 text-xs">Last Sync</p>
+              <p className="font-medium">2025-01-15 14:30:00</p>
+            </div>
+          </div>
         </div>
-      )}
-    </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 
+
 const ConnectorLine = () => (
-<svg className="w-full h-18"  width="15" height="91" viewBox="0 0 15 91" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6.65617 90.7071C7.0467 91.0976 7.67986 91.0976 8.07039 90.7071L14.4343 84.3431C14.8249 83.9526 14.8249 83.3195 14.4343 82.9289C14.0438 82.5384 13.4107 82.5384 13.0201 82.9289L7.36328 88.5858L1.70643 82.9289C1.3159 82.5384 0.682738 82.5384 0.292213 82.9289C-0.0983109 83.3195 -0.0983109 83.9526 0.292213 84.3431L6.65617 90.7071ZM7.36328 0H6.36328V90H7.36328H8.36328V0H7.36328Z" fill="black"/>
-</svg>
+  <svg className="w-full h-18" width="15" height="91" viewBox="0 0 15 91" fill="none">
+    <path
+      d="M6.65617 90.7071C7.0467 91.0976 7.67986 91.0976 8.07039 90.7071L14.4343 84.3431C14.8249 83.9526 14.8249 83.3195 14.4343 82.9289C14.0438 82.5384 13.4107 82.5384 13.0201 82.9289L7.36328 88.5858L1.70643 82.9289C1.3159 82.5384 0.682738 82.5384 0.292213 82.9289C-0.0983109 83.3195 -0.0983109 83.9526 0.292213 84.3431L6.65617 90.7071ZM7.36328 0H6.36328V90H7.36328H8.36328V0H7.36328Z"
+      fill="black"
+    />
+  </svg>
 );
-
-
 
 const SplitConnector = () => (
  <svg className='w-full h-18' width="465" height="91" viewBox="0 0 465 91" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,50 +129,20 @@ const MergeConnector = () => (
 
 );
 
+
 function CustomerPipelineDiagram() {
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col items-center">
-          {/* Customer Database */}
+
           <PipelineNode
             title="Customer Database"
             subtitle="External Sources"
-            detailsContent={
-              <>
-                <div className="space-y-3">
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1">Source Type</p>
-                    <p className="font-semibold">PostgreSQL</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1">Database</p>
-                    <p className="font-semibold">Customer_analytics</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1">Host</p>
-                    <p className="font-semibold">prod-db.company.com</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1">Tables</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">customers</span>
-                      <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">transactions</span>
-                      <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">demographics</span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-600 mb-1">Last Sync</p>
-                    <p className="font-semibold">2025-01-15 14:30:00</p>
-                  </div>
-                </div>
-              </>
-            }
           />
 
           <ConnectorLine />
 
-          {/* Customer Data Pipeline */}
           <PipelineNode
             title="Customer Data Pipeline"
             subtitle="Data Ingestion"
@@ -134,27 +150,27 @@ function CustomerPipelineDiagram() {
               <>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Pipeline Type</p>
+                    <p className="text-sm text-foreground/80 mb-1">Pipeline Type</p>
                     <p className="font-semibold">Batch Ingestion</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Schedule</p>
+                    <p className="text-sm text-foreground/80 mb-1">Schedule</p>
                     <p className="font-semibold">Every 6 hours</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Status</p>
+                    <p className="text-sm text-foreground/80 mb-1">Status</p>
                     <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">Active</span>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Records Processed</p>
+                    <p className="text-sm text-foreground/80 mb-1">Records Processed</p>
                     <p className="font-semibold">2,456,789</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Last Run</p>
+                    <p className="text-sm text-foreground/80 mb-1">Last Run</p>
                     <p className="font-semibold">2025-01-15 14:30:00</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Next Run</p>
+                    <p className="text-sm text-foreground/80 mb-1">Next Run</p>
                     <p className="font-semibold">2025-01-15 20:30:00</p>
                   </div>
                 </div>
@@ -163,8 +179,8 @@ function CustomerPipelineDiagram() {
           />
 
           <SplitConnector />
+          
 
-          {/* Transformations Row */}
           <div className="flex gap-24 ">
             <PipelineNode
               title="Aggregate Customer Metrics"
@@ -173,11 +189,11 @@ function CustomerPipelineDiagram() {
                 <>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Transformation Type</p>
+                      <p className="text-sm text-foreground/80 mb-1">Transformation Type</p>
                       <p className="font-semibold">SQL Aggregation</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Output Features</p>
+                      <p className="text-sm text-foreground/80 mb-1">Output Features</p>
                       <div className="flex flex-wrap gap-2 mt-2">
                         <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">total_spend</span>
                         <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">avg_order_value</span>
@@ -186,11 +202,11 @@ function CustomerPipelineDiagram() {
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Refresh Rate</p>
+                      <p className="text-sm text-foreground/80 mb-1">Refresh Rate</p>
                       <p className="font-semibold">Daily</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Data Range</p>
+                      <p className="text-sm text-foreground/80 mb-1">Data Range</p>
                       <p className="font-semibold">Last 365 days</p>
                     </div>
                   </div>
@@ -204,11 +220,11 @@ function CustomerPipelineDiagram() {
                 <>
                   <div className="space-y-3">
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Transformation Type</p>
+                      <p className="text-sm text-foreground/80 mb-1">Transformation Type</p>
                       <p className="font-semibold">Python Feature Engineering</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Output Features</p>
+                      <p className="text-sm text-foreground/80 mb-1">Output Features</p>
                       <div className="flex flex-wrap gap-2 mt-2">
                         <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">engagement_score</span>
                         <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">category_preference</span>
@@ -217,11 +233,11 @@ function CustomerPipelineDiagram() {
                       </div>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">Refresh Rate</p>
+                      <p className="text-sm text-foreground/80 mb-1">Refresh Rate</p>
                       <p className="font-semibold">Real-time</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-600 mb-1">ML Framework</p>
+                      <p className="text-sm text-foreground/80 mb-1">ML Framework</p>
                       <p className="font-semibold">Scikit-learn</p>
                     </div>
                   </div>
@@ -240,27 +256,27 @@ function CustomerPipelineDiagram() {
               <>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Feature Store</p>
+                    <p className="text-sm text-foreground/80 mb-1">Feature Store</p>
                     <p className="font-semibold">Feast Feature Store</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Total Features</p>
+                    <p className="text-sm text-foreground/80 mb-1">Total Features</p>
                     <p className="font-semibold">28 features</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Entity</p>
+                    <p className="text-sm text-foreground/80 mb-1">Entity</p>
                     <p className="font-semibold">customer_id</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Online Store</p>
+                    <p className="text-sm text-foreground/80 mb-1">Online Store</p>
                     <p className="font-semibold">Redis</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Offline Store</p>
+                    <p className="text-sm text-foreground/80 mb-1">Offline Store</p>
                     <p className="font-semibold">BigQuery</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">TTL</p>
+                    <p className="text-sm text-foreground/80 mb-1">TTL</p>
                     <p className="font-semibold">30 days</p>
                   </div>
                 </div>
@@ -278,11 +294,11 @@ function CustomerPipelineDiagram() {
               <>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Service Type</p>
+                    <p className="text-sm text-foreground/80 mb-1">Service Type</p>
                     <p className="font-semibold">Feature Service</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Selected Features</p>
+                    <p className="text-sm text-foreground/80 mb-1">Selected Features</p>
                     <div className="flex flex-wrap gap-2 mt-2">
                       <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">total_spend</span>
                       <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">engagement_score</span>
@@ -292,11 +308,11 @@ function CustomerPipelineDiagram() {
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Latency</p>
+                    <p className="text-sm text-foreground/80 mb-1">Latency</p>
                     <p className="font-semibold">~50ms (p95)</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Requests/day</p>
+                    <p className="text-sm text-foreground/80 mb-1">Requests/day</p>
                     <p className="font-semibold">1.2M</p>
                   </div>
                 </div>
@@ -314,31 +330,31 @@ function CustomerPipelineDiagram() {
               <>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Model Type</p>
+                    <p className="text-sm text-foreground/80 mb-1">Model Type</p>
                     <p className="font-semibold">XGBoost Classifier</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Accuracy</p>
+                    <p className="text-sm text-foreground/80 mb-1">Accuracy</p>
                     <p className="font-semibold">94.3%</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Precision</p>
+                    <p className="text-sm text-foreground/80 mb-1">Precision</p>
                     <p className="font-semibold">91.7%</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Recall</p>
+                    <p className="text-sm text-foreground/80 mb-1">Recall</p>
                     <p className="font-semibold">89.2%</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Last Trained</p>
+                    <p className="text-sm text-foreground/80 mb-1">Last Trained</p>
                     <p className="font-semibold">2025-01-10 09:00:00</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Training Data Size</p>
+                    <p className="text-sm text-foreground/80 mb-1">Training Data Size</p>
                     <p className="font-semibold">850,000 samples</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600 mb-1">Deployment</p>
+                    <p className="text-sm text-foreground/80 mb-1">Deployment</p>
                     <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">Production</span>
                   </div>
                 </div>
