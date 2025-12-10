@@ -12,15 +12,15 @@ export default function Explainability() {
   ];
 
   return (
-    <div className="p-5 border border-border-color-2 rounded-2xl space-y-8">
+    <div className="border border-border-color-1 rounded-2xl space-y-8 py-6 pb-8 px-8">
 
         <h2 className="text-xl font-medium">Feature Importance</h2>
 
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-5">
       {data.map((item, index) => (
         <div key={index} className="space-y-1.5">
        
-          <div className="flex items-center justify-between text-sm font-medium">
+          <div className="flex items-center justify-between text-sm ">
             <span className="text-foreground/80">{item.label}</span>
             <span className="text-foreground/80">
               {item.value}%

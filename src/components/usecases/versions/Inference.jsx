@@ -20,6 +20,7 @@ import Link from "next/link";
 import { LeftArrow } from "@/components/Icons";
 import { UploadFile } from "@/components/Icons";
 import CardDetails from "@/components/CardDetails";
+import CountUp from "@/components/animations/CountUp";
 export default function Inference() {
   const [mode, setMode] = useState("single");
 
@@ -47,11 +48,11 @@ export default function Inference() {
   ];
 
   const chartData2 = [
-    { range: "0.9–1.0", score: 80 },
-    { range: "0.8–0.9", score: 50 },
-    { range: "0.7–0.8", score: 35 },
-    { range: "0.6–0.7", score: 20 },
-    { range: "0.5–0.6", score: 8 },
+    { range: "0.9–1.0", score: 50 },
+    { range: "0.8–0.9", score: 35 },
+    { range: "0.7–0.8", score: 25 },
+    { range: "0.6–0.7", score: 15 },
+    { range: "0.5–0.6", score: 7 },
   ];
 
   const chartConfig = {
@@ -173,7 +174,7 @@ export default function Inference() {
             transition={{ duration: 0.25 }}
             className="grid grid-cols-2 gap-6 w-full"
           >
-            <div className="border rounded-xl p-6 flex flex-col gap-6">
+            <div className="border rounded-xl p-6 flex flex-col gap-4">
               <h2 className="text-lg font-medium">Configure Inference</h2>
 
               <div className="flex items-center gap-4">
@@ -185,7 +186,7 @@ export default function Inference() {
                 Upload CSV <span className="font-normal">(Transaction ID)</span>
               </h2>
 
-              <div className="border rounded-xl h-48 flex flex-col justify-center items-center cursor-pointer">
+              <div className="border rounded-xl h-48 flex flex-col justify-center items-center cursor-pointer mt-[-2%]">
                 <UploadFile className="w-8 h-8 text-foreground/80 mb-5" />
                 <span className=" font-medium text-sm mt-3">
                   Click to upload or drag and drop
@@ -213,8 +214,8 @@ export default function Inference() {
               </h2>
 
               <div className="h-48  w-full flex flex-col justify-center items-center">
-                <UploadFile className="w-5 h-5 text-foreground/80 mb-2" />
-                <span className="text-foreground/80 text-sm">
+                <UploadFile className="w-5 h-5 text-foreground/80 " />
+                <span className="text-foreground text-sm mt-3">
                   Upload a CSV file and run batch inference
                 </span>
               </div>
@@ -280,7 +281,8 @@ export default function Inference() {
                 {/* Confidence */}
                 <div className="border rounded-xl p-4 flex flex-col gap-2">
                   <span className="text-sm text-foreground/80">Confidence</span>
-                  <span className="text-2xl font-medium">{confidence}%</span>
+                  <span className="text-3xl font-medium">
+                    <CountUp value={confidence} startOnView/>%</span>
 
                   <AnimatedProgressBar
                     value={confidence}
@@ -297,7 +299,8 @@ export default function Inference() {
                 {/* Risk Score */}
                 <div className="border rounded-xl p-4 flex flex-col gap-2">
                   <span className="text-sm text-foreground/80">Risk Score</span>
-                  <span className="text-2xl font-medium">{riskScore}%</span>
+                  <span className="text-2xl font-medium">
+                    <CountUp value={riskScore}/>%</span>
 
                   <AnimatedProgressBar
                     value={riskScore}
@@ -460,7 +463,7 @@ export default function Inference() {
             </div>
 
             <div className="w-full flex justify-between gap-6 items-center">
-              <div className="border h-[28vw]  w-1/2 border-border-color-1 rounded-2xl p-6">
+              <div className="border h-[26vw]  w-1/2 border-border-color-1 rounded-2xl p-6">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-medium text-foreground">
                     Prediction Trends
@@ -526,7 +529,7 @@ export default function Inference() {
               </div>
 
               {/* ---------------- Risk Score Distribution ---------------- */}
-              <div className="border w-1/2 h-[28vw] border-border-color-1 rounded-2xl p-6  shadow-sm">
+              <div className="border w-1/2 h-[26vw] border-border-color-1 rounded-2xl p-6  shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-medium text-foreground">
                     Risk Score Distribution
@@ -581,7 +584,7 @@ export default function Inference() {
             </div>
 
             <div className="w-full flex justify-between gap-6">
-              <div className="p-5 border w-1/2 h-[25vw] border-border-color-2 rounded-2xl space-y-6">
+              <div className="p-5 border w-1/2 h-[28vw] border-border-color-2 rounded-2xl space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-medium">
                     Top Contributing Features
@@ -591,10 +594,10 @@ export default function Inference() {
                   </span>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {featureData.map((item, index) => (
                     <div key={index} className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs font-medium">
+                      <div className="flex items-center justify-between text-sm">
                         <span className="text-foreground/80">{item.label}</span>
                         <span className="text-foreground/80">
                           {item.value}%
@@ -608,7 +611,7 @@ export default function Inference() {
                         animateOnMount
                         playKey={item.value}
                         className="w-full"
-                        trackClassName="w-full bg-sidebar-accent h-2 rounded-full relative overflow-hidden"
+                        trackClassName="w-full bg-black/10 h-2 rounded-full relative overflow-hidden"
                         barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
                       />
                     </div>
@@ -617,7 +620,7 @@ export default function Inference() {
               </div>
 
               {/* Right Card */}
-              <div className="p-5 w-1/2 h-[25vw] border border-border-color-2 rounded-2xl space-y-6">
+              <div className="p-5 w-1/2 h-[28vw] border border-border-color-2 rounded-2xl space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-medium">
                     Confidence Score Distribution
@@ -629,7 +632,7 @@ export default function Inference() {
 
                 <ChartContainer
                   config={chartConfig}
-                  className="h-64 w-full px-4 py-5 pt-2"
+                  className="h-75 w-full px-4  pt-8 bg-sidebar-accent rounded-xl"
                 >
                   <BarChart
                     accessibilityLayer
@@ -645,7 +648,7 @@ export default function Inference() {
                       dataKey="score"
                       fill="#f76809"
                       radius={[6, 6, 0, 0]}
-                      barSize={45}
+                      barSize={55}
                       animationBegin={0}
                       animationDuration={600}
                       animationEasing="ease-out"

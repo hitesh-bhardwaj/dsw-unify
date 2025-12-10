@@ -42,7 +42,8 @@ export default function CountUp({
   const motion = useMotionValue(0);
 
   const ref = useRef(null);
-  const inView = useInView(ref, { once, margin: "0px 0px -20% 0px" });
+  // const inView = useInView(ref, { once, margin: "0px 0px -20% 0px" });
+  const inView = useInView(ref, { once, margin: "0px" }); // Changed from "0px 0px -20% 0px"
 
   // Start when visible (or immediately if startOnView=false)
   useEffect(() => {

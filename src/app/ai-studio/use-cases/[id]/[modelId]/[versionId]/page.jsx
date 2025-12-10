@@ -20,6 +20,7 @@ import Inference from "@/components/usecases/versions/Inference";
 import Link from "next/link";
 import CountUp from "@/components/animations/CountUp";
 import APIPage from "@/components/usecases/versions/APIPage";
+import Lineage from "@/components/usecases/versions/Lineage";
 
 const page = () => {
   const { id } = useParams();
@@ -57,7 +58,7 @@ const page = () => {
       label: "Lineage",
       name: "Lineage",
       render: () => (
-        <EmptyCard>No Lineage data available at this point</EmptyCard>
+        <Lineage/>
       ),
     },
     {

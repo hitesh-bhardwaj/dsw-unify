@@ -1,5 +1,7 @@
 "use client";
 
+import CountUp from "@/components/animations/CountUp";
+
 export default function Details() {
   const metrics = [
     { label: "Accuracy", value: "96.3%" },
@@ -51,17 +53,15 @@ export default function Details() {
           <h2 className="text-xl font-medium ">Model Configuration</h2>
 
           <div>
-            <p className=" text-xs">Algorithm</p>
-            <p className="font-medium text-foreground/80 mt-1 text-xs">
+            <p className=" text-sm">Algorithm</p>
+            <p className="font-semibold text-foreground/80 mt-1 text-xs">
               XGBoost
             </p>
           </div>
 
           <div className="space-y-2">
             <p className=" text-sm mb-2 text-foreground/80">Hyperparameters</p>
-            {/* <pre className="bg-muted/20 p-4 rounded-lg text-sm overflow-x-auto">
-{hyperparams}
-          </pre> */}
+            
             <pre
               className={`rounded-lg bg-sidebar-accent p-4 text-xs border border-border-color-2 text-foreground/80 overflow-x-auto transition-opacity duration-300 ease-in
           }`}
@@ -71,7 +71,7 @@ export default function Details() {
           </div>
 
           <div>
-            <p className="font-medium text-sm text-foreground/80">
+            <p className="text-sm text-foreground/80">
               Cross-validation
             </p>
             <p className="text-xs font-semibold text-foreground/80 mt-1">
@@ -89,8 +89,10 @@ export default function Details() {
               key={i}
               className="border border-border-color-1 flex flex-col gap-7  rounded-2xl px-4 py-4 !w-full bg-background"
             >
-              <p className="text-xs text-foreground/80 mb-2">{m.label}</p>
-              <p className="text-2xl font-medium text-badge-green">{m.value}</p>
+              <p className="text-sm text-foreground mb-2">{m.label}</p>
+              <p className="text-2xl font-medium text-badge-green">
+                <CountUp value={m.value} startOnView key={m.value}  />
+                </p>
             </div>
           ))}
         </div>

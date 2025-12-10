@@ -5,6 +5,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Bar, BarChart } from "recharts";
+import CountUp from "@/components/animations/CountUp";
 
 const Monitoring = () => {
   const chartData = [
@@ -73,7 +74,9 @@ const Monitoring = () => {
           {/* Total Features */}
           <div className="border border-border-color-2 rounded-xl p-4 flex flex-col justify-between gap-7">
             <p className="text-sm text-foreground/80 mb-2">No. of features</p>
-            <p className="text-4xl font-medium text-badge-green">21</p>
+            <p className="text-4xl font-medium text-badge-green">
+              <CountUp value={21} startOnView/>
+              </p>
           </div>
 
           {/* Drifted Features */}
@@ -81,12 +84,15 @@ const Monitoring = () => {
             <p className="text-sm text-foreground/80 mb-2">
               No. of drifted features
             </p>
-            <p className="text-4xl font-medium text-red-500">14</p>
+            <p className="text-4xl font-medium text-red-500">
+              <CountUp value={14} startOnView/>
+
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-sidebar-accent rounded-xl border border-color-1 pt-5 px-2">
+      <div className=" rounded-xl border border-color-1 pt-5 px-2">
         <div className="flex items-center justify-between mb-4 px-2">
           <h3 className="text-xl font-medium">Dataset Drift</h3>
                 
@@ -122,22 +128,23 @@ const Monitoring = () => {
         </div>
       </div>
 
-      <h3 className="text-2xl font-medium mb-4">Data Drift Metrics</h3>
+      <h3 className="text-2xl font-medium mb-4 mt-10">API Metrics</h3>
 
       <div className="flex gap-4">
         {metrics.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col gap-6 border border-border-color-1 rounded-lg py-6 px-4 w-full"
+            className="flex flex-col gap-8 border border-border-color-1 rounded-lg py-6 px-4 w-full"
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 
-            <span className="text-xl font-medium mt-2">{item.value}</span>
+            <span className="text-3xl font-medium mt-2">
+              <CountUp value={item.value} startOnView/></span>
           </div>
         ))}
       </div>
 
-      <div className="bg-sidebar-accent rounded-xl border border-color-1 pt-5 px-2">
+      <div className="rounded-xl border border-color-1 pt-5 px-2">
         <div className="flex items-center justify-between mb-4 px-2">
           <h3 className="text-xl font-medium">Latency</h3>
         </div>
