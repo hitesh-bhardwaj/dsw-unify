@@ -20,7 +20,7 @@ export default function Explainability() {
       {data.map((item, index) => (
         <div key={index} className="space-y-1.5">
        
-          <div className="flex items-center justify-between text-xs font-medium">
+          <div className="flex items-center justify-between text-sm font-medium">
             <span className="text-foreground/80">{item.label}</span>
             <span className="text-foreground/80">
               {item.value}%

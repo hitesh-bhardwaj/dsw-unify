@@ -11,6 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import MonitoringView from "@/components/Monitoring/MonitoringView";
+
 const useCases = [
   { id: 1, label: "Marketing" },
   { id: 2, label: "Customer Support" },
@@ -34,6 +36,8 @@ const page = () => {
   const [model, setModel] = useState("");
   const [version, setVersion] = useState("");
 
+  const allSelected = useCase && model && version;
+
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       <ScaleDown>
@@ -43,28 +47,32 @@ const page = () => {
               <h1 className="text-3xl font-medium text-foreground">
                 Monitoring
               </h1>
-              <p className="text-xs dark:text-foreground text-black/60">
+              <p className="text-sm dark:text-foreground text-black/60">
                 Monitor model performance and data drift
               </p>
             </div>
           </div>
-          <SearchBar
-            placeholder="Search ..."
-            // value={query}
-            // onChange={(e) => setQuery(e.target.value)}
-          />
+
+          <SearchBar placeholder="Search ..." />
 
           <div className="grid grid-cols-3 gap-4 w-full">
             {/* Use Case */}
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Use Case</label>
-              <Select onValueChange={(val) => setUseCase(val)} className='py-2'>
-                <SelectTrigger className="w-full py-5 ">
-                  <SelectValue placeholder="Choose a use case" className='text-foreground/80' />
+              <Select onValueChange={(val) => setUseCase(val)} className="py-2">
+                <SelectTrigger className="w-full py-5">
+                  <SelectValue
+                    placeholder="Choose a use case"
+                    className="text-foreground/80"
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   {useCases.map((item) => (
-                    <SelectItem key={item.id} value={item.label} className='cursor-pointer'>
+                    <SelectItem
+                      key={item.id}
+                      value={item.label}
+                      className="cursor-pointer"
+                    >
                       {item.label}
                     </SelectItem>
                   ))}
@@ -77,28 +85,42 @@ const page = () => {
               <label className="text-sm mb-2 block">Select Model</label>
               <Select onValueChange={(val) => setModel(val)}>
                 <SelectTrigger className="w-full py-5">
-                  <SelectValue placeholder="Choose a model" className='text-foreground/80' />
+                  <SelectValue
+                    placeholder="Choose a model"
+                    className="text-foreground/80"
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   {models.map((item) => (
-                    <SelectItem key={item.id} value={item.label} className='cursor-pointer'>
+                    <SelectItem
+                      key={item.id}
+                      value={item.label}
+                      className="cursor-pointer"
+                    >
                       {item.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
-                  
+
             {/* Version */}
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Version</label>
               <Select onValueChange={(val) => setVersion(val)}>
                 <SelectTrigger className="w-full py-5">
-                  <SelectValue placeholder="Choose a version" className='text-foreground/80' />
+                  <SelectValue
+                    placeholder="Choose a version"
+                    className="text-foreground/80"
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   {versions.map((item) => (
-                    <SelectItem key={item.id} value={item.label} className='cursor-pointer'>
+                    <SelectItem
+                      key={item.id}
+                      value={item.label}
+                      className="cursor-pointer"
+                    >
                       {item.label}
                     </SelectItem>
                   ))}
@@ -107,11 +129,20 @@ const page = () => {
             </div>
           </div>
 
-          <div className="flex justify-center items-center bg-sidebar-accent h-40 rounded-lg border border-border-color-2">
-                  <p className="text-xs text-foreground/80">
-                    Select a use case, model, and version to view monitoring data
-                  </p>
-          </div>
+          {/* Conditional Rendering Section */}
+          {!allSelected ? (
+            <div className="flex justify-center items-center bg-sidebar-accent h-40 rounded-lg border border-border-color-2">
+              <p className="text-xs text-foreground/80">
+                Select a use case, model, and version to view monitoring data
+              </p>
+            </div>
+          ) : (
+            <MonitoringView
+              useCase={useCase}
+              model={model}
+              version={version}
+            />
+          )}
         </div>
       </ScaleDown>
     </div>

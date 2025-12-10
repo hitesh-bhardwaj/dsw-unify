@@ -33,7 +33,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered UsecaseInternalCard component.
  */
-export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500 }) {
+export default function UsecaseInternalCard({ usecase, slug,view, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -67,6 +67,9 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
     }
   }, [minSkeletonMs, id, showSkeleton]);
 
+  const isGrid = view === "grid";
+  const isList = view === "list";
+
   if (showSkeleton) return <UsecaseInternalCardSkeleton />;
 
   return (
@@ -75,18 +78,23 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-          "feature-card-hover-container h-full transition-all duration-300 group gap-0 py-5 hover:border-white/20 cursor-pointer hover:shadow-md flex flex-col justify-between"
-        )}
+            "feature-card-hover-container gap-2  transition-all duration-300 group",
+            isGrid &&
+              " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 hover:shadow-md",
+            // List view styles
+            isList &&
+              "w-full rounded-xl hover:shadow-md px-6 py-6 bg-white dark:bg-background"
+          )}
       >
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between mb-4">
             {/* Icon */}
-            <div className="flex gap-2 items-end">
+            <div className={`flex gap-2 items-end ${view==='list'? 'gap-5': ''}`}>
 
             <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
               {Icon && <Icon className="h-6 w-6" />}
             </div>
-            <p className={`text-xs border px-2 py-1 group-hover:border-white group-hover:text-white duration-300  rounded-full ${status==='Deployed'? 'border-badge-green': 'border-red-500'}`}>
+            <p className={`text-xs border px-2 py-1 group-hover:border-white group-hover:text-white duration-300  rounded-full ${status==='Deployed'? 'border-badge-green': 'border-red-500'} `}>
                 {status}
             </p>
             </div>
@@ -154,6 +162,9 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
             "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300"
           )}
         >
+          {isList && (
+              <div className="border-t border-border-color-2 group-hover:border-white/60" />
+            )}
           {/* Tags */}
           <div className="flex flex-wrap gap-1 pt-2">
             {tags.map((tag, index) => (
@@ -161,7 +172,7 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                 )}
               >
                 {tag}
@@ -169,10 +180,18 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
             ))}
           </div>
 
+           <div
+              className={`${
+                view === "list"
+                  ? "flex justify-between"
+                  : " flex flex-col gap-4"
+              }`}
+            >
+
           {/* Versions + Features */}
           <div
             className={cn(
-              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30 border border-border-color-2"
+              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2", isList && 'w-[25%]'
             )}
           >
             <div className="flex items-center gap-2 ">
@@ -198,6 +217,7 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
               {" "}
               Updated {lastUpdated}
             </span>
+          </div>
           </div>
         </CardContent>
       </Card>

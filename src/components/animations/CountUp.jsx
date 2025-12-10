@@ -2,19 +2,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { animate, useInView, useMotionValue } from "framer-motion";
 
-
-/**
- * Component to animate counting up to a target value.
- *
- * @param {Object} props - The component props.
- * @param {string|number} props.value - The target value to count up to.
- * @param {number} [props.duration=1.5] - The duration of the animation in seconds.
- * @param {number} [props.delay=0] - The delay before starting the animation in seconds.
- * @param {boolean} [props.startOnView=true] - Whether to start the animation when in view.
- * @param {boolean} [props.once=true] - Whether to animate only once when entering view.
- * @param {string} [props.className] - Additional class names for the span element.
- * @returns {React.JSX.Element} The rendered CountUp component.
- */
 export default function CountUp({
   value,
   duration = 1.5, 

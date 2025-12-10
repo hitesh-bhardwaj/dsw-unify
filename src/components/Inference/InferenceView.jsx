@@ -20,7 +20,7 @@ import Link from "next/link";
 import { LeftArrow } from "@/components/Icons";
 import { UploadFile } from "@/components/Icons";
 import CardDetails from "@/components/CardDetails";
-export default function Inference() {
+export default function InferenceView() {
   const [mode, setMode] = useState("single");
 
   const customerIds = [4038, 5386, 8031, 7214, 6285, 8299, 2500];

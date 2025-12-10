@@ -174,7 +174,7 @@ const isGrid = view === "grid";
           <div
             className={cn(
               "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2",
-              `${isList ? "justify-start gap-10 w-[30%]":"justify-between w-full"}`
+              `${isList ? "justify-between gap-10 w-[30%]":"justify-between w-full"}`
             )}
           >
             <div className="flex items-center gap-2 ">

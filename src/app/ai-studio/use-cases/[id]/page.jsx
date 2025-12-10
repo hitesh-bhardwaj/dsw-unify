@@ -1,22 +1,31 @@
 "use client";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
-import { DataEngineeringIcon, SynthWave } from "@/components/Icons";
+import { DataEngineeringIcon } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import UsecaseInternalCard from "@/components/usecases/UsecaseInternalCard";
 import SearchBar from "@/components/search-bar";
-
 import { Badge } from "@/components/ui/badge";
-import { PlusIcon, Tune } from "@/components/Icons";
+import { PlusIcon } from "@/components/Icons";
 import Link from "next/link";
 import CountUp from "@/components/animations/CountUp";
 
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import { motion, AnimatePresence } from "framer-motion";
+
 const page = () => {
   const { id } = useParams();
+
+  const [query, setQuery] = useState("");
+
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+
   const usecase = {
     id: id,
     name: "Claims Fraud Detection",
@@ -28,45 +37,16 @@ const page = () => {
     lastModified: "2 Hours Ago",
     usage: "1.2K Request",
     stats: [
-      {
-        title: "Owner",
-        value: "Shivam Thakkar",
-        description: "Use case owner",
-      },
-      {
-        title: "Total Models",
-        value: "4",
-        description: "ML models in usecase",
-      },
+      { title: "Owner", value: "Shivam Thakkar", description: "Use case owner" },
+      { title: "Total Models", value: "4", description: "ML models in usecase" },
       { title: "Deployed", value: "3", description: "Models in production" },
     ],
-    metrics: {
-      totalRequests: "12,847",
-      avgResponse: "245ms",
-      successRate: "99.2%",
-      activeUsers: "156",
-    },
-    health: {
-      lastActivity: "2 minutes ago",
-      errorRate: "0.8%",
-      systemStatus: "operational",
-    },
-    recentActivity: [
-      { type: "success", event: "API call completed", time: "2 minutes ago" },
-      { type: "success", event: "User interaction", time: "5 minutes ago" },
-      {
-        type: "success",
-        event: "Knowledge base query",
-        time: "12 minutes ago",
-      },
-      { type: "error", event: "Guardrail triggered", time: "18 minutes ago" },
-      { type: "success", event: "Model inference", time: "25 minutes ago" },
-    ],
   };
+
   const modelsData = [
     {
       id: 1,
-      ModelSlug:'fraud-detector',
+      ModelSlug: "fraud-detector",
       name: "Fraud Detector",
       icon: DataEngineeringIcon,
       description:
@@ -85,7 +65,7 @@ const page = () => {
       icon: DataEngineeringIcon,
       description:
         "Unsupervised anomaly detection for suspicious claim patterns",
-      ModelSlug:'claims-anomaly-detector',
+      ModelSlug: "claims-anomaly-detector",
       tags: ["anomaly detection", "unsupervised"],
       versions: 2,
       features: 24,
@@ -97,7 +77,7 @@ const page = () => {
     {
       id: 3,
       name: "Fraud Risk Scorer",
-      ModelSlug:'fraud-risk-scorer',
+      ModelSlug: "fraud-risk-scorer",
       icon: DataEngineeringIcon,
       description: "Risk scoring model for fraud probability assessment",
       tags: ["anomaly detection", "unsupervised"],
@@ -112,7 +92,7 @@ const page = () => {
       id: 4,
       name: "Pattern Recognition Model",
       icon: DataEngineeringIcon,
-      ModelSlug:'pattern-recognition-model',
+      ModelSlug: "pattern-recognition-model",
       description: "Pattern recognition for identifying fraud indicators",
       tags: ["pattern recognition", "deep learning"],
       versions: 2,
@@ -123,23 +103,52 @@ const page = () => {
       variant: "light",
     },
   ];
-  function slugToTitle(slug) {
-  if (!slug) return "";
-  
-  return slug
-    .split("-")                
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
-    .join(" ");                
-}
 
-    const title = slugToTitle(id);
+  //  Convert slug to title
+  function slugToTitle(slug) {
+    if (!slug) return "";
+    return slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+  const title = slugToTitle(id);
+
+  //  Collect unique tags from models for filtering
+  const availableTags = useMemo(() => {
+    const setTags = new Set();
+    modelsData.forEach((m) => m.tags?.forEach((t) => setTags.add(t)));
+    return Array.from(setTags).sort();
+  }, []);
+
+  //  FILTER: search + tags
+  let filteredModels = modelsData.filter((model) => {
+    const matchesSearch = model.name.toLowerCase().includes(query.toLowerCase());
+
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => model.tags?.includes(tag));
+
+    return matchesSearch && matchesTags;
+  });
+
+  //  SORTING
+  if (sortOrder === "asc") {
+    filteredModels = [...filteredModels].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredModels = [...filteredModels].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
+  }
 
   return (
     <>
       <div className="flex flex-col h-full">
-        {/* Header */}
         <ScaleDown>
           <div className="bg-background p-6 space-y-8">
+            {/* HEADER */}
             <div className="flex items-center justify-between">
               <div className="flex gap-3">
                 <LeftArrowAnim link={"/ai-studio/use-cases/"} />
@@ -166,6 +175,7 @@ const page = () => {
                   </p>
                 </div>
               </div>
+
               <div className="flex items-center gap-3">
                 <Link href={`#`}>
                   <RippleButton>
@@ -177,7 +187,8 @@ const page = () => {
                 </Link>
               </div>
             </div>
-            <div className="w-full  flex items-center justify-between gap-4">
+
+            <div className="w-full flex items-center justify-between gap-4">
               {usecase.stats.map((item, index) => (
                 <div
                   key={index}
@@ -187,7 +198,7 @@ const page = () => {
                     {item.title}
                   </span>
                   <span className="text-2xl font-medium mt-1">
-                   <CountUp value={item.value} startOnView/>
+                    <CountUp value={item.value} startOnView />
                   </span>
                   <span className="text-xs font-normal">
                     {item.description}
@@ -195,44 +206,57 @@ const page = () => {
                 </div>
               ))}
             </div>
+
             <div className="space-y-4">
               <h2 className="text-2xl font-medium">Models</h2>
 
               <div className="flex gap-2">
-                           <div className="relative flex-1">
-                             <SearchBar
-                               placeholder="Search by name, description, table or  features..."
-                               onChange={(e) => setQuery(e.target.value)}
-                             />
-                           </div>
-                           <RippleButton className={"rounded-lg "}>
-                             <Button
-                               variant="outline"
-                               className="gap-2 w-36 border-border-color-1 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
-                             >
-                               <div className="w-4 h-4">
-                                 <Tune />
-                               </div>
-                               Filters
-                             </Button>
-                           </RippleButton>
-                         </div>
-            </div>
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-              {modelsData.map((item) => (
-                <UsecaseInternalCard key={item.id} usecase={item} slug={id} />
-              ))}
-
-              {modelsData.length === 0 && (
-                <div className="flex h-64 items-center justify-center text-gray-500">
-                  No Features found matching "{query}"
+                <div className="relative flex-1">
+                  <SearchBar
+                    placeholder="Search by name, description, or tags..."
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
                 </div>
-              )}
+              </div>
+
+              <FilterBar
+                selectedTags={selectedTags}
+                onTagsChange={setSelectedTags}
+                availableTags={availableTags}
+                view={view}
+                setView={setView}
+                sortOrder={sortOrder}
+                setSortOrder={setSortOrder}
+              />
             </div>
+
+            {/* MODEL GRID / LIST */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={view}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`items-stretch ${
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                    : "flex flex-col gap-5"
+                }`}
+              >
+                {filteredModels.map((item) => (
+                  <UsecaseInternalCard key={item.id} view={view} usecase={item} slug={id} />
+                ))}
+
+                {filteredModels.length === 0 && (
+                  <div className="flex h-64 items-center justify-center text-gray-500">
+                    No Models found matching "{query}"
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </ScaleDown>
-
-        {/* API Modal */}
       </div>
     </>
   );

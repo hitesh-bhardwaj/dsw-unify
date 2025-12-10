@@ -19,6 +19,7 @@ import { LineGraph, PlusIcon, Tune, RocketIcon } from "@/components/Icons";
 import Inference from "@/components/usecases/versions/Inference";
 import Link from "next/link";
 import CountUp from "@/components/animations/CountUp";
+import APIPage from "@/components/usecases/versions/APIPage";
 
 const page = () => {
   const { id } = useParams();
@@ -74,7 +75,7 @@ const page = () => {
       label: "API",
       name: "API",
       render: () => (
-        <EmptyCard  />
+        <APIPage  />
       ),
     },
   ];
