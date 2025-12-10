@@ -42,7 +42,7 @@ const FilterBar = ({
         {/* Filter by Tags */}
         <Popover open={tagOpen} onOpenChange={setTagOpen}>
           <PopoverTrigger asChild>
-            <button className="flex cursor-pointer items-center gap-2 border rounded-md px-4 py-2 text-xs">
+            <button className="flex cursor-pointer items-center gap-2 border border-border-color-1 rounded-md px-4 py-2 text-xs">
               <Tune className="w-5 h-5" />
               <span>Filter by Tags</span>
               {selectedTags.length > 0 && (
@@ -116,7 +116,7 @@ const FilterBar = ({
         {/* Sorting */}
         <Popover open={sortOpen} onOpenChange={setSortOpen}>
           <PopoverTrigger asChild>
-            <button className="flex cursor-pointer items-center gap-2 border rounded-md px-4 py-2 text-xs">
+            <button className="flex cursor-pointer items-center gap-2 border border-border-color-1 rounded-md px-4 py-2 text-xs">
               <SortIcon className="w-4 h-4" />
               <span>Sorting</span>
             </button>
@@ -175,9 +175,9 @@ const FilterBar = ({
 
       {/* Right Side View Toggle */}
       <div>
-        <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5">
+        <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5 border-border-color-1">
           {/* Grid View */}
-          <button onClick={() => setView("grid")} className="cursor-pointer">
+          <button onClick={() => setView("grid")} className="cursor-pointer ">
             <GridIcon
               className={`${view === "grid" ? "opacity-100" : "opacity-[0.4]"}`}
             />

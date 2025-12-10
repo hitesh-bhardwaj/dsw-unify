@@ -146,7 +146,7 @@ export function FeatureCard({ feature, view, minSkeletonMs = 500 }) {
               key={index}
               variant="secondary"
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-light transition-all duration-300 border border-color-2 dark:bg-background group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10",
+                "rounded-full px-3 py-1 text-xs font-light transition-all duration-300 border border-color-2 dark:bg-background group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10",
               )}
             >
               {tag}
@@ -154,11 +154,11 @@ export function FeatureCard({ feature, view, minSkeletonMs = 500 }) {
           ))}
         </div>
 
-        {isList && <div className="border-t border-border-color-2 group-hover:border-white/30" />}
+        {isList && <div className="border-t border-border-color-2 group-hover:border-white/60" />}
 
         {/* Code Block */}
         <pre className={cn(
-          "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all duration- dark:bg-background border-border-color-2 border text-foreground/80 group-hover:text-white/80 bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30 py-5 px-4",
+          "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all duration- dark:bg-background border-border-color-2 border text-foreground/80 group-hover:text-white/80 bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 py-5 px-4",
         )}>
           <code>{previewCode}</code>
         </pre>

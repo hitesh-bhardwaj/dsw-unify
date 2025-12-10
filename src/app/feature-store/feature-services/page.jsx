@@ -5,14 +5,15 @@ import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
-import React, { useState } from "react";
-import { Tune} from "@/components/Icons";
-import { ViewCard } from "@/components/FeatureStore/view-card";
+import React, { useMemo, useState } from "react";
+import { Tune } from "@/components/Icons";
 import StepFormModal from "@/components/common/StepModalForm";
 import BasicInfo from "@/components/FeatureStore/feature-services/BasicInfo";
 import SelectFeatureViews from "@/components/FeatureStore/feature-services/SelectFeatureViews";
 import CountUp from "@/components/animations/CountUp";
-
+import { ServiceCard } from "@/components/FeatureStore/feature-services/ServiceCard";
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Features = [
   {
@@ -22,10 +23,9 @@ const Features = [
     description:
       "Demographic features including age, location, credit score, marital status, and employment",
     tags: ["demographics", "policyholder", "underwriting"],
-    // tags: [{ label: "demographics" }, { label: "age" }],
-    featureNo: "18",
+    featureNo: "64",
     lastUpdated: "2 days Ago",
-    tablesCount: "2",
+    viewsCount: "2",
     variant: "light",
   },
   {
@@ -35,9 +35,9 @@ const Features = [
     description:
       "Historical claims features with aggregations including claim frequency, amounts, and types",
     tags: ["claims", "history", "fraud"],
-    featureNo: "24",
+    featureNo: "76",
     lastUpdated: "5 hours ago",
-    tablesCount: "3",
+    viewsCount: "3",
     variant: "light",
   },
   {
@@ -48,7 +48,7 @@ const Features = [
       "Policy-level features including coverage amounts, deductibles, premiums, and policy tenure",
     tags: ["policy", "coverage", "premium"],
     featureNo: "16",
-    tablesCount: "2",
+    viewsCount: "2",
     lastUpdated: "1 day ago",
     variant: "light",
   },
@@ -60,9 +60,8 @@ const Features = [
       "Auto insurance vehicle features including make, model, year, mileage, and safety ratings",
     tags: ["auto", "vehicle", "risk"],
     featureNo: "14",
-    tablesCount: "2",
+    viewsCount: "2",
     lastUpdated: "3 Days Ago",
-
     variant: "light",
   },
   {
@@ -73,12 +72,11 @@ const Features = [
       "Home insurance property features including type, age, construction, location risk, and security",
     tags: ["property", "home", "risk"],
     featureNo: "20",
-    tablesCount: "3",
+    viewsCount: "3",
     lastUpdated: "1 week ago",
-
     variant: "light",
   },
-   {
+  {
     id: 6,
     name: "Home Insurance Underwriting Service",
     icon: FeatureServicesIcon,
@@ -86,12 +84,10 @@ const Features = [
       "Comprehensive risk assessment features including driving record, credit score, and location hazards",
     tags: ["risk", "underwriting", "assessment"],
     featureNo: "22",
-    tablesCount: "4",
+    viewsCount: "4",
     lastUpdated: "4 days ago",
-
     variant: "light",
   },
-  
 ];
 
 const stats = [
@@ -102,9 +98,13 @@ const stats = [
 
 const page = () => {
   const [query, setQuery] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const steps = [
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+
+  const steps = [
     {
       id: "basic",
       label: "Basic Info",
@@ -115,19 +115,46 @@ const page = () => {
       id: "logic",
       label: "Select Views",
       required: false,
-      element: <SelectFeatureViews/>
+      element: <SelectFeatureViews />,
     },
   ];
-  
 
-  const filteredFeatures = Features.filter((feature) =>
-    feature.name.toLowerCase().includes(query.toLowerCase())
-  );
+  //  Compute available tags from services
+  const availableTags = useMemo(() => {
+    const tags = new Set();
+    Features.forEach((feature) => {
+      feature.tags?.forEach((tag) => tags.add(tag));
+    });
+    return Array.from(tags).sort();
+  }, []);
+
+  //  Apply Search + Tag Filter
+  let filteredFeatures = Features.filter((feature) => {
+    const matchesSearch = feature.name.toLowerCase().includes(query.toLowerCase());
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => feature.tags?.includes(tag));
+
+    return matchesSearch && matchesTags;
+  });
+
+  //  Apply Sorting 
+  if (sortOrder === "asc") {
+    filteredFeatures = [...filteredFeatures].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredFeatures = [...filteredFeatures].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
+  }
+
   return (
     <>
       <div className="flex flex-col h-full w-full overflow-hidden">
         <ScaleDown>
           <div className="space-y-6 p-6">
+      
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
@@ -141,8 +168,9 @@ const page = () => {
               <Link href="#">
                 <RippleButton>
                   <Button
-                  onClick={() => setIsModalOpen(true)}
-                   className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                  >
                     <PlusIcon />
                     Create Feature Service
                   </Button>
@@ -150,7 +178,7 @@ const page = () => {
               </Link>
             </div>
 
-            <div className="w-full  flex items-center justify-between gap-4">
+            <div className="w-full flex items-center justify-between gap-4">
               {stats.map((item, index) => (
                 <div
                   key={index}
@@ -165,47 +193,65 @@ const page = () => {
                 </div>
               ))}
             </div>
+
+      
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <SearchBar
-                  placeholder="Search by name, description, table or  features..."
+                  placeholder="Search services by name, tags..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
               </div>
-              <RippleButton className={"rounded-lg "}>
-                <Button
-                  variant="outline"
-                  className="gap-2 w-36 border-border-color-1 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
-                >
-                  <div className="w-4 h-4">
-                    <Tune />
-                  </div>
-                  Filters
-                </Button>
-              </RippleButton>
             </div>
 
-            <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-              {filteredFeatures.map((feature) => (
-                <ViewCard key={feature.id} feature={feature} />
-              ))}
-              {filteredFeatures.length === 0 && (
-                <div className="flex h-64 items-center justify-center text-gray-500">
-                  No Features found matching "{query}"
-                </div>
-              )}
-            </div>
+       
+            <FilterBar
+              selectedTags={selectedTags}
+              onTagsChange={setSelectedTags}
+              availableTags={availableTags}
+              view={view}
+              setView={setView}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+            />
+
+            {/* ---------- SERVICE CARDS (GRID/LIST) ---------- */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={view}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`items-stretch ${
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                    : "flex flex-col gap-5"
+                }`}
+              >
+                {filteredFeatures.map((feature) => (
+                  <ServiceCard key={feature.id} feature={feature} view={view} />
+                ))}
+
+                {filteredFeatures.length === 0 && (
+                  <div className="flex h-64 items-center justify-center text-gray-500">
+                    No Feature Services found matching "{query}"
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </ScaleDown>
       </div>
 
-       <StepFormModal
-              title="Create Feature Service"
-              open={isModalOpen}
-              onOpenChange={setIsModalOpen}
-              steps={steps}
-            />
+     
+      <StepFormModal
+        title="Create Feature Service"
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        steps={steps}
+      />
     </>
   );
 };

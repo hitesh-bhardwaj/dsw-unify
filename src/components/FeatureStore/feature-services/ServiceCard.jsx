@@ -6,37 +6,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, FeaturesIcon, TablesIcon } from "../Icons";
-import ViewsCardModal from "./feature-view/ViewsModalCard";
-import CopyButton from "../animate-ui/components/buttons/CopyButton";
+import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, FeaturesIcon, TablesIcon, ViewsIcon } from "@/components/Icons";
+import ViewsCardModal from "../feature-view/ViewsModalCard";
 
 const skeletonShownMap = new Map();
 
-/**
- * Component to display a card for a feature view.
- *
- * @param {Object} props - The component props.
- * @param {Object} props.feature - The feature view data.
- * @param {string} props.feature.id - The ID of the feature view.
- * @param {string} props.feature.name - The name of the feature view.
- * @param {string} props.feature.description - The description of the feature view.
- * @param {React.ReactNode} props.feature.icon - The icon for the feature view.
- * @param {string|number} props.feature.tablesCount - The number of tables.
- * @param {string} props.feature.lastUpdated - The last updated timestamp or text.
- * @param {Array<string>} [props.feature.tags=[]] - The tags associated with the feature view.
- * @param {string|number} props.feature.featureNo - The feature number.
- * @param {string} props.feature.createdAt - The creation timestamp or text.
- * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
- * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
- * @returns {React.JSX.Element} The rendered ViewCard component.
- */
-export function ViewCard({ feature,view, minSkeletonMs = 500 }) {
+export function ServiceCard({ feature,view, minSkeletonMs = 500 }) {
   const {
     id,
     name,
     description,
     icon: Icon,
-    tablesCount,
+    viewsCount,
     lastUpdated,
     tags = [],
     featureNo,
@@ -83,7 +64,7 @@ const isGrid = view === "grid";
       >
         <CardHeader className={cn(isGrid && "pb-2")}>
           <div className={cn(
-          "flex items-center mb-4",
+          "flex items-center  w-full mb-4",
           isGrid && "justify-between",
           isList && "flex-col items-start w-full"
         )}>
@@ -177,18 +158,19 @@ const isGrid = view === "grid";
               `${isList ? "justify-start gap-10 w-[30%]":"justify-between w-full"}`
             )}
           >
+            <div className="flex items-center gap-2">
+              <div className="w-5 h-5">
+                <ViewsIcon className="text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground "/>
+              </div>
+              <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{viewsCount} views</span>
+            </div>
             <div className="flex items-center gap-2 ">
               <div className="w-5 h-5">
                 <FeaturesIcon className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground"/>
               </div>
               <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{featureNo} features</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5">
-                <TablesIcon className="text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground "/>
-              </div>
-              <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{tablesCount} tables</span>
-            </div>
+            
           </div>
 
           <div className={cn(
