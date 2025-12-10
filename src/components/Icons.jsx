@@ -213,8 +213,8 @@ export const LineGraph = ({ active, ...props }) => {
         width="34"
         height="34"
         rx="17"
-        fill="#F7F7F7"
-        className="fill-white"
+        fill="currentColor"
+        className="fill-transparent"
       />
 
       <g>

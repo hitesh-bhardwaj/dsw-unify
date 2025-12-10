@@ -18,6 +18,7 @@ import Monitoring from "@/components/usecases/versions/Monitoring";
 import { LineGraph, PlusIcon, Tune, RocketIcon } from "@/components/Icons";
 import Inference from "@/components/usecases/versions/Inference";
 import Link from "next/link";
+import CountUp from "@/components/animations/CountUp";
 
 const page = () => {
   const { id } = useParams();
@@ -67,6 +68,15 @@ const page = () => {
         <Inference />
       ),
     },
+    {
+      id: "tab-api",
+      value: "api",
+      label: "API",
+      name: "API",
+      render: () => (
+        <EmptyCard  />
+      ),
+    },
   ];
 
   const versionsData = {
@@ -83,7 +93,7 @@ const page = () => {
       { title: "Created", value: "January 16, 2025" },
       { title: "Updated", value: "January 16, 2025" },
 
-      { title: "Accuracy", value: "96.5%" },
+      { title: "Accuracy", value: "96.3%" },
     ],
     metrics: {
       totalRequests: "12,847",
@@ -149,9 +159,9 @@ function slugToTitle(slug) {
                     {item.title}
                   </span>
                   {item.title === "Accuracy" ? (
-                    <span className="text-badge-green flex items-center gap-1">
+                    <span className="text-badge-green text-xl flex items-center gap-1">
                       <LineGraph className="w-5 h-5" />
-                      {item.value}
+                      <CountUp value={item.value} startOnView/>
                     </span>
                   ) : (
                     <span className="text-xl font-medium mt-2">

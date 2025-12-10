@@ -123,14 +123,14 @@ const { id: routeId, modelId } = params;
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1",
-                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                    "h-7 w-7 flex items-center justify-center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
+                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                   )}
                 >
                   <Eye />
                 </Button>
 
-                <Button
+                {/* <Button
                   variant="ghost"
                   size="icon"
                   className={cn(
@@ -139,14 +139,14 @@ const { id: routeId, modelId } = params;
                   )}
                 >
                   <CopyButton />
-                </Button>
+                </Button> */}
 
                 <Button
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                   )}
                 >
                   <Editor />
@@ -156,8 +156,8 @@ const { id: routeId, modelId } = params;
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                    "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                   )}
                 >
                   <Bin />
@@ -169,7 +169,7 @@ const { id: routeId, modelId } = params;
             <h3 className="text-xl font-medium mb-2 group-hover:text-white transition-colors duration-300">{name}</h3>
 
             {/* Description */}
-            <p className="text-xs text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
+            <p className="text-sm text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
               {description}
             </p>
           </CardHeader>
@@ -198,38 +198,31 @@ const { id: routeId, modelId } = params;
             {/* Versions + Features */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg p-3 px-2 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30 border border-border-color-2"
+                "flex items-start justify-between gap-4 rounded-lg p-3 px-2 text-sm py-2 duration-300 dark:bg-background flex-col"
               )}
             >
               <div className="flex items-center gap-6 ">
-                <div className="w-5 h-5">
-                  <LineGraph className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground" />
+                <div className="w-5 h-5 text-white">
+                  <LineGraph className=" transition-all duration-300" />
                 </div>
                 <div className="flex flex-col gap-1">
-                  <p className="text-foreground text-xs group-hover:text-white transition-colors duration-300">Accuracy:</p>
-                  <p className="text-badge-green group-hover:text-white transition-colors duration-300">{accuracy}</p>
+                  <p className="text-foreground text-xs group-hover:text-white transition-colors duration-300">Accuracy</p>
+                  <p className="text-badge-green  transition-colors duration-300">{accuracy}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="flex gap-2 items-end">
-                  <p
-                    className={`text-xs border px-3 flex gap-2 items-center py-2 rounded-full group-hover:text-white group-hover:border-white/30 transition-all duration-300 ${
-                      status === "Deployed"
-                        ? "border-primary"
-                        : "border-primary"
-                    }`}
-                  >
-                    <RocketIcon className="w-5 h-5 text-black group-hover:text-white transition-colors duration-300" />
-                    {status}
-                  </p>
-                </div>
+              <div className="flex items-center gap-2 w-full">
+                <button className={` text-xs border flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground group-hover:border-white/30 transition-all duration-300 bg-primary group-hover:bg-white`}>
+                    <RocketIcon className="w-4 h-4 " />
+                    {status=="Deployed"?"Undeploy":"Deploy"}
+                  
+                  </button>
               </div>
             </div>
 
             {/* Last Updated */}
-            <div className="flex items-center gap-2  pl-2">
+            <div className="flex items-center gap-3  pl-2">
               <div className="w-4 h-4">
-                <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300" />
+                <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300 h-full w-full" />
               </div>
               <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
                 {" "}

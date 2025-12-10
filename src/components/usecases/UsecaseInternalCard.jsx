@@ -97,14 +97,14 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
+                  "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                 )}
               >
                 <Eye />
               </Button>
 
-              <Button
+              {/* <Button
                 variant="ghost"
                 size="icon"
                 className={cn(
@@ -113,14 +113,14 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
                 )}
               >
                 <CopyButton />
-              </Button>
+              </Button> */}
 
               <Button
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                  "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                 )}
               >
                 <Editor />
@@ -130,8 +130,8 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                  "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                 )}
               >
                 <Bin />
@@ -177,22 +177,22 @@ export default function UsecaseInternalCard({ usecase, slug, minSkeletonMs = 500
           >
             <div className="flex items-center gap-2 ">
               <div className="w-4 h-4">
-                <VersionsIcon className="text-badge-blue group-hover:text-white transition-all duration-300 " />
+                <VersionsIcon className="text-badge-blue group-hover:text-white transition-all duration-300 h-full w-full" />
               </div>
               <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{versions} Versions</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-4 h-4">
-                <FeaturesIcon className="text-primary group-hover:text-white transition-all duration-300" />
+                <FeaturesIcon className="text-primary group-hover:text-white transition-all duration-300 h-full w-full" />
               </div>
               <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{features} features</span>
             </div>
           </div>
 
           {/* Last Updated */}
-           <div className="flex items-center gap-2  pl-2">
+           <div className="flex items-center gap-3  pl-2">
             <div className="w-4 h-4">
-              <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300" />
+              <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300 h-full w-full" />
             </div>
             <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
               {" "}

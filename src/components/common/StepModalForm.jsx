@@ -93,9 +93,14 @@ export default function StepFormModal({ open, onOpenChange, steps = [] ,title}) 
                       onClick={() => handleStepClick(index)}
                       className={`w-8 h-8 flex justify-center items-center rounded-full border transition-all
                         ${
-                          isActive || isCompleted
+                          isActive
                             ? "bg-primary text-white border-primary"
                             : "border-foreground/40 text-foreground/40"
+                        }
+                         ${
+                          isCompleted
+                            ? "bg-white !text-[#111111] border-primary font-medium"
+                            : "border-foreground/40"
                         }
                       `}
                     >
@@ -106,7 +111,7 @@ export default function StepFormModal({ open, onOpenChange, steps = [] ,title}) 
                       className={`whitespace-nowrap ${
                         isActive || isCompleted
                           ? "text-foreground"
-                          : "text-foreground/40"
+                          : "text-foreground"
                       }`}
                     >
                       {step.label}

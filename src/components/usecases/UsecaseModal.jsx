@@ -71,7 +71,7 @@ export default function UsecaseModal({ open, onOpenChange }) {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="w-full h-full relative overflow-y-scroll overflow-x-hidden">
+        <div className="w-full h-full relative  overflow-x-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key="step-1"
@@ -108,7 +108,7 @@ export default function UsecaseModal({ open, onOpenChange }) {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder='Describe the business problem this use case addresses'
-                    className={`border !text-xs h-32 placeholder:text-foreground/80 placeholder:text-xs ${
+                    className={`border !text-xs h-28 placeholder:text-foreground/80 placeholder:text-xs ${
                       errors.description
                         ? "border-red-500"
                         : "border-foreground/20"

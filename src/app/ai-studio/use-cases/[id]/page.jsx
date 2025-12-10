@@ -13,6 +13,7 @@ import SearchBar from "@/components/search-bar";
 import { Badge } from "@/components/ui/badge";
 import { PlusIcon, Tune } from "@/components/Icons";
 import Link from "next/link";
+import CountUp from "@/components/animations/CountUp";
 
 const page = () => {
   const { id } = useParams();
@@ -186,7 +187,7 @@ const page = () => {
                     {item.title}
                   </span>
                   <span className="text-2xl font-medium mt-1">
-                    {item.value}
+                   <CountUp value={item.value} startOnView/>
                   </span>
                   <span className="text-xs font-normal">
                     {item.description}

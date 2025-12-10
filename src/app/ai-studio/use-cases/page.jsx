@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { Tune, SynthWave } from "@/components/Icons";
 import { UseCaseCard } from "@/components/usecases/usecase-card";
 import UseCaseModal from "@/components/usecases/UsecaseModal";
+import CountUp from "@/components/animations/CountUp";
 const Features = [
   {
     id: 1,
@@ -163,7 +164,7 @@ const page = () => {
                     {item.title}
                   </span>
                   <span className="text-4xl font-medium mt-1">
-                    {item.value}
+                    <CountUp value={item.value} startOnView/>
                   </span>
                   <span className="text-xs font-normal">
                     {item.description}

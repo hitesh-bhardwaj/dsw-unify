@@ -6,12 +6,6 @@ import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useState } from "react";
-import {
-  SynthWave,
-  DataExplorerIcon,
-  DataVisualizationIcon,
-} from "@/components/Icons";
-
 import { QuickCards } from "@/components/AIstudio/QuickCards";
 
 const quickFeatures = [

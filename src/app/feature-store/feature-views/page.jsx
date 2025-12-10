@@ -11,6 +11,7 @@ import { ViewCard } from "@/components/FeatureStore/view-card";
 import ViewsModal from "@/components/FeatureStore/feature-view/ViewsModal";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
+import CountUp from "@/components/animations/CountUp";
 
 const Features = [
   {
@@ -191,7 +192,7 @@ const page = () => {
                     {item.title}
                   </span>
                   <span className="text-4xl font-medium mt-2">
-                    {item.value}
+                    <CountUp value={item.value} startOnView/>
                   </span>
                 </div>
               ))}

@@ -1,5 +1,7 @@
 "use client";
 
+import CountUp from "./animations/CountUp";
+
 /**
  * Component to display a list of card details.
  *
@@ -19,7 +21,8 @@ export default function CardDetails({ data = [] }) {
 
           {item.description ? (
             <>
-              <span className="text-2xl font-medium mt-1">{item.value}</span>
+              <span className="text-2xl font-medium mt-1">
+               <CountUp value={item.value} startOnView/></span>
               <span className="text-xs font-normal">{item.description}</span>
             </>
           ) : (

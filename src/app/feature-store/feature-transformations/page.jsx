@@ -13,6 +13,7 @@ import StepFormModal from "@/components/common/StepModalForm";
 import BasicInfo from "@/components/FeatureStore/feature-transformation/create-transformation/BasicInfo";
 import TransformLogic from "@/components/FeatureStore/feature-transformation/create-transformation/TransformLogic";
 import { motion, AnimatePresence } from "framer-motion";
+import CountUp from "@/components/animations/CountUp";
 
 const Features = [
   {
@@ -209,7 +210,7 @@ if (sortOrder === "asc") {
                     {item.title}
                   </span>
                   <span className="text-4xl font-medium mt-2">
-                    {item.value}
+                    <CountUp value={item.value} startOnView/>
                   </span>
                 </div>
               ))}

@@ -162,7 +162,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature }) {
                   variant="ghost"
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground focus-visible:ring-0",
                     "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
                   )}
                 >

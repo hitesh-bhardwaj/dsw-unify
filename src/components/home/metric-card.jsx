@@ -9,6 +9,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import CountUp from "../animations/CountUp";
 
 /**
  * Component to display a metric card with a label, value, change percentage, and trend chart.
@@ -60,7 +61,8 @@ export function MetricCard({
         <div className="flex flex-col items-start justify-between w-[70%] gap-4">
           <div className="space-y-2">
             <p className="text-sm  text-nowrap text-muted-foreground">{label}</p>
-            <h3 className="text-3xl font-medium tracking-tight">{value}</h3>
+            <h3 className="text-3xl font-medium tracking-tight">
+              <CountUp value={value} startOnView/></h3>
           </div>
           <div className="w-full flex gap-2 text-badge-green ">
             <div className="w-6 h-6 rounded-full bg-badge-green p-1 text-white flex items-center justify-center">

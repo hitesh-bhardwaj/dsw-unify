@@ -83,7 +83,7 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
         <CardHeader className="pb-2">
           <div className="flex items-center justify-between mb-4">
             {/* Icon, Rating, and Version */}
-            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
+            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3 ">
               {Icon && <Icon className="h-6 w-6" />}
             </div>
 
@@ -93,8 +93,8 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1 ",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center text-foreground px-1 py-1  opacity-0 group-hover:opacity-100",
+                  "hover:bg-white/30 group-hover:text-white transition-call duration-300"
                 )}
               >
                 <Eye />
@@ -103,18 +103,8 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-                )}
-              >
-                <CopyButton />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                  "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                 )}
               >
                 <Editor />
@@ -123,8 +113,8 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                  "hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                  "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                 )}
               >
                 <Bin />
@@ -182,9 +172,9 @@ export function UseCaseCard({ feature, minSkeletonMs = 500 }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 pl-2">
+          <div className="flex items-center gap-3 pl-2">
             <div className="w-4 h-4">
-              <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300" />
+              <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300 h-full w-full" />
             </div>
             <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
               {" "}

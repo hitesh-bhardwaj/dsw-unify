@@ -11,6 +11,7 @@ import { ViewCard } from "@/components/FeatureStore/view-card";
 import StepFormModal from "@/components/common/StepModalForm";
 import BasicInfo from "@/components/FeatureStore/feature-services/BasicInfo";
 import SelectFeatureViews from "@/components/FeatureStore/feature-services/SelectFeatureViews";
+import CountUp from "@/components/animations/CountUp";
 
 
 const Features = [
@@ -159,7 +160,7 @@ const page = () => {
                     {item.title}
                   </span>
                   <span className="text-4xl font-medium mt-2">
-                    {item.value}
+                    <CountUp value={item.value} startOnView/>
                   </span>
                 </div>
               ))}
