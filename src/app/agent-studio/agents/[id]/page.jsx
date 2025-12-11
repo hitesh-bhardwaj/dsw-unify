@@ -19,6 +19,7 @@ import EmptyCard from "@/components/common/EmptyCard";
 import Overview from "@/components/agent-studio/agents/Overview";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import Guardrails from "@/components/agent-studio/agents/Guardrails";
+import Conversations from "@/components/agent-studio/agents/Conversations";
 
 export default function AgentDetailPage({ params }) {
    const { id } = use(params);
@@ -71,7 +72,7 @@ export default function AgentDetailPage({ params }) {
       label: "Conversations",
       name: "Conversations",
       render: () => (
-        <EmptyCard children={"Conversations configuration coming soon..."} />
+        <Conversations/>
       ),
     }
   ];
