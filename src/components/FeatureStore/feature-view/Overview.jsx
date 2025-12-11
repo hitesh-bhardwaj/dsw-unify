@@ -33,36 +33,36 @@ const Overview = ({
         {/* Details Section */}
         <div className="space-y-3">
           <div className="text-sm font-medium">Details</div>
-          <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-color-2">
+          <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-border-color-0">
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent p-2.5">
+          <div className="w-10 h-10 bg-icon-color-1/10 text-icon-color-1 rounded-lg flex items-center justify-center p-3">   
                 <FeaturesIcon className="h-full w-full"/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Features</div>
-                <div className="text-xs font-medium">{featureNo || 0}</div>
+                <div className="text-sm font-medium">{featureNo || 0}</div>
               </div>
             </div>
 
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent p-2.5">
-                <TablesIcon className="h-full w-full"/>
+          <div className="w-10 h-10 bg-icon-color-2/10 text-icon-color-2 rounded-lg flex items-center justify-center p-3">   
+                       <TablesIcon className="h-full w-full"/>
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">Tables</div>
-                <div className="text-xs font-medium">{tablesCount || 0}</div>
+                <div className="text-sm font-medium">{tablesCount || 0}</div>
               </div>
             </div>
 
-            <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
-               <FeatureTransformationIcon/>
+            <div className=" p-4 flex gap-4 items-center min-w-48">
+          <div className="w-10 h-10 bg-icon-color-3/10 text-icon-color-3 rounded-lg flex items-center justify-center p-2">   
+               <FeatureTransformationIcon />
               </div>
               <div className="space-y-1">
                 <div className="text-xs text-foreground/70">
                   Transformations
                 </div>
-                <div className="text-xs font-medium">0</div>
+                <div className="text-sm font-medium">0</div>
               </div>
             </div>
           </div>
@@ -79,36 +79,36 @@ const Overview = ({
         {/* Metadata */}
         <div className="space-y-3">
           <div className="text-sm font-medium">Metadata</div>
-          <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-color-2">
+          <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-border-color-0">
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-2.5">
+          <div className="w-10 h-10 bg-icon-color-1/10 text-icon-color-1 rounded-lg flex items-center justify-center p-3">   
                 <DocumentIcon/>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 <div className="text-xs text-foreground/70">Created</div>
-                <div className="text-xs font-medium">{createdAt || "N/A"}</div>
+                <div className="text-sm font-medium">{createdAt || "N/A"}</div>
               </div>
             </div>
 
             <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-2.5">
+          <div className="w-10 h-10 bg-icon-color-2/10 text-icon-color-2 rounded-lg flex items-center justify-center p-3">   
                <Calendar/>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 <div className="text-xs text-foreground/70">Last Modified</div>
-                <div className="text-xs font-medium">
+                <div className="text-sm font-medium">
                   {lastUpdated || "Just now"}
                 </div>
               </div>
             </div>
 
-            <div className=" p-4 flex gap-4 items-center">
-              <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-2.5">
+            <div className=" p-4 flex gap-4 items-center min-w-48 ">
+          <div className="w-10 h-10 bg-icon-color-3/10 text-icon-color-3 rounded-lg flex items-center justify-center p-3">   
                 <ActiveIcon/>
               </div>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 <div className="text-xs text-foreground/70">Status</div>
-                <div className="text-xs font-medium">Active</div>
+                <div className="text-sm font-medium">Active</div>
               </div>
             </div>
           </div>

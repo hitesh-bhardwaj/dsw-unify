@@ -57,7 +57,7 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
             onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="e.g. customer demographics"
-            className={`h-11 border-border-color-0 mt-3 ${
+            className={`h-11 border-border-color-0 placeholder:text-foreground/80 mt-3 ${
               errors.name ? "border-red-500" : ""
             }`}
           />
@@ -72,8 +72,8 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
           <Textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="border border-foreground/20 placeholder:text-foreground/40 placeholder:text-xs h-36"
-            placeholder="Enter description..."
+            className="border border-border-color-0  placeholder:text-foreground/80 placeholder:text-xs h-36"
+            placeholder="Describe what this feature view contains..."
           />
         </div>
 
@@ -87,7 +87,7 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
             onChange={(e) => setTags(e.target.value)}
             type="text"
             placeholder="Add tags (comma separated)"
-            className="h-11 border-border-color-0 mt-3"
+            className="h-11 placeholder:text-foreground/80 border-border-color-0 mt-3"
           />
         </div>
       </div>

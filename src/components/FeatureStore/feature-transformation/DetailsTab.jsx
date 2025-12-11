@@ -33,10 +33,10 @@ export default function DetailsTab({
       </div>
       <div>
         <h3 className="text-lg font-medium pb-2">Input Parameters</h3>
-        <div className=" rounded-lg overflow-hidden">
-          <div className="w-full rounded-md   overflow-hidden">
-            <Table className="w-full text-xs border border-color-2 dark:hover:bg-background">
-  <TableHeader className="bg-sidebar-accent dark:hover:bg-sidebar-accent">
+        <div className=" overflow-hidden">
+          <div className="w-full p-0 border border-border-color-0 rounded-lg  overflow-hidden ">
+            <Table className="w-full text-xs  dark:hover:bg-background">
+  <TableHeader className="bg-sidebar-accent dark:hover:bg-sidebar-accent !border-b !border-border-color-0">
     <TableRow className='dark:hover:bg-sidebar-accent'>
       <TableHead className="py-2 px-4 w-[25%]">Name</TableHead>
       <TableHead className="py-2 px-4 w-[25%]">Type</TableHead>
@@ -47,7 +47,7 @@ export default function DetailsTab({
 
   <TableBody>
     {inputParams?.map((row, i) => (
-      <TableRow key={i} className="text-foreground/80 dark:hover:bg-background">
+      <TableRow key={i} className="text-foreground/80 dark:hover:bg-background border-b border-border-color-0">
         <TableCell className="py-2 px-4 w-[25%]">{row.name}</TableCell>
         <TableCell className="py-2 px-4 w-[25%]">{row.type}</TableCell>
         <TableCell className="py-2 px-4 w-[25%]">{row.required}</TableCell>
@@ -68,7 +68,7 @@ export default function DetailsTab({
       </div>
       <div className="w-full flex items-center justify-between text-sm text-foreground/80 pt-4">
         <div className="flex gap-4 items-center ">
-          <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent   p-3">
+          <div className="w-10 h-10 bg-icon-color-1/10 text-icon-color-1 rounded-lg flex items-center justify-center p-3">
             <DocumentIcon/>
           </div>
           <div>
@@ -78,8 +78,8 @@ export default function DetailsTab({
             </p>
           </div>
         </div>
-        <div className="flex gap-4 items-center ">
-          <div className="w-10 h-10 border border-color-2 rounded-lg bg-sidebar-accent  p-3">
+        <div className="flex gap-4 items-center justify-center">
+          <div className="w-10 h-10 bg-icon-color-4/10 text-icon-color-4 rounded-lg flex items-center justify-center p-3">
           <Calendar/>
           </div>
           <div>

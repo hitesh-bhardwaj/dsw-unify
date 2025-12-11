@@ -78,7 +78,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 className={`border placeholder:text-foreground/80 ${
-                  errors.name ? "border-red-500" : "border-foreground/20"
+                  errors.name ? "border-red-500" : "border-border-color-0"
                 }`}
                 placeholder="e.g. calculate age from DOB"
               />
@@ -95,7 +95,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="border border-foreground/20 !text-xs h-32 placeholder:text-foreground/80"
+                className="border border-border-color-0 !text-xs h-32 placeholder:text-foreground/80"
                 placeholder="Describe what this transformation does..."
               />
             </div>
@@ -115,7 +115,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
               <SelectTrigger
                 className={`border placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isCategoryOpen ? "[&>svg]:rotate-180" : ""
-                } ${errors.category ? "border-red-500" : "border-foreground/20"}`}
+                } ${errors.category ? "border-red-500" : "border-border-color-0"}`}
               >
                 <SelectValue
                   placeholder="Select a category"

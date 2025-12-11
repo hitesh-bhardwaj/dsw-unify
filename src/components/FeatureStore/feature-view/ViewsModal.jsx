@@ -89,14 +89,14 @@ export default function ViewsModal({ open, onOpenChange, onSelect }) {
       title: "Auto Create Features",
       description:
         "Quickly generate features by selecting tables. Our system will automatically create features from all columns.",
-      icon: <RegenerateIcon className="w-6 h-6 " />,
+      icon: <RegenerateIcon className="w-8 h-8 text-icon-color-1 group-hover:text-white" />,
     },
     {
       id: "manual",
       title: "Create Manually",
       description:
         "Full control over feature creation. Select specific columns, define joins, and apply transformations.",
-      icon: <CreateManuallyIcon className="w-6 h-6 " />,
+      icon: <CreateManuallyIcon className="w-8 h-8 text-icon-color-1 group-hover:text-white" />,
     },
   ];
 
@@ -140,14 +140,14 @@ export default function ViewsModal({ open, onOpenChange, onSelect }) {
                       key={item.id}
                       onClick={() => handleSelect(item.id)}
                       className={cn(
-                        "feature-card-hover-container hover:text-white cursor-pointer p-8 group rounded-lg border border-border-color-0 hover:bg-sidebar-accent duration-500 transition-all flex items-center justify-center flex-col text-center space-y-4"
+                        "feature-card-hover-container hover:text-white cursor-pointer p-8 group rounded-3xl border border-border-color-0 hover:bg-sidebar-accent duration-500 transition-all flex items-center justify-center flex-col text-center space-y-4"
                       )}
                     >
-                      <div className="pb-2 group-hover:text-white duration-300 transition-all">
+                      <div className="pb-2  group-hover:text-white duration-300 transition-all">
                         {item.icon}
                       </div>
-                      <h3 className="text-2xl group-hover:text-white  duration-300 transition-all font-medium">{item.title}</h3>
-                      <p className="text-xs group-hover:text-white duration-300 transition-all  text-foreground/80 max-w-[80%]">
+                      <h3 className="text-3xl group-hover:text-white  duration-300 transition-all font-medium">{item.title}</h3>
+                      <p className="text-sm group-hover:text-white duration-300 transition-all  text-foreground/80 max-w-[80%]">
                         {item.description}
                       </p>
                     </div>

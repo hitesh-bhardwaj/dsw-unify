@@ -1762,7 +1762,7 @@ export const DataIngestionIcon2 = ({ active, ...props }) => {
 export const FeatureTransformationIcon = ({ active, ...props }) => {
   return (
     <>
-      <svg
+      <svg className={`${props.className || ""} `}
         width="22"
         height="22"
         viewBox="0 0 28 28"

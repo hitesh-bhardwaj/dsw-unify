@@ -58,11 +58,11 @@ export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
     <Card
       onClick={() => setIsModalOpen(true)}
       className={cn(
-        "cursor-pointer transition-all duration-300 feature-card-hover-container group",
+        "cursor-pointer transition-all duration-300 feature-card-hover-container hover:border-transparent group hover:drop-shadow-xl",
         
-        isGrid && " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 hover:shadow-md",
+        isGrid && " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
         // List view styles
-        isList && "w-full rounded-xl hover:shadow-md px-6 py-6 bg-white dark:bg-background"
+        isList && "w-full rounded-xl  py-6 bg-white dark:bg-background"
       )}
     >
       {/* Header Section */}
@@ -76,13 +76,13 @@ export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
           <div className={cn(
             "flex items-center justify-center rounded-lg p-3 group-hover:!bg-white group-hover:!text-black duration-300",
             isGrid && "h-14 w-14 transition-all   ",
-            isList && "h-14 w-14  mb-4"
+            isList && "h-15 w-15  mb-4"
           )}
           style={{
                 color: `var(--icon-color-${(index % 4) + 1})`,
                 backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
               }}>
-            {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-20 w-20")} />}
+            {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-7 w-7")} />}
           </div>
            
 
@@ -159,11 +159,11 @@ export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
           ))}
         </div>
 
-        {isList && <div className="border-t border-border-color-0 group-hover:border-white/60" />}
+
 
         {/* Code Block */}
         <pre className={cn(
-          "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all duration- dark:bg-background border-border-color-0 border text-foreground/80 group-hover:text-white/80 bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 py-5 px-4",
+          "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all dark:bg-background border-border-color-2 border text-foreground/80 group-hover:text-white bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 py-5 px-4",
         )}>
           <code>{previewCode}</code>
         </pre>

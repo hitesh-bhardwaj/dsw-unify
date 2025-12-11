@@ -44,7 +44,7 @@ export default function FeatureCreation({ onCloseModal }) {
     <div className="space-y-4 pb-10 pr-2">
       {/* Title */}
       <h2 className="text-xl font-medium text-foreground">Creating Features</h2>
-      <p className="text-xs text-foreground/80">
+      <p className="text-sm text-foreground/80 pt-2">
         Automatically generating features from your selected tables
       </p>
 

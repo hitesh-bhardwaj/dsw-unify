@@ -71,14 +71,14 @@ export function ViewCard({ feature, view, index, minSkeletonMs = 500 }) {
 const isGrid = view === "grid";
   const isList = view === "list";
   return (
-    <div className="group w-full h-full">
+    <div className=" w-full h-full">
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-          "feature-card-hover-container gap-2  transition-all duration-300 group",
-          isGrid && " h-full flex flex-col justify-between gap-0 py-5 hover:border-border-color-0 hover:shadow-md",
+          "feature-card-hover-container cursor-pointer hover:border-transparent gap-2  transition-all duration-300 group hover:drop-shadow-xl",
+          isGrid && " h-full flex flex-col justify-between gap-0 py-5 ",
         // List view styles
-        isList && "w-full rounded-xl hover:shadow-md px-6 py-6 bg-white dark:bg-background"
+        isList && "w-full rounded-xl py-6 bg-white dark:bg-background"
         )}
       >
         <CardHeader className={cn(isGrid && "pb-2")}>
@@ -158,7 +158,6 @@ const isGrid = view === "grid";
           )}
         >
 
-          {isList && <div className="border-t border-border-color-0 group-hover:border-white/60" />}
           <div className="flex flex-wrap gap-1 pt-2">
             {tags.map((tag, index) => (
               <Badge
@@ -173,12 +172,12 @@ const isGrid = view === "grid";
             ))}
           </div>
 
-          <div className={`${view==='list'? 'flex justify-between': ' flex flex-col gap-4'}`}>
+          <div className={` flex flex-col gap-4`}>
 
           <div
             className={cn(
-              "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-0",
-              `${isList ? "justify-between gap-10 w-[30%]":"justify-between w-full"}`
+              "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border  border-color-2 ",
+              `${isList ? "justify-between gap-10 w-full":"justify-between w-full"}`
             )}
           >
             <div className="flex items-center gap-2 ">
@@ -196,7 +195,7 @@ const isGrid = view === "grid";
           </div>
 
           <div className={cn(
-          "flex items-center gap-2",
+          "flex items-center  gap-2",
           isGrid && "pl-2",
           isList && "mt-4"
         )}>

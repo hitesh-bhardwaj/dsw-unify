@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { LeftArrow } from "@/components/Icons";
 import { Trash2, ChevronRight } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox"
 
 export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
   // AVAILABLE COLUMNS DATA
@@ -16,10 +17,10 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
         { id: "order_id", name: "order_id", type: "string" },
         { id: "payment_method", name: "payment_method", type: "string" },
         { id: "status", name: "status", type: "string" },
-        { id: "transaction_id", name: "transaction_id", type: "string" },
-        { id: "order_id", name: "order_id", type: "string" },
-        { id: "payment_method", name: "payment_method", type: "string" },
-        { id: "status", name: "status", type: "string" },
+        { id: "transaction_id2", name: "transaction_id", type: "string" },
+        { id: "order_id2", name: "order_id", type: "string" },
+        { id: "payment_method2", name: "payment_method", type: "string" },
+        { id: "status2", name: "status", type: "string" },
       ],
     },
   ]);
@@ -110,50 +111,43 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
                 {table.name}
               </h4>
 
-              <div className="space-y-2 max-h-[280px] overflow-y-auto">
-                {table.columns.map((column,index) => (
-                  <div
-                    key={index}
-                    className={`border rounded-lg border-border-color-0 p-3 cursor-pointer transition-all w-[95%] ${
-                      selectedColumns.includes(column.id)
-                        ? " "
-                        : " "
-                    }`}
-                    onClick={() => toggleColumnSelection(column.id)}
-                  >
-                    <div className="flex items-center gap-3">
-                      {/* Radio Button */}
-                      <div
-                        className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                          selectedColumns.includes(column.id)
-                            ? ""
-                            : ""
-                        }`}
-                      >
-                        {selectedColumns.includes(column.id) && (
-                          <div className="w-2 h-2 rounded-full bg-orange-500" />
-                        )}
-                      </div>
+             <div className="space-y-2 max-h-[280px] overflow-y-auto">
+  {table.columns.map((column, index) => {
+    const isSelected = selectedColumns.includes(column.id);
 
-                      {/* Column Info */}
-                      <div className="flex-1">
-                        <p
-                          className={`text-sm font-medium ${
-                            selectedColumns.includes(column.id)
-                              ? "text-orange-500"
-                              : "text-foreground"
-                          }`}
-                        >
-                          {column.name}
-                        </p>
-                        <p className="text-xs text-foreground/60">
-                          {column.type}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+    return (
+      <div
+        key={index}
+        className={`border rounded-lg border-border-color-0 p-3 cursor-pointer transition-all w-[95%]`}
+        onClick={() => toggleColumnSelection(column.id)}
+      >
+        <div className="flex items-center gap-3">
+          
+          {/* Shadcn Checkbox */}
+          <Checkbox
+            checked={isSelected}
+            onCheckedChange={() => toggleColumnSelection(column.id)}
+            className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
+            // Prevent card click triggering twice
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {/* Column Info */}
+          <div className="flex-1">
+            <p
+              className={`text-sm font-medium ${
+                isSelected ? "text-orange-500" : "text-foreground"
+              }`}
+            >
+              {column.name}
+            </p>
+            <p className="text-xs text-foreground/60">{column.type}</p>
+          </div>
+        </div>
+      </div>
+    );
+  })}
+</div>
             </div>
           ))}
         </div>

@@ -71,9 +71,9 @@ const TransformLogic = ({ goNext, goBack, isLastStep }) => {
               onOpenChange={(open) => setIsLanguageOpen(open)}
             >
               <SelectTrigger
-                className={`border border-foreground/20 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border border-border-color-0 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isLanguageOpen ? "[&>svg]:rotate-180" : ""
-                } ${errors.language ? "border-red-500" : "border-foreground/20"}`}
+                } ${errors.language ? "border-red-500" : "border-border-color-0"}`}
               >
                 <SelectValue
                   placeholder="Python"
@@ -102,7 +102,7 @@ const TransformLogic = ({ goNext, goBack, isLastStep }) => {
               <Textarea
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="border border-foreground/20 !text-xs h-32 placeholder:text-foreground/80 font-mono"
+                className="border border-border-color-0 !text-xs h-32 placeholder:text-foreground/80 font-mono"
                 placeholder={`def calculate_age(dob):\n    today = datetime.now()\n    return (today - dob).days // 365`}
               />
             </div>

@@ -52,33 +52,33 @@ export function ServiceCard({ feature,view, index, minSkeletonMs = 500 }) {
 const isGrid = view === "grid";
   const isList = view === "list";
   return (
-    <div className="group w-full h-full">
+    <div className=" w-full h-full">
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-          "feature-card-hover-container gap-2  transition-all duration-300 group",
-          isGrid && " h-full flex flex-col justify-between gap-0 py-5  hover:shadow-md",
+          "feature-card-hover-container gap-2 hover:drop-shadow-xl hover:border-transparent  transition-all duration-300 group",
+          isGrid && " h-full flex flex-col justify-between gap-0 py-5  ",
         // List view styles
-        isList && "w-full rounded-xl hover:shadow-md px-6 py-6 bg-white dark:bg-background"
+        isList && "w-full rounded-xl  py-6 bg-white dark:bg-background"
         )}
       >
-        <CardHeader className={cn(isGrid && "pb-2")}>
+        <CardHeader className={cn(isGrid && "")}>
           <div className={cn(
-          "flex items-center  w-full mb-4",
+          "flex items-center  w-full ",
           isGrid && "justify-between",
           isList && "flex-col items-start w-full"
         )}>
             {/* Icon, Rating, and Version */}
            <div className={cn(
             "flex items-center justify-center rounded-lg  p-3 group-hover:!bg-white group-hover:!text-black duration-300",
-            isGrid && "h-14 w-14 transition-all   ",
+            isGrid && "h-13 w-13 transition-all   ",
             isList && "h-14 w-14  mb-4"
           )}
           style={{
                 color: `var(--icon-color-${(index % 4) + 1})`,
                 backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
               }}>
-            {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-20 w-20")} />}
+            {Icon && <Icon className={cn(isGrid ? "h-5 w-5" : "h-20 w-20")} />}
           </div>
 
             {/* Action buttons */}
@@ -139,7 +139,6 @@ const isGrid = view === "grid";
           )}
         >
 
-          {isList && <div className="border-t border-border-color-0 group-hover:border-white/60" />}
           <div className="flex flex-wrap gap-1 pt-2">
             {tags.map((tag, index) => (
               <Badge
@@ -154,12 +153,12 @@ const isGrid = view === "grid";
             ))}
           </div>
 
-          <div className={`${view==='list'? 'flex justify-between': ' flex flex-col gap-4'}`}>
+          <div className={` flex flex-col gap-4`}>
 
           <div
             className={cn(
               "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-0",
-              `${isList ? "justify-between gap-10 w-[30%]":"justify-between w-full"}`
+              `${isList ? "justify-between gap-10 w-full":"justify-between w-full"}`
             )}
           >
             <div className="flex items-center gap-2">
