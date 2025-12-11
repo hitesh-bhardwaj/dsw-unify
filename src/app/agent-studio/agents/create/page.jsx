@@ -14,6 +14,7 @@ import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import PromptCardGrid from "@/components/prompt-card-grid";
 import { ScaleDown } from "@/components/animations/Animations";
+import ModelGrid from "@/components/agent-studio/agents/ModelGrid";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -34,7 +35,7 @@ export default function CreateAgentPage() {
       label: "Model",
       name: "Model",
       render: () => (
-        <EmptyCard children={"Models configuration coming soon..."} />
+       <ModelGrid/>
       ),
     },
     {
