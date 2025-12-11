@@ -10,6 +10,7 @@ import RadioTabs from "@/components/common/RadioTabs";
 import { FadeUp, ScaleDown } from "@/components/animations/Animations";
 import { cn } from "@/lib/utils";
 import { RippleButton } from "@/components/ui/ripple-button";
+import CardDetails from "@/components/CardDetails";
 
 // Mock data for agents
 const agents = [
@@ -140,6 +141,21 @@ const agents = [
  
 ];
 
+const stats = [
+    {
+      title: "Total Agents",
+      value: "42",
+    },
+    {
+      title: "Active Agents",
+      value: "41",
+    },
+    {
+      title: "Total Requests",
+      value: "100,800",
+    }
+  ];
+
 export default function AgentsPage() {
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState("prompts");
@@ -171,6 +187,7 @@ export default function AgentsPage() {
               </RippleButton>
             </Link>
           </div>
+          <CardDetails data={stats} textSize="text-4xl"/>
           {/* </FadeUp> */}
           {/* <FadeUp delay={0.02}> */}
           <SearchBar

@@ -16,6 +16,9 @@ import PromptCardGrid from "@/components/prompt-card-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ArrowRight } from "lucide-react";
 
+
+
+
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("");
@@ -94,6 +97,7 @@ export default function CreateAgentPage() {
     },
   ];
 
+  
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       {/* Header */}
