@@ -18,6 +18,7 @@ import SearchBar from "@/components/search-bar";
 import EmptyCard from "@/components/common/EmptyCard";
 import Overview from "@/components/agent-studio/agents/Overview";
 import AnimatedTabsSection from "@/components/common/TabsPane";
+import Guardrails from "@/components/agent-studio/agents/Guardrails";
 
 export default function AgentDetailPage({ params }) {
    const { id } = use(params);
@@ -31,46 +32,28 @@ export default function AgentDetailPage({ params }) {
 
   const items = [
     {
-      id: "prompt",
-      value: "prompt",
-      label: "Prompt",
-      name: "Prompt",
+      id: "overview",
+      value: "overview",
+      label: "Overview",
+      name: "Overview",
       render: () => <Overview/>,
     },
     {
-      id: "model",
-      value: "model",
-      label: "Model",
-      name: "Model",
+      id: "monitoring",
+      value: "monitoring",
+      label: "Monitoring",
+      name: "Monitoring",
       render: () => (
-        <EmptyCard children={"Models configuration coming soon..."} />
+        <EmptyCard children={"Monitoring configuration coming soon..."} />
       ),
     },
     {
-      id: "tools",
-      value: "tools",
-      label: "Tools",
-      name: "Tools",
+      id: "performance",
+      value: "performance",
+      label: "Performance",
+      name: "Performance",
       render: () => (
-        <EmptyCard children={"Tools configuration coming soon..."} />
-      ),
-    },
-    {
-      id: "knowledge",
-      value: "knowledge",
-      label: "Knowledge",
-      name: "Knowledge",
-      render: () => (
-        <EmptyCard children={"Knowledge configuration coming soon..."} />
-      ),
-    },
-    {
-      id: "memory",
-      value: "memory",
-      label: "Memory",
-      name: "Memory",
-      render: () => (
-        <EmptyCard children={"Memory configuration coming soon..."} />
+        <EmptyCard children={"Performance configuration coming soon..."} />
       ),
     },
     {
@@ -79,27 +62,18 @@ export default function AgentDetailPage({ params }) {
       label: "Guardrails",
       name: "Guardrails",
       render: () => (
-        <EmptyCard children={"Guardrails configuration coming soon..."} />
+        <Guardrails/>
       ),
     },
     {
-      id: "finetuning",
-      value: "finetuning",
-      label: "Finetuning",
-      name: "Finetuning",
+      id: "conversations",
+      value: "conversations",
+      label: "Conversations",
+      name: "Conversations",
       render: () => (
-        <EmptyCard children={"Finetuning configuration coming soon..."} />
+        <EmptyCard children={"Conversations configuration coming soon..."} />
       ),
-    },
-    {
-      id: "tags",
-      value: "tags",
-      label: "Tags",
-      name: "Tags",
-      render: () => (
-        <EmptyCard children={"Tags configuration coming soon..."} />
-      ),
-    },
+    }
   ];
 
   const agent = {
@@ -350,20 +324,13 @@ export default function AgentDetailPage({ params }) {
             </div>
           </div>
         </div>
-        <div className="p-6 py-3">
-         <SearchBar
-                    placeholder="Search Agents..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                  />
-                  </div>
-        
-
+        <div className="p-6 py-3 space-y-3">
         {/* Main Content */}
        <AnimatedTabsSection
                     items={items}
-                    defaultValue="prompt"
+                    defaultValue="overview"
                   />
+                  </div>
       </ScaleDown>
 
       {/* API Modal */}

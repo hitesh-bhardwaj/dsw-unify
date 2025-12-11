@@ -27,11 +27,10 @@ const agent = {
       systemStatus: "operational",
     },
     recentActivity: [
-      { type: "success", event: "API call completed", time: "2 minutes ago" },
-      { type: "success", event: "User interaction", time: "5 minutes ago" },
-      { type: "success", event: "Knowledge base query", time: "12 minutes ago" },
-      { type: "error", event: "Guardrail triggered", time: "18 minutes ago" },
-      { type: "success", event: "Model inference", time: "25 minutes ago" },
+      { type: "success", event: "conv-001",mail:"user@example.com",turns:"12", time: "5m 20s" },
+      { type: "success", event: "conv-002",mail:"another@example.com",turns:"6", time: "2m 45s" },
+      { type: "success", event: "conv-003",mail:"test@example.com",turns:"9", time: "4m 10s" },
+      { type: "success", event: "conv-004",mail:"demo@example.com",turns:"15", time: "7m 30s" },
     ],
   };
 const Overview = () => {
@@ -65,7 +64,7 @@ const Overview = () => {
     
   return (
     <>
-    <div className="flex-1 overflow-auto p-6 bg-background">
+    <div className="flex-1 overflow-auto bg-background">
           <div className="max-w-7xl mx-auto space-y-6">
             {/* Top Cards Row */}
             <div className="grid grid-cols-3 gap-6">
@@ -200,16 +199,16 @@ const Overview = () => {
                   </Card>
                 </>
             </div>
-              <Card className={"border-none"}>
+              <Card className={"border-none bg-background max-w-7xl mx-auto"}>
                 <CardHeader>
                   <h2 className="text-xl font-semibold">Recent Activity</h2>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
+                  <div className="space-y-2">
                     {agent.recentActivity.map((activity, index) => (
                       <div
                         key={index}
-                        className="w-full flex flex-col gap-2 items-end group"
+                        className="w-full flex flex-col gap-2 items-end group border border-border-color-0 px-5 py-0.5 rounded-xl"
                       >
                         <div className="flex items-center justify-between py-4 w-full">
                           <div className="flex items-center gap-3">
@@ -219,23 +218,24 @@ const Overview = () => {
                                 getActivityColor(activity.type)
                               )}
                             />
-                            <span className="text-sm text-gray-900 dark:text-foreground">
+                            <div className='space-y-1'>
+                            <span className="text-sm text-gray-900 dark:text-foreground block">
                               {activity.event}
                             </span>
+                             <span className="text-sm text-gray-900 dark:text-foreground block">
+                              {activity.mail}
+                            </span>
+                            </div>
                           </div>
+                          <div className='flex items-center gap-3'>
+                            <span className="text-sm text-gray-500 dark:text-foreground/80">
+                            {activity.turns} turns
+                          </span>
                           <span className="text-sm text-gray-500 dark:text-foreground/80">
                             {activity.time}
                           </span>
+                          </div>
                         </div>
-                        <motion.div
-                          custom={index}
-                          initial="hidden"
-                          animate="visible"
-                          variants={separatorVariants}
-                          className="w-full h-[1px] bg-foreground/40"
-                        >
-                          <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
-                        </motion.div>
                       </div>
                     ))}
                   </div>
