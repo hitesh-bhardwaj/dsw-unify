@@ -111,7 +111,7 @@ const Features = [
 ];
 
 const stats = [
-  { title: "Total Feature Views", value: 7 },
+  { title: "Total Feature Views", value: "07" },
   { title: "Total Features", value: 126 },
   { title: "Total Tables", value: 18 },
 ];

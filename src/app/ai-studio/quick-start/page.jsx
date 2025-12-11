@@ -1,6 +1,6 @@
 "use client"
 import { ScaleDown } from "@/components/animations/Animations";
-import { DefineUseCasesIcon, PlusIcon, SelectDataIcon, TrainAndDeployIcon } from "@/components/Icons";
+import {PathIcon, PlusIcon, RocketIcon, SelectDataIcon, TrainAndDeployIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -10,7 +10,7 @@ import { QuickCards } from "@/components/AIstudio/QuickCards";
 
 const quickFeatures = [
   {
-    icon: DefineUseCasesIcon,
+    icon: PathIcon,
     title: "Define Your Use Case",
     description:
       "Start by creating a use case to organize your AI models and track business objectives",
@@ -52,6 +52,11 @@ const page = () => {
             />
 
             <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+              <div className=" text-primary h-10 w-10">
+                <RocketIcon className="h-10 w-10"/>
+
+              </div>
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
                   Quick Start Your AI Journey
@@ -60,6 +65,7 @@ const page = () => {
                   Deploy your use case in minutes by creating and training your
                   first model with our guided workflow
                 </p>
+              </div>
               </div>
 
               <Link href="#">
@@ -71,19 +77,26 @@ const page = () => {
                 </RippleButton>
               </Link>
             </div>
+            <div className="flex items-center gap-15 pl-4 mt-10">
+<div className="relative w-[1px] h-85 bg-border-color-0 flex flex-col items-center justify-between text-white">
+  <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">1</div>
+  <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">2</div>
+  <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center">3</div>
+</div>
+              
 
+<div className="w-full">
             {filteredQuickFeature.length > 0 && (
                         //   <FadeUp delay={0.06}>
                             <div className="space-y-6">
-                        
-                              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                                 {filteredQuickFeature.map((feature, index) => (
                                   <QuickCards key={index} {...feature} index={index} />
                                 ))}
-                              </div>
                             </div>
                         //   </FadeUp>
                         )}
+                        </div>
+                        </div>
           </div>
         </ScaleDown>
       </div>

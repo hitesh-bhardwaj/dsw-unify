@@ -59,7 +59,7 @@
 :root {
   --font-inter: "Inter", sans-serif;
   --radius: 0.625rem;
-  --background: #ffffff;
+  --background: #fafafa;
   --foreground: #111111;
   --active-card: #1d1d1d;
   --card: oklch(1 0 0);

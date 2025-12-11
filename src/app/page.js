@@ -456,9 +456,9 @@ function MetricsBoard({ metricsData, view, setView }) {
             Key platform metrics and activity at a glance
           </p>
         </div>
-<div className="space-x-3 flex items-center gap-1">
+<div className="space-x-1 flex items-center gap-1">
 
-  <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border border-border-color-0 rounded-sm py-1.5 p-3 flex items-center gap-3 text-sm">
+  <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border border-border-color-0 rounded-md py-1.5 p-1.5 flex items-center gap-3 text-sm">
     <div className="h-5 w-5 text-[#111111]">
     <Eye/>
     </div>
@@ -466,7 +466,7 @@ function MetricsBoard({ metricsData, view, setView }) {
   </Link>
 
         <TooltipProvider delayDuration={0}>
-          <div className="inline-flex border border-border-color-0 rounded-md overflow-hidden py-2 px-4 gap-5">
+          <div className="inline-flex border border-border-color-0 rounded-md overflow-hidden py-1.5 px-2 gap-5">
             <Tooltip>
               <TooltipTrigger asChild>
                 <button onClick={() => setView("list")} className="cursor-pointer">
@@ -525,7 +525,7 @@ function MetricsBoard({ metricsData, view, setView }) {
             <div
               ref={scrollRef}
               onScroll={checkScroll}
-              className="flex gap-4 overflow-x-auto px-6 cursor-grab select-none py-2 scrollbar-hide"
+              className="flex gap-4 overflow-x-auto px-6 cursor-grab select-none py-1 scrollbar-hide"
               onMouseDown={handleMouseDown}
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
@@ -762,19 +762,31 @@ function ManageCards({ open, onOpenChange, metricsData, cardVisibility, setCardV
     }));
   };
 
+  const handleToggleAll = () => {
+    const allChecked = Object.values(cardVisibility).every(val => val);
+    const newVisibility = {};
+    metricsData.forEach((_, index) => {
+      newVisibility[index] = !allChecked;
+    });
+    setCardVisibility(newVisibility);
+  };
+
+  const allChecked = Object.values(cardVisibility).every(val => val);
+  const someChecked = Object.values(cardVisibility).some(val => val) && !allChecked;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[50%] h-[80%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 pt-8">
+      <DialogContent className="w-[40%] h-[60%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 pt-8 border border-border-color-0">
         <DialogHeader className="justify-center pb-4">
           <DialogTitle className="text-2xl font-medium">
            Manage Overview Cards
           </DialogTitle>
-          <p className="text-xs text-foreground/80">
+          <p className="text-sm text-foreground/80 w-4/5">
             Select which metrics you want to display on your overview dashboard. Drag cards to reorder them.
           </p>
         </DialogHeader>
 
-        <div className="w-full h-full overflow-y-auto pr-2 flex flex-col justify-between">
+        <div className="w-full h-full overflow-y-auto  flex flex-col justify-between">
           <motion.div
             className="flex flex-col space-y-4"
             variants={slide}
@@ -782,38 +794,60 @@ function ManageCards({ open, onOpenChange, metricsData, cardVisibility, setCardV
             animate="animate"
             exit="exit"
           >
+            {/* All Cards Option */}
+            <Card
+              className={cn(
+                "h-full transition-all duration-300 group py-1 border-0",
+                "cursor-pointer"
+              )}
+            >
+              <CardHeader className="flex gap-4 items-center p-0">
+                <div className="flex items-center gap-3">
+                  <Checkbox 
+                    checked={allChecked}
+                    onCheckedChange={handleToggleAll}
+                    className={someChecked ? "data-[state=checked]:bg-primary/50" : ""}
+                  /> 
+                </div>
 
-       {metricsData.map((card,index)=>(
-      <Card
-      key={index}
-        className={cn(
-          "h-full transition-all duration-300 group py-4 rounded-sm ",
-          "cursor-pointer"
-        )}
-      >
-        <CardHeader className=" flex gap-4 items-center">
-          <div className="flex items-center gap-3">
-            <Checkbox 
-              checked={cardVisibility[index]}
-              onCheckedChange={() => handleToggle(index)}
-            /> 
+                <div className="flex items-center gap-2">
+                  <h3 className="text-sm font-medium leading-none tracking-tight transition-colors duration-300">
+                    ALL CARDS
+                  </h3>
+                </div>
+              </CardHeader>
+            </Card>
 
-            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-sidebar-accent text-foreground transition-all group-hover:text-black  duration-300 p-3">
-              <HomeIcon/>
-            </div>
-          </div>
+            {/* Individual Cards */}
+            {metricsData.map((card, index) => (
+              <Card
+                key={index}
+                className={cn(
+                  "h-full transition-all duration-300 group py-1 border-0",
+                  "cursor-pointer"
+                )}
+              >
+                <CardHeader className="flex gap-4 items-center p-0">
+                  <div className="flex items-center gap-3">
+                    <Checkbox 
+                      checked={cardVisibility[index]}
+                      onCheckedChange={() => handleToggle(index)}
+                    /> 
+                  </div>
 
-          <div className="space-y-1">
-            <h3 className="text-sm font-medium leading-none tracking-tight transition-colors duration-300">
-            {card.label}
-            </h3>
-            <p className="text-xs text-muted-foreground line-clamp-2  transition-colors duration-300">
-              Current value: {card.value} (+{card.change}%)
-            </p>
-          </div>
-        </CardHeader>
-      </Card>
-       ))}
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-sm font-medium leading-none tracking-tight transition-colors duration-300">
+                      {card.label} -
+                    </h3>
+                    
+                    <p className="text-sm text-muted-foreground line-clamp-2 transition-colors duration-300">
+                      Current value: {card.value}
+                      <span className="text-badge-green"> (+{card.change}%)</span>
+                    </p>
+                  </div>
+                </CardHeader>
+              </Card>
+            ))}
           </motion.div>
         </div>
       </DialogContent>

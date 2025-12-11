@@ -52,7 +52,7 @@ export function FeatureCard({
     <CardWrapper>
       <Card
         className={cn(
-          "feature-card-hover-container h-full transition-all duration-300 group py-5 pb-10 border border-border-color-0",
+          "feature-card-hover-container h-full transition-all duration-300 group py-5 pb-10 border border-border-color-0 hover:drop-shadow-xl",
           href && "cursor-pointer",
           className
         )}

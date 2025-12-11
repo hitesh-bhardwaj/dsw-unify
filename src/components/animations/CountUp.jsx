@@ -16,7 +16,7 @@ export default function CountUp({
     const match = str.match(
       /^([^\d+\-]*)([+\-]?\d{1,3}(?:,\d{3})*(?:\.\d+)?|[+\-]?\d*(?:\.\d+)?)(.*)$/
     );
-    if (!match) return { prefix: "", number: 0, suffix: str, decimals: 0 };
+    if (!match) return { prefix: "", number: 0, suffix: str, decimals: 0, hasLeadingZero: false, originalLength: 0 };
 
     const [, prefix, numPart, suffix] = match;
     const clean = (numPart || "0").replace(/,/g, "");
@@ -24,26 +24,37 @@ export default function CountUp({
 
     const dotIdx = clean.indexOf(".");
     const decimals = dotIdx === -1 ? 0 : clean.length - dotIdx - 1;
+    
+    // Check for leading zeros
+    const hasLeadingZero = clean.startsWith("0") && clean.length > 1 && !clean.startsWith("0.");
+    const originalLength = dotIdx === -1 ? clean.length : dotIdx;
 
-    return { prefix: prefix || "", number, suffix: suffix || "", decimals };
+    return { prefix: prefix || "", number, suffix: suffix || "", decimals, hasLeadingZero, originalLength };
   };
 
-  const formatNumber = (n, decimals) =>
-    decimals === 0 ? Math.round(n).toString() : n.toFixed(decimals);
+  const formatNumber = (n, decimals, hasLeadingZero, originalLength) => {
+    let formatted = decimals === 0 ? Math.round(n).toString() : n.toFixed(decimals);
+    
+    // Pad with leading zeros if original had them
+    if (hasLeadingZero && originalLength > formatted.length) {
+      formatted = formatted.padStart(originalLength, '0');
+    }
+    
+    return formatted;
+  };
 
-  const { prefix, number: target, suffix, decimals } = useMemo(
+  const { prefix, number: target, suffix, decimals, hasLeadingZero, originalLength } = useMemo(
     () => parseValue(value),
     [value]
   );
 
   const [display, setDisplay] = useState(
-    `${prefix}${formatNumber(0, decimals)}${suffix}`
+    `${prefix}${formatNumber(0, decimals, hasLeadingZero, originalLength)}${suffix}`
   );
   const motion = useMotionValue(0);
 
   const ref = useRef(null);
-  // const inView = useInView(ref, { once, margin: "0px 0px -20% 0px" });
-  const inView = useInView(ref, { once, margin: "0px" }); // Changed from "0px 0px -20% 0px"
+  const inView = useInView(ref, { once, margin: "0px" });
 
   // Start when visible (or immediately if startOnView=false)
   useEffect(() => {
@@ -55,12 +66,12 @@ export default function CountUp({
       delay,
       ease: "easeOut",
       onUpdate: (latest) => {
-        setDisplay(`${prefix}${formatNumber(latest, decimals)}${suffix}`);
+        setDisplay(`${prefix}${formatNumber(latest, decimals, hasLeadingZero, originalLength)}${suffix}`);
       },
     });
 
     return () => controls.stop();
-  }, [inView, startOnView, target, duration, delay, decimals, prefix, suffix, motion]);
+  }, [inView, startOnView, target, duration, delay, decimals, prefix, suffix, motion, hasLeadingZero, originalLength]);
 
   // Re-animate if the raw value changes after mount
   useEffect(() => {
@@ -69,7 +80,7 @@ export default function CountUp({
       duration,
       ease: "easeOut",
       onUpdate: (latest) => {
-        setDisplay(`${prefix}${formatNumber(latest, decimals)}${suffix}`);
+        setDisplay(`${prefix}${formatNumber(latest, decimals, hasLeadingZero, originalLength)}${suffix}`);
       },
     });
     return () => controls.stop();

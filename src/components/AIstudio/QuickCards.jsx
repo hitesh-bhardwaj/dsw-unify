@@ -20,9 +20,9 @@ export function QuickCards({ icon: Icon, title, description, href, className, in
   const CardWrapper = href
     ? ({ children }) => (
         <Bounce>
-          <Link href={href} className="block h-full">
+          <div className="block h-full">
             {children}
-          </Link>
+          </div>
         </Bounce>
       )
     : ({ children }) => <Bounce>{children}</Bounce>;
@@ -31,28 +31,23 @@ export function QuickCards({ icon: Icon, title, description, href, className, in
     <CardWrapper>
       <Card
         className={cn(
-          "feature-card-hover-container h-full transition-all duration-300 group py-5 pb-10 hover:border-white/20",
-          href && "cursor-pointer",
+          " flex  h-full transition-all duration-300 group !pb-0 !pt-0 !py-8",
           className
         )}
       >
-        <CardHeader className="space-y-6">
-          <div className="flex items-center gap-3">
+        <CardHeader className="flex gap-6 items-center">
+          <div className="">
             <div
-              className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
-              style={{
-                color: `var(--icon-color-${(index % 4) + 1})`,
-                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
-              }}
+              className="flex h-15 w-15 items-center justify-center rounded-lg  transition-all  p-3.5 bg-icon-color-1/10 text-icon-color-1"
             >
-              {Icon && <Icon className="h-8 w-8" />}
+              {Icon && <Icon className="h-9 w-9" />}
             </div>
           </div>
           <div className="space-y-4">
-            <h3 className="text-xl font-medium leading-none tracking-tight group-hover:text-white transition-colors duration-300">
+            <h3 className="text-xl font-medium leading-none tracking-tight ">
               {title}
             </h3>
-            <p className="text-sm text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
+            <p className="text-sm text-muted-foreground line-clamp-2">
               {description}
             </p>
           </div>

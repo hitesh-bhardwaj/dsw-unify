@@ -275,7 +275,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-sidebar-border">
+      <SidebarHeader className="border-b border-border-color-0">
         <div className="flex h-12 items-center gap-3 px-2">
           <div className="size-10 shrink-0">
             <Image src={logo} className="" alt="Unify-Logo" />
@@ -291,27 +291,6 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {navigation.map((item) => {
-                // const hasChildren =
-                //   Array.isArray(item.children) && item.children.length > 0;
-
-                // const isActive =
-                //   pathname === item.href ||
-                //   pathname?.startsWith(item.href + "/");
-
-                // const hasActiveChild =
-                //   hasChildren &&
-                //   (item.children || []).some(
-                //     (child) =>
-                //       pathname === child.href ||
-                //       pathname?.startsWith(child.href + "/")
-                //   );
-
-                // const userExpanded = expandedItems[item.name];
-                // const isExpanded =
-                //   typeof userExpanded === "boolean"
-                //     ? userExpanded
-                //     : hasActiveChild;
-
                 const hasChildren =
                   Array.isArray(item.children) && item.children.length > 0;
 
@@ -327,6 +306,7 @@ export function AppSidebar() {
                       pathname?.startsWith(child.href + "/")
                   );
 
+
                 // 👇 When nothing chosen manually, auto-expand the one that has an active child
                 const isExpanded =
                   expandedItem !== null ? expandedItem === item.name : hasActiveChild;
@@ -336,6 +316,13 @@ export function AppSidebar() {
                 if (hasChildren) {
                   const firstChild = item.children[0];
 
+                  const activeIndex = (item.children || []).findIndex(
+                    (child) =>
+                      pathname === child.href ||
+                      pathname?.startsWith(child.href + "/")
+                  );
+                  // Default to first item if no active child found
+                  const dotIndex = activeIndex !== -1 ? activeIndex : 0;
                   return (
                     <Collapsible
                       key={item.name}
@@ -366,7 +353,7 @@ export function AppSidebar() {
                             className={cn(
                               "cursor-pointer transition-colors duration-200 ease-in-out",
                               (isActive || hasActiveChild) &&
-                              "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                              "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary   hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                             )}
                             onClick={(e) => {
                               if (isCollapsed && firstChild?.href) {
@@ -420,6 +407,27 @@ export function AppSidebar() {
                             style={{ overflow: "hidden" }}
                           >
                             <SidebarMenuSub className="py-2">
+                              {/* Progress Indicator Container */}
+                              <div className="absolute left-6 top-0 bottom-0 flex items-center">
+                                {/* Vertical Progress Bar */}
+                                <div className="absolute left-1/2 -translate-x-1/2 top-5 bottom-5 w-[1px] bg-border-color-0 z-[99]" />
+
+                                {/* Active Indicator Dot */}
+                                {isExpanded && (
+                                  <motion.div
+                                    className="absolute left-1/2 -translate-x-1/2 w-[10px] h-[10px] bg-sidebar-primary rounded-full z-[100]"
+                                    initial={false}
+                                    animate={{
+                                      top: `${10 + dotIndex * 43}px`,
+                                    }}
+                                    transition={{
+                                      type: "spring",
+                                      stiffness: 300,
+                                      damping: 30,
+                                    }}
+                                  />
+                                )}
+                              </div>
                               {(item.children || []).map((child) => {
                                 const isChildActive =
                                   pathname === child.href ||
@@ -434,7 +442,7 @@ export function AppSidebar() {
                                       size="sm"
                                       isActive={isChildActive}
                                       className={cn(
-                                        "pl-8 transition-colors duration-200 ease-in-out",
+                                        "ml-5 transition-colors duration-200 ease-in-out w-[95%]",
                                         isChildActive &&
                                         "text-sidebar-primary data-[active=true]:text-sidebar-primary"
                                       )}
