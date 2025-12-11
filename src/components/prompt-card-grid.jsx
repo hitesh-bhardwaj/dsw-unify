@@ -24,6 +24,7 @@ const PromptCardGrid = () => {
         </p>
 
         <div className="space-y-2 mb-4 mt-8">
+          <p className="text-sm text-foreground">Search existing prompts</p>
           <SearchBar
             placeholder="Search by name, tags or content..."
             value={query}

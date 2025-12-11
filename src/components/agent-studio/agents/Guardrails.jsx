@@ -49,19 +49,19 @@ const Guardrails = () => {
   return (
     <>
     <div className="flex-1 overflow-auto bg-background">
-          <div className="max-w-7xl mx-auto space-y-6">
+          <div className=" mx-auto space-y-6">
             {/* Top Cards Row */}
             <div className="grid grid-cols-2 gap-6">
                 <>
                   <Card>
                     <CardHeader>
-                      <h2 className="text-lg font-medium">Total Triggers</h2>
+                      <h2 className="text-md font-medium">Total Triggers</h2>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       
-                        <div className='space-y-3'>
+                        <div className='space-y-5'>
                           <h3 className="text-3xl font-medium text-gray-900 dark:text-foreground">
-                            <CountUp value={199} />
+                            <CountUp className='font-medium' value={199} />
                           </h3>
                           <p className="text-sm text-gray-600 dark:text-foreground">
                             Last 24 hours
@@ -73,7 +73,7 @@ const Guardrails = () => {
 
                   <Card>
                     <CardHeader>
-                      <h2 className="text-lg font-medium">Prevention Rate</h2>
+                      <h2 className="text-md font-medium">Prevention Rate</h2>
                     </CardHeader>
                     <CardContent className="">
                       
@@ -89,11 +89,11 @@ const Guardrails = () => {
                   </Card>
                 </>
             </div>
-              <Card className={"border-none bg-background max-w-7xl mx-auto"}>
-                <CardHeader>
-                  <h2 className="text-xl font-semibold">Guardrail Triggers Breakdown</h2>
+              <Card className={"border-none bg-background space-y-2 gap-1  mx-auto"}>
+                <CardHeader className='px-0 py-0'>
+                  <h2 className="text-2xl font-medium">Guardrail Triggers Breakdown</h2>
                 </CardHeader>
-                <CardContent>
+                <CardContent className='px-0 py-0'>
                   <div className="space-y-2">
                     {agent.recentActivity.map((activity, index) => (
                       <div
@@ -108,7 +108,7 @@ const Guardrails = () => {
                             </div>
 
                             <div className='space-y-1'>
-                            <span className="text-sm text-gray-900 dark:text-foreground block">
+                            <span className="text-sm font-medium text-gray-900 dark:text-foreground block">
                               {activity.event}
                             </span>
                              <span className="text-sm text-gray-900 dark:text-foreground block">

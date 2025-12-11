@@ -200,10 +200,10 @@ const Overview = () => {
                 </>
             </div>
               <Card className={"border-none bg-background px-0 mx-auto"}>
-                <CardHeader>
+                <CardHeader className='px-0'>
                   <h2 className="text-xl font-semibold">Recent Activity</h2>
                 </CardHeader>
-                <CardContent>
+                <CardContent className='px-0'>
                   <div className="space-y-2">
                     {agent.recentActivity.map((activity, index) => (
                       <div

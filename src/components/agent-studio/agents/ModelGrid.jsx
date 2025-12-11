@@ -3,9 +3,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
-import { RippleButton } from "@/components/ui/ripple-button";
-import { SparklesIcon } from "@/components/Icons";
+import { SparklesIcon, PlusIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { RippleButton } from "@/components/ui/ripple-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 /**
@@ -28,12 +29,26 @@ const ModelGrid = () => {
   return (
     <>
       <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 ">
+        <div className="flex justify-between">
+
+    <div>
+
         <h3 className="text-xl font-medium mb-2">Model Selection</h3>
         <p className="text-sm text-gray-600 mb-4 dark:text-foreground">
           Choose the AI model and configure its parameters
         </p>
+    </div>
+    <Link href="/agent-studio/agents/create">
+              <RippleButton>
+                <Button variant="outline" className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10">
+                  <PlusIcon  className="text-primary"/>
+                  Create New Model
+                </Button>
+              </RippleButton>
+            </Link>
+        </div>
 
-         <div>
+         <div className="space-y-1">
             <label className="text-sm mb-2 block">Model Selection</label>
               <Select onValueChange={(val) => setUseCase(val)} className="py-2">
                 <SelectTrigger className="w-full py-5 ">
@@ -49,7 +64,7 @@ const ModelGrid = () => {
               </Select>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
              <p className="text-sm font-medium">Model Parameters</p>
              <div className="py-2">
             <div className="w-full flex justify-between">

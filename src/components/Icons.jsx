@@ -2616,11 +2616,26 @@ export const RunTestsIcon = ({ active, ...props }) => {
   );
 };
 
+export const SaveAgentIcon = () => {
+  return (
+
+  
+  <>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.95 0.75C13.4775 0.757514 13.9807 0.973171 14.35 1.35L18.15 5.15C18.5268 5.51926 18.7425 6.02246 18.75 6.55V16.75C18.75 17.2804 18.5393 17.7891 18.1642 18.1642C17.7891 18.5393 17.2804 18.75 16.75 18.75H2.75C2.21957 18.75 1.71086 18.5393 1.33579 18.1642C0.960714 17.7891 0.75 17.2804 0.75 16.75V2.75C0.75 2.21957 0.960714 1.71086 1.33579 1.33579C1.71086 0.960714 2.21957 0.75 2.75 0.75H12.95Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M14.75 18.75V11.75C14.75 11.4848 14.6446 11.2304 14.4571 11.0429C14.2696 10.8554 14.0152 10.75 13.75 10.75H5.75C5.48478 10.75 5.23043 10.8554 5.04289 11.0429C4.85536 11.2304 4.75 11.4848 4.75 11.75V18.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M4.75 0.75V4.75C4.75 5.01522 4.85536 5.26957 5.04289 5.45711C5.23043 5.64464 5.48478 5.75 5.75 5.75H12.75" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+
+  </>
+  )
+}
+
 export const APIIcon = ({ active, ...props }) => {
   return (
     <>
       <svg
-        className={`api-icon ${props.className || ""} h-full w-full`}
+        className={`api-icon ${props.className || ""} `}
         data-active={active ?? props["data-active"]}
         {...props}
         width="25"

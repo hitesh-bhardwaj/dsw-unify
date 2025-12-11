@@ -71,16 +71,16 @@ const Conversations = () => {
   return (
     <>
     <div className="flex-1 overflow-auto bg-background">
-          <div className="max-w-7xl mx-auto space-y-6">
+          <div className="m mx-auto space-y-6">
             {/* Top Cards Row */}
             
                 <CardDetails data={stats} textSize="text-4xl"/>
 
-              <Card className={"border-none bg-background max-w-7xl mx-auto"}>
-                <CardHeader>
-                  <h2 className="text-xl font-semibold">Recent Conversations</h2>
+              <Card className={"border-none bg-background gap-2 mx-auto"}>
+                <CardHeader className='px-0'>
+                  <h2 className="text-2xl font-medium">Recent Conversations</h2>
                 </CardHeader>
-                <CardContent>
+                <CardContent className='px-0'>
                   <div className="space-y-2">
                     {agent.recentActivity.map((activity, index) => (
                       <div

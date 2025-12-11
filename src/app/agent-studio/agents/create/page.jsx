@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
-import { AiGenerator, EditIcon, SparklesIcon } from "@/components/Icons";
+import { AiGenerator, EditIcon, SparklesIcon, APIIcon, SaveAgentIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 // import { FadeUp } from "@/components/animations/Animations";
@@ -118,8 +118,8 @@ export default function CreateAgentPage() {
                   onClick={() => setApiModalOpen(true)}
                   className="gap-2 text-foreground border border-primary"
                 >
-                  <div className="!w-4">
-                    <AiGenerator />
+                  <div className="w-4 h-4">
+                    <APIIcon className='w-4 h-4' />
                   </div>
                   API
                 </Button>
@@ -139,7 +139,7 @@ export default function CreateAgentPage() {
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                     <div className="!w-4">
-                      <EditIcon className={"text-white"} />
+                      <SaveAgentIcon className={"text-white"} />
                     </div>
                     Save Agent
                   </Button>
