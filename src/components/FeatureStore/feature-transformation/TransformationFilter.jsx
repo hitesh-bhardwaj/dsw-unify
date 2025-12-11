@@ -119,7 +119,7 @@ const filteredTags = useMemo(
       )}
 
       {/* Tag List (filtered) */}
-      <div className="space-y-3 max-h-45 overflow-y-auto">
+      <div className="space-y-3 pr-4 max-h-45 overflow-y-auto">
         {filteredTags.length === 0 ? (
           <p className="text-xs text-muted-foreground">No tags found.</p>
         ) : (

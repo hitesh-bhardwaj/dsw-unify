@@ -60,7 +60,13 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
     let newErrors = {};
 
     joins.forEach((join) => {
-      if (!join.leftTable || !join.leftKey || !join.rightTable || !join.rightKey || !join.joinType) {
+      if (
+        !join.leftTable ||
+        !join.leftKey ||
+        !join.rightTable ||
+        !join.rightKey ||
+        !join.joinType
+      ) {
         newErrors[join.id] = "All fields are required for each join";
         valid = false;
       }
@@ -92,8 +98,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
             onClick={addJoin}
           >
             <div className="text-primary">
-
-            <Plus className="w-5 h-5" />
+              <Plus className="w-5 h-5" />
             </div>
             Add Join
           </Button>
@@ -129,18 +134,20 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                 <label className="text-xs text-foreground">Left Table</label>
                 <Select
                   value={join.leftTable}
-                  className='space-y-2'
                   onValueChange={(value) =>
                     updateJoin(join.id, "leftTable", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-0 w-full">
-                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
+                  <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
+                    <SelectValue
+                      placeholder="Transactions"
+                      className="text-sm"
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem className='cursor-pointer' value="transactions">Transactions</SelectItem>
-                    <SelectItem className='cursor-pointer' value="users">Users</SelectItem>
-                    <SelectItem className='cursor-pointer' value="products">Products</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="transactions">Transactions</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="users">Users</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="products">Products</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -154,13 +161,13 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "leftKey", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-0 w-full ">
-                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
+                  <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
+                    <SelectValue placeholder="Select Column" className="text-sm" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem className='cursor-pointer' value="id">ID</SelectItem>
-                    <SelectItem className='cursor-pointer' value="user_id">User ID</SelectItem>
-                    <SelectItem className='cursor-pointer' value="transaction_id">Transaction ID</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="id">ID</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="user_id">User ID</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="transaction_id">Transaction ID</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -174,14 +181,14 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "joinType", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-0 w-full">
-                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
+                  <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
+                    <SelectValue placeholder="Inner" className="text-sm" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem classname='cursor-pointer' value="inner">Inner</SelectItem>
-                    <SelectItem classname='cursor-pointer' value="left">Left</SelectItem>
-                    <SelectItem classname='cursor-pointer' value="right">Right</SelectItem>
-                    <SelectItem classname='cursor-pointer' value="full">Full</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="inner">Inner</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="left">Left</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="right">Right</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="full">Full</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -198,13 +205,16 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "rightTable", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-0 w-full">
-                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
+                  <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
+                    <SelectValue
+                      placeholder="User_events"
+                      className="text-sm"
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem classname='cursor-pointer' value="user_events">User_events</SelectItem>
-                    <SelectItem classname='cursor-pointer' value="orders">Orders</SelectItem>
-                    <SelectItem classname='cursor-pointer' value="payments">Payments</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="user_events">User_events</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="orders">Orders</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="payments">Payments</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -218,13 +228,13 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "rightKey", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-0 w-full">
-                    <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
+                  <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
+                    <SelectValue placeholder="Select Column" className="text-sm" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem classname='cursor-pointer' value="id">ID</SelectItem>
-                    <SelectItem classname='cursor-pointer' value="user_id">User ID</SelectItem>
-                    <SelectItem classname='cursor-pointer' value="event_id">Event ID</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="id">ID</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="user_id">User ID</SelectItem>
+                    <SelectItem className="!cursor-pointer" value="event_id">Event ID</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
