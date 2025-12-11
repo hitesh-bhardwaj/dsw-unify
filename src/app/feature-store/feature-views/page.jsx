@@ -216,6 +216,7 @@ const page = () => {
                 setView={setView}
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
+                cards={Features}
               />
             </div>
           

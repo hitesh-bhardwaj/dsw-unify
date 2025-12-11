@@ -9,7 +9,7 @@ import CountUp from "./animations/CountUp";
  * @param {Array<{title: string, value: string|number, description?: string}>} [props.data=[]] - An array of data objects to display in cards.
  * @returns {React.JSX.Element} The rendered CardDetails component.
  */
-export default function CardDetails({ data = [] }) {
+export default function CardDetails({ data = [], first }) {
   return (
     <div className="w-full flex items-center justify-between gap-4">
       {data.map((item, index) => (
@@ -22,7 +22,8 @@ export default function CardDetails({ data = [] }) {
           {item.description ? (
             <>
               <span className="text-2xl font-medium mt-1">
-               <CountUp value={item.value} startOnView/></span>
+                {first ? `${item.value}` : <CountUp value={item.value} startOnView />}
+          </span>
               <span className="text-xs font-normal">{item.description}</span>
             </>
           ) : (

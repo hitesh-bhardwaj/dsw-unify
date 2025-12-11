@@ -5,6 +5,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Bar, BarChart } from "recharts";
+import CountUp from "../animations/CountUp";
 
 const MonitoringView = () => {
   const chartData = [
@@ -73,7 +74,8 @@ const MonitoringView = () => {
           {/* Total Features */}
           <div className="border border-border-color-0 rounded-xl p-4 flex flex-col justify-between gap-7">
             <p className="text-sm text-foreground/80 mb-2">No. of features</p>
-            <p className="text-4xl font-medium text-badge-green">21</p>
+            <p className="text-4xl font-medium text-badge-green">
+              <CountUp value={21} startOnView/></p>
           </div>
 
           {/* Drifted Features */}
@@ -81,7 +83,7 @@ const MonitoringView = () => {
             <p className="text-sm text-foreground/80 mb-2">
               No. of drifted features
             </p>
-            <p className="text-4xl font-medium text-red-500">01</p>
+            <p className="text-4xl font-medium text-red-500"> <CountUp value={"01"} startOnView/></p>
           </div>
         </div>
       </div>
@@ -132,7 +134,8 @@ const MonitoringView = () => {
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 
-            <span className="text-3xl font-medium mt-2">{item.value}</span>
+            <span className="text-3xl font-medium mt-2">
+              <CountUp value={item.value} startOnView/></span>
           </div>
         ))}
       </div>

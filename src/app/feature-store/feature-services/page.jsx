@@ -214,6 +214,7 @@ const page = () => {
               setView={setView}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
+              cards={Features}
             />
 
             {/* ---------- SERVICE CARDS (GRID/LIST) ---------- */}

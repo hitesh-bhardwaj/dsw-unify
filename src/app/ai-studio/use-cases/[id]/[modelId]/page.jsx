@@ -177,7 +177,7 @@ const page = () => {
             </Link>
           </div>
 
-          <CardDetails data={versionsData.stats} />
+          <CardDetails data={versionsData.stats} first={true}/>
 
           <div className="space-y-4">
             <h2 className="text-2xl font-medium">Versions</h2>
@@ -200,6 +200,7 @@ const page = () => {
               setView={setView}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
+              cards={versions}
             />
           </div>
 

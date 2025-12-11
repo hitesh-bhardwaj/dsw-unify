@@ -220,6 +220,7 @@ const page = () => {
               setView={setView}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
+              cards={Features}
             />
 
             {/* USE CASE CARDS (GRID / LIST) */}

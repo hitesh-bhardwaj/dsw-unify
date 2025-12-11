@@ -38,8 +38,8 @@ const page = () => {
     usage: "1.2K Request",
     stats: [
       { title: "Owner", value: "Shivam Thakkar", description: "Use case owner" },
-      { title: "Total Models", value: "4", description: "ML models in usecase" },
-      { title: "Deployed", value: "3", description: "Models in production" },
+      { title: "Total Models", value: "04", description: "ML models in usecase" },
+      { title: "Deployed", value: "03", description: "Models in production" },
     ],
   };
 
@@ -198,9 +198,9 @@ const page = () => {
                     {item.title}
                   </span>
                   <span className="text-2xl font-medium mt-1">
-                    <CountUp value={item.value} startOnView />
+                    {index==0 ? `${item.value}` : <CountUp value={item.value} startOnView /> }
                   </span>
-                  <span className="text-xs font-normal">
+                  <span className="text-sm font-normal">
                     {item.description}
                   </span>
                 </div>
@@ -227,6 +227,7 @@ const page = () => {
                 setView={setView}
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
+                cards={modelsData}
               />
             </div>
 

@@ -234,6 +234,7 @@ if (sortOrder === "asc") {
                 setView={setView}
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
+                cards={Features}
               />
             </div>
 
