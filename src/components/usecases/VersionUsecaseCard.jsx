@@ -95,16 +95,16 @@ const { id: routeId, modelId } = params;
   if (showSkeleton) return <UsecaseInternalCardSkeleton />;
 
   return (
-    <div className="group w-full h-full">
+    <div className=" w-full h-full">
 <Link href={`/ai-studio/use-cases/${routeId}/${modelId}/${versionSlug}`}>
         <Card
           onClick={() => setIsModalOpen(true)}
           className={cn(
-            "feature-card-hover-container gap-2  transition-all duration-300 group",
+            "feature-card-hover-container gap-2  transition-all duration-300 hover:drop-shadow-xl hover:bg-transparent group",
             isGrid &&
-              " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 hover:shadow-md",
+              " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
             isList &&
-              "w-full rounded-xl hover:shadow-md px-6 py-6 bg-white dark:bg-background"
+              "w-full rounded-xl  py-6 bg-white dark:bg-background"
           )}
         >
           <CardHeader className="pb-2">
@@ -194,9 +194,7 @@ const { id: routeId, modelId } = params;
               "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300"
             )}
           >
-            {isList && (
-              <div className="border-t border-border-color-0 group-hover:border-border-color-0" />
-            )}
+            
             {/* Tags */}
             <div className="flex flex-wrap gap-1 pt-2">
               {tags.map((tag, index) => (
@@ -213,11 +211,7 @@ const { id: routeId, modelId } = params;
             </div>
 
             <div
-              className={`${
-                view === "list"
-                  ? "flex justify-between"
-                  : " flex flex-col gap-4"
-              }`}
+              className={` flex flex-col gap-4`}
             >
 
             {/* Versions + Features */}
@@ -236,7 +230,7 @@ const { id: routeId, modelId } = params;
                 </div>
               </div>
               <div className="flex items-center gap-2 w-full">
-                <button className={` text-xs border border-border-color-0 flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground group-hover:border-white/60 transition-all duration-300 bg-primary group-hover:bg-white`}>
+                <button className={` text-xs  flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground  transition-all duration-300 bg-primary group-hover:bg-white`}>
                     <RocketIcon className="w-4 h-4 " />
                     {status=="Deployed"?"Undeploy":"Deploy"}
                   

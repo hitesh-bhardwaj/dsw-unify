@@ -797,7 +797,7 @@ function ManageCards({ open, onOpenChange, metricsData, cardVisibility, setCardV
             {/* All Cards Option */}
             <Card
               className={cn(
-                "h-full transition-all duration-300 group py-1 border-0",
+                "h-full transition-all duration-300 group py-1 border-0 bg-background",
                 "cursor-pointer"
               )}
             >
@@ -823,11 +823,11 @@ function ManageCards({ open, onOpenChange, metricsData, cardVisibility, setCardV
               <Card
                 key={index}
                 className={cn(
-                  "h-full transition-all duration-300 group py-1 border-0",
+                  "h-full transition-all duration-300 group py-1 border-0 bg-background",
                   "cursor-pointer"
                 )}
               >
-                <CardHeader className="flex gap-4 items-center p-0">
+                <CardHeader className="flex gap-4 items-center p-0 ">
                   <div className="flex items-center gap-3">
                     <Checkbox 
                       checked={cardVisibility[index]}
@@ -835,7 +835,7 @@ function ManageCards({ open, onOpenChange, metricsData, cardVisibility, setCardV
                     /> 
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 ">
                     <h3 className="text-sm font-medium leading-none tracking-tight transition-colors duration-300">
                       {card.label} -
                     </h3>

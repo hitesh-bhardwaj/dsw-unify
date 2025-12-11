@@ -162,7 +162,7 @@ const page = () => {
                           key={index}
                           variant="secondary"
                           className={cn(
-                            "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                            "rounded-full border border-border-color-0 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
                           )}
                         >
                           {tag}
@@ -192,7 +192,7 @@ const page = () => {
               {usecase.stats.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-3 border border-border-color-0 rounded-lg py-6 px-4 w-full"
+                  className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full"
                 >
                   <span className="text-sm text-foreground/80">
                     {item.title}

@@ -93,7 +93,7 @@ export default function UsecaseModal({ open, onOpenChange }) {
                     placeholder='e.g. Customer Churn Prediction'
                     onChange={(e) => setName(e.target.value)}
                     className={`border placeholder:text-foreground/80 placeholder:text-xs ${
-                      errors.name ? "border-red-500" : "border-foreground/20"
+                      errors.name ? "border-red-500" : "border-border-color-0"
                     }`}
                   />
                   {errors.name && (
@@ -111,7 +111,7 @@ export default function UsecaseModal({ open, onOpenChange }) {
                     className={`border !text-xs h-28 placeholder:text-foreground/80 placeholder:text-xs ${
                       errors.description
                         ? "border-red-500"
-                        : "border-foreground/20"
+                        : "border-border-color-0"
                     }`}
                   />
                   {errors.description && (
@@ -128,7 +128,7 @@ export default function UsecaseModal({ open, onOpenChange }) {
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
                     className={`border rounded-md px-3 h-10 placeholder:text-foreground/80 placeholder:text-xs text-sm outline-none ${
-                      errors.tags ? "border-red-500" : "border-foreground/20"
+                      errors.tags ? "border-red-500" : "border-border-color-0"
                     }`}
                   />
                   {errors.tags && (
@@ -145,7 +145,7 @@ export default function UsecaseModal({ open, onOpenChange }) {
                     onChange={(e) => setOwner(e.target.value)}
                     placeholder="Owner name or email"
                     className={`border rounded-md px-3 h-10 placeholder:text-foreground/80 placeholder:text-xs text-sm outline-none ${
-                      errors.owner ? "border-red-500" : "border-foreground/20"
+                      errors.owner ? "border-red-500" : "border-border-color-0"
                     }`}
                   />
                   {errors.owner && (

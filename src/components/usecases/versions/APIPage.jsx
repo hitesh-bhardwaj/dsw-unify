@@ -4,34 +4,38 @@ import { useState } from "react";
 import CountUp from "@/components/animations/CountUp";
 import { Input } from "@/components/ui/input";
 import AnimatedTabsSection from "@/components/common/TabsPane";
+import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
+import { Copy, Check } from "lucide-react";
 export default function APIPage() {
   const [endpointUrl] = useState(
     "https://api.unifyai.com/v1/models/1/versions/v1-1/predict"
   );
   const [apiKey] = useState("YOUR_API_KEY");
 
+  
+
   const errorCodes = [
-  {
-    code: "400",
-    title: "Bad Request",
-    description: "Invalid input data or missing required fields",
-  },
-  {
-    code: "401",
-    title: "Unauthorized",
-    description: "Invalid or missing API key",
-  },
-  {
-    code: "429",
-    title: "Too Many Requests",
-    description: "Rate limit exceeded",
-  },
-  {
-    code: "503",
-    title: "Service Unavailable",
-    description: "Model is not deployed or temporarily unavailable",
-  },
-];
+    {
+      code: "400",
+      title: "Bad Request",
+      description: "Invalid input data or missing required fields",
+    },
+    {
+      code: "401",
+      title: "Unauthorized",
+      description: "Invalid or missing API key",
+    },
+    {
+      code: "429",
+      title: "Too Many Requests",
+      description: "Rate limit exceeded",
+    },
+    {
+      code: "503",
+      title: "Service Unavailable",
+      description: "Model is not deployed or temporarily unavailable",
+    },
+  ];
 
   const hyperparams = `{
   "max_depth": 6,
@@ -131,7 +135,6 @@ public class APIPredict {
         }
     }
 }`,
-
   };
 
   const tabItems = [
@@ -171,18 +174,20 @@ public class APIPredict {
       {/* API DOCUMENTATION */}
       {/* ---------------------------------------------------------------------- */}
       <div className="w-full gap-8 py-6">
-
         <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4">
           <div className="space-y-1">
             <h2 className="text-xl font-medium">API Documentation</h2>
             <p className="text-sm text-foreground/80">
-              Use the following endpoints to interact with your deployed model version programmatically.
+              Use the following endpoints to interact with your deployed model
+              version programmatically.
             </p>
           </div>
 
           {/* Endpoint */}
           <div className="space-y-4">
-            <label className="text-lg font-medium text-[#111111]">Endpoint URL</label>
+            <label className="text-lg font-medium text-[#111111]">
+              Endpoint URL
+            </label>
             <Input
               placeholder={endpointUrl}
               className="h-11 border-[#AAAAAA] mt-2"
@@ -191,7 +196,9 @@ public class APIPredict {
 
           {/* Authentication */}
           <div className="space-y-1 pt-4">
-            <label className="text-lg font-medium text-[#111111]">Authentication</label>
+            <label className="text-lg font-medium text-[#111111]">
+              Authentication
+            </label>
             <p className="text-sm text-foreground/80 pt-2">
               All API requests require an API key in the Authorization header.
             </p>
@@ -203,7 +210,9 @@ public class APIPredict {
 
           {/* Request Format */}
           <div className="pt-6">
-            <label className="text-lg font-medium text-[#111111]">Request Format</label>
+            <label className="text-lg font-medium text-[#111111]">
+              Request Format
+            </label>
 
             <div className="mt-4">
               <AnimatedTabsSection items={tabItems} defaultValue="curl" />
@@ -212,10 +221,12 @@ public class APIPredict {
 
           {/* Response Format */}
           <div className="pt-6 space-y-3">
-            <label className="text-lg font-medium text-[#111111]">Response Format</label>
+            <label className="text-lg font-medium text-[#111111]">
+              Response Format
+            </label>
 
             <pre className="rounded-xl bg-background border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
-{`{
+              {`{
   "prediction": "No Fraud",
   "confidence": 0.924,
   "risk_score": 0.076,
@@ -230,66 +241,87 @@ public class APIPredict {
           <div className="pt-10">
             <h3 className="text-lg font-medium">Rate Limits</h3>
 
-           <div className="flex justify-between gap-4  mt-4 min-h-32">
-  <div className="border border-border-color-0 w-full rounded-xl  p-4 bg-background  text-left flex flex-col justify-between">
-    <p className="text-sm text-foreground/80">Requests per minute</p>
-    <p className="text-4xl font-medium mt-1">1,000</p>
-  </div>
+            <div className="flex justify-between gap-4  mt-4 min-h-32">
+              <div className="border border-border-color-0 w-full rounded-xl  p-4 bg-background  text-left flex flex-col justify-between">
+                <p className="text-sm text-foreground/80">
+                  Requests per minute
+                </p>
+                <p className="text-4xl font-medium mt-1">1,000</p>
+              </div>
 
-  <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
-    <p className="text-sm text-foreground/80">Requests per day</p>
-    <p className="text-4xl font-medium mt-1">50,000</p>
-  </div>
+              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
+                <p className="text-sm text-foreground/80">Requests per day</p>
+                <p className="text-4xl font-medium mt-1">50,000</p>
+              </div>
 
-  <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
-    <p className="text-sm text-foreground/80">Average latency</p>
-    <p className="text-4xl font-medium mt-1">100ms</p>
-  </div>
-</div>
-
+              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
+                <p className="text-sm text-foreground/80">Average latency</p>
+                <p className="text-4xl font-medium mt-1">100ms</p>
+              </div>
+            </div>
           </div>
 
           {/* Error Codes */}
           <div className="pt-4">
-  <h3 className="text-lg font-medium">Error Codes</h3>
+            <h3 className="text-lg font-medium">Error Codes</h3>
 
-  <div className="space-y-3 mt-3">
-    {errorCodes.map((err, index) => (
-      <div
-        key={index}
-        className="border border-border-color-0 rounded-xl px-4 py-5 bg-background flex gap-4"
-      >
-        <p className="font-medium text-sm w-12">{err.code}</p>
+            <div className="space-y-3 mt-3">
+              {errorCodes.map((err, index) => (
+                <div
+                  key={index}
+                  className="border border-border-color-0 rounded-xl px-4 py-5 bg-background flex gap-4"
+                >
+                  <p className="font-medium text-sm w-12">{err.code}</p>
 
-        <div>
-          <p className="font-medium">{err.title}</p>
-          <p className="text-sm text-foreground/80 ">
-            {err.description}
-          </p>
+                  <div className="space-y-1">
+                    <p className="font-medium text-sm">{err.title}</p>
+                    <p className="text-xs text-foreground/80 ">
+                      {err.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
-    ))}
-  </div>
-</div>
-
-
-        </div>
-
-
-       
-      </div>
-
-     
     </>
   );
 }
 
-
 function CodeBlock({ code }) {
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    // await navigator.clipboard.writeText();
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 1500); // 1.5 seconds
+  };
+
+
   return (
-    <pre className="rounded-lg bg-background p-4 text-sm text-foreground overflow-x-auto border border-border-color-0">
+    <>
+    <pre className="rounded-lg bg-background relative  p-4 text-xs text-foreground overflow-x-auto border border-border-color-0">
       <code>{code}</code>
     </pre>
+    <div className="absolute right-5 top-5">
+      <div
+            onClick={handleCopy}
+            className="p-3 cursor-pointer text-icon-color-2 bg-icon-color-2/10 rounded-lg transition duration-200 ease-in-out flex items-center justify-center"
+          >
+            {copied ? (
+              <Check className="w-5 h-5 text-icon-color-2" />
+            ) : (
+              <Copy className="w-5 h-5" />
+            )}
+          </div>
+    </div>
+    </>
+
   );
 }
 
@@ -305,7 +337,9 @@ function RateBox({ label, value }) {
 function ErrorBox({ code, title, desc }) {
   return (
     <div className="border border-border-color-0 rounded-xl p-4 bg-background">
-      <p className="font-semibold">{code} — {title}</p>
+      <p className="font-semibold">
+        {code} — {title}
+      </p>
       <p className="text-xs text-foreground/80 mt-1">{desc}</p>
     </div>
   );

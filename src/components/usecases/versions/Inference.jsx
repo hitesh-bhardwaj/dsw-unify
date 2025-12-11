@@ -174,7 +174,7 @@ export default function Inference() {
             transition={{ duration: 0.25 }}
             className="grid grid-cols-2 gap-6 w-full"
           >
-            <div className="border rounded-xl p-6 flex flex-col gap-4">
+            <div className="border border-border-color-0 rounded-3xl p-6 flex flex-col gap-4">
               <h2 className="text-lg font-medium">Configure Inference</h2>
 
               <div className="flex items-center gap-4">
@@ -186,7 +186,7 @@ export default function Inference() {
                 Upload CSV <span className="font-normal">(Transaction ID)</span>
               </h2>
 
-              <div className="border rounded-xl h-48 flex flex-col justify-center items-center cursor-pointer mt-[-2%]">
+              <div className="border border-border-color-0 rounded-xl h-48 flex flex-col justify-center items-center cursor-pointer mt-[-2%]">
                 <UploadFile className="w-8 h-8 text-foreground/80 mb-5" />
                 <span className=" font-medium text-sm mt-3">
                   Click to upload or drag and drop
@@ -208,7 +208,7 @@ export default function Inference() {
               </div>
             </div>
 
-            <div className="border rounded-xl p-6 flex flex-col items-start gap-15 justify-start">
+            <div className="border rounded-3xl border-border-color-0 p-6 flex flex-col items-start gap-15 justify-start">
               <h2 className="text-lg font-medium mb-6">
                 Batch Processing Status
               </h2>
@@ -234,11 +234,11 @@ export default function Inference() {
             className="grid grid-cols-2 gap-6 w-full"
           >
             {/* ----- Left Section: Configure Inference ----- */}
-            <div className="border rounded-2xl p-6 flex flex-col gap-6">
+            <div className="border border-border-color-0 rounded-3xl p-6 flex flex-col gap-6">
               <h2 className="text-xl font-medium">Configure Inference</h2>
 
               <div className="flex items-center gap-4">
-                <Input placeholder="By ID" className="w-full" />
+                <Input placeholder="By ID" className="w-full border border-border-color-0" />
                 <Input placeholder="By Data" className="w-full" />
               </div>
 
@@ -263,11 +263,11 @@ export default function Inference() {
             </div>
 
             {/* ----- Right Section: Prediction Result ----- */}
-            <div className="border rounded-2xl p-6 flex flex-col gap-6">
+            <div className="border rounded-3xl border-border-color-0 p-6 flex flex-col gap-6">
               <h2 className="text-xl font-medium">Prediction Result</h2>
 
               {/* Prediction badge */}
-              <div className="bg-sidebar-accent border rounded-xl p-4 flex flex-col items-center">
+              <div className="bg-sidebar-accent border rounded-xl px-4 py-6 flex flex-col items-center">
                 <span className="text-xs text-foreground/80 mb-2">
                   Prediction
                 </span>
@@ -279,7 +279,7 @@ export default function Inference() {
               {/* Confidence & Risk */}
               <div className="grid grid-cols-2 gap-4">
                 {/* Confidence */}
-                <div className="border rounded-xl p-4 flex flex-col gap-2">
+                <div className="border rounded-xl p-4 border-border-color-0 flex flex-col gap-2">
                   <span className="text-sm text-foreground/80">Confidence</span>
                   <span className="text-3xl font-medium">
                     <CountUp value={confidence} startOnView/>%</span>
@@ -297,7 +297,7 @@ export default function Inference() {
                 </div>
 
                 {/* Risk Score */}
-                <div className="border rounded-xl p-4 flex flex-col gap-2">
+                <div className="border border-border-color-0 rounded-xl p-4 flex flex-col gap-2">
                   <span className="text-sm text-foreground/80">Risk Score</span>
                   <span className="text-2xl font-medium">
                     <CountUp value={riskScore}/>%</span>
@@ -331,7 +331,7 @@ export default function Inference() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="border rounded-xl p-6 flex flex-col gap-6"
+            className="rounded-xl p-6 flex flex-col gap-6"
           >
             <CardDetails data={stats} />
 

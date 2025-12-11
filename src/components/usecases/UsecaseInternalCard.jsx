@@ -73,17 +73,17 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
   if (showSkeleton) return <UsecaseInternalCardSkeleton />;
 
   return (
-    <div className="group w-full h-full">
+    <div className=" w-full h-full">
     <Link href={`/ai-studio/use-cases/${slug}/${ModelSlug}/`}>
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-            "feature-card-hover-container gap-2  transition-all duration-300 group",
+            "feature-card-hover-container gap-2  transition-all hover:bg-transparent hover:drop-shadow-xl duration-300 group",
             isGrid &&
-              " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 hover:shadow-md",
+              " h-full flex flex-col justify-between gap-0 py-5  ",
             // List view styles
             isList &&
-              "w-full rounded-xl hover:shadow-md px-6 py-6 bg-white dark:bg-background"
+              "w-full rounded-xl   py-6 bg-white dark:bg-background"
           )}
       >
         <CardHeader className="pb-2">
@@ -168,9 +168,7 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
             "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300"
           )}
         >
-          {isList && (
-              <div className="border-t border-border-color-0 group-hover:border-white/60" />
-            )}
+         
           {/* Tags */}
           <div className="flex flex-wrap gap-1 pt-2">
             {tags.map((tag, index) => (
@@ -187,17 +185,13 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
           </div>
 
            <div
-              className={`${
-                view === "list"
-                  ? "flex justify-between"
-                  : " flex flex-col gap-4"
-              }`}
+              className={` flex flex-col gap-4 `}
             >
 
           {/* Versions + Features */}
           <div
             className={cn(
-              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-0", isList && 'w-[25%]'
+              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2 w-full"
             )}
           >
             <div className="flex items-center gap-2 ">

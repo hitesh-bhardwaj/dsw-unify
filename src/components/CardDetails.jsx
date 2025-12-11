@@ -24,7 +24,7 @@ export default function CardDetails({ data = [], first }) {
               <span className="text-2xl font-medium mt-1">
                 {first ? `${item.value}` : <CountUp value={item.value} startOnView />}
           </span>
-              <span className="text-xs font-normal">{item.description}</span>
+              <span className="text-sm font-normal">{item.description}</span>
             </>
           ) : (
             <span className="text-xl font-medium mt-2">{item.value}</span>
