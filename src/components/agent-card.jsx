@@ -29,7 +29,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time in milliseconds to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered AgentCard component.
  */
-export function AgentCard({ agent,index , minSkeletonMs = 500 }) {
+export function AgentCard({ agent,index , view, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -108,16 +108,19 @@ export function AgentCard({ agent,index , minSkeletonMs = 500 }) {
     );
   }
 
+    const isGrid = view === "grid";
+  const isList = view === "list";
+
   // Real content after 500ms
   return (
     <Bounce>
       <Link href={`/agent-studio/agents/${id}`} className="block">
           <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5"
+            "feature-card-hover-container  overflow-hidden group hover:drop-shadow-xl space-y-6 cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-transparent py-5", isList && 'space-y-2'
           )}
         >
-          <CardHeader className="">
+          <CardHeader className=" h-fit">
             <div className="flex items-end justify-start gap-2">
               {/* Icon */}
               <div
@@ -158,7 +161,7 @@ export function AgentCard({ agent,index , minSkeletonMs = 500 }) {
             </div>
 
             {/* Agent name */}
-            <h3 className="mt-7 h-15 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
+            <h3 className="mt-7 mb-2 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
               {name}
             </h3>
 
@@ -172,17 +175,17 @@ export function AgentCard({ agent,index , minSkeletonMs = 500 }) {
             </p>
           </CardHeader>
 
-          <CardContent>
+          <CardContent className=" space-y-9">
             {/* Tags */}
-            <div className="mb-16 flex flex-wrap gap-1">
+            <div className=" flex flex-wrap gap-1">
               {tags.map((tag, index) => (
                 <Badge
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                 )}>
-                  {tag.label}
+                  {tag}
                 </Badge>
               ))}
             </div>
@@ -190,20 +193,20 @@ export function AgentCard({ agent,index , minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between border border-color-2 rounded-lg p-3 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/30"
+                "flex items-center justify-between border border-color-2 rounded-lg px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60"
               )}
             >
-              <div className="flex items-center gap-2 font-medium">
-                <div className="w-4 h-4">
+              <div className="flex items-center gap-2 ">
+                {/* <div className="w-4 h-4">
                   <Calendar className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground" />
-                </div>
-                <span className="text-foreground group-hover:text-white transition-colors duration-300">{lastActivity}</span>
+                </div> */}
+                <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{lastActivity}</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4">
+                {/* <div className="w-4 h-4">
                   <FileTimeout className="text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground" />
-                </div>
-                <span className="font-medium text-foreground group-hover:text-white transition-colors duration-300">{requestCount}</span>
+                </div> */}
+                <span className="font-medium text-xs text-foreground group-hover:text-white transition-colors duration-300">{requestCount}</span>
               </div>
             </div>
           </CardContent>

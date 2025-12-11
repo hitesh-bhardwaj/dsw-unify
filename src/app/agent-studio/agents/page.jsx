@@ -1,30 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { AgentCard } from "@/components/agent-card";
 import Link from "next/link";
-import { AgentStudioIcon, PlusIcon, PromptsIcon, TemplatesIcon } from "@/components/Icons";
+import { AgentStudioIcon, PlusIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
-import RadioTabs from "@/components/common/RadioTabs";
-import { FadeUp, ScaleDown } from "@/components/animations/Animations";
+import { ScaleDown } from "@/components/animations/Animations";
 import { cn } from "@/lib/utils";
 import { RippleButton } from "@/components/ui/ripple-button";
 import CardDetails from "@/components/CardDetails";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Mock data for agents
+// SAME FILTER BAR
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+
+// CLEAN TAGS
 const agents = [
   {
     id: "auto-claims-processing-agent",
     name: "Auto Claims Processing Agent",
     description: "Automates auto insurance claims intake, validation, and processing",
-    icon:<AgentStudioIcon/>,
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "auto", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "processing", color: "gray" },
-    ],
+    tags: ["auto", "claims", "processing"],
     lastActivity: "2 hours ago",
     requestCount: "3.2k requests",
     variant: "light",
@@ -32,14 +31,11 @@ const agents = [
   {
     id: "property-claims-agent",
     name: "Property Claims Agent",
-    description: "Handles home and property damage claims assessment and processing",
-    icon:<AgentStudioIcon/>,
+    description:
+      "Handles home and property damage claims assessment and processing",
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "property", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "home", color: "gray" },
-    ],
+    tags: ["property", "claims", "home"],
     lastActivity: "3 hours ago",
     requestCount: "2.8k requests",
     variant: "light",
@@ -47,14 +43,11 @@ const agents = [
   {
     id: "health-claims-adjudication-agent",
     name: "Health Claims Adjudication Agent",
-    description: "Automates auto insurance claims intake, validation, and processing",
-    icon:<AgentStudioIcon/>,
+    description:
+      "Automates auto insurance claims intake, validation, and processing",
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "health", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "medical", color: "gray" },
-    ],
+    tags: ["health", "claims", "medical"],
     lastActivity: "1 hour ago",
     requestCount: "4.1k requests",
     variant: "light",
@@ -64,13 +57,9 @@ const agents = [
     name: "Workers Comp Claims Agent",
     description:
       "Handles home and property damage claims assessment and processing",
-    icon:<AgentStudioIcon/>,
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "property", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "home", color: "gray" },
-    ],
+    tags: ["property", "claims", "home"],
     lastActivity: "3 hours ago",
     requestCount: "2.8k requests",
     variant: "light",
@@ -80,13 +69,9 @@ const agents = [
     name: "Life Insurance Claims Agent",
     description:
       "Automates auto insurance claims intake, validation, and processing",
-    icon:<AgentStudioIcon/>,
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "health", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "medical", color: "gray" },
-    ],
+    tags: ["health", "claims", "medical"],
     lastActivity: "1 hour ago",
     requestCount: "4.1k requests",
     variant: "light",
@@ -96,13 +81,9 @@ const agents = [
     name: "Claims Status Inquiry Agent",
     description:
       "Automates auto insurance claims intake, validation, and processing",
-    icon:<AgentStudioIcon/>,
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "health", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "medical", color: "gray" },
-    ],
+    tags: ["health", "claims", "medical"],
     lastActivity: "1 hour ago",
     requestCount: "4.1k requests",
     variant: "light",
@@ -110,14 +91,11 @@ const agents = [
   {
     id: "auto-underwriting-agent",
     name: "Auto Underwriting Agent",
-    description: "Handles home and property damage claims assessment and processing",
-    icon:<AgentStudioIcon/>,
+    description:
+      "Handles home and property damage claims assessment and processing",
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "property", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "home", color: "gray" },
-    ],
+    tags: ["property", "claims", "home"],
     lastActivity: "3 hours ago",
     requestCount: "2.8k requests",
     variant: "light",
@@ -127,49 +105,62 @@ const agents = [
     name: "Home Insurance Underwriting Agent",
     description:
       "Automates auto insurance claims intake, validation, and processing",
-    icon:<AgentStudioIcon/>,
+    icon: <AgentStudioIcon />,
     status: "active",
-    tags: [
-      { label: "health", color: "gray" },
-      { label: "claims", color: "gray" },
-      { label: "medical", color: "gray" },
-    ],
+    tags: ["health", "claims", "medical"],
     lastActivity: "1 hour ago",
     requestCount: "4.1k requests",
     variant: "light",
   },
- 
 ];
 
 const stats = [
-    {
-      title: "Total Agents",
-      value: "42",
-    },
-    {
-      title: "Active Agents",
-      value: "41",
-    },
-    {
-      title: "Total Requests",
-      value: "100,800",
-    }
-  ];
+  { title: "Total Agents", value: "42" },
+  { title: "Active Agents", value: "41" },
+  { title: "Total Requests", value: "100,800" },
+];
 
 export default function AgentsPage() {
   const [query, setQuery] = useState("");
-  const [tab, setTab] = useState("prompts");
-  const filteredAgents = agents.filter((agent) =>
-    agent.name.toLowerCase().includes(query.toLowerCase())
-  );
+
+  // FILTER BAR STATE
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+
+  // AVAILABLE TAGS
+  const availableTags = useMemo(() => {
+    const setTag = new Set();
+    agents.forEach((a) => a.tags?.forEach((t) => setTag.add(t.toLowerCase())));
+    return Array.from(setTag).sort();
+  }, []);
+
+  // SEARCH + TAG FILTER
+  let filteredAgents = agents.filter((agent) => {
+    const matchSearch = agent.name.toLowerCase().includes(query.toLowerCase());
+    const matchTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((t) => agent.tags.includes(t));
+    return matchSearch && matchTags;
+  });
+
+  // SORTING
+  if (sortOrder === "asc") {
+    filteredAgents = [...filteredAgents].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredAgents = [...filteredAgents].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
+  }
 
   return (
-    <div className="flex flex-col h-full w-full overflow-hidden pb-5 ">
+    <div className="flex flex-col h-full w-full overflow-hidden pb-5">
       <ScaleDown>
-        {/* Header section */}
         <div className="space-y-6 p-6">
-          {/* Title and CTA */}
-          {/* <FadeUp> */}
+
+          {/* HEADER */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Agents</h1>
@@ -180,72 +171,65 @@ export default function AgentsPage() {
 
             <Link href="/agent-studio/agents/create">
               <RippleButton>
-                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 duration-300 cursor-pointer">
                   <PlusIcon />
                   Create Agents
                 </Button>
               </RippleButton>
             </Link>
           </div>
-          <CardDetails data={stats} textSize="text-4xl"/>
-          {/* </FadeUp> */}
-          {/* <FadeUp delay={0.02}> */}
+
+          {/* STATS */}
+          <CardDetails data={stats} textSize="text-4xl" />
+
+          {/* SEARCH */}
           <SearchBar
             placeholder="Search Agents..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {/* <RadioTabs
-            items={[
-              { id: "prompts", label: "Prompts", icon: PromptsIcon },
-              { id: "templates", label: "Templates", icon: TemplatesIcon },
-            ]}
-            value={tab}
-            onValueChange={setTab}
-            activeClassName=" text-primary"
-            inactiveClassName="border-transparent dark:text-foreground text-black/70"
-            dotColorClassName="bg-[#FF5722]"
-            equalWidth={true}
-          /> */}
+
+          {/* FILTER BAR */}
+          <FilterBar
+            selectedTags={selectedTags}
+            onTagsChange={setSelectedTags}
+            availableTags={availableTags}
+            view={view}
+            setView={setView}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+            cards={agents}
+          />
         </div>
-        <div className="flex-1 pt-0 px-6 h-fit w-full relative">
-          <div
-            className={cn(
-              "relative inset-0  pt-0 transition-all h-full",
-              tab === "prompts"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : "-translate-x-[40%] opacity-0 pointer-events-none duration-500 ease-out"
-            )}
-          >
-            <div className="grid gap-6  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
+
+        {/* GRID / LIST WITH ANIMATION */}
+        <div className="flex-1 px-6">
+          <AnimatePresence mode="wait">
+           <motion.div
+                           key={view}
+                           initial={{ opacity: 0 }}
+                           animate={{ opacity: 1 }}
+                           exit={{ opacity: 0 }}
+                           transition={{ duration: 0.3 }}
+                           className={`items-stretch ${
+                             view === "grid"
+                               ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                               : "flex flex-col gap-5"
+                           }`}
+                         >
               {filteredAgents.map((agent, index) => (
-                <AgentCard key={agent.id} agent={agent} index={index} />
+                <AgentCard key={agent.id} agent={agent} index={index} view={view} />
               ))}
-            </div>
-          </div>
-          <div
-            className={cn(
-              "absolute inset-0 pt-0 transition-all px-6 h-94",
-              tab === "templates"
-                ? "translate-x-0 opacity-100 duration-500 ease-out"
-                : tab === "prompts"
-                ? "translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-                : "-translate-x-[40%] opacity-0 pointer-events-none duration-300 ease-out"
-            )}
-          >
-            <div className="grid gap-6 grid-cols-1 h-full">
-              <div className="w-full border border-border-color-0 rounded-2xl h-full flex justify-center items-center text-border-color-3">
-                <p>"No Templates to be shown"</p>
-              </div>
-            </div>
-          </div>
-          {filteredAgents.length === 0 && tab === "prompts" && (
-            <div className="flex h-64 items-center justify-center text-border-color-3 dark:text-foreground border border-border-color-0 rounded-xl">
-              No prompts found matching "{query}"
+            </motion.div>
+          </AnimatePresence>
+
+          {/* NO RESULT */}
+          {filteredAgents.length === 0 && (
+            <div className="flex h-64 items-center justify-center text-border-color-3 border border-border-color-0 rounded-xl mt-6">
+              No agents found matching "{query}"
             </div>
           )}
         </div>
-        {/* </FadeUp> */}
       </ScaleDown>
     </div>
   );

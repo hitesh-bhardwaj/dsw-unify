@@ -65,12 +65,12 @@ const Overview = () => {
   return (
     <>
     <div className="flex-1 overflow-auto bg-background">
-          <div className="max-w-7xl mx-auto space-y-6">
+          <div className=" mx-auto space-y-6">
             {/* Top Cards Row */}
             <div className="grid grid-cols-3 gap-6">
                 <>
                   {/* Agent Information */}
-                  <Card>
+                  <Card className='px-0'> 
                     <CardHeader>
                       <h2 className="text-xl font-medium">Agent Information</h2>
                     </CardHeader>
@@ -186,7 +186,7 @@ const Overview = () => {
                           {agent.health.errorRate}
                         </p>
                       </div>
-                      <span className="w-full h-[1px] bg-foreground/40 block mt-8" />
+                      <span className="w-full h-[1px] bg-border-color-0 block mt-8" />
                       <div className="pt-4">
                         <div className="flex items-center gap-2 ">
                           <div className="w-4.5 h-4.5 ">
@@ -199,7 +199,7 @@ const Overview = () => {
                   </Card>
                 </>
             </div>
-              <Card className={"border-none bg-background max-w-7xl mx-auto"}>
+              <Card className={"border-none bg-background px-0 mx-auto"}>
                 <CardHeader>
                   <h2 className="text-xl font-semibold">Recent Activity</h2>
                 </CardHeader>
