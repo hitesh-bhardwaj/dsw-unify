@@ -75,7 +75,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
     <div className="group w-full h-full">
       <Card
         className={cn(
-          "feature-card-hover-container overflow-hidden w-full h-full transition-all hover:shadow-md duration-300 py-5 border-border-color-1 hover:border-white/20 bg-background"
+          "feature-card-hover-container overflow-hidden w-full h-full transition-all hover:shadow-md duration-300 py-5 border-border-color-0 hover:border-white/20 bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -173,7 +173,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
                 className={cn(
                   "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10",
                    {
-    "border-border-color-2": tag.color !== "red",
+    "border-border-color-0": tag.color !== "red",
     "border-primary": tag.color === "red",
   }
                 )}
@@ -199,7 +199,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
           {/* Preview */}
           <div
             className={cn(
-              "rounded-lg p-3 text-xs duration-300 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-gray-600 dark:text-white/80 group-hover:text-white/80 border border-border-color-2 group-hover:border-white/30 transition-all"
+              "rounded-lg p-3 text-xs duration-300 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-gray-600 dark:text-white/80 group-hover:text-white/80 border border-border-color-0 group-hover:border-white/30 transition-all"
             )}
           >
             {preview}
@@ -222,7 +222,7 @@ export function PromptCard({ prompt, minSkeletonMs = 500 }) {
 export function PromptCardSkeleton() {
   return (
     <div className="group w-full h-full">
-      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-0">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

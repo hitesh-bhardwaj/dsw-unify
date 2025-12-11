@@ -30,7 +30,7 @@ const GuardrailsOverviews = () => {
         {stats.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col gap-10 border border-border-color-1 rounded-xl py-6 px-4 w-full"
+            className="flex flex-col gap-10 border border-border-color-0 rounded-xl py-6 px-4 w-full"
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 
@@ -48,7 +48,7 @@ const GuardrailsOverviews = () => {
 
       <div className="w-full flex items-start justify-between gap-6">
         {/* Rules */}
-        <div className="w-full space-y-4 border rounded-3xl p-6 border-border-color-1">
+        <div className="w-full space-y-4 border rounded-3xl p-6 border-border-color-0">
           <h2 className="text-lg font-medium text-foreground">Rules</h2>
 
           {data.rules.map((item, index) => (
@@ -60,7 +60,7 @@ const GuardrailsOverviews = () => {
         </div>
 
         {/* Actions */}
-        <div className="w-full space-y-4 border rounded-3xl p-6 border-border-color-1">
+        <div className="w-full space-y-4 border rounded-3xl p-6 border-border-color-0">
           <h2 className="text-lg font-medium text-foreground">Actions</h2>
 
           {data.actions.map((item, index) => (

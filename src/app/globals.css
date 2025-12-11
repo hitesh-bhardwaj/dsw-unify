@@ -49,6 +49,7 @@
   --color-border-color-1:var(--border-color-1);
   --color-border-color-2:var(--border-color-2);
   --color-border-color-3:var(--border-color-3);
+  --color-border-color-0:var(--border-color-0);
   --color-icon-color-1:var(--icon-color-1);
   --color-icon-color-2:var(--icon-color-2);
   --color-icon-color-3:var(--icon-color-3);
@@ -98,10 +99,11 @@
   --border-color-1: #00000030;
   --border-color-2: #0000001d;
   --border-color-3: #00000070;
+  --border-color-0:#A4B4CC;
   --icon-color-1:#F76809;
   --icon-color-2:#2563FB;
   --icon-color-3:#6BC631;
-  --icon-color-4:#FFC71F;
+  --icon-color-4:#1FDAFF;
 
 }
 

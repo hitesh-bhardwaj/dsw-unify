@@ -72,7 +72,7 @@ const Monitoring = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Total Features */}
-          <div className="border border-border-color-2 rounded-xl p-4 flex flex-col justify-between gap-7">
+          <div className="border border-border-color-0 rounded-xl p-4 flex flex-col justify-between gap-7">
             <p className="text-sm text-foreground/80 mb-2">No. of features</p>
             <p className="text-4xl font-medium text-badge-green">
               <CountUp value={21} startOnView/>
@@ -80,7 +80,7 @@ const Monitoring = () => {
           </div>
 
           {/* Drifted Features */}
-          <div className="border border-border-color-2 rounded-xl p-4 flex flex-col justify-between gap-7">
+          <div className="border border-border-color-0 rounded-xl p-4 flex flex-col justify-between gap-7">
             <p className="text-sm text-foreground/80 mb-2">
               No. of drifted features
             </p>
@@ -134,7 +134,7 @@ const Monitoring = () => {
         {metrics.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col gap-8 border border-border-color-1 rounded-lg py-6 px-4 w-full"
+            className="flex flex-col gap-8 border border-border-color-0 rounded-lg py-6 px-4 w-full"
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 

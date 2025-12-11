@@ -458,7 +458,7 @@ function MetricsBoard({ metricsData, view, setView }) {
         </div>
 <div className="space-x-3 flex items-center gap-1">
 
-  <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border rounded-sm py-1.5 p-3 flex items-center gap-3 text-sm">
+  <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border border-border-color-0 rounded-sm py-1.5 p-3 flex items-center gap-3 text-sm">
     <div className="h-5 w-5 text-[#111111]">
     <Eye/>
     </div>
@@ -466,7 +466,7 @@ function MetricsBoard({ metricsData, view, setView }) {
   </Link>
 
         <TooltipProvider delayDuration={0}>
-          <div className="inline-flex border rounded-md overflow-hidden py-2 px-4 gap-5">
+          <div className="inline-flex border border-border-color-0 rounded-md overflow-hidden py-2 px-4 gap-5">
             <Tooltip>
               <TooltipTrigger asChild>
                 <button onClick={() => setView("list")} className="cursor-pointer">
@@ -658,7 +658,7 @@ export default function Home() {
                 />
                 <motion.div layout className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredDataEngineering.map((feature, index) => (
-                    <FeatureCard key={index} {...feature} />
+                    <FeatureCard key={index} {...feature} index={index} />
                   ))}
                 </motion.div>
               </motion.div>
@@ -673,7 +673,7 @@ export default function Home() {
                 />
                 <motion.div layout className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredFeatureStore.map((feature, index) => (
-                    <FeatureCard key={index} {...feature} />
+                    <FeatureCard key={index} {...feature} index={index} />
                   ))}
                 </motion.div>
               </motion.div>
@@ -688,7 +688,7 @@ export default function Home() {
                 />
                 <motion.div layout className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredAIStudio.map((feature, index) => (
-                    <FeatureCard key={index} {...feature} />
+                    <FeatureCard key={index} {...feature} index={index}/>
                   ))}
                 </motion.div>
               </motion.div>
@@ -703,7 +703,7 @@ export default function Home() {
                 />
                 <motion.div layout className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredAgentStudio.map((feature, index) => (
-                    <FeatureCard key={index} {...feature} />
+                    <FeatureCard key={index} {...feature} index={index} />
                   ))}
                 </motion.div>
               </motion.div>
@@ -718,7 +718,7 @@ export default function Home() {
                 />
                 <motion.div layout className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredWorkflowBuilder.map((feature, index) => (
-                    <FeatureCard key={index} {...feature} />
+                    <FeatureCard key={index} {...feature} index={index}/>
                   ))}
                 </motion.div>
               </motion.div>

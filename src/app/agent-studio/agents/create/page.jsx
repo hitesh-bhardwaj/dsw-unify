@@ -154,7 +154,7 @@ export default function CreateAgentPage() {
         <div className="max-w-6xl mx-auto space-y-4">
           {/* Basic Information */}
           {/* <FadeUp delay={0.02}> */}
-            <Card className={"h-full py-10 shadow-none border-border-color-1 bg-background"}>
+            <Card className={"h-full py-10 shadow-none border-border-color-0 bg-background"}>
               <CardHeader>
                 <h2 className="text-xl font-medium">Basic Information</h2>
                 <p className="text-sm text-gray-600 dark:text-foreground  ">
@@ -171,7 +171,7 @@ export default function CreateAgentPage() {
                       value={agentName}
                       onChange={(e) => setAgentName(e.target.value)}
                       placeholder="MY AI Assistant"
-                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/80 "
+                      className="h-11 border-border-color-0 mt-3 text-foreground placeholder:text-foreground/80 "
                     />
                   </div>
                   <div className="space-y-4">
@@ -182,7 +182,7 @@ export default function CreateAgentPage() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="A Helpful AI Assistant for..."
-                      className="h-11 border-border-color-1 mt-3 text-foreground placeholder:text-foreground/80"
+                      className="h-11 border-border-color-0 mt-3 text-foreground placeholder:text-foreground/80"
                     />
                   </div>
                 </div>

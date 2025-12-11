@@ -15,7 +15,7 @@ export default function CardDetails({ data = [] }) {
       {data.map((item, index) => (
         <div
           key={index}
-          className="flex flex-col gap-3 border border-border-color-1 rounded-lg py-6 px-4 w-full"
+          className="flex flex-col gap-3 border border-border-color-0 rounded-lg py-6 px-4 w-full"
         >
           <span className="text-sm text-foreground/80">{item.title}</span>
 

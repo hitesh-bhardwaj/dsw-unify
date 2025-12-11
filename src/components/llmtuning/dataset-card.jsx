@@ -46,7 +46,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
       <div className="block">
         <Card
           className={cn(
-            "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 pt-3 pb-8"
+            "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 pt-3 pb-8"
           )}
         >
           <CardHeader>
@@ -95,7 +95,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
     <Link href={`#`} className="block group">
       <Card
         className={cn(
-          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border  dark:group-hover:border-border-color-1 dark:group-hover:bg-sidebar-accent pt-3 pb-8"
+          "overflow-hidden hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border  dark:group-hover:border-border-color-0 dark:group-hover:bg-sidebar-accent pt-3 pb-8"
         )}
       >
         <CardHeader>
@@ -115,13 +115,13 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                       className={cn(
                         "rounded-full px-3.5 py-1 text-xs font-normal dark:group-hover:bg-foreground ",
                         tag.color === "yellow" &&
-                          "bg-transparent text-foreground border border-badge-yellow dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
+                          "bg-transparent text-foreground border border-badge-yellow dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-0 transition-all duration-500 ease-out",
                         tag.color === "blue" &&
                           "bg-badge-blue text-white  transition-all duration-500 ease-out",
                         tag.color === "green" &&
                           "bg-badge-green text-white  transition-all duration-500 ease-out",
                         tag.color === "mint" &&
-                          "bg-transparent text-foreground border border-badge-mint dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out",
+                          "bg-transparent text-foreground border border-badge-mint dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-0 transition-all duration-500 ease-out",
                         tag.color === "orange" &&
                           "bg-primary text-white  transition-all duration-500 ease-out",
                         tag.color === "red" &&
@@ -129,7 +129,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
                         tag.color === "sea-green" &&
                           "bg-badge-sea-green text-white  transition-all duration-500 ease-out",
                         tag.color === "transparent" &&
-                          "bg-transparent text-foreground border border-border-color-1 dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-1 transition-all duration-500 ease-out"
+                          "bg-transparent text-foreground border border-border-color-0 dark:group-hover:bg-transparent dark:group-hover:border-foreground dark:border-border-color-0 transition-all duration-500 ease-out"
                       )}
                     >
                       {tag.label}

@@ -113,7 +113,7 @@ export function TypewriterInput({
         placeholder={animatedPlaceholder}
         value={value}
         onChange={onChange}
-        className={["h-11 bg-background border-border-color-1 py-6 placeholder:text-border-color-3 ", icon ? "pl-12" : "", className]
+        className={["h-11 bg-background border-border-color-0 py-6 placeholder:text-border-color-3 ", icon ? "pl-12" : "", className]
           .filter(Boolean)
           .join(" ")}
         {...rest}

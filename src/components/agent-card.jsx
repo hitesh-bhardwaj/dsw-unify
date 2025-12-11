@@ -66,7 +66,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
     return (
       <Bounce>
         <div className="block h-full">
-          <Card className="overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 py-5">
+          <Card className="overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 py-5">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground/40 dark:bg-sidebar-accent">
@@ -114,7 +114,7 @@ export function AgentCard({ agent,minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/agents/${id}`} className="block">
           <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-1 hover:border-white/20 py-5"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5"
           )}
         >
           <CardHeader className="">

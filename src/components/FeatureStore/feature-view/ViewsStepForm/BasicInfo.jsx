@@ -57,7 +57,7 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
             onChange={(e) => setName(e.target.value)}
             type="text"
             placeholder="e.g. customer demographics"
-            className={`h-11 border-border-color-1 mt-3 ${
+            className={`h-11 border-border-color-0 mt-3 ${
               errors.name ? "border-red-500" : ""
             }`}
           />
@@ -87,7 +87,7 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
             onChange={(e) => setTags(e.target.value)}
             type="text"
             placeholder="Add tags (comma separated)"
-            className="h-11 border-border-color-1 mt-3"
+            className="h-11 border-border-color-0 mt-3"
           />
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
         <RippleButton>
           <Button
             variant="outline"
-            className="gap-2 border-border-color-1 text-foreground hover:bg-gray-50 w-fit px-7"
+            className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
             onClick={goBack}
           >
             Cancel

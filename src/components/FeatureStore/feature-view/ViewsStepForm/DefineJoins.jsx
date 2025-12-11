@@ -105,7 +105,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
         {joins.map((join, index) => (
           <div
             key={join.id}
-            className="border border-border-color-1 rounded-lg p-6 space-y-4 relative"
+            className="border border-border-color-0 rounded-lg p-6 space-y-4 relative"
           >
             {/* Header with delete button */}
             <div className="flex items-center justify-between mb-2">
@@ -134,7 +134,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "leftTable", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-1 w-full">
+                  <SelectTrigger className="h-11 border-border-color-0 w-full">
                     <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
@@ -154,7 +154,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "leftKey", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-1 w-full ">
+                  <SelectTrigger className="h-11 border-border-color-0 w-full ">
                     <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
@@ -174,7 +174,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "joinType", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-1 w-full">
+                  <SelectTrigger className="h-11 border-border-color-0 w-full">
                     <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
@@ -198,7 +198,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "rightTable", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-1 w-full">
+                  <SelectTrigger className="h-11 border-border-color-0 w-full">
                     <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
@@ -218,7 +218,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                     updateJoin(join.id, "rightKey", value)
                   }
                 >
-                  <SelectTrigger className="h-11 border-border-color-1 w-full">
+                  <SelectTrigger className="h-11 border-border-color-0 w-full">
                     <SelectValue className='placeholder:text-xs' placeholder="Select Column" />
                   </SelectTrigger>
                   <SelectContent>
@@ -243,7 +243,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
         <RippleButton>
           <Button
             variant="outline"
-            className="gap-2 border-border-color-1 text-foreground hover:bg-gray-50 w-fit px-7"
+            className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
             onClick={goBack}
           >
             Back

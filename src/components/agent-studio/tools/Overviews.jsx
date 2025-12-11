@@ -26,7 +26,7 @@ const Overviews = () => {
         {stats.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col gap-10 border border-border-color-1 rounded-lg py-6 px-4 w-full"
+            className="flex flex-col gap-10 border border-border-color-0 rounded-lg py-6 px-4 w-full"
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 
@@ -42,7 +42,7 @@ const Overviews = () => {
         ))}
       </div>
 
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-1 h-full pb-8">
+      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8">
         {/* Query */}
         <div className="space-y-2">
           <h2 className="text-xl font-medium mb-6">Parameters</h2>
@@ -52,7 +52,7 @@ const Overviews = () => {
           <div className="flex gap-2 mt-2">
             <Input
               placeholder="Search query"
-              className="h-12 flex-1 !text-xs p-4 border-border-color-1 shadow-none text-foreground placeholder:text-foreground/80"
+              className="h-12 flex-1 !text-xs p-4 border-border-color-0 shadow-none text-foreground placeholder:text-foreground/80"
             />
           </div>
         </div>
@@ -65,7 +65,7 @@ const Overviews = () => {
           <div className="flex gap-2 mt-2">
             <Input
               placeholder="Number of results"
-              className="h-12 flex-1 !text-xs p-4 border-border-color-1 shadow-none text-foreground placeholder:text-foreground/80"
+              className="h-12 flex-1 !text-xs p-4 border-border-color-0 shadow-none text-foreground placeholder:text-foreground/80"
             />
           </div>
         </div>

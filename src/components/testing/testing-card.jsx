@@ -63,7 +63,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
     <div className="">
       <Card
         className={cn(
-          "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 h-full"
+          "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
         )}
       >
         <CardHeader>
@@ -172,7 +172,7 @@ export function TestingCard({ test, minSkeletonMs = 500 }) {
 export function TestingCardSkeleton() {
   return (
     <div className="group">
-      <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-2 !py-3 !pb-1 !pl-0">
+      <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 !py-3 !pb-1 !pl-0">
         <CardHeader>
           <div className="flex items-center w-full justify-between">
             <div className="space-y-6 w-full">

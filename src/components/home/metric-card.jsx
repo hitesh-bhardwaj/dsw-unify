@@ -56,7 +56,7 @@ export function MetricCard({
   const gradientId = `gradient-${String(label).replace(/\s+/g, "-")}`;
 
   return (
-    <Card className={cn(" min-h-40 py-0 rounded-xl ", className)}>
+    <Card className={cn(" min-h-38 py-0 rounded-xl ", className)}>
       <CardContent className="p-5 flex items-end justify-between">
         <div className="flex flex-col items-start justify-between w-[70%] gap-4">
           <div className="space-y-2">
@@ -64,7 +64,7 @@ export function MetricCard({
             <h3 className="text-3xl font-medium tracking-tight">
               <CountUp value={value} startOnView/></h3>
           </div>
-          <div className="w-full flex gap-2 text-badge-green ">
+          <div className="w-full flex gap-1 text-badge-green ">
             <div className="w-6 h-6 rounded-full bg-badge-green p-1 text-white flex items-center justify-center">
               <ArrowUp/>
             </div>

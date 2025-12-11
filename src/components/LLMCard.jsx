@@ -59,7 +59,7 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/llms/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-1 hover:border-white/20 py-5"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5"
           )}
         >
           <CardHeader>
@@ -134,7 +134,7 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
             {/* Footer */}
             {!llm?.deploy ? (
               llm?.performance ? (
-                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/30 transition-all duration-300">
+                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-0 border group-hover:border-white/30 transition-all duration-300">
                   <p className="group-hover:text-white transition-colors duration-300">Performance</p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
@@ -149,7 +149,7 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/30 transition-all duration-300">
+                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-0 border group-hover:border-white/30 transition-all duration-300">
                   <p className="group-hover:text-white transition-colors duration-300">Usage Stats</p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
@@ -165,7 +165,7 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
                 </div>
               )
             ) : (
-              <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/30 transition-all duration-300">
+              <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-0 border group-hover:border-white/30 transition-all duration-300">
                 <p className="group-hover:text-white transition-colors duration-300">Deploying Status</p>
                 <div className="w-full flex flex-col gap-4">
                   <p className="text-primary group-hover:text-white transition-colors duration-300">Progress:75%</p>
@@ -194,7 +194,7 @@ export function LLMCardSkeleton() {
   return (
     <Bounce>
       <div className="block h-full">
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-2 h-full py-5">
+        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 h-full py-5">
           <CardHeader>
             <div className="flex items-start justify-between">
               <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-black/40 relative">

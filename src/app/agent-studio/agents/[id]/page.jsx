@@ -340,7 +340,7 @@ export default function AgentDetailPage({ params }) {
                             <Badge
                               key={index}
                               variant="secondary"
-                              className="bg-transparent border border-border-color-1 font-light"
+                              className="bg-transparent border border-border-color-0 font-light"
                             >
                               {tag}
                             </Badge>

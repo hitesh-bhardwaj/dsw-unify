@@ -62,7 +62,7 @@ export default function DetailsTab({
       </div>
       <div>
         <h3 className="text-lg font-medium mb-3">Output Type</h3>
-        <div className="border border-border-color-1  p-3 rounded-lg text-foreground/80 text-xs">
+        <div className="border border-border-color-0  p-3 rounded-lg text-foreground/80 text-xs">
           Object
         </div>
       </div>

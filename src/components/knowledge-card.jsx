@@ -63,7 +63,7 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/knowledge-bases/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-1 hover:border-white/20 !py-5 h-full"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 !py-5 h-full"
           )}
         >
           <CardHeader>
@@ -117,7 +117,7 @@ export function KnowledgeCard({ agent, minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 duration-300 border-border-color-2 border group-hover:border-white/30 transition-all"
+                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 duration-300 border-border-color-0 border group-hover:border-white/30 transition-all"
               )}
             >
               <div className="flex flex-col items-start gap-1 font-medium">
@@ -155,7 +155,7 @@ export function KnowledgeCardSkeleton() {
   return (
     <Bounce>
       <div className="block group h-full">
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-2 !py-5 h-full">
+        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 !py-5 h-full">
           <CardHeader>
             <div className="flex items-start justify-between">
               {/* Icon placeholder */}

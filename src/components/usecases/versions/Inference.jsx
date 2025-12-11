@@ -337,12 +337,12 @@ export default function Inference() {
 
             <div className="flex gap-6 ">
               {/* Prediction Distribution Card */}
-              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-1">
+              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <h2 className="text-xl font-medium ">
                     Prediction Distribution
                   </h2>
-                  <span className="text-xs  rounded-full border border-border-color-2 px-3 py-1">
+                  <span className="text-xs  rounded-full border border-border-color-0 px-3 py-1">
                     Last 7 days
                   </span>
                 </div>
@@ -426,30 +426,30 @@ export default function Inference() {
               </div>
 
               {/* Recent Fraud Cases Card */}
-              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-1">
+              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <h2 className="text-xl font-medium">Recent Fraud Cases</h2>
-                  <span className="text-xs px-3 py-1 rounded-full border border-border-color-2">
+                  <span className="text-xs px-3 py-1 rounded-full border border-border-color-0">
                     8 flagged
                   </span>
                 </div>
                 <div className="px-6 pb-6">
                   {/* Table Header */}
-                  <div className="bg-sidebar-accent text-center px-4 py-3 rounded-t-lg border border-border-color-2">
+                  <div className="bg-sidebar-accent text-center px-4 py-3 rounded-t-lg border border-border-color-0">
                     <span className="text-sm font-medium text-foreground/80">
                       Customer IDs
                     </span>
                   </div>
 
                   {/* Scrollable Table Rows */}
-                  <div className="border-l border-r border-b border-border-color-2 rounded-b-lg overflow-hidden">
+                  <div className="border-l border-r border-b border-border-color-0 rounded-b-lg overflow-hidden">
                     <div className="max-h-64 overflow-y-auto">
                       {customerIds.map((id, index) => (
                         <div
                           key={id}
                           className={`px-4 py-3 flex justify-center items-center ${
                             index !== customerIds.length - 1
-                              ? "border-b border-border-color-2"
+                              ? "border-b border-border-color-0"
                               : ""
                           } hover:bg-sidebar-accent transition-colors`}
                         >
@@ -463,12 +463,12 @@ export default function Inference() {
             </div>
 
             <div className="w-full flex justify-between gap-6 items-center">
-              <div className="border h-[26vw]  w-1/2 border-border-color-1 rounded-2xl p-6">
+              <div className="border h-[26vw]  w-1/2 border-border-color-0 rounded-2xl p-6">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-medium text-foreground">
                     Prediction Trends
                   </span>
-                  <button className="text-xs px-3 py-1 rounded-full border border-border-color-1 ">
+                  <button className="text-xs px-3 py-1 rounded-full border border-border-color-0 ">
                     Daily
                   </button>
                 </div>
@@ -529,12 +529,12 @@ export default function Inference() {
               </div>
 
               {/* ---------------- Risk Score Distribution ---------------- */}
-              <div className="border w-1/2 h-[26vw] border-border-color-1 rounded-2xl p-6  shadow-sm">
+              <div className="border w-1/2 h-[26vw] border-border-color-0 rounded-2xl p-6  shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-medium text-foreground">
                     Risk Score Distribution
                   </span>
-                  <button className="text-xs px-3 py-1 rounded-full border border-border-color-2 ">
+                  <button className="text-xs px-3 py-1 rounded-full border border-border-color-0 ">
                     1,000 records
                   </button>
                 </div>
@@ -584,12 +584,12 @@ export default function Inference() {
             </div>
 
             <div className="w-full flex justify-between gap-6">
-              <div className="p-5 border w-1/2 h-[28vw] border-border-color-2 rounded-2xl space-y-6">
+              <div className="p-5 border w-1/2 h-[28vw] border-border-color-0 rounded-2xl space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-medium">
                     Top Contributing Features
                   </h2>
-                  <span className="text-xs px-3 border border-border-color-2 py-1 rounded-full ">
+                  <span className="text-xs px-3 border border-border-color-0 py-1 rounded-full ">
                     Impact Score
                   </span>
                 </div>
@@ -620,12 +620,12 @@ export default function Inference() {
               </div>
 
               {/* Right Card */}
-              <div className="p-5 w-1/2 h-[28vw] border border-border-color-2 rounded-2xl space-y-6">
+              <div className="p-5 w-1/2 h-[28vw] border border-border-color-0 rounded-2xl space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-medium">
                     Confidence Score Distribution
                   </h2>
-                  <span className="text-xs px-3 border border-border-color-2 py-1 rounded-full ">
+                  <span className="text-xs px-3 border border-border-color-0 py-1 rounded-full ">
                     Model Reliability
                   </span>
                 </div>

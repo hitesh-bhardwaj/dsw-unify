@@ -34,7 +34,7 @@ export default function SelectTables({ goNext, goBack }) {
         {tables.map((item) => (
           <label
             key={item.name}
-            className={`border border-border-color-1 rounded-lg p-4 cursor-pointer transition-all
+            className={`border border-border-color-0 rounded-lg p-4 cursor-pointer transition-all
                 flex flex-col justify-between h-22 hover:bg-sidebar-accent
                 ${
                   selected === item.name
@@ -71,7 +71,7 @@ export default function SelectTables({ goNext, goBack }) {
         <RippleButton>
           <Button
             variant="outline"
-            className="gap-2 border-border-color-1 text-foreground hover:bg-gray-50 w-fit px-7"
+            className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
             onClick={goBack}
           >
             Back

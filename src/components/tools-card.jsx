@@ -54,7 +54,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/tools/${id}`} className="block group h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-1 hover:border-white/20 !py-5 h-full"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 !py-5 h-full"
           )}
         >
           <CardHeader>
@@ -104,7 +104,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
 
           <CardContent>
 
-            <div className="border border-border-color-2 group-hover:border-white/30 h-full w-full rounded-lg flex px-5 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
+            <div className="border border-border-color-0 group-hover:border-white/30 h-full w-full rounded-lg flex px-5 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
 
             {/* Tags */}
             <div className="h-fit flex flex-wrap gap-1">
@@ -140,7 +140,7 @@ export function ToolsCardSkeleton() {
   return (
     <Bounce>
       <div className="block group h-full">
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-2 !pt-5">
+        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 !pt-5">
           <CardHeader>
             <div className="flex items-start justify-between">
               {/* Icon placeholder */}

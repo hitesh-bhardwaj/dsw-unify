@@ -49,7 +49,7 @@ export default function FeatureCreation({ onCloseModal }) {
       </p>
 
       {/* Card */}
-      <div className="border border-border-color-1 rounded-3xl p-8 space-y-5">
+      <div className="border border-border-color-0 rounded-3xl p-8 space-y-5">
         {/* Subtitle */}
         <h3 className="text-lg font-medium text-foreground">
           Validation Feature Definitions…

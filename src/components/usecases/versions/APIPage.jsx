@@ -175,7 +175,7 @@ public class APIPredict {
       {/* ---------------------------------------------------------------------- */}
       <div className="w-full gap-8 py-6">
 
-        <div className="border border-border-color-1 rounded-3xl px-4 py-6 space-y-4">
+        <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4">
           <div className="space-y-1">
             <h2 className="text-xl font-medium">API Documentation</h2>
             <p className="text-sm text-foreground/80">
@@ -217,7 +217,7 @@ public class APIPredict {
           <div className="pt-6 space-y-3">
             <label className="text-lg font-medium text-[#111111]">Response Format</label>
 
-            <pre className="rounded-xl bg-background border border-border-color-1 p-4 text-xs text-foreground/80 overflow-x-auto">
+            <pre className="rounded-xl bg-background border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
 {`{
   "prediction": "No Fraud",
   "confidence": 0.924,
@@ -234,17 +234,17 @@ public class APIPredict {
             <h3 className="text-lg font-medium">Rate Limits</h3>
 
            <div className="flex justify-between gap-4  mt-4 min-h-32">
-  <div className="border border-border-color-1 w-full rounded-xl  p-4 bg-background  text-left flex flex-col justify-between">
+  <div className="border border-border-color-0 w-full rounded-xl  p-4 bg-background  text-left flex flex-col justify-between">
     <p className="text-sm text-foreground/80">Requests per minute</p>
     <p className="text-4xl font-medium mt-1">1,000</p>
   </div>
 
-  <div className="border border-border-color-1 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
+  <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
     <p className="text-sm text-foreground/80">Requests per day</p>
     <p className="text-4xl font-medium mt-1">50,000</p>
   </div>
 
-  <div className="border border-border-color-1 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
+  <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
     <p className="text-sm text-foreground/80">Average latency</p>
     <p className="text-4xl font-medium mt-1">100ms</p>
   </div>
@@ -260,7 +260,7 @@ public class APIPredict {
     {errorCodes.map((err, index) => (
       <div
         key={index}
-        className="border border-border-color-1 rounded-xl px-4 py-5 bg-background flex gap-4"
+        className="border border-border-color-0 rounded-xl px-4 py-5 bg-background flex gap-4"
       >
         <p className="font-medium text-sm w-12">{err.code}</p>
 
@@ -290,7 +290,7 @@ public class APIPredict {
 
 function CodeBlock({ code }) {
   return (
-    <pre className="rounded-lg bg-background p-4 text-sm text-foreground overflow-x-auto border border-border-color-2">
+    <pre className="rounded-lg bg-background p-4 text-sm text-foreground overflow-x-auto border border-border-color-0">
       <code>{code}</code>
     </pre>
   );
@@ -298,7 +298,7 @@ function CodeBlock({ code }) {
 
 function RateBox({ label, value }) {
   return (
-    <div className="border border-border-color-1 rounded-xl p-4 bg-background text-center">
+    <div className="border border-border-color-0 rounded-xl p-4 bg-background text-center">
       <p className="text-sm text-foreground/80">{label}</p>
       <p className="text-xl font-medium mt-1">{value}</p>
     </div>
@@ -307,7 +307,7 @@ function RateBox({ label, value }) {
 
 function ErrorBox({ code, title, desc }) {
   return (
-    <div className="border border-border-color-1 rounded-xl p-4 bg-background">
+    <div className="border border-border-color-0 rounded-xl p-4 bg-background">
       <p className="font-semibold">{code} — {title}</p>
       <p className="text-xs text-foreground/80 mt-1">{desc}</p>
     </div>

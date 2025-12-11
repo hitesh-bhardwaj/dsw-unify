@@ -186,7 +186,7 @@ export default function PromptsPage() {
               <RippleButton className={"rounded-lg"}>
                 <Button
                   variant="outline"
-                  className="gap-2 border-border-color-1 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
+                  className="gap-2 border-border-color-0 text-foreground hover:bg-sidebar-accent duration-300 px-4 text-xs rounded-lg"
                 >
                   <div className="w-4 h-4">
                     <Tune />

@@ -36,7 +36,7 @@ export default function History() {
         {historyData.map((item, index) => (
           <div
             key={index}
-            className="!border  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background py-6 text-xs flex justify-between items-center"
+            className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background py-6 text-xs flex justify-between items-center"
           >
             <div className="">
                 <div className="flex gap-4">

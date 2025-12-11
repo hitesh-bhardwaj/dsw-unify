@@ -83,7 +83,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
     return (
       <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
         {/* Left card skeleton */}
-        <Card className="overflow-hidden bg-background border border-border-color-1 h-full py-7 w-full">
+        <Card className="overflow-hidden bg-background border border-border-color-0 h-full py-7 w-full">
           <div className="space-y-4 px-5">
             <CardHeader className="px-0">
               <Skeleton className="h-6 w-44" />
@@ -119,7 +119,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
         </Card>
 
         {/* Right card skeleton */}
-        <Card className="overflow-hidden bg-background border border-border-color-1 h-full pt-7 pb-3 w-full">
+        <Card className="overflow-hidden bg-background border border-border-color-0 h-full pt-7 pb-3 w-full">
           <div className="space-y-4 px-5">
             <CardHeader className="px-0">
               <Skeleton className="h-6 w-40" />
@@ -160,7 +160,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
     <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
       <Card
         className={cn(
-          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
+          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
         )}
       >
         <div className="space-y-4 px-5">
@@ -202,13 +202,13 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
           <div className="space-y-2">
             <p>Tags</p>
             <div className="flex gap-2">
-              <Badge className="bg-transparent border border-border-color-1 text-foreground font-normal">
+              <Badge className="bg-transparent border border-border-color-0 text-foreground font-normal">
                 general purpose
               </Badge>
-              <Badge className="bg-transparent border border-border-color-1 text-foreground font-normal">
+              <Badge className="bg-transparent border border-border-color-0 text-foreground font-normal">
                 api-based
               </Badge>
-              <Badge className="bg-transparent border border-border-color-1 text-foreground font-normal">
+              <Badge className="bg-transparent border border-border-color-0 text-foreground font-normal">
                 production
               </Badge>
             </div>
@@ -218,7 +218,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
 
       <Card
         className={cn(
-          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
+          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
         )}
       >
         <div className="space-y-4 px-5">

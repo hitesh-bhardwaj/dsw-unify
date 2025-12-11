@@ -217,13 +217,13 @@ export default function AgentsPage() {
             )}
           >
             <div className="grid gap-6 grid-cols-1 h-full">
-              <div className="w-full border border-border-color-1 rounded-2xl h-full flex justify-center items-center text-border-color-3">
+              <div className="w-full border border-border-color-0 rounded-2xl h-full flex justify-center items-center text-border-color-3">
                 <p>"No Templates to be shown"</p>
               </div>
             </div>
           </div>
           {filteredAgents.length === 0 && tab === "prompts" && (
-            <div className="flex h-64 items-center justify-center text-border-color-3 dark:text-foreground border border-border-color-1 rounded-xl">
+            <div className="flex h-64 items-center justify-center text-border-color-3 dark:text-foreground border border-border-color-0 rounded-xl">
               No prompts found matching "{query}"
             </div>
           )}

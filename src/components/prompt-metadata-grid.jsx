@@ -17,7 +17,7 @@ const PromptMetadataGrid = () => {
 
   return (
     <>
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-1 h-full pb-8 ">
+      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 ">
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground dark:text-foreground">
             Name
@@ -27,7 +27,7 @@ const PromptMetadataGrid = () => {
               value={namePrompt}
               onChange={(e) => setNamePrompt(e.target.value)}
               placeholder="Customer Support Assistant"
-              className="h-12 flex-1 !text-xs p-4 border-border-color-1 shadow-none text-foreground placeholder:text-foreground/80"
+              className="h-12 flex-1 !text-xs p-4 border-border-color-0 shadow-none text-foreground placeholder:text-foreground/80"
             />
           </div>
         </div>
@@ -40,7 +40,7 @@ const PromptMetadataGrid = () => {
               value={categoryPrompt}
               onChange={(e) => setCategoryPrompt(e.target.value)}
               placeholder="Customer Service"
-              className="h-12 flex-1 !text-xs p-4 border-border-color-1 shadow-none text-foreground placeholder:text-foreground/80"
+              className="h-12 flex-1 !text-xs p-4 border-border-color-0 shadow-none text-foreground placeholder:text-foreground/80"
             />
           </div>
         </div>
@@ -52,7 +52,7 @@ const PromptMetadataGrid = () => {
             value={systemPrompt}
             onChange={(e) => setSystemPrompt(e.target.value)}
             placeholder="Helpful and empathetic customer service responses"
-            className="min-h-[150px] mt-2 resize-none border-border-color-1 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80"
+            className="min-h-[150px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80"
           />
         </div>
         <div className="space-y-2">

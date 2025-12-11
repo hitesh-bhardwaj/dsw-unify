@@ -154,11 +154,11 @@ export function FeatureCard({ feature, view, minSkeletonMs = 500 }) {
           ))}
         </div>
 
-        {isList && <div className="border-t border-border-color-2 group-hover:border-white/60" />}
+        {isList && <div className="border-t border-border-color-0 group-hover:border-white/60" />}
 
         {/* Code Block */}
         <pre className={cn(
-          "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all duration- dark:bg-background border-border-color-2 border text-foreground/80 group-hover:text-white/80 bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 py-5 px-4",
+          "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all duration- dark:bg-background border-border-color-0 border text-foreground/80 group-hover:text-white/80 bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 py-5 px-4",
         )}>
           <code>{previewCode}</code>
         </pre>
@@ -201,7 +201,7 @@ export function FeatureCard({ feature, view, minSkeletonMs = 500 }) {
 export function FeatureCardSkelton() {
   return (
     <div className="group w-full h-full">
-      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-0">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

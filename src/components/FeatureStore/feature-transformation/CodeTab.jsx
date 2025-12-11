@@ -21,7 +21,7 @@ export default function PythonCodeBlock({ codeExamples }) {
     <div className="w-full  dark:bg-background py-4 px-0 relative space-y-4 ">
       <p className=" text-xs">Python</p>
 
-      <pre className="w-full whitespace-pre  dark:bg-background border-border-color-2 border overflow-x-auto rounded-lg text-foreground/80 py-6 px-4 text-xs font-mono">
+      <pre className="w-full whitespace-pre  dark:bg-background border-border-color-0 border overflow-x-auto rounded-lg text-foreground/80 py-6 px-4 text-xs font-mono">
         <code>{codeExamples}</code>
       </pre>
 

@@ -37,7 +37,7 @@ export function TemplateCard({ template }) {
     <div className="group h-full">
       <Card
         className={cn(
-          "feature-card-hover-container overflow-hidden transition-all hover:shadow-md duration-300 py-5 border border-border-color-1 hover:border-white/20 bg-background"
+          "feature-card-hover-container overflow-hidden transition-all hover:shadow-md duration-300 py-5 border border-border-color-0 hover:border-white/20 bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -126,7 +126,7 @@ export function TemplateCard({ template }) {
           <div className={`flex items-center justify-between mb-3`}>
             <span className={"text-foreground group-hover:text-white transition-colors duration-300"}>{uses} uses</span>
           </div>
-          <div className="bg-white/10 dark:bg-background dark:group-hover:bg-white/10 p-3 rounded-md border border-border-color-2 group-hover:border-white/30 transition-all duration-300">
+          <div className="bg-white/10 dark:bg-background dark:group-hover:bg-white/10 p-3 rounded-md border border-border-color-0 group-hover:border-white/30 transition-all duration-300">
           <span className="font-medium text-foreground group-hover:text-white transition-colors duration-300">Variables: </span>
           <span className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">{variable}</span>
           </div>

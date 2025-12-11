@@ -65,7 +65,7 @@ export default function Documents() {
         {documnetsData.map((item, index) => (
           <div
             key={index}
-            className="!border  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+            className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
           >
             <div className="flex gap-5">
                  <div className="w-13 h-12">

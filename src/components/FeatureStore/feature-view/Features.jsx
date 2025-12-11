@@ -58,7 +58,7 @@ export default function Features() {
     <div className="w-full mx-auto ">
         <p className="font-medium text-lg mb-4">Feature Schema <span className="text-muted-foreground">(5 features)</span></p>
       
-      <div className="border border-border-color-2 p-0 rounded-2xl">
+      <div className="border border-border-color-0 p-0 rounded-2xl">
 
 
           <Table className="w-full text-xs rounded-2xl overflow-hidden ">

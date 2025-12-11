@@ -16,6 +16,7 @@ export function FeatureCard({
   href,
   className,
   minSkeletonMs = 500,
+  index
 }) {
   const id = title; // unique key for skeleton control
 
@@ -37,26 +38,32 @@ export function FeatureCard({
 
   const CardWrapper = href
     ? ({ children }) => (
-        <Bounce>
-          <Link href={href} className="block h-full">
-            {children}
-          </Link>
-        </Bounce>
-      )
+      <Bounce>
+        <Link href={href} className="block h-full">
+          {children}
+        </Link>
+      </Bounce>
+    )
     : ({ children }) => <Bounce>{children}</Bounce>;
 
   return (
     <CardWrapper>
       <Card
         className={cn(
-          "feature-card-hover-container h-full transition-all duration-300 group py-5 pb-10",
+          "feature-card-hover-container h-full transition-all duration-300 group py-5 pb-10 border border-border-color-0",
           href && "cursor-pointer",
           className
         )}
       >
         <CardHeader className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
+            <div
+              className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
+              style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
+            >
               {Icon && <Icon className="h-6 w-6" />}
             </div>
           </div>
@@ -80,7 +87,7 @@ export function FeatureCard({
 export function FeatureCardSkeleton() {
   return (
     <div className="group w-full h-full">
-      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-0">
         <CardHeader className="space-y-6">
           {/* Icon circle */}
           <div className="flex items-center gap-3">

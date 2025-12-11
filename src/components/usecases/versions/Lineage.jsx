@@ -10,7 +10,7 @@ import {
 
 export default function Lineage() {
   return (
-    <div className="border border-border-color-1 rounded-2xl space-y-8 py-6 pb-8 px-8">
+    <div className="border border-border-color-0 rounded-2xl space-y-8 py-6 pb-8 px-8">
       <div className="space-y-3">
         <h2 className="text-xl font-medium">Data Lineage</h2>
         <p className="text-sm text-foreground/80">
@@ -55,7 +55,7 @@ const PipelineNode = ({ title, subtitle, children }) => {
         align="center"
         side="right"
         sideOffset={16}
-        className="w-88 rounded-3xl p-6 shadow-md border border-border-color-1"
+        className="w-88 rounded-3xl p-6 shadow-md border border-border-color-0"
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
       >

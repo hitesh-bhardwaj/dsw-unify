@@ -50,7 +50,7 @@ export function ConsoleCard({ memories, minSkeletonMs = 500 }) {
       <Link href={`#`} className="block group h-full">
         <Card
           className={cn(
-            "overflow-hidden h-full hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 py-5"
+            "overflow-hidden h-full hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 py-5"
           )}
         >
           <CardHeader>
@@ -120,7 +120,7 @@ export function GuardrailsCardSkeleton() {
   return (
     <Bounce>
       <div className="block group h-full">
-        <Card className="overflow-hidden h-full hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-2 !py-5">
+        <Card className="overflow-hidden h-full hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 !py-5">
           <CardHeader>
             <div className="flex items-start justify-between">
               {/* Icon placeholder */}

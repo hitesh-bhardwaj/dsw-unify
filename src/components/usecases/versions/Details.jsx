@@ -33,14 +33,14 @@ export default function Details() {
     <>
       <div className="w-full  grid grid-cols-1 md:grid-cols-2 gap-8 py-6">
         {/* Feature List */}
-        <div className="border border-border-color-1 rounded-3xl px-4 py-6 space-y-4">
+        <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4">
           <h2 className="text-xl font-medium mb-4">Feature List</h2>
 
           <div className="space-y-2">
             {features.map((item, idx) => (
               <div
                 key={idx}
-                className="border border-border-color-1 rounded-lg px-4 py-3 text-xs text-foreground/80"
+                className="border border-border-color-0 rounded-lg px-4 py-3 text-xs text-foreground/80"
               >
                 {item}
               </div>
@@ -49,7 +49,7 @@ export default function Details() {
         </div>
 
         {/* Model Configuration */}
-        <div className="border border-border-color-1 rounded-2xl px-5 py-6 space-y-6">
+        <div className="border border-border-color-0 rounded-2xl px-5 py-6 space-y-6">
           <h2 className="text-xl font-medium ">Model Configuration</h2>
 
           <div>
@@ -63,7 +63,7 @@ export default function Details() {
             <p className=" text-sm mb-2 text-foreground/80">Hyperparameters</p>
             
             <pre
-              className={`rounded-lg bg-sidebar-accent p-4 text-xs border border-border-color-2 text-foreground/80 overflow-x-auto transition-opacity duration-300 ease-in
+              className={`rounded-lg bg-sidebar-accent p-4 text-xs border border-border-color-0 text-foreground/80 overflow-x-auto transition-opacity duration-300 ease-in
           }`}
             >
               <code>{hyperparams}</code>
@@ -87,7 +87,7 @@ export default function Details() {
           {metrics.map((m, i) => (
             <div
               key={i}
-              className="border border-border-color-1 flex flex-col gap-7  rounded-2xl px-4 py-4 !w-full bg-background"
+              className="border border-border-color-0 flex flex-col gap-7  rounded-2xl px-4 py-4 !w-full bg-background"
             >
               <p className="text-sm text-foreground mb-2">{m.label}</p>
               <p className="text-2xl font-medium text-badge-green">

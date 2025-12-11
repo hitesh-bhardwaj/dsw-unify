@@ -20,7 +20,7 @@ export function TestingAnalyticsCard({ cards, tab }) {
   const { heading, progress, remarks, positive } = cards;
 
   return (
-    <Card className={cn("overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-1 !py-5 !rounded-lg")}>
+    <Card className={cn("overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 !rounded-lg")}>
       <CardHeader>
         <div className="flex items-center w-full justify-between">
           <div className="space-y-3">

@@ -25,7 +25,7 @@ const Overview = ({
         {/* Description */}
         <div className="space-y-2">
           <div className="text-sm font-medium pb-2">Description</div>
-          <div className="border border-border-color-2 rounded-lg py-8 px-6 text-xs bg-white dark:bg-background">
+          <div className="border border-border-color-0 rounded-lg py-8 px-6 text-xs bg-white dark:bg-background">
             {description || "No description available"}
           </div>
         </div>
@@ -71,7 +71,7 @@ const Overview = ({
         {/* Source Tables */}
         <div className="space-y-3">
           <div className="text-sm font-medium">Source Tables</div>
-          <div className="border border-border-color-2 rounded-lg py-8 px-6 text-xs bg-white dark:bg-background  text-foreground/60">
+          <div className="border border-border-color-0 rounded-lg py-8 px-6 text-xs bg-white dark:bg-background  text-foreground/60">
             No source tables
           </div>
         </div>

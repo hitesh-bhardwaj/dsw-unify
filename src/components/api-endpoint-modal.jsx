@@ -316,7 +316,7 @@ const handleTabChange = (value) => {
                     />
                     <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
 
-                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={apiKey} />
+                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={apiKey} />
                     </button>
                     </div>
                   </div>
@@ -341,7 +341,7 @@ const handleTabChange = (value) => {
                     />
                     <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
 
-                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={apiKey} />
+                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={apiKey} />
                     </button>
                   </div>
                   <p className="text-xs text-black/60">
@@ -362,7 +362,7 @@ const handleTabChange = (value) => {
                     />
                     <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
 
-                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={endpointUrl} />
+                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={endpointUrl} />
                     </button>
                   </div>
                 </div>
@@ -384,7 +384,7 @@ const handleTabChange = (value) => {
         <div className="absolute right-2 top-2">
           <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
 
-                    <CopyButton className='border p-5 border-border-color-2 ' textToCopy={codeExamples[displayedTab]} />
+                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={codeExamples[displayedTab]} />
                     </button>
         </div>
       </div>

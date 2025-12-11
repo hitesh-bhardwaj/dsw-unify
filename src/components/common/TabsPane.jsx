@@ -105,7 +105,7 @@ export default function AnimatedTabsSection({
         value={active}
         {...(!isControlled && { defaultValue: defaultValue ?? first })}
         onValueChange={setActive}
-        className={`sticky z-30 top-0  flex gap-4  bg-sidebar-accent p-1.5 rounded-lg border border-border-color-2 `}
+        className={`sticky z-30 top-0  flex gap-4  bg-sidebar-accent p-1.5 rounded-lg border border-border-color-0 `}
       >
         <TabsList className={`relative flex w-full gap-4 !p-0 bg-transparent`} activeClassName={"border shadow-none"}>
           {items.map((i) => (

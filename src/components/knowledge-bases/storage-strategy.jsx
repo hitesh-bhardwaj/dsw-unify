@@ -85,7 +85,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
     return (
       <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
         {/* Left card skeleton */}
-        <Card className="overflow-hidden bg-background border border-border-color-1 h-full py-7 w-full">
+        <Card className="overflow-hidden bg-background border border-border-color-0 h-full py-7 w-full">
           <div className="space-y-4 px-5">
             <CardHeader className="px-0">
               <Skeleton className="h-6 w-44" />
@@ -121,7 +121,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
         </Card>
 
         {/* Right card skeleton */}
-        <Card className="overflow-hidden bg-background border border-border-color-1 h-full pt-7 pb-3 w-full">
+        <Card className="overflow-hidden bg-background border border-border-color-0 h-full pt-7 pb-3 w-full">
           <div className="space-y-4 px-5">
             <CardHeader className="px-0">
               <Skeleton className="h-6 w-40" />
@@ -164,7 +164,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
     <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
       <Card
         className={cn(
-          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
+          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
         )}
       >
         <div className="space-y-6 px-5 pb-10">
@@ -225,13 +225,13 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
           <div className="space-y-2">
             <p>Separators</p>
             <div className="flex gap-2">
-              <Badge className="bg-transparent border border-border-color-1 text-foreground font-normal">
+              <Badge className="bg-transparent border border-border-color-0 text-foreground font-normal">
                 \n\n
               </Badge>
-              <Badge className="bg-transparent border border-border-color-1 text-foreground font-normal">
+              <Badge className="bg-transparent border border-border-color-0 text-foreground font-normal">
                 \n
               </Badge>
-              <Badge className="bg-transparent border border-border-color-1 text-foreground font-normal">
+              <Badge className="bg-transparent border border-border-color-0 text-foreground font-normal">
                EOF
               </Badge>
             </div>
@@ -241,7 +241,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
 
       <Card
         className={cn(
-          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
+          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
         )}
       >
         <div className="space-y-4 px-5">
@@ -255,7 +255,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
             <p className="text-sm">Embedding Model</p>
             <div
             
-            className="!border  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+            className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
           >
             <div className="flex gap-5">
                 <div className="">
@@ -279,7 +279,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
             
             <div
             
-            className="!border  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+            className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
           >
             
                 <div className="space-y-2 w-full">
@@ -308,7 +308,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
             <p className="text-sm">Storage Impact</p>
             <div
             
-            className="!border  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs space-y-3"
+            className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs space-y-3"
           >
             <div className="flex items-center justify-between w-full">
               <p className="text-sm">
@@ -337,7 +337,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
     <div>
           <Card
         className={cn(
-          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-1 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
+          "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
         )}
       >
         <div className="space-y-4 px-5">
@@ -348,7 +348,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
           </CardHeader>
            <div className="space-y-3 flex gap-3">
            
-            <div className="!border w-1/3 border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+            <div className="!border w-1/3 border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
           >
             
                 <div className="space-y-2 w-full">
@@ -370,7 +370,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
             </div>
           </div>
             </div>
-              <div className="!border w-1/3  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+              <div className="!border w-1/3  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
           >
             
                 <div className="space-y-2 w-full">
@@ -392,7 +392,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
             </div>
           </div>
             </div>
-              <div className="!border w-1/3  border-border-color-2 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+              <div className="!border w-1/3  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
           >
             
                 <div className="space-y-2 w-full">

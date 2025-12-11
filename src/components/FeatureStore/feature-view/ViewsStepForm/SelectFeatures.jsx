@@ -104,7 +104,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
           {availableTables.map((table,index) => (
             <div
               key={index}
-              className="border border-border-color-1 rounded-lg p-4 "
+              className="border border-border-color-0 rounded-lg p-4 "
             >
               <h4 className="text-sm font-medium text-foreground mb-3">
                 {table.name}
@@ -114,7 +114,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
                 {table.columns.map((column,index) => (
                   <div
                     key={index}
-                    className={`border rounded-lg border-border-color-1 p-3 cursor-pointer transition-all w-[95%] ${
+                    className={`border rounded-lg border-border-color-0 p-3 cursor-pointer transition-all w-[95%] ${
                       selectedColumns.includes(column.id)
                         ? " "
                         : " "
@@ -168,7 +168,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
             {selectedFeatures.map((feature) => (
               <div
                 key={feature.id}
-                className="border border-border-color-1 rounded-lg p-4 "
+                className="border border-border-color-0 rounded-lg p-4 "
               >
                 {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-foreground/60 mb-3">
@@ -184,7 +184,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
                 </div>
 
                 {/* Feature Name */}
-                <div className="bg-gray-50 rounded-md py-2 px-3 border border-border-color-1 dark:bg-background w-[85%]">
+                <div className="bg-gray-50 rounded-md py-2 px-3 border border-border-color-0 dark:bg-background w-[85%]">
                   <p className="text-sm text-foreground font-medium">
                     {feature.featureName}
                   </p>
@@ -193,7 +193,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
             ))}
 
             {selectedFeatures.length === 0 && (
-              <div className="border border-dashed border-border-color-1 rounded-lg p-8 text-center">
+              <div className="border border-dashed border-border-color-0 rounded-lg p-8 text-center">
                 <p className="text-sm text-foreground/60">
                   No features selected yet
                 </p>
@@ -211,7 +211,7 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
         <RippleButton>
           <Button
             variant="outline"
-            className="gap-2 border-border-color-1 text-foreground hover:bg-gray-50 w-fit px-7"
+            className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
             onClick={goBack}
           >
             Back

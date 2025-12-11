@@ -163,7 +163,7 @@ export default function UsecaseInternalCard({ usecase, slug,view, minSkeletonMs 
           )}
         >
           {isList && (
-              <div className="border-t border-border-color-2 group-hover:border-white/60" />
+              <div className="border-t border-border-color-0 group-hover:border-white/60" />
             )}
           {/* Tags */}
           <div className="flex flex-wrap gap-1 pt-2">
@@ -191,7 +191,7 @@ export default function UsecaseInternalCard({ usecase, slug,view, minSkeletonMs 
           {/* Versions + Features */}
           <div
             className={cn(
-              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2", isList && 'w-[25%]'
+              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-0", isList && 'w-[25%]'
             )}
           >
             <div className="flex items-center gap-2 ">
@@ -237,7 +237,7 @@ export default function UsecaseInternalCard({ usecase, slug,view, minSkeletonMs 
 export function UsecaseInternalCardSkeleton() {
   return (
     <div className="group w-full h-full">
-      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-0">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

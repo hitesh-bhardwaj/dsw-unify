@@ -188,7 +188,7 @@ const { id: routeId, modelId } = params;
             )}
           >
             {isList && (
-              <div className="border-t border-border-color-2 group-hover:border-white/60" />
+              <div className="border-t border-border-color-0 group-hover:border-white/60" />
             )}
             {/* Tags */}
             <div className="flex flex-wrap gap-1 pt-2">
@@ -265,7 +265,7 @@ const { id: routeId, modelId } = params;
 export function UsecaseInternalCardSkeleton() {
   return (
     <div className="group w-full h-full">
-      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-2">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-0">
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">

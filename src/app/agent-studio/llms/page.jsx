@@ -132,7 +132,7 @@ export default function LLMsPage() {
         filteredLLMs.length > 0 ? (
           <LLMGrid items={filteredLLMs} />
         ) : (
-          <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground border border-border-color-1 rounded-xl">
+          <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground border border-border-color-0 rounded-xl">
             No LLMs found matching "{query}"
           </div>
         ),
