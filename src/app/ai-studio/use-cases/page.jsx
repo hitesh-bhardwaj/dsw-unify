@@ -236,8 +236,8 @@ const page = () => {
                     : "flex flex-col gap-5"
                 }`}
               >
-                {filteredFeatures.map((feature) => (
-                  <UseCaseCard key={feature.id} feature={feature} view={view} />
+                {filteredFeatures.map((feature, index) => (
+                  <UseCaseCard key={feature.id} feature={feature} view={view} index={index} />
                 ))}
 
                 {filteredFeatures.length === 0 && (

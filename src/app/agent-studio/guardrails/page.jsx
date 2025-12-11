@@ -103,8 +103,8 @@ export default function GuardrailsPage() {
       {/* <FadeUp delay={0.04}> */}
         <div className="flex-1 overflow-auto p-6 pt-0">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-            {filteredGuardrails.map((guardrail) => (
-              <GuardrailsCard key={guardrail.id} memories={guardrail} />
+            {filteredGuardrails.map((guardrail, index) => (
+              <GuardrailsCard key={guardrail.id} memories={guardrail} index={index} />
             ))}
           </div>
 

@@ -11,7 +11,7 @@ import HotEncoding from "./TransformationCard";
 
 const skeletonShownMap = new Map();
 
-export function FeatureCard({ feature, view, minSkeletonMs = 500 }) {
+export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -74,12 +74,17 @@ export function FeatureCard({ feature, view, minSkeletonMs = 500 }) {
         )}>
           {/* Icon */}
           <div className={cn(
-            "flex items-center justify-center rounded-lg border p-3 group-hover:bg-white group-hover:text-black group-hover:border-white duration-300",
-            isGrid && "h-14 w-14 bg-sidebar-accent text-foreground transition-all   ",
-            isList && "h-14 w-14 bg-sidebar-accent mb-4"
-          )}>
+            "flex items-center justify-center rounded-lg p-3 group-hover:!bg-white group-hover:!text-black duration-300",
+            isGrid && "h-14 w-14 transition-all   ",
+            isList && "h-14 w-14  mb-4"
+          )}
+          style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}>
             {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-20 w-20")} />}
           </div>
+           
 
             <div className={cn(
               "flex items-center gap-1 transition-opacity duration-300",

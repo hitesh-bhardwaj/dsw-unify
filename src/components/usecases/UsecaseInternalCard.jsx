@@ -33,7 +33,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered UsecaseInternalCard component.
  */
-export default function UsecaseInternalCard({ usecase, slug,view, minSkeletonMs = 500 }) {
+export default function UsecaseInternalCard({ usecase, slug,view,index, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -91,7 +91,13 @@ export default function UsecaseInternalCard({ usecase, slug,view, minSkeletonMs 
             {/* Icon */}
             <div className={`flex gap-2 items-end ${view==='list'? 'gap-5': ''}`}>
 
-            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
+            <div
+              className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
+              style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
+            >
               {Icon && <Icon className="h-6 w-6" />}
             </div>
             <p className={`text-xs border px-2 py-1 group-hover:border-white group-hover:text-white duration-300  rounded-full ${status==='Deployed'? 'border-badge-green': 'border-red-500'} `}>

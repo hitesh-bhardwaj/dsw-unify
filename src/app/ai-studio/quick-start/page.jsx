@@ -78,7 +78,7 @@ const page = () => {
                         
                               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                                 {filteredQuickFeature.map((feature, index) => (
-                                  <QuickCards key={index} {...feature} />
+                                  <QuickCards key={index} {...feature} index={index} />
                                 ))}
                               </div>
                             </div>

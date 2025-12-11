@@ -21,7 +21,7 @@ const skeletonShownMap = new Map();
 import Link from "next/link";
 import CopyButton from "../animate-ui/components/buttons/CopyButton";
 
-export function UseCaseCard({ feature, view, minSkeletonMs = 500 }) {
+export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -79,10 +79,15 @@ export function UseCaseCard({ feature, view, minSkeletonMs = 500 }) {
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between mb-4">
               {/* Icon, Rating, and Version */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3 ">
-                {Icon && <Icon className="h-6 w-6" />}
-              </div>
-
+             <div
+              className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
+              style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
+            >
+              {Icon && <Icon className="h-6 w-6" />}
+            </div>
               {/* Action buttons */}
               <div className="flex items-center gap-1">
                 <Button
@@ -138,7 +143,7 @@ export function UseCaseCard({ feature, view, minSkeletonMs = 500 }) {
             )}
           >
             {isList && (
-              <div className="border-t border-border-color-0 group-hover:border-white/60" />
+              <div className="border-t border-border-color-0 group-hover:border-border-color-0" />
             )}
 
             <div className="flex flex-wrap gap-1 pt-2">
@@ -147,7 +152,7 @@ export function UseCaseCard({ feature, view, minSkeletonMs = 500 }) {
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                    "rounded-full border border-border-color-0 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-border-color-0 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
                   {tag}
@@ -164,7 +169,7 @@ export function UseCaseCard({ feature, view, minSkeletonMs = 500 }) {
             >
               <div
                 className={cn(
-                  "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-0",
+                  "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-border-color-0 border border-border-color-0",
                   `${
                     isList
                       ? "justify-between gap-10 w-[30%]"

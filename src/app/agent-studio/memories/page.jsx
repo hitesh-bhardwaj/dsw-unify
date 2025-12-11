@@ -100,8 +100,8 @@ export default function MemoriesPage() {
         {/* <FadeUp delay={0.04}> */}
         <div className="flex-1 overflow-auto p-6 pt-0 w-full h-full">
           <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {filteredMemories.map((memory) => (
-              <MemoryCard key={memory.id} memories={memory} />
+            {filteredMemories.map((memory, index) => (
+              <MemoryCard key={memory.id} memories={memory} index={index} />
             ))}
           </div>
 

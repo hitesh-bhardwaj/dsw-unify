@@ -33,9 +33,6 @@ export default function APIPage() {
   },
 ];
 
-
-  
-
   const hyperparams = `{
   "max_depth": 6,
   "learning_rate": 0.1,

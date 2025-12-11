@@ -32,7 +32,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time in milliseconds to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered LLMCard component.
  */
-export function LLMCard({ llm, minSkeletonMs = 500 }) {
+export function LLMCard({ llm, index, minSkeletonMs = 500 }) {
   const { id, name, description, status, tags = [],icon } = llm || {};
 
   const [showSkeleton, setShowSkeleton] = useState(() => {
@@ -65,10 +65,14 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
           <CardHeader>
             <div className="flex items-end gap-2">
               {/* Icon */}
-              <div
+               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent text-foreground group-hover:!bg-white group-hover:!text-black  transition-all duration-300"
                 )}
+                 style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
               >
                 <span
                   className={cn(
@@ -123,7 +127,7 @@ export function LLMCard({ llm, minSkeletonMs = 500 }) {
                   key={index}
                   variant="secondary"
                   className={cn(
-                   "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                   "rounded-full border border-border-color-0 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
                   {tag.label}

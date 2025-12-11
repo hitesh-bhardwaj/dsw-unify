@@ -30,7 +30,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered ViewCard component.
  */
-export function ViewCard({ feature,view, minSkeletonMs = 500 }) {
+export function ViewCard({ feature, view, index, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -76,7 +76,7 @@ const isGrid = view === "grid";
         onClick={() => setIsModalOpen(true)}
         className={cn(
           "feature-card-hover-container gap-2  transition-all duration-300 group",
-          isGrid && " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 hover:shadow-md",
+          isGrid && " h-full flex flex-col justify-between gap-0 py-5 hover:border-border-color-0 hover:shadow-md",
         // List view styles
         isList && "w-full rounded-xl hover:shadow-md px-6 py-6 bg-white dark:bg-background"
         )}
@@ -89,12 +89,16 @@ const isGrid = view === "grid";
         )}>
             {/* Icon, Rating, and Version */}
             <div className={cn(
-            "flex items-center justify-center rounded-lg border p-3 group-hover:bg-white group-hover:text-black group-hover:border-white duration-300",
-            isGrid && "h-14 w-14 bg-sidebar-accent text-foreground transition-all   ",
-            isList && "h-14 w-14 bg-sidebar-accent "
-          )}>
-              {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-20 w-20")} />}
-            </div>
+            "flex items-center justify-center rounded-lg  p-3 group-hover:!bg-white group-hover:!text-black duration-300",
+            isGrid && "h-14 w-14 transition-all   ",
+            isList && "h-14 w-14  mb-4"
+          )}
+          style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}>
+            {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-20 w-20")} />}
+          </div>
 
             {/* Action buttons */}
             <div className={cn(

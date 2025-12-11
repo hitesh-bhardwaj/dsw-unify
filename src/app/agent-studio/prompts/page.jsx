@@ -224,8 +224,8 @@ export default function PromptsPage() {
         className="pt-0"
       >
         <div className="grid gap-6 grid-cols-3 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-          {filteredPrompts.map((prompt) => (
-            <PromptCard key={prompt.id} prompt={prompt} />
+          {filteredPrompts.map((prompt, index) => (
+            <PromptCard key={prompt.id} prompt={prompt} index={index} />
           ))}
         </div>
 
@@ -248,8 +248,8 @@ export default function PromptsPage() {
         className="pt-0"
       >
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-          {filteredTemplates.map((template) => (
-            <TemplateCard key={template.id} template={template} />
+          {filteredTemplates.map((template, index) => (
+            <TemplateCard key={template.id} template={template} index={index} />
           ))}
 
           {filteredTemplates.length === 0 && (

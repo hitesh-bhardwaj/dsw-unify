@@ -232,8 +232,8 @@ const page = () => {
                   : "flex flex-col gap-5"
                 }`}
             >
-              {filteredFeatures.map((feature) => (
-                <ViewCard key={feature.id} view={view} feature={feature} />
+              {filteredFeatures.map((feature, index) => (
+                <ViewCard key={feature.id} view={view} feature={feature} index={index} />
               ))}
               {filteredFeatures.length === 0 && (
                 <div className="flex h-64 items-center justify-center text-gray-500">

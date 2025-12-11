@@ -244,8 +244,8 @@ const page = () => {
                     : "flex flex-col gap-5"
                 }`}
               >
-                {filteredModels.map((item) => (
-                  <UsecaseInternalCard key={item.id} view={view} usecase={item} slug={id} />
+                {filteredModels.map((item, index) => (
+                  <UsecaseInternalCard key={item.id} view={view} index={index} usecase={item} slug={id} />
                 ))}
 
                 {filteredModels.length === 0 && (

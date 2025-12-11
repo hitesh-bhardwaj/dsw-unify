@@ -65,7 +65,7 @@ const page = () => {
               <div className="space-y-6">
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {filteredDataEngineering.map((feature, index) => (
-                    <FeatureCard key={index} {...feature} />
+                    <FeatureCard key={index} {...feature} index={index} />
                   ))}
                 </div>
               </div>

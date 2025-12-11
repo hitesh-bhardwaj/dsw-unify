@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  * @param {string} [props.className] - Additional class names for the card.
  * @returns {React.JSX.Element} The rendered QuickCards component.
  */
-export function QuickCards({ icon: Icon, title, description, href, className }) {
+export function QuickCards({ icon: Icon, title, description, href, className, index }) {
   const CardWrapper = href
     ? ({ children }) => (
         <Bounce>
@@ -38,7 +38,13 @@ export function QuickCards({ icon: Icon, title, description, href, className }) 
       >
         <CardHeader className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
+            <div
+              className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
+              style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
+            >
               {Icon && <Icon className="h-8 w-8" />}
             </div>
           </div>

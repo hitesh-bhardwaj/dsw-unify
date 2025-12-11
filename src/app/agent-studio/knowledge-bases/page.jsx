@@ -87,7 +87,7 @@ export default function KnowledgePage() {
             {filteredKb.length > 0 ? (
               <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
                 {filteredKb.map((kb, i) => (
-                  <KnowledgeCard key={`${kb.id}-${i}`} agent={kb} />
+                  <KnowledgeCard key={`${kb.id}-${i}`} agent={kb} index={i} />
                 ))}
               </div>
             ) : (

@@ -25,7 +25,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered ToolsCard component.
  */
-export function ToolsCard({ tools, minSkeletonMs = 500 }) {
+export function ToolsCard({ tools,index, minSkeletonMs = 500 }) {
   const {id,name, description, status, tags = [],icon } = tools || {};
 
   // Keep a skeleton up for at least `minSkeletonMs`
@@ -54,7 +54,7 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/tools/${id}`} className="block group h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 !py-5 h-full"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 !py-5 h-full"
           )}
         >
           <CardHeader>
@@ -62,8 +62,12 @@ export function ToolsCard({ tools, minSkeletonMs = 500 }) {
               {/* Icon */}
              <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent text-foreground group-hover:!bg-white group-hover:!text-black  transition-all duration-300"
                 )}
+                 style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
               >
                 <span
                   className={cn(

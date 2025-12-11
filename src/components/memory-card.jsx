@@ -27,7 +27,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered MemoryCard component.
  */
-export function MemoryCard({ memories, minSkeletonMs = 500 }) {
+export function MemoryCard({ memories, index, minSkeletonMs = 500 }) {
   const { id, name, description, status, tags = [], entries ,icon} = memories || {};
 
   // Keep skeleton visible for at least `minSkeletonMs`
@@ -60,10 +60,14 @@ export function MemoryCard({ memories, minSkeletonMs = 500 }) {
           <CardHeader>
             <div className="flex items-end justify-start gap-2">
               {/* Icon */}
-             <div
+              <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent text-foreground group-hover:!bg-white group-hover:!text-black  transition-all duration-300"
                 )}
+                 style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
               >
                 <span
                   className={cn(

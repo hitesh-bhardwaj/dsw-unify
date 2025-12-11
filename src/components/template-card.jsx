@@ -19,7 +19,7 @@ import CopyButton from "./animate-ui/components/buttons/CopyButton";
  * @param {"light"|"dark"} [props.template.variant="light"] - The variant of the card.
  * @returns {React.JSX.Element} The rendered TemplateCard component.
  */
-export function TemplateCard({ template }) {
+export function TemplateCard({ template, index }) {
   const {
     name,
     description,
@@ -44,10 +44,14 @@ export function TemplateCard({ template }) {
           <div className="flex items-center justify-between mb-4">
             {/* Icon, Rating, and Version */}
             <div className="flex items-center gap-3">
-              <div
+               <div
                 className={cn(
-                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent border border-color-2 text-foreground group-hover:bg-white group-hover:text-black group-hover:border-white transition-all duration-300"
+                  "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent text-foreground group-hover:!bg-white group-hover:!text-black  transition-all duration-300"
                 )}
+                 style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
               >
                 <span
                   className={cn(

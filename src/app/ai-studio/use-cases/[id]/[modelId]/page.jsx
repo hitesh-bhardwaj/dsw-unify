@@ -217,8 +217,8 @@ const page = () => {
                   : "flex flex-col gap-5"
               }
             >
-              {filteredVersions.map((item) => (
-                <VersionUsecaseCard key={item.id} view={view} usecase={item} />
+              {filteredVersions.map((item, index) => (
+                <VersionUsecaseCard key={item.id} view={view} usecase={item} index={index} />
               ))}
 
               {filteredVersions.length === 0 && (

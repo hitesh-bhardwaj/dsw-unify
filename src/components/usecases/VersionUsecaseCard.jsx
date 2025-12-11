@@ -49,6 +49,7 @@ const skeletonShownMap = new Map();
 export default function VersionUsecaseCard({
   usecase,
   view,
+  index,
   minSkeletonMs = 500,
 }) {
   const {
@@ -110,9 +111,15 @@ const { id: routeId, modelId } = params;
             <div className="flex items-center justify-between mb-4">
               {/* Icon */}
               <div className="flex gap-2 items-end">
-                <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-sidebar-accent border text-foreground transition-all group-hover:bg-white group-hover:text-black group-hover:border-white duration-300 p-3">
-                  {Icon && <Icon className="h-6 w-6" />}
-                </div>
+                <div
+              className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
+              style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+              }}
+            >
+              {Icon && <Icon className="h-6 w-6" />}
+            </div>
                 <p
                   className={`text-xs border px-2 py-1 rounded-full group-hover:border-white group-hover:text-white duration-300 ${
                     status === "Deployed"
@@ -188,7 +195,7 @@ const { id: routeId, modelId } = params;
             )}
           >
             {isList && (
-              <div className="border-t border-border-color-0 group-hover:border-white/60" />
+              <div className="border-t border-border-color-0 group-hover:border-border-color-0" />
             )}
             {/* Tags */}
             <div className="flex flex-wrap gap-1 pt-2">
@@ -197,7 +204,7 @@ const { id: routeId, modelId } = params;
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-border-color-0 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
                   {tag}
@@ -229,7 +236,7 @@ const { id: routeId, modelId } = params;
                 </div>
               </div>
               <div className="flex items-center gap-2 w-full">
-                <button className={` text-xs border flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground group-hover:border-white/60 transition-all duration-300 bg-primary group-hover:bg-white`}>
+                <button className={` text-xs border border-border-color-0 flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground group-hover:border-white/60 transition-all duration-300 bg-primary group-hover:bg-white`}>
                     <RocketIcon className="w-4 h-4 " />
                     {status=="Deployed"?"Undeploy":"Deploy"}
                   

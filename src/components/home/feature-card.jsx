@@ -15,6 +15,7 @@ export function FeatureCard({
   description,
   href,
   className,
+  iconColor,
   minSkeletonMs = 500,
   index
 }) {
@@ -25,6 +26,7 @@ export function FeatureCard({
   });
 
   useEffect(() => {
+    console.log(index)
     if (showSkeleton && id) {
       const t = setTimeout(() => {
         setShowSkeleton(false);
@@ -72,7 +74,7 @@ export function FeatureCard({
             <h3 className="text-xl font-medium leading-none tracking-tight group-hover:text-white transition-colors duration-300">
               {title}
             </h3>
-            <p className="text-sm text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
+            <p className="text-sm w-[90%] text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
               {description}
             </p>
           </div>
