@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import SearchBar from "@/components/search-bar";
+
 import { Button } from "@/components/ui/button";
-import { SparklesIcon, PlusIcon } from "@/components/Icons";
-import { Badge } from "@/components/ui/badge";
+import {  PlusIcon } from "@/components/Icons";
 import Link from "next/link";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowDown, ArrowUp, Check } from "lucide-react";
 

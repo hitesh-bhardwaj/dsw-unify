@@ -172,12 +172,12 @@ const FinetuningGrid = () => {
         </Card>
 
         {/* Advanced Options */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Advanced Options</CardTitle>
+        <Card className="mb-6 px-0 border-none">
+          <CardHeader className="px-0">
+            <h2 className="text-xl font-medium"> Advanced Options </h2>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between py-3 border-b">
+          <CardContent className="space-y-3 px-0">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium text-gray-900">LoRA (Low-Rank Adaptation)</p>
                 <p className="text-sm text-gray-500">Efficient fine-tuning method</p>
@@ -185,7 +185,7 @@ const FinetuningGrid = () => {
               <Switch checked={loRA} onCheckedChange={setLoRA} />
             </div>
             
-            <div className="flex items-center justify-between py-3 border-b">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium text-gray-900">Gradient Checkpointing</p>
                 <p className="text-sm text-gray-500">Reduce memory usage during training</p>
@@ -193,7 +193,7 @@ const FinetuningGrid = () => {
               <Switch checked={gradientCheckpoint} onCheckedChange={setGradientCheckpoint} />
             </div>
             
-            <div className="flex items-center justify-between py-3">
+            <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium text-gray-900">Mixed Precision Training</p>
                 <p className="text-sm text-gray-500">Faster training with FP16</p>
@@ -202,17 +202,17 @@ const FinetuningGrid = () => {
             </div>
           </CardContent>
         </Card>
-
+<div className=" bg-border-color-0/50 h-[1px] w-full rounded-xl"></div>
         {/* Estimated Cost */}
-        <Card className="border-gray-200">
+        <Card className="border-none px-0">
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-gray-900">Estimated Training Cost</h3>
+                <h3 className="text-2xl font-medium ">Estimated Training Cost</h3>
                 <p className="text-sm text-gray-500">Based on current configuration</p>
               </div>
               <div className="text-right">
-                <p className="text-3xl font-bold text-gray-900">$24.50</p>
+                <p className="text-3xl font-medium">$24.50</p>
                 <p className="text-sm text-gray-500">~2-3 hours</p>
               </div>
             </div>

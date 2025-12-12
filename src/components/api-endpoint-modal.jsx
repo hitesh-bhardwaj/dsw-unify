@@ -7,7 +7,7 @@ import {
   useLayoutEffect,
   useCallback,
 } from "react";
-import { Copy } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -45,7 +45,7 @@ function CopyWithTooltip({
 }) {
   const [label, setLabel] = useState("Copy");
   const handleClick = () => {
-    navigator.clipboard?.writeText?.(text).catch(() => {});
+    navigator.clipboard?.writeText?.(text).catch(() => { });
     setLabel("Copied");
   };
   return (
@@ -67,21 +67,21 @@ function CopyWithTooltip({
 }
 
 
- const tabs = [
-    
-    {
-      id: "curl",
-      label: "cURL",
-    },
-    {
-      id: "javascript",
-      label: "Javascript",
-    },
-    {
-      id: "python",
-      label: "Python",
-    },
-  ];
+const tabs = [
+
+  {
+    id: "curl",
+    label: "cURL",
+  },
+  {
+    id: "javascript",
+    label: "Javascript",
+  },
+  {
+    id: "python",
+    label: "Python",
+  },
+];
 
 /**
  * Modal for displaying API endpoint information and code examples.
@@ -140,21 +140,21 @@ print(response.json())`,
   const trackRef = useRef(null);
   const thumbRef = useRef(null);
   const [activeTab, setActiveTab] = useState("curl");
-const [displayedTab, setDisplayedTab] = useState("curl");
-const [isTransitioning, setIsTransitioning] = useState(false);
+  const [displayedTab, setDisplayedTab] = useState("curl");
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-const handleTabChange = (value) => {
-  if (value === activeTab) return;
-  
-  setIsTransitioning(true);
-  setActiveTab(value);
-  
-  // Wait for fade out to complete, then change content and fade in
-  setTimeout(() => {
-    setDisplayedTab(value);
-    setIsTransitioning(false);
-  }, 300); // Match this to your transition duration (duration-300 = 300ms)
-};
+  const handleTabChange = (value) => {
+    if (value === activeTab) return;
+
+    setIsTransitioning(true);
+    setActiveTab(value);
+
+    // Wait for fade out to complete, then change content and fade in
+    setTimeout(() => {
+      setDisplayedTab(value);
+      setIsTransitioning(false);
+    }, 300); // Match this to your transition duration (duration-300 = 300ms)
+  };
 
   // Start at 0 so there's no fake size; we compute before first paint.
   const [thumbH, setThumbH] = useState(0);
@@ -284,6 +284,25 @@ const handleTabChange = (value) => {
     recalcThumb();
   }, [open, recalcThumb]);
 
+  const [copiedText, setCopiedText] = useState(null);
+  const [copied, setCopied] = useState(false);
+
+
+const handleCopy = async (textToCopy) => {
+  try {
+    await navigator.clipboard.writeText(textToCopy);
+    setCopiedText(textToCopy);
+    setCopied(true);
+    setTimeout(() => {
+      setCopiedText(null);
+    setCopied(false);
+
+    }, 1500);
+  } catch (err) {
+    console.error('Failed to copy:', err);
+  }
+};
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
@@ -309,15 +328,33 @@ const handleTabChange = (value) => {
                   <div className="flex flex-col gap-2 w-full">
                     <label className="text-sm text-foreground">Agent ID</label>
                     <div className="flex gap-2 w-full">
-                    <Input
-                      value={agentId}
-                      readOnly
-                      className="border border-foreground/20"
-                    />
-                    <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
+                      <Input
+                        value={agentId}
+                        readOnly
+                        className="border border-foreground/20"
+                      />
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <button
+                              onClick={() => handleCopy(agentId)}
+                              className="p-3 cursor-pointer text-icon-color-2 bg-icon-color-2/10 rounded-lg transition duration-200 ease-in-out flex items-center justify-center"
+                            >
+                              {copiedText === agentId ? (
+                                <Check className="w-5 h-5 text-icon-color-2" />
+                              ) : (
+                                <Copy className="w-5 h-5" />
+                              )}
+                            </button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{copied ? "Copied!" : "Copy"}</p>
+                          </TooltipContent>
 
-                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={apiKey} />
-                    </button>
+                        </Tooltip>
+                      </TooltipProvider>
+
+
                     </div>
                   </div>
                   <div className="flex flex-col gap-2">
@@ -339,10 +376,29 @@ const handleTabChange = (value) => {
                       readOnly
                       className="border border-foreground/20"
                     />
-                    <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
 
-                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={apiKey} />
-                    </button>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            onClick={() => handleCopy(apiKey)}
+                            className="p-3 cursor-pointer text-icon-color-2 bg-icon-color-2/10 rounded-lg transition duration-200 ease-in-out flex items-center justify-center"
+                          >
+                            {copiedText === apiKey ? (
+                              <Check className="w-5 h-5 text-icon-color-2" />
+                            ) : (
+                              <Copy className="w-5 h-5" />
+                            )}
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{copied ? "Copied!" : "Copy"}</p>
+                        </TooltipContent>
+
+                      </Tooltip>
+                    </TooltipProvider>
+
                   </div>
                   <p className="text-xs text-black/60">
                     *Keep your API key secure and don't share it publicly
@@ -360,35 +416,72 @@ const handleTabChange = (value) => {
                       readOnly
                       className="border border-foreground/20"
                     />
-                    <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
 
-                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={endpointUrl} />
-                    </button>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            onClick={() => handleCopy(endpointUrl)}
+                            className="p-3 cursor-pointer text-icon-color-2 bg-icon-color-2/10 rounded-lg transition duration-200 ease-in-out flex items-center justify-center"
+                          >
+                            {copiedText === endpointUrl ? (
+                              <Check className="w-5 h-5 text-icon-color-2" />
+                            ) : (
+                              <Copy className="w-5 h-5" />
+                            )}
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{copied ? "Copied!" : "Copy"}</p>
+                        </TooltipContent>
+
+                      </Tooltip>
+                    </TooltipProvider>
+
                   </div>
                 </div>
 
                 {/* Code Examples */}
                 <div className="space-y-3">
                   <h3 className="text-xl font-medium">Code Examples</h3>
-                    <Tabs tabs={tabs} value={activeTab} onValueChange={handleTabChange} />
+                  <Tabs tabs={tabs} value={activeTab} onValueChange={handleTabChange} />
 
-     <div className="mt-4 border rounded-xl overflow-hidden w-full">
-      <div className="relative">
-        <pre 
-          className={`rounded-lg bg-background p-4 text-sm text-foreground overflow-x-auto transition-opacity duration-300 ease-in ${
-            isTransitioning ? 'opacity-0' : 'opacity-100'
-          }`}
-        >
-          <code>{codeExamples[displayedTab]}</code>
-        </pre>
-        <div className="absolute right-2 top-2">
-          <button className="p-0.5 rounded-lg h-10 w-10 px-1 border border-foreground/20 bg-sidebar-accent">
+                  <div className="mt-4 border rounded-xl overflow-hidden w-full">
+                    <div className="relative">
+                      <pre
+                        className={`rounded-lg bg-background p-4 text-sm text-foreground overflow-x-auto transition-opacity duration-300 ease-in ${isTransitioning ? 'opacity-0' : 'opacity-100'
+                          }`}
+                      >
+                        <code>{codeExamples[displayedTab]}</code>
+                      </pre>
+                      <div className="absolute right-2 top-2">
 
-                    <CopyButton className='border p-5 border-border-color-0 ' textToCopy={codeExamples[displayedTab]} />
-                    </button>
-        </div>
-      </div>
-    </div>      </div>
+
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={() => handleCopy(codeExamples[displayedTab])}
+                                className="p-3 cursor-pointer text-icon-color-2 bg-icon-color-2/10 rounded-lg transition duration-200 ease-in-out flex items-center justify-center"
+                              >
+                                {copiedText === codeExamples[displayedTab] ?(
+                                  <Check className="w-5 h-5 text-icon-color-2" />
+                                ) : (
+                                  <Copy className="w-5 h-5" />
+                                )}
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{copied ? "Copied!" : "Copy"}</p>
+                            </TooltipContent>
+
+                          </Tooltip>
+                        </TooltipProvider>
+
+                      </div>
+                    </div>
+                  </div>      </div>
               </div>
             </div>
           </div>

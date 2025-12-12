@@ -45,12 +45,6 @@ const page = () => {
       <div className="flex flex-col h-full w-full overflow-hidden">
         <ScaleDown>
           <div className="space-y-6 p-6">
-            <SearchBar
-              placeholder="Search features..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-            />
-
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
               <div className=" text-primary h-10 w-10">

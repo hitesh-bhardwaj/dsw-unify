@@ -20,6 +20,7 @@ import GuardrailsGrid from "@/components/agent-studio/agents/GuardrailsGrid";
 import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
 import KnowledgeBaseList from "@/components/agent-studio/agents/KnowledgeBase/KnowledgeList";
 import MemoriesList from "@/components/agent-studio/agents/MemoryList";
+import TagsGrid from "@/components/agent-studio/agents/TagsGrid";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -94,7 +95,7 @@ export default function CreateAgentPage() {
       label: "Tags",
       name: "Tags",
       render: () => (
-        <EmptyCard children={"Tags configuration coming soon..."} />
+        <TagsGrid/>
       ),
     },
   ];

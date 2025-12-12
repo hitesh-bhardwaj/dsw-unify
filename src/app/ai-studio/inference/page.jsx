@@ -52,7 +52,7 @@ const page = () => {
             </div>
           </div>
 
-          <SearchBar placeholder="Search ..." />
+          {/* <SearchBar placeholder="Search ..." /> */}
 
           <div className="grid grid-cols-3 gap-4 w-full">
             {/* Inference */}
