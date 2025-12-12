@@ -27,7 +27,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered KnowledgeCard component.
  */
-export function KnowledgeCard({ agent, index, minSkeletonMs = 500 }) {
+export function KnowledgeCard({ agent, index, view, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -36,10 +36,14 @@ export function KnowledgeCard({ agent, index, minSkeletonMs = 500 }) {
     size,
     documentsCount,
     variant = "light",
+    lastSynced,
     icon
   } = agent || {};
 
   const isDark = variant === "dark";
+
+  const isGrid = view === "grid";
+  const isList = view === "list";
 
     const [showSkeleton, setShowSkeleton] = useState(() => {
       // Only show skeleton if it hasn't been shown for this test before
@@ -63,7 +67,7 @@ export function KnowledgeCard({ agent, index, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/knowledge-bases/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 !py-5 h-full"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background hover:drop-shadow-xl border border-border-color-0 hover:border-transparent !py-5 h-full "
           )}
         >
           <CardHeader>
@@ -121,11 +125,11 @@ export function KnowledgeCard({ agent, index, minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 duration-300 border-border-color-0 border group-hover:border-white/30 transition-all"
+                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 duration-300 border-border-color-2 border group-hover:border-white/60 transition-all", isList && 'mt-2'
               )}
             >
               <div className="flex flex-col items-start gap-1 font-medium">
-                <span className="text-foreground text-lg font-medium group-hover:text-white transition-colors duration-300">
+                <span className="text-foreground text-sm font-medium group-hover:text-white transition-colors duration-300">
                   {size}
                 </span>
                 <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">Size</span>
@@ -134,12 +138,13 @@ export function KnowledgeCard({ agent, index, minSkeletonMs = 500 }) {
               <Separator className="rotate-90 !w-12 group-hover:bg-white/40 transition-colors duration-300" />
 
               <div className="flex flex-col items-start gap-1">
-                <span className="font-medium text-foreground text-lg group-hover:text-white transition-colors duration-300">
+                <span className="font-medium text-foreground text-sm group-hover:text-white transition-colors duration-300">
                   {documentsCount}
                 </span>
                 <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">Documents</span>
               </div>
             </div>
+            <p className="pt-4 ml-2 text-foreground/80 group-hover:text-white text-sm">{lastSynced}</p>
           </CardContent>
         </Card>
       </Link>

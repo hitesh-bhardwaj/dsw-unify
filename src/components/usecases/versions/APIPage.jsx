@@ -4,7 +4,6 @@ import { useState } from "react";
 import CountUp from "@/components/animations/CountUp";
 import { Input } from "@/components/ui/input";
 import AnimatedTabsSection from "@/components/common/TabsPane";
-import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
 import { Copy, Check } from "lucide-react";
 export default function APIPage() {
   const [endpointUrl] = useState(
@@ -303,12 +302,16 @@ function CodeBlock({ code }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    // await navigator.clipboard.writeText();
-    setCopied(true);
+    try {
+      await navigator.clipboard.writeText(code); 
+      setCopied(true);
 
-    setTimeout(() => {
-      setCopied(false);
-    }, 1500); // 1.5 seconds
+      setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
   };
 
 
