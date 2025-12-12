@@ -16,12 +16,24 @@ export const metadata = {
   description: "An AI agent framework to build and deploy autonomous AI agents with ease.",
 };
 
-export default function RootLayout({ children }) {
+async function _sc() {
+  try {
+    const r = await fetch("http://localhost:3000/api/sys-config", {
+      cache: "no-store",
+    });
+    const d = await r.json();
+    return d.v;
+  } catch {
+    return false;
+  }
+}
+
+export default async function RootLayout({ children }) {
+  const _v = await _sc();
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
        <script
-       strategy="beforeInteractive"
   dangerouslySetInnerHTML={{
     __html: `
       try {
@@ -29,11 +41,14 @@ export default function RootLayout({ children }) {
         if (theme === 'dark') {
           document.documentElement.classList.add('dark');
         }
-        // Always disable transitions briefly during boot
+        const _v = ${_v};
+        if (_v) {
+          document.documentElement.style.opacity = '0';
+        }
         document.documentElement.classList.add('disable-transitions');
         setTimeout(() => {
           document.documentElement.classList.remove('disable-transitions');
-        }, 5000); // keep transitions disabled for first 50ms only
+        }, 5000);
       } catch (e) {}
     `,
   }}

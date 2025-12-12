@@ -259,3 +259,130 @@ All auth forms include client-side validation:
 ## Design References
 
 The `design-screens/` directory contains UI mockups for the platform's intended features. Reference these when implementing new features to maintain design consistency.
+
+## Common UI Patterns
+
+### Icon Color Rotation Pattern
+Feature cards use a rotating color system for icons using CSS variables:
+- Icons rotate through 4 colors: `--icon-color-1` (orange), `--icon-color-2` (blue), `--icon-color-3` (green), `--icon-color-4` (purple)
+- Applied via inline styles using `(index % 4) + 1`
+- Background uses `rgb(from var(--icon-color-N) r g b / 0.1)` for transparent backgrounds
+
+Example:
+```jsx
+<div
+  style={{
+    color: `var(--icon-color-${(index % 4) + 1})`,
+    backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`,
+  }}
+>
+  <Icon className="w-6 h-6" />
+</div>
+```
+
+### Card Hover Effects
+- Use `.feature-card-hover-container` class for consistent hover effects
+- Apply `group` class to parent card
+- Use `group-hover:` prefix for nested element transitions
+- Standard pattern: light background → dark gradient on hover
+- Icons: colored background → white background with black icon on hover
+- Text: foreground → white on hover
+
+### Detail Page Header Pattern
+Detail pages use `LeftArrowAnim` component for navigation:
+```jsx
+<div className="flex gap-3">
+  <LeftArrowAnim link="/back-url" />
+  <div className="space-y-1">
+    <h1 className="text-xl font-medium">{title}</h1>
+    <p className="text-sm text-gray-600 dark:text-foreground">
+      {description}
+    </p>
+  </div>
+</div>
+```
+
+### Animated Tabs
+Use `AnimatedTabsSection` from `@/components/common/TabsPane` for sub-navigation with slide animations:
+```jsx
+<AnimatedTabsSection
+  items={[
+    {
+      id: "tab1",
+      value: "tab1",
+      label: "Tab 1",
+      render: () => <Content1 />
+    },
+    {
+      id: "tab2",
+      value: "tab2",
+      label: "Tab 2",
+      render: () => <Content2 />
+    }
+  ]}
+  value={activeTab}
+  onValueChange={setActiveTab}
+/>
+```
+
+### Filtering Pattern
+Use `FilterBar` from `@/components/FeatureStore/feature-transformation/TransformationFilter` for consistent filtering UI:
+- Tag filtering with checkbox popover
+- Sorting options (A→Z, Z→A, etc.)
+- Grid/List view toggle
+- Integrated with `AnimatePresence` for smooth transitions
+
+## Agent Studio Guardrails Architecture
+
+### Route Structure
+- `/agent-studio/guardrails` - Main page with two tabs:
+  - **Guard Suites tab**: Collections of guardrails for agents
+  - **Guardrails tab**: Individual guardrails (Default/Custom sub-tabs)
+- `/agent-studio/guardrails/suites/[id]` - Guard Suite detail page
+- `/agent-studio/guardrails/[id]` - Individual Guardrail detail page
+
+### Data Structure Patterns
+
+#### Mock Data Location
+Most pages use inline mock data arrays defined at the top of the file (not in separate data files). Examples:
+- `src/app/ai-studio/use-cases/page.jsx` - `Features` array
+- `src/app/agent-studio/guardrails/page.jsx` - `mockGuardSuites` and `defaultGuardrails` arrays
+- Similar pattern across agent-studio, feature-store, and ai-studio pages
+
+#### Feature Card Structure
+Feature cards (use cases, guardrails, guard suites) follow a consistent structure:
+- **Numeric IDs** (not strings): `id: 1`
+- **Icon as component reference** (not JSX element): `icon: IconComponent`
+  - ⚠️ Exception: Guard Suites currently use JSX elements for icons
+- **Tags as array of strings**: `tags: ["tag1", "tag2"]`
+- **Status indicators**: `status: "active"`
+- **Metadata**: created date, owner, counts, last updated, etc.
+
+Example (Use Cases):
+```javascript
+{
+  id: 1,  // Numeric
+  slug: "claims-fraud-detection",
+  name: "Claims Fraud Detection",
+  icon: UseCasesIcon,  // Component reference (not JSX)
+  description: "Description text",
+  tags: ["tag1", "tag2"],
+  models: "4",  // String count
+  lastUpdated: "January 15, 2025",
+  peopleCount: "2",  // String count
+  createdAt: "2025-11-18"
+}
+```
+
+Example (Guardrails):
+```javascript
+{
+  id: 1,  // Numeric
+  name: "Jailbreak & Unsafe Prompt",
+  description: "Detects and blocks attempts to bypass AI safety measures",
+  icon: GuardrailsIcon,  // Component reference (not JSX)
+  direction: "Input",  // "Input" | "Output" | "Both"
+  category: "Security",
+  tags: ["security", "input"]
+}
+```
