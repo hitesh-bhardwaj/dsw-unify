@@ -1,125 +1,378 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GuardrailsIcon, PlusIcon } from "@/components/Icons";
 import { GuardrailsCard } from "@/components/guardrails-card";
+import { GuardSuiteCard } from "@/components/guard-suite-card";
 import SearchBar from "@/components/search-bar";
-// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
 import AddGuardrailsModal from "@/components/agent-studio/AddGuardrails";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/motion-tabs";
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import { motion, AnimatePresence } from "framer-motion";
+import AnimatedTabsSection from "@/components/common/TabsPane";
 
-const guardrails = [
+// Mock data for Guard Suites
+const mockGuardSuites = [
   {
-    id: "content-safety",
-    name: "Content Safety",
-    description: "Prevents harmful or inappropriate content generation",
+    id: 1,
+    name: "Production Safety Suite",
+    description: "Comprehensive safety checks for production agents",
     status: "active",
-    icon:<GuardrailsIcon/>,
-    tags: [
-      { label: "output", color: "yellow" },
-      { label: "high", color: "blue" },
+    icon: <GuardrailsIcon />,
+    inputGuardrails: [
+      { name: "Jailbreak & Unsafe Prompt", severity: "High" },
+      { name: "Toxic Language", severity: "Medium" },
+      { name: "Sensitive Information", severity: "High" },
     ],
-    triggers: "45",
-    variant: "light",
+    outputGuardrails: [
+      { name: "Hallucination/Correctness" },
+      { name: "Offensive Check", severity: "Medium" },
+    ],
+    agentsCount: 12,
+    createdDate: "2024-01-15",
+    tags: ["production", "safety", "compliance"],
   },
   {
-    id: "pii-detection",
-    name: "PII Detection",
-    description: "Detects and blocks personally identifiable information",
+    id: 2,
+    name: "Content Moderation Suite",
+    description: "Focused on toxic and offensive content detection",
     status: "active",
-        icon:<GuardrailsIcon/>,
-    tags: [
-      { label: "input", color: "yellow" },
-      { label: "high", color: "blue" },
+    icon: <GuardrailsIcon />,
+    inputGuardrails: [
+      { name: "Toxic Language", severity: "High" },
+      { name: "Words/Expression Check" },
     ],
-    triggers: "12",
-    variant: "light",
+    outputGuardrails: [
+      { name: "Toxic Language", severity: "High" },
+      { name: "Offensive Check", severity: "High" },
+    ],
+    agentsCount: 8,
+    createdDate: "2024-01-20",
+    tags: ["moderation", "content", "safety"],
+  },
+];
+
+// Default Guardrails data
+const defaultGuardrails = [
+  {
+    id: 1,
+    name: "Jailbreak & Unsafe Prompt",
+    description: "Detects and blocks attempts to bypass AI safety measures",
+    icon: GuardrailsIcon,
+    direction: "Input",
+    category: "Security",
+    tags: ["security", "input"],
   },
   {
-    id: "toxicity-filter",
-    name: "Toxicity Filter",
-    description: "Filters toxic language and hate speech",
-    status: "active",
-       icon:<GuardrailsIcon/>,
-    tags: [
-      { label: "api", color: "yellow" },
-      { label: "search", color: "blue" },
-    ],
-    triggers: "08",
-    variant: "light",
+    id: 2,
+    name: "Toxic Language",
+    description: "Filters toxic, abusive, or harmful language",
+    icon: GuardrailsIcon,
+    direction: "Both",
+    category: "Content Safety",
+    tags: ["content safety", "both"],
   },
-  
+  {
+    id: 3,
+    name: "Sensitive Information",
+    description: "Prevents exposure of PII and confidential data",
+    icon: GuardrailsIcon,
+    direction: "Input",
+    category: "Privacy",
+    tags: ["privacy", "input"],
+  },
+  {
+    id: 4,
+    name: "Hallucination/Correctness",
+    description: "Validates factual accuracy and prevents hallucinations",
+    icon: GuardrailsIcon,
+    direction: "Output",
+    category: "Quality",
+    tags: ["quality", "output"],
+  },
+  {
+    id: 5,
+    name: "Offensive Check",
+    description: "Detects offensive or inappropriate content",
+    icon: GuardrailsIcon,
+    direction: "Both",
+    category: "Content Safety",
+    tags: ["content safety", "both"],
+  },
+  {
+    id: 6,
+    name: "Words/Expression Check",
+    description: "Monitors specific words and expressions",
+    icon: GuardrailsIcon,
+    direction: "Input",
+    category: "Content Moderation",
+    tags: ["moderation", "input"],
+  },
+];
+
+// Custom Guardrails data
+const customGuardrails = [
+  {
+    id: 7,
+    name: "Strict Toxic Language Filter",
+    description: "Enhanced toxic language detection with custom keywords and higher sensitivity",
+    basedOn: "Toxic Language",
+    icon: GuardrailsIcon,
+    direction: "Both",
+    category: "Content Safety",
+    isCustom: true,
+    tags: ["content safety", "custom", "both"],
+  },
+  {
+    id: 8,
+    name: "PII Detection - Healthcare",
+    description: "Customized sensitive information detection for healthcare data including medical IDs",
+    basedOn: "Sensitive Information",
+    icon: GuardrailsIcon,
+    direction: "Input",
+    category: "Privacy",
+    isCustom: true,
+    tags: ["privacy", "custom", "input"],
+  },
+  {
+    id: 9,
+    name: "Code Security - Advanced",
+    description: "Enhanced code exploit detection with custom patterns for SQL injection and XSS",
+    basedOn: "Code Exploit Check",
+    icon: GuardrailsIcon,
+    direction: "Both",
+    category: "Security",
+    isCustom: true,
+    tags: ["security", "custom", "both"],
+  },
 ];
 
 export default function GuardrailsPage() {
+  const [activeTab, setActiveTab] = useState("suites");
+  const [guardrailsSubTab, setGuardrailsSubTab] = useState("default"); // default or custom
   const [query, setQuery] = useState("");
-          const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [sortOrder, setSortOrder] = useState("none");
+  const [view, setView] = useState("grid");
 
-  const filteredGuardrails = guardrails.filter((guardrail) =>
-    guardrail.name.toLowerCase().includes(query.toLowerCase())
-  );
+  // Get available tags dynamically based on active tab
+  const availableTags = useMemo(() => {
+    const tags = new Set();
+    if (activeTab === "suites") {
+      mockGuardSuites.forEach((suite) => suite.tags?.forEach((tag) => tags.add(tag)));
+    } else {
+      const list = guardrailsSubTab === "default" ? defaultGuardrails : customGuardrails;
+      list.forEach((gr) => gr.tags?.forEach((tag) => tags.add(tag)));
+    }
+    return Array.from(tags).sort();
+  }, [activeTab, guardrailsSubTab]);
+
+  // Search + Tag Filtering
+  let filteredSuites = mockGuardSuites.filter((suite) => {
+    const matchSearch =
+      suite.name.toLowerCase().includes(query.toLowerCase()) ||
+      suite.description.toLowerCase().includes(query.toLowerCase());
+    const matchTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => suite.tags?.includes(tag));
+
+    return matchSearch && matchTags;
+  });
+
+  // Sorting (ASC / DESC)
+  if (sortOrder === "asc") {
+    filteredSuites = [...filteredSuites].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredSuites = [...filteredSuites].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
+  }
+
+  const filterGuardrailsList = (list) => {
+    let filtered = list.filter((guardrail) => {
+      const matchSearch =
+        guardrail.name.toLowerCase().includes(query.toLowerCase()) ||
+        guardrail.description.toLowerCase().includes(query.toLowerCase());
+      const matchTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => guardrail.tags?.includes(tag));
+
+      return matchSearch && matchTags;
+    });
+
+    if (sortOrder === "asc") {
+      filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOrder === "desc") {
+      filtered = [...filtered].sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    return filtered;
+  };
+
+  const activeGuardrailList =
+    guardrailsSubTab === "default" ? defaultGuardrails : customGuardrails;
+
+  const renderGuardrailGrid = (list, variant) => {
+    const filtered = filterGuardrailsList(list);
+
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${view}-${variant}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className={`items-stretch ${
+            view === "grid"
+              ? "grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+              : "flex flex-col gap-5"
+          } ${variant === "custom" ? "rounded-2xl p-4" : ""}`}
+        >
+          {filtered.map((guardrail, index) => (
+            <GuardrailsCard
+              key={`${variant}-${guardrail.id}`}
+              guardrail={{ ...guardrail, isCustom: variant === "custom" || guardrail.isCustom }}
+              view={view}
+              index={index}
+            />
+          ))}
+
+          {filtered.length === 0 && (
+            <div className="flex h-64 items-center justify-center text-gray-500">
+              No guardrails found matching "{query}"
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    );
+  };
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
-
-      {/* Header section */}
       <ScaleDown>
-      <div className="space-y-6 p-6">
-        {/* Title and CTA */}
-        {/* <FadeUp> */}
+        <div className="space-y-6 p-6">
+          {/* Animated Tabs - At the very top */}
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="w-fit border border-border">
+              <TabsTrigger className="px-4 font-normal" value="suites">Guard Suites</TabsTrigger>
+              <TabsTrigger className="px-4 font-normal" value="guardrails">Guardrails</TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          {/* Title and CTA */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">
-                Guardrails
+                {activeTab === "suites" ? "Guard Suites" : "Guardrails"}
               </h1>
               <p className="mt-1 text-sm text-gray-600 dark:text-foreground">
-                Manage safety and compliance guardrails
+                {activeTab === "suites"
+                  ? "Manage collections of guardrails for your agents"
+                  : "Manage safety and compliance guardrails"}
               </p>
             </div>
             <RippleButton>
-            <Link href="#">
-              <Button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                {/* <Plus className="h-4 w-4" /> */}
-                <PlusIcon />
-                Create Guardrail
-              </Button>
-            </Link>
+              <Link href="#">
+                <Button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                >
+                  <PlusIcon />
+                  {activeTab === "suites"
+                    ? "Create Guard Suite"
+                    : "Create Guardrail"}
+                </Button>
+              </Link>
             </RippleButton>
           </div>
-        {/* </FadeUp> */}
-        {/* <FadeUp delay={0.02}> */}
+
+          {/* Search Bar */}
           <SearchBar
-            placeholder="Search Guardrails..."
+            placeholder={
+              activeTab === "suites"
+                ? "Search guard suites..."
+                : "Search Guardrails..."
+            }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        {/* </FadeUp> */}
-      </div>
-      {/* <FadeUp delay={0.04}> */}
-        <div className="flex-1 overflow-auto p-6 pt-0">
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-            {filteredGuardrails.map((guardrail, index) => (
-              <GuardrailsCard key={guardrail.id} memories={guardrail} index={index} />
-            ))}
-          </div>
 
-          {filteredGuardrails.length === 0 && (
-            <div className="flex h-64 items-center justify-center text-gray-500">
-              No agents found matching "{query}"
+          {/* Filter Bar */}
+          <FilterBar
+            selectedTags={selectedTags}
+            onTagsChange={setSelectedTags}
+            availableTags={availableTags}
+            view={view}
+            setView={setView}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+            cards={activeTab === "suites" ? mockGuardSuites : activeGuardrailList}
+          />
+        </div>
+
+        {/* Content Area */}
+        <div className="flex-1 overflow-auto p-6 pt-0">
+          {activeTab === "suites" ? (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={view}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`items-stretch ${
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                    : "flex flex-col gap-5"
+                }`}
+              >
+                {filteredSuites.map((suite, index) => (
+                  <GuardSuiteCard key={suite.id} suite={suite} view={view} index={index} />
+                ))}
+
+                {filteredSuites.length === 0 && (
+                  <div className="flex h-64 items-center justify-center text-gray-500">
+                    No guard suites found matching "{query}"
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          ) : (
+            <div className="space-y-6">
+              <AnimatedTabsSection
+                items={[
+                  {
+                    id: "default",
+                    value: "default",
+                    label: "Default Guardrails",
+                    render: () => renderGuardrailGrid(defaultGuardrails, "default"),
+                  },
+                  {
+                    id: "custom",
+                    value: "custom",
+                    label: "Custom Guardrails",
+                    render: () => renderGuardrailGrid(customGuardrails, "custom"),
+                  },
+                ]}
+                value={guardrailsSubTab}
+                onValueChange={setGuardrailsSubTab}
+                className="w-full"
+                contentClassName="relative mt-3"
+              />
             </div>
           )}
         </div>
-      {/* </FadeUp> */}
       </ScaleDown>
-       <AddGuardrailsModal 
-                              open={isModalOpen}
-                                    onOpenChange={setIsModalOpen}
-                        />
+
+      <AddGuardrailsModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }

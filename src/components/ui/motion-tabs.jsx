@@ -81,7 +81,7 @@ function Tabs(
       }}>
       <div
         data-slot='tabs'
-        className={cn('flex flex-col gap-2', className)}
+        className={cn('flex flex-col gap-4', className)}
         {...props}>
         {children}
       </div>
@@ -117,14 +117,14 @@ function TabsList({
   return (
     <MotionHighlight
       controlledItems
-      className={cn('bg-background rounded-sm shadow-sm', activeClassName)}
+      className={cn('bg-white rounded-sm border-border border', activeClassName)}
       value={activeValue}
       transition={transition}>
       <div
         role='tablist'
         data-slot='tabs-list'
         className={cn(
-          'bg-muted text-muted-foreground inline-flex h-10 w-fit items-center justify-center rounded-lg p-[4px]',
+          'bg-background inline-flex h-12 w-fit items-center justify-center rounded-lg p-[5px]',
           className
         )}
         {...props}>
@@ -171,7 +171,7 @@ function TabsTrigger({
         onClick={() => handleValueChange(value)}
         data-state={activeValue === value ? 'active' : 'inactive'}
         className={cn(
-          'ring-offset-background  data-[state=active]:text-primary z-[1] inline-flex size-full cursor-pointer items-center justify-center rounded-lg px-2 py-1 text-sm font-medium whitespace-nowrap transition-transform  focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ',
+          'ring-offset-background  data-[state=active]:text-primary z-[1] inline-flex size-full cursor-pointer items-center justify-center rounded-lg px-2 py-2 text-xs font-medium whitespace-nowrap transition-transform  focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 ',
           className
         )}
         {...props}>
