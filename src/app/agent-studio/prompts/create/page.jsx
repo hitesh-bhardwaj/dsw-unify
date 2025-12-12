@@ -81,7 +81,7 @@ export default function CreateAgentPage() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto p-6">
-        <div className="max-w-6xl mx-auto ">
+        <div className=" mx-auto ">
           {/* Basic Information */}
           <Card className={"h-full py-10 shadow-none border-[#AAAAAA]"}>
             <CardHeader>

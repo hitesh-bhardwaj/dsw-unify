@@ -15,6 +15,7 @@ import EmptyCard from "@/components/common/EmptyCard";
 import PromptCardGrid from "@/components/prompt-card-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import ModelGrid from "@/components/agent-studio/agents/ModelGrid";
+import ToolsList from "@/components/agent-studio/agents/tools/ToolsList";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -44,7 +45,7 @@ export default function CreateAgentPage() {
       label: "Tools",
       name: "Tools",
       render: () => (
-        <EmptyCard children={"Tools configuration coming soon..."} />
+        <ToolsList/>
       ),
     },
     {
@@ -152,7 +153,7 @@ export default function CreateAgentPage() {
 
       {/* Main Content */}
       <div className="flex-1 p-6">
-        <div className="max-w-6xl mx-auto space-y-4">
+        <div className=" mx-auto space-y-4">
           {/* Basic Information */}
           {/* <FadeUp delay={0.02}> */}
             <Card className={"h-full py-10 shadow-none border-border-color-0 bg-background"}>

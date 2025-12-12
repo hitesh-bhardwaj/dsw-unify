@@ -115,7 +115,7 @@ export default function CreateAgentPage() {
 
       {/* Main Content */}
       <div className="flex-1 p-6">
-        <div className="max-w-6xl mx-auto space-y-4">
+        <div className=" mx-auto space-y-4">
          
             <AnimatedTabsSection
               items={items}
