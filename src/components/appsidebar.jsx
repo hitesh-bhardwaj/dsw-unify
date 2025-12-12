@@ -65,7 +65,7 @@ import {
 } from "@/components/ui/tooltip";
 
 const navigation = [
-  { name: "Home", href: "/", icon: HomeIcon2 },
+  { name: "Home", href: "/dashboard", icon: HomeIcon2 },
   {
     name: "Data Engineering",
     href: "/data-engineering",
