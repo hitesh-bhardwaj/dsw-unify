@@ -7,6 +7,8 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowDown, ArrowUp, Check } from "lucide-react";
+import KnowledgeBaseCreateModal from "./KnowledgeBase/CreateKnowledgePopup";
+import CreateGuardSuitesModal from "../guardrails/CreateGuardSuitesModal";
 
 /**
  * Component to display a grid of prompt cards with search and generation functionality.
@@ -16,6 +18,8 @@ import { ArrowDown, ArrowUp, Check } from "lucide-react";
 const GuardrailsGrid = () => {
 const [useCase, setUseCase] = useState("");
 const cardRef = useRef(null);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+
 
   useEffect(() => {
     if (useCase === "Production Safety Suite" && cardRef.current) {
@@ -52,7 +56,7 @@ const useCases = [
     </div>
     <Link href="/agent-studio/agents/create">
               <RippleButton>
-                <Button variant="outline" className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10">
+                <Button onClick={() => setOpenCreateModal(true)} variant="outline" className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10">
                   <PlusIcon  className="text-primary"/>
                   Create Guard Suite
                 </Button>
@@ -141,6 +145,11 @@ const useCases = [
           </CardContent>
        
       </Card>
+       <CreateGuardSuitesModal
+        open={openCreateModal}
+        onOpenChange={setOpenCreateModal}
+      />
+      
     </>
   );
 };
