@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Separator } from "./ui/separator";
+import Link from "next/link";
 
 /**
  * GuardSuiteCard component for displaying guard suite information
@@ -27,17 +28,16 @@ export function GuardSuiteCard({ suite, view, index }) {
     outputGuardrails = [],
     agentsCount,
     createdDate,
-    tags = [],
   } = suite || {};
 
   const isGrid = view === "grid";
   const isList = view === "list";
 
   return (
-    <div className="w-full h-full">
+    <Link href={`/agent-studio/guardrails/suites/${id}`} className="w-full h-full block">
       <Card
         className={cn(
-          "feature-card-hover-container gap-2 hover:drop-shadow-md transition-all duration-300 group border-border-color-0 hover:border-white/20 !py-5 h-full",
+          "feature-card-hover-container gap-2 hover:drop-shadow-md transition-all duration-300 group border-border-color-0 hover:border-white/20 !py-5 h-full cursor-pointer",
           isGrid &&
           "h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20",
           isList && "w-full rounded-xl py-6 bg-white dark:bg-background"
@@ -223,6 +223,6 @@ export function GuardSuiteCard({ suite, view, index }) {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </Link>
   );
 }

@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Bounce } from "./animations/Animations";
-import { Copy, Eye } from "lucide-react";
+import { MoreVertical } from "lucide-react";
 
 const skeletonShownMap = new Map();
 
@@ -32,6 +32,8 @@ export function GuardrailsCard({ guardrail, memories, index, minSkeletonMs = 500
     icon,
     direction,
     category,
+    basedOn,
+    isCustom,
   } = source;
 
   // Normalize tags that might come as strings from guardrail data
@@ -93,7 +95,7 @@ export function GuardrailsCard({ guardrail, memories, index, minSkeletonMs = 500
         >
           <CardHeader>
             <div className="flex items-center justify-between gap-2">
-              <div className="flex items-end gap-2">
+              <div className="flex items-center gap-3">
                 {/* Icon */}
                 <div
                   className={cn(
@@ -111,50 +113,30 @@ export function GuardrailsCard({ guardrail, memories, index, minSkeletonMs = 500
                   >
                     {iconNode}
                   </span>
-                  <span
-                    className={cn(
-                      "w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse",
-                      status === "active" ? "" : "hidden"
-                    )}
-                  />
                 </div>
 
-                {/* Status badge */}
-                <Badge
-                  className={cn(
-                    "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all duration-300 group-hover:text-white group-hover:border-white",
-                    status === "active"
-                      ? "border-badge-green text-foreground"
-                      : "border-badge-sea-green text-foreground px-4 opacity-[0.8]"
-                  )}
-                >
-                  {status === "active" ? "Active" : "Beta"}
-                </Badge>
+                {/* Custom badge */}
+                {isCustom && (
+                  <Badge
+                    variant="secondary"
+                    className="rounded-full border border-border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                  >
+                    Custom
+                  </Badge>
+                )}
               </div>
 
-              {/* Action buttons */}
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={cn(
-                    "h-7 w-7 flex items-center justify-center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
-                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
-                  )}
-                >
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className={cn(
-                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
-                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
-                  )}
-                >
-                  <Copy className="h-4 w-4" />
-                </Button>
-              </div>
+              {/* Three-dot menu */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "h-7 w-7 flex items-center justify-center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
+                  "hover:bg-white/30 group-hover:text-white transition-all duration-300"
+                )}
+              >
+                <MoreVertical className="h-4 w-4" />
+              </Button>
             </div>
 
             {/* Name */}
@@ -163,9 +145,18 @@ export function GuardrailsCard({ guardrail, memories, index, minSkeletonMs = 500
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-foreground/80 group-hover:text-white/90 transition-colors duration-300 pb-10">
+            <p className="text-sm text-foreground/80 group-hover:text-white/90 transition-colors duration-300">
               {description}
             </p>
+
+            {/* Based on (for custom guardrails) */}
+            {basedOn && (
+              <p className="text-xs text-muted-foreground mt-2 transition-colors duration-300 group-hover:text-white/60 pb-6">
+                Based on: {basedOn}
+              </p>
+            )}
+
+            {!basedOn && <div className="pb-10" />}
           </CardHeader>
 
           <CardContent>
