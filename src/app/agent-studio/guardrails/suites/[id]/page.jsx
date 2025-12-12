@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -8,13 +8,13 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
 import { Bin, GuardrailsIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, Edit3 } from "lucide-react";
 import CountUp from "@/components/animations/CountUp";
 import { Card } from "@/components/ui/card";
 
-// Mock data - in real app, this would come from API based on ID
-const guardSuitesData = {
-  1: {
+// --------- MOCK DATA: now driven by slug ----------
+const guardSuitesList = [
+  {
+    slug: "production-safety-suite",
     id: 1,
     name: "Production Safety Suite",
     description: "Prevents harmful or inappropriate content generation",
@@ -60,7 +60,8 @@ const guardSuitesData = {
     ],
     agentsCount: 12,
   },
-  2: {
+  {
+    slug: "content-moderation-suite",
     id: 2,
     name: "Content Moderation Suite",
     description: "Focused on toxic and offensive content detection",
@@ -99,7 +100,27 @@ const guardSuitesData = {
     ],
     agentsCount: 8,
   },
-};
+];
+
+// turn slug into nice title (handles %26, %20, etc)
+function titleFromSlug(raw) {
+  if (!raw) return "Guard Suite";
+
+  const single = Array.isArray(raw) ? raw[0] : raw;
+
+  // Decode % encodings: %20, %26, etc.
+  const decoded = decodeURIComponent(single);
+
+  // "production-safety-suite" -> "production safety suite"
+  const spaced = decoded.replace(/-/g, " ");
+
+  // Title case it
+  return spaced
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
 // Simplified Guardrail Item Card (non-clickable)
 function GuardrailItemCard({ guardrail, index }) {
@@ -142,10 +163,20 @@ function GuardrailItemCard({ guardrail, index }) {
 
 export default function GuardSuiteDetailPage() {
   const params = useParams();
-  const id = params?.id;
+  const slugParam = params?.id;
 
-  // Get guard suite data
-  const guardSuite = guardSuitesData[id] || guardSuitesData[1];
+  // normalize slug (handle catch-all / array)
+  const slug = useMemo(
+    () => (Array.isArray(slugParam) ? slugParam[0] : slugParam) || "",
+    [slugParam]
+  );
+
+  // find matching suite by slug; fallback to first
+  const guardSuite =
+    guardSuitesList.find((suite) => suite.slug === slug) ?? guardSuitesList[0];
+
+  // H1 name driven by slug (route), not just data
+  const displayName = titleFromSlug(slug || guardSuite.slug);
 
   // Combine all guardrails
   const allGuardrails = [
@@ -169,7 +200,7 @@ export default function GuardSuiteDetailPage() {
             <div className="flex gap-3">
               <LeftArrowAnim link="/agent-studio/guardrails" />
               <div className="space-y-1">
-                <h1 className="text-xl font-medium">{guardSuite.name}</h1>
+                <h1 className="text-xl font-medium">{displayName}</h1>
                 <p className="text-sm text-gray-600 dark:text-foreground">
                   {guardSuite.description}
                 </p>
@@ -191,7 +222,6 @@ export default function GuardSuiteDetailPage() {
 
               <RippleButton>
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                  <Edit3 className="w-4 h-4" />
                   Edit
                 </Button>
               </RippleButton>
@@ -199,13 +229,16 @@ export default function GuardSuiteDetailPage() {
           </div>
 
           {/* STATS CARDS */}
-          <div className="w-full flex items-center justify-between gap-4">
+          <div className="w-full flex flex-col md:flex-row items-stretch justify-between gap-4">
             <div className="flex flex-col gap-3 border border-border-color-0 bg-white rounded-3xl py-6 px-4 w-full">
               <span className="text-sm text-foreground/80">
                 Input Guardrails
               </span>
               <span className="text-3xl font-medium mt-1">
-                <CountUp value={String(inputCount).padStart(2, "0")} startOnView />
+                <CountUp
+                  value={Number(String(inputCount).padStart(2, "0"))}
+                  startOnView
+                />
               </span>
             </div>
 
@@ -219,9 +252,11 @@ export default function GuardSuiteDetailPage() {
             <div className="flex flex-col gap-3 border border-border-color-0 bg-white rounded-3xl py-6 px-4 w-full">
               <span className="text-sm text-foreground/80">Status</span>
               <div className="flex items-center gap-2 mt-1">
-                <span className="text-3xl font-medium">Active</span>
+                <span className="text-3xl font-medium">
+                  {guardSuite.status === "active" ? "Active" : "Inactive"}
+                </span>
                 <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-badge-green/10 text-badge-green border border-badge-green">
-                  Active
+                  {guardSuite.status === "active" ? "Active" : "Inactive"}
                 </Badge>
               </div>
             </div>
@@ -233,7 +268,11 @@ export default function GuardSuiteDetailPage() {
 
             <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {uniqueGuardrails.map((guardrail, index) => (
-                <GuardrailItemCard key={guardrail.id} guardrail={guardrail} index={index} />
+                <GuardrailItemCard
+                  key={guardrail.id}
+                  guardrail={guardrail}
+                  index={index}
+                />
               ))}
             </div>
           </div>

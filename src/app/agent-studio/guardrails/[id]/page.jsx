@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -8,12 +8,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { GuardrailsIcon } from "@/components/Icons";
-import { AlertCircle, Check, CheckCircle, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 import CountUp from "@/components/animations/CountUp";
 
-// Mock data for guardrails
-const guardrailsData = {
-  1: {
+// --- MOCK DATA: driven by slug so it matches list page routing ---
+const guardrailsList = [
+  {
+    slug: "jailbreak-&-unsafe-prompt", // this is what you use in <Link href={`/agent-studio/guardrails/${slug}`}/>
     id: 1,
     name: "Jailbreak & Unsafe Prompt",
     description: "Detects and blocks attempts to bypass AI safety measures",
@@ -51,15 +52,44 @@ const guardrailsData = {
       },
     ],
   },
-  // Add more guardrails as needed
-};
+  // add more guardrails here with their own `slug` if you need
+];
+
+// turn a slug into a nice title
+function titleFromSlug(raw) {
+  if (!raw) return "Guardrail";
+
+  const single = Array.isArray(raw) ? raw[0] : raw;
+
+  // decode any %20, %26, etc (defensive)
+  const decoded = decodeURIComponent(single);
+
+  // "jailbreak-&-unsafe-prompt" -> "jailbreak & unsafe prompt"
+  const spaced = decoded.replace(/-/g, " ");
+
+  // title case
+  return spaced
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
 export default function GuardrailDetailPage() {
   const params = useParams();
-  const id = params?.id;
+  const slugParam = params?.id; // dynamic route: /agent-studio/guardrails/[id]
 
-  // Get guardrail data
-  const guardrail = guardrailsData[id] || guardrailsData[1];
+  const slug = useMemo(
+    () => (Array.isArray(slugParam) ? slugParam[0] : slugParam) || "",
+    [slugParam]
+  );
+
+  // find matching guardrail by slug; fallback to first if not found
+  const guardrail =
+    guardrailsList.find((g) => g.slug === slug) ?? guardrailsList[0];
+
+  // 💥 H1 text derived from route, not from data name (but falls back gracefully)
+  const displayName = titleFromSlug(slug || guardrail.slug);
 
   return (
     <div className="flex flex-col h-full">
@@ -71,9 +101,9 @@ export default function GuardrailDetailPage() {
               <LeftArrowAnim link="/agent-studio/guardrails" />
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
-                  <h1 className="text-xl font-medium">{guardrail.name}</h1>
+                  <h1 className="text-xl font-medium">{displayName}</h1>
                   <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-transparent text-black border border-badge-green">
-                    Active
+                    {guardrail.status === "active" ? "Active" : "Inactive"}
                   </Badge>
                 </div>
                 <p className="text-sm text-gray-600 dark:text-foreground">
@@ -84,7 +114,7 @@ export default function GuardrailDetailPage() {
           </div>
 
           {/* STATS CARDS */}
-          <div className="w-full grid grid-cols-4 gap-4">
+          <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card className="p-6 space-y-3 border border-border-color-0 bg-white">
               <span className="text-sm text-foreground/80">Check Type</span>
               <span className="text-2xl font-medium block">
@@ -118,10 +148,10 @@ export default function GuardrailDetailPage() {
             </Card>
           </div>
 
-          {/* CONFIGURATION AND TECHNICAL DETAILS */}
-          <div className="grid grid-cols-2 gap-6">
+          {/* CONFIGURATION + TECH DETAILS */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Configuration */}
-            <Card className="p-6 space-y-0 border border-border-color-0 bg-white">
+            <Card className="p-6 space-y-4 border border-border-color-0 bg-white">
               <h2 className="text-lg font-medium">Configuration</h2>
 
               <div className="space-y-4">
@@ -146,7 +176,7 @@ export default function GuardrailDetailPage() {
             </Card>
 
             {/* Technical Details */}
-            <Card className="p-6 space-y-0 border border-border-color-0 bg-white">
+            <Card className="p-6 space-y-4 border border-border-color-0 bg-white">
               <h2 className="text-lg font-medium">Technical Details</h2>
 
               <div className="space-y-0">
@@ -177,7 +207,7 @@ export default function GuardrailDetailPage() {
 
                 <Separator />
 
-                <div className="flex justify-between items-center py-3">
+                <div className="flex justify_between items-center py-3">
                   <span className="text-sm text-foreground/80">
                     Check Applied
                   </span>
@@ -226,7 +256,7 @@ export default function GuardrailDetailPage() {
 
             <div className="space-y-4">
               {/* Violation Example */}
-              <div className="border border-red dark:bg-red-950/20 rounded-lg p-4 space-y-3">
+              <div className="border border-red rounded-lg p-4 space-y-3 dark:bg-red-950/20">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center justify-center size-6 text-red border border-red rounded-full">
                     <X className="size-4 text-red" />
@@ -244,7 +274,7 @@ export default function GuardrailDetailPage() {
               </div>
 
               {/* Safe Example */}
-              <div className="border border-badge-green bg-gwhite rounded-lg p-4 space-y-3">
+              <div className="border border-badge-green rounded-lg p-4 space-y-3 bg-gwhite">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center justify-center size-6 text-badge-green border border-badge-green rounded-full">
                     <Check className="size-4 text-badge-green" />
@@ -269,7 +299,7 @@ export default function GuardrailDetailPage() {
               Performance Metrics (Last 30 Days)
             </h2>
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* True Positives */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
@@ -327,7 +357,7 @@ export default function GuardrailDetailPage() {
           </Card>
 
           {/* USED IN GUARD SUITES */}
-          <Card className="p-6 space-y-6 border border-border-color-0 bg-white">
+          <Card className="p-6 space-y-6 border border-border-color-0 bg_white">
             <h2 className="text-lg font-medium">Used in Guard Suites</h2>
 
             <div className="space-y-4">

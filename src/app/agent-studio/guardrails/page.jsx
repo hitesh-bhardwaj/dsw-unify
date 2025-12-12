@@ -14,6 +14,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/motion-tabs";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedTabsSection from "@/components/common/TabsPane";
+import AddCustomGuardrailsModal from "@/components/agent-studio/AddCustomGuardrails";
+import CreateGuardSuitesModal from "@/components/agent-studio/guardrails/CreateGuardSuitesModal";
 
 // Mock data for Guard Suites
 const mockGuardSuites = [
@@ -119,7 +121,8 @@ const customGuardrails = [
   {
     id: 7,
     name: "Strict Toxic Language Filter",
-    description: "Enhanced toxic language detection with custom keywords and higher sensitivity",
+    description:
+      "Enhanced toxic language detection with custom keywords and higher sensitivity",
     basedOn: "Toxic Language",
     icon: GuardrailsIcon,
     direction: "Both",
@@ -130,7 +133,8 @@ const customGuardrails = [
   {
     id: 8,
     name: "PII Detection - Healthcare",
-    description: "Customized sensitive information detection for healthcare data including medical IDs",
+    description:
+      "Customized sensitive information detection for healthcare data including medical IDs",
     basedOn: "Sensitive Information",
     icon: GuardrailsIcon,
     direction: "Input",
@@ -141,7 +145,8 @@ const customGuardrails = [
   {
     id: 9,
     name: "Code Security - Advanced",
-    description: "Enhanced code exploit detection with custom patterns for SQL injection and XSS",
+    description:
+      "Enhanced code exploit detection with custom patterns for SQL injection and XSS",
     basedOn: "Code Exploit Check",
     icon: GuardrailsIcon,
     direction: "Both",
@@ -156,6 +161,7 @@ export default function GuardrailsPage() {
   const [guardrailsSubTab, setGuardrailsSubTab] = useState("default"); // default or custom
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortOrder, setSortOrder] = useState("none");
   const [view, setView] = useState("grid");
@@ -164,9 +170,12 @@ export default function GuardrailsPage() {
   const availableTags = useMemo(() => {
     const tags = new Set();
     if (activeTab === "suites") {
-      mockGuardSuites.forEach((suite) => suite.tags?.forEach((tag) => tags.add(tag)));
+      mockGuardSuites.forEach((suite) =>
+        suite.tags?.forEach((tag) => tags.add(tag))
+      );
     } else {
-      const list = guardrailsSubTab === "default" ? defaultGuardrails : customGuardrails;
+      const list =
+        guardrailsSubTab === "default" ? defaultGuardrails : customGuardrails;
       list.forEach((gr) => gr.tags?.forEach((tag) => tags.add(tag)));
     }
     return Array.from(tags).sort();
@@ -234,12 +243,15 @@ export default function GuardrailsPage() {
             view === "grid"
               ? "grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
               : "flex flex-col gap-5"
-          } ${variant === "custom" ? "rounded-2xl p-4" : ""}`}
+          } ${variant === "custom" ? "rounded-2xl" : ""}`}
         >
           {filtered.map((guardrail, index) => (
             <GuardrailsCard
               key={`${variant}-${guardrail.id}`}
-              guardrail={{ ...guardrail, isCustom: variant === "custom" || guardrail.isCustom }}
+              guardrail={{
+                ...guardrail,
+                isCustom: variant === "custom" || guardrail.isCustom,
+              }}
               view={view}
               index={index}
             />
@@ -262,8 +274,12 @@ export default function GuardrailsPage() {
           {/* Animated Tabs - At the very top */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="w-fit border border-border">
-              <TabsTrigger className="px-4 font-normal" value="suites">Guard Suites</TabsTrigger>
-              <TabsTrigger className="px-4 font-normal" value="guardrails">Guardrails</TabsTrigger>
+              <TabsTrigger className="px-4 font-normal" value="suites">
+                Guard Suites
+              </TabsTrigger>
+              <TabsTrigger className="px-4 font-normal" value="guardrails">
+                Guardrails
+              </TabsTrigger>
             </TabsList>
           </Tabs>
 
@@ -279,19 +295,31 @@ export default function GuardrailsPage() {
                   : "Manage safety and compliance guardrails"}
               </p>
             </div>
-            <RippleButton>
-              <Link href="#">
-                <Button
-                  onClick={() => setIsModalOpen(true)}
-                  className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
-                >
-                  <PlusIcon />
-                  {activeTab === "suites"
-                    ? "Create Guard Suite"
-                    : "Create Guardrail"}
-                </Button>
-              </Link>
-            </RippleButton>
+            {activeTab === "suites" ? (
+              <RippleButton>
+                <Link href="#">
+                  <Button
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                  >
+                    <PlusIcon />
+                    Create Guard Suite
+                  </Button>
+                </Link>
+              </RippleButton>
+            ) : (
+              <RippleButton>
+                <Link href="#">
+                  <Button
+                    onClick={() => setIsCustomModalOpen(true)}
+                    className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                  >
+                    <PlusIcon />
+                    Create Guardrail
+                  </Button>
+                </Link>
+              </RippleButton>
+            )}
           </div>
 
           {/* Search Bar */}
@@ -314,7 +342,9 @@ export default function GuardrailsPage() {
             setView={setView}
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
-            cards={activeTab === "suites" ? mockGuardSuites : activeGuardrailList}
+            cards={
+              activeTab === "suites" ? mockGuardSuites : activeGuardrailList
+            }
           />
         </div>
 
@@ -335,7 +365,12 @@ export default function GuardrailsPage() {
                 }`}
               >
                 {filteredSuites.map((suite, index) => (
-                  <GuardSuiteCard key={suite.id} suite={suite} view={view} index={index} />
+                  <GuardSuiteCard
+                    key={suite.id}
+                    suite={suite}
+                    view={view}
+                    index={index}
+                  />
                 ))}
 
                 {filteredSuites.length === 0 && (
@@ -353,13 +388,15 @@ export default function GuardrailsPage() {
                     id: "default",
                     value: "default",
                     label: "Default Guardrails",
-                    render: () => renderGuardrailGrid(defaultGuardrails, "default"),
+                    render: () =>
+                      renderGuardrailGrid(defaultGuardrails, "default"),
                   },
                   {
                     id: "custom",
                     value: "custom",
                     label: "Custom Guardrails",
-                    render: () => renderGuardrailGrid(customGuardrails, "custom"),
+                    render: () =>
+                      renderGuardrailGrid(customGuardrails, "custom"),
                   },
                 ]}
                 value={guardrailsSubTab}
@@ -372,7 +409,8 @@ export default function GuardrailsPage() {
         </div>
       </ScaleDown>
 
-      <AddGuardrailsModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <CreateGuardSuitesModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <AddCustomGuardrailsModal open={isCustomModalOpen} onOpenChange={setIsCustomModalOpen} />
     </div>
   );
 }
