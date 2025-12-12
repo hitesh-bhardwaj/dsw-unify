@@ -167,12 +167,12 @@ export default function TestAgentModal({
   return (
     <Dialog open={open} onOpenChange={onOpenChange} className="rounded-3xl overflow-hidden">
       <DialogContent
-        className="w-3/5 h-[70%] flex flex-col p-0 gap-0"
+        className="w-3/5 h-[70%]  rounded-3xl flex flex-col p-0 gap-0 overflow-hidden"
       >
         <TooltipProvider delayDuration={200}>
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col h-full overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-8 py-6 border-b border-gray-200">
+            <div className="flex items-center  bg-white justify-between px-8 py-6 ">
               <h2 className="text-2xl font-normal">
                 Test Agent: Unnamed Agent
               </h2>
@@ -185,6 +185,8 @@ export default function TestAgentModal({
                 <X className="h-6 w-6" />
               </Button>
             </div>
+
+            <div className="w-[95%] h-[1px] bg-border-color-0 mx-auto" />
 
             {/* Messages Container */}
             <div
@@ -199,17 +201,20 @@ export default function TestAgentModal({
                 >
                   <div className="flex items-start gap-4 max-w-3xl">
                     {message.sender === 'bot' && (
-                      <div className="w-14 h-14 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
-                        <Bot className="w-7 h-7 text-white" />
+                      <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                        <Bot className="w-5 h-5 text-white" />
                       </div>
                     )}
-                    <div className="bg-white border border-gray-300 rounded-2xl px-6 py-4 shadow-sm">
-                      <p className="text-base text-gray-900 mb-3">{message.text}</p>
-                      <p className="text-sm text-gray-500">{message.timestamp}</p>
+                    <div className="flex flex-col">
+                    <div className="bg-white border border-border-color-0 rounded-lg px-6 py-4  ">
+                      <p className="text-xs text-gray-900 ">{message.text}</p>
+                     
                     </div>
+                     <p className="text-xs text-foreground/80 ml-1 mt-1">{message.timestamp}</p>
+                      </div>
                     {message.sender === 'user' && (
-                      <div className="w-14 h-14 rounded-full border-2 border-gray-300 bg-white flex items-center justify-center flex-shrink-0">
-                        <User className="w-7 h-7 text-gray-700" />
+                      <div className="w-10 h-10 rounded-full border border-border-color-0 bg-white flex items-center justify-center flex-shrink-0">
+                        <User className="w-5 h-5 text-gray-700" />
                       </div>
                     )}
                   </div>
@@ -217,8 +222,10 @@ export default function TestAgentModal({
               ))}
             </div>
 
+            <div className="w-[95%] h-[1px] bg-border-color-0 mx-auto" />
+
             {/* Input Area - Fixed at bottom */}
-            <div className="bg-white border-t border-border-color-0 px-8 py-6">
+            <div className="bg-white border-none px-8 py-6">
               <div className="flex items-center gap-3">
                 <input
                   type="file"
@@ -234,7 +241,7 @@ export default function TestAgentModal({
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Type your message..."
-                    className="w-full px-6 py-3 border border-gray-300 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    className="w-full px-6 py-3 border border-border-color-0 rounded-xl text-base"
                   />
                 </div>
                 
