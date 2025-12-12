@@ -96,7 +96,7 @@ export function TrainingCard({ data, playKey }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground dark:text-foreground hover:bg-sidebar-accent"
+                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-foreground dark:text-foreground hover:bg-sidebar-accent"
                 )}
               >
                 <Eye />

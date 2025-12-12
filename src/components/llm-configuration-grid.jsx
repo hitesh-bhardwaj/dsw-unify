@@ -5,6 +5,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Slider } from "./ui/slider";
 import {
   ChartContainer,
   ChartTooltip,
@@ -38,6 +39,8 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
 
   const [animationId, setAnimationId] = useState(0);
   const [showProgress, setShowProgress] = useState(false);
+  const [temperature, setTemperature] = useState(0.7);
+
 
   // --- Show skeleton only once (global) ---
   const STORAGE_KEY = "LLMConfig:skeletonShown";
@@ -176,21 +179,23 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
             </label>
             <Input readOnly placeholder="123456789" className="h-11 mt-2" />
           </div>
+<div className="space-y-2">
+  <div className="w-full flex justify-between">
+    <p>Temperature</p>
+    <p>{temperature}</p>
+  </div>
 
-          <div className="space-y-2">
-            <div className="w-full flex justify-between">
-              <p>Temperature</p>
-              <p>0.7</p>
-            </div>
-            <div className="w-full h-[4px] bg-sidebar-accent rounded-full flex items-center dark:bg-gray-700">
-              <div
-                className={`h-full bg-primary rounded-full relative duration-700 ease-in-out ${
-                  showProgress ? "w-[70%]" : "w-0"
-                } delay-300`}
-              />
-              <div className="w-5 h-5 rounded-full bg-background border-3 border-foreground -ml-1 relative z-[2]" />
-            </div>
-          </div>
+  <Slider
+    value={[temperature]}            
+    min={0}
+    max={1}
+    step={0.01}
+    onValueChange={(v) => setTemperature(v[0])}   
+    className="w-full"
+  />
+</div>
+
+
                 
           <div>
             <label className="text-sm text-[#111111] dark:text-foreground">

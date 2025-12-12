@@ -32,7 +32,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered PromptCard component.
  */
-export function PromptCard({ prompt,index, minSkeletonMs = 500 }) {
+export function PromptCard({ prompt,index,view, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -55,6 +55,9 @@ export function PromptCard({ prompt,index, minSkeletonMs = 500 }) {
       // Only show skeleton if it hasn't been shown for this test before
       return !skeletonShownMap.has(id);
     });
+
+     const isGrid = view === "grid";
+  const isList = view === "list";
   
     useEffect(() => {
       if (showSkeleton && id) {
@@ -75,7 +78,7 @@ export function PromptCard({ prompt,index, minSkeletonMs = 500 }) {
     <div className="group w-full h-full">
       <Card
         className={cn(
-          "feature-card-hover-container overflow-hidden w-full h-full transition-all hover:shadow-md duration-300 py-5 border-border-color-0 hover:border-white/20 bg-background"
+          "feature-card-hover-container overflow-hidden w-full h-full transition-all hover:drop-shadow-xl duration-300 py-5 border-border-color-0 hover:border-transparent bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -120,25 +123,17 @@ export function PromptCard({ prompt,index, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Eye />
               </Button>
+              
               <Button
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-                )}
-              >
-                <CopyButton />
-              </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}>
                 <Editor />
               </Button>
@@ -146,7 +141,7 @@ export function PromptCard({ prompt,index, minSkeletonMs = 500 }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600 hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 flex opacity-0 group-hover:opacity-100 items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Bin />
@@ -169,41 +164,36 @@ export function PromptCard({ prompt,index, minSkeletonMs = 500 }) {
           </div>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-1 mt-5">
-            {tags.map((tag, index) => (
-              <Badge
+         <div className=" flex flex-wrap gap-1">
+              {tags.map((tag, index) => (
+                <Badge
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10",
-                   {
-    "border-border-color-0": tag.color !== "red",
-    "border-primary": tag.color === "red",
-  }
-                )}
-              >
-                {tag.label}
-              </Badge>
-            ))}
-          </div>
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10", tag === "+1 more" ? "border-primary" : "border-color-2"
+                )}>
+                  {tag}
+                </Badge>
+              ))}
+            </div>
         </CardHeader>
 
         <CardContent
           className={cn(
             isDark ? "bg-background" : "",
-            "w-[92%] mx-auto py-5 rounded-xl px-4 duration-300"
+            "w-[92%] mx-auto py-5  border border-border-color-2 group-hover:border-white/60 rounded-xl px-4 duration-300", isList && 'w-[97%]'
           )}
         >
           {/* Usage stats */}
           <div className="flex items-center justify-between text-sm mb-3">
-            <span className="text-foreground group-hover:text-white transition-colors duration-300">{uses} uses</span>
-            <span className="text-foreground group-hover:text-white transition-colors duration-300">Updates {lastUpdated}</span>
+            <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{uses} uses</span>
+            <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">Updates {lastUpdated}</span>
           </div>
 
           {/* Preview */}
           <div
             className={cn(
-              "rounded-lg p-3 text-xs duration-300 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-gray-600 dark:text-white/80 group-hover:text-white/80 border border-border-color-0 group-hover:border-white/30 transition-all"
+              "rounded-lg p-3 bg-sidebar-accent text-xs border-transparent group-hover:bg-transparent  dark:bg-background dark:group-hover:bg-white/10 text-gray-600 dark:text-white/80 group-hover:text-white/80 border group-hover:border-white/60 transition-all"
             )}
           >
             {preview}

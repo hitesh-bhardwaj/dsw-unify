@@ -32,13 +32,16 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time in milliseconds to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered LLMCard component.
  */
-export function LLMCard({ llm, index, minSkeletonMs = 500 }) {
+export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
   const { id, name, description, status, tags = [],icon } = llm || {};
 
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this LLM before
     return !skeletonShownMap.has(id);
   });
+
+    const isGrid = view === "grid";
+  const isList = view === "list";
 
   useEffect(() => {
     if (showSkeleton && id) {
@@ -59,7 +62,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/llms/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5", isList && '!gap-0'
           )}
         >
           <CardHeader>
@@ -121,16 +124,16 @@ export function LLMCard({ llm, index, minSkeletonMs = 500 }) {
 
           <CardContent>
             {/* Tags */}
-            <div className="mb-10 flex flex-wrap gap-1 mt-7">
+            <div className="my-4 flex flex-wrap gap-1 ">
               {tags.map((tag, index) => (
                 <Badge
                   key={index}
                   variant="secondary"
                   className={cn(
-                   "rounded-full border border-border-color-0 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                   "rounded-full border border-border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
-                  {tag.label}
+                  {tag}
                 </Badge>
               ))}
             </div>
@@ -138,7 +141,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500 }) {
             {/* Footer */}
             {!llm?.deploy ? (
               llm?.performance ? (
-                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-0 border group-hover:border-white/30 transition-all duration-300">
+                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300">
                   <p className="group-hover:text-white transition-colors duration-300">Performance</p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
@@ -153,7 +156,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500 }) {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-0 border group-hover:border-white/30 transition-all duration-300">
+                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300">
                   <p className="group-hover:text-white transition-colors duration-300">Usage Stats</p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
@@ -169,7 +172,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500 }) {
                 </div>
               )
             ) : (
-              <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-0 border group-hover:border-white/30 transition-all duration-300">
+              <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/30 transition-all duration-300">
                 <p className="group-hover:text-white transition-colors duration-300">Deploying Status</p>
                 <div className="w-full flex flex-col gap-4">
                   <p className="text-primary group-hover:text-white transition-colors duration-300">Progress:75%</p>

@@ -19,7 +19,7 @@ import CopyButton from "./animate-ui/components/buttons/CopyButton";
  * @param {"light"|"dark"} [props.template.variant="light"] - The variant of the card.
  * @returns {React.JSX.Element} The rendered TemplateCard component.
  */
-export function TemplateCard({ template, index }) {
+export function TemplateCard({ template, index, view }) {
   const {
     name,
     description,
@@ -32,12 +32,15 @@ export function TemplateCard({ template, index }) {
 
   const isDark = variant === "dark";
 
+   const isGrid = view === "grid";
+  const isList = view === "list";
+
   return (
     // <Link href={"/"} className="block group">
     <div className="group h-full">
       <Card
         className={cn(
-          "feature-card-hover-container overflow-hidden transition-all hover:shadow-md duration-300 py-5 border border-border-color-0 hover:border-white/20 bg-background"
+          "feature-card-hover-container overflow-hidden transition-all hover:drop-shadow-xl duration-300 py-5 border border-border-color-0 hover:border-transparent bg-background"
         )}
       >
         <CardHeader className="pb-4">
@@ -69,7 +72,7 @@ export function TemplateCard({ template, index }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Eye />
@@ -78,16 +81,16 @@ export function TemplateCard({ template, index }) {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
-                <CopyButton />
+                <CopyButton className='!duration-0' />
               </Button>
               <Button
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-primary hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
               >
                 <Editor />
@@ -114,23 +117,23 @@ export function TemplateCard({ template, index }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10", tag === "+1 more" ? "border-primary" : "border-color-2"
                 )}
               >
-                {tag.label}
+                {tag}
               </Badge>
             ))}
           </div>
         </CardHeader>
 
         <CardContent
-          className={`w-[92%] mx-auto py-5 rounded-xl px-4 text-foreground text-sm duration-300 ${isDark ? "bg-background" : ""}`}
+          className={` mx-auto border border-border-color-2 group-hover:border-white/60 py-5 rounded-xl px-4 text-foreground text-sm duration-300 ${isDark ? "bg-background" : ""} ${view==='list'? 'w-[97%]': 'w-[92%]'}`}
         >
           {/* Usage stats */}
           <div className={`flex items-center justify-between mb-3`}>
             <span className={"text-foreground group-hover:text-white transition-colors duration-300"}>{uses} uses</span>
           </div>
-          <div className="bg-white/10 dark:bg-background dark:group-hover:bg-white/10 p-3 rounded-md border border-border-color-0 group-hover:border-white/30 transition-all duration-300">
+          <div className="bg-sidebar-accent group-hover:bg-transparent border border-transparent dark:bg-background dark:group-hover:bg-white/10 p-3 rounded-md   group-hover:border-white/60 transition-all ">
           <span className="font-medium text-foreground group-hover:text-white transition-colors duration-300">Variables: </span>
           <span className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">{variable}</span>
           </div>

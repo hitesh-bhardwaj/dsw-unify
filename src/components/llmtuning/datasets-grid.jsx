@@ -12,7 +12,7 @@ import { DataSet } from './dataset-card'
 const DatasetsGrid = ({items}) => {
   return (
       <>
-       <div className="flex-1 h-full w-full relative space-y-4">
+       <div className="flex-1 h-full w-full relative space-y-4 pb-10">
             {items.map((item) => (
             <DataSet key={item.id} data={item} id={item.id}/>
             ))}

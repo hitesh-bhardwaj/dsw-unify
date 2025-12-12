@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { AiGenerator, PlusIcon } from "./Icons";
+import { AiGenerator, LeftArrow, PlusIcon } from "./Icons";
 import { Button } from "./ui/button";
 import {
   Select,
@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { RippleButton } from "./ui/ripple-button";
+import { ArrowRight } from "lucide-react";
 
 const CATEGORY_OPTIONS = [
   "General",
@@ -60,7 +61,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-[60%]">
               <label className="text-sm text-foreground">Prompt Name*</label>
               <Input
-                className="border border-foreground/20 placeholder:text-foreground/40"
+                className=" placeholder:text-foreground/40"
                 placeholder="Enter Prompt Name"
               />
             </div>
@@ -73,13 +74,13 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
                 onOpenChange={(open) => setIsOpen(open)}
                 className="w-full "
               >
-                <SelectTrigger className={`border border-foreground/20 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${isOpen ? '[&>svg]:rotate-180' : ''}`}>
+                <SelectTrigger className={` placeholder:text-foreground/40 cursor-pointer border border-border-color-0 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${isOpen ? '[&>svg]:rotate-180' : ''}`}>
                   <SelectValue
                     placeholder="Choose category"
                     className={"placeholder:text-sm !cursor-pointer "}
                   />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="border border-border-color-0">
                   {CATEGORY_OPTIONS.map((c) => (
                     <SelectItem key={c} value={c} className={"!cursor-pointer"}>
                       {c}
@@ -94,7 +95,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-full">
               <label className="text-sm text-foreground">Description</label>
               <Input
-                className="border border-foreground/20 placeholder:text-foreground/40"
+                className=" placeholder:text-foreground/40"
                 placeholder="Brief Description"
               />
             </div>
@@ -104,23 +105,23 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-full">
               <label className="text-sm text-foreground">Prompt Content*</label>
               <Textarea
-                className="border border-foreground/20 placeholder:text-foreground/40 placeholder:text-xs h-36"
+                className=" placeholder:text-foreground/40 placeholder:text-xs h-36"
                 placeholder="Enter Prompt Content"
               />
             </div>
           </div>
 
-          <div className="flex w-full h-fit gap-2 items-end">
+          <div className="flex w-full h-fit gap-2 items-end ">
             <div className="flex flex-col gap-2 w-[85%]">
               <label className="text-sm text-foreground">Tags</label>
               <Input
-                className="border border-foreground/20 placeholder:text-foreground/40"
+                className=" placeholder:text-foreground/40"
                 placeholder="Add a tag"
               />
             </div>
-            <div className="w-[15%] h-fit">
-            <RippleButton className={"w-full rounded-lg mt-1"} circColor={"dark:bg-background/40 bg-white "}>
-            <div className="flex gap-2 w-full  border border-foreground/20 placeholder:text-foreground/40 h-10.5 rounded-lg bg-foreground text-background justify-start pl-2.5 items-center cursor-pointer">
+            <div className="w-[15%] h-full">
+            <RippleButton className={"w-full rounded-lg mt-2"} circColor={"dark:bg-background/40 bg-white "}>
+            <div className="flex gap-2 w-full py-0 placeholder:text-foreground/40 h-10 rounded-lg bg-foreground text-background justify-start pl-2.5 items-center cursor-pointer">
               <div className="w-3.5 h-auto">
                 <PlusIcon className="w-full h-full text-background" />
               </div>
@@ -135,7 +136,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <RippleButton>
               <Button
                 variant="outline"
-                className="gap-2 border-primary text-foreground hover:bg-gray-50 w-fit px-7"
+                className="gap-2 border border-border-color-2 text-foreground hover:bg-gray-50 w-fit px-7"
                 onClick={() => onOpenChange?.(false)}
               >
                 Cancel
@@ -144,11 +145,11 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <RippleButton>
               <Button
                 className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                onClick={() => onOpenChange?.(false)}
               >
-                <div className="w-4 h-auto">
-                  <AiGenerator />
-                </div>
-                Create Prompt
+                
+                Create Prompts
+                <LeftArrow className='rotate-180' />
               </Button>
             </RippleButton>
           </div>

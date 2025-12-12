@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import {
   AiGenerator,
@@ -11,27 +10,25 @@ import {
   PlusIcon,
   SynthWave,
 } from "@/components/Icons";
-import { motion } from "framer-motion";
 import SearchBar from "@/components/search-bar";
-// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import LLMGrid from "@/components/LLMGrid";
 import EmptyCard from "@/components/common/EmptyCard";
 import { ScaleDown } from "@/components/animations/Animations";
+import { motion } from "framer-motion";
+import SelfHosted from "@/components/LLM/SelfHosted";
+import ImportModal from "@/components/LLM/ImportModal";
+import DeployModal from "@/components/LLM/DeployModal";
 
 const LLMs = [
   {
     id: "gpt-4-turbo",
     name: "GPT-4 Turbo",
     description: "OpenAI API Model",
-    icon:<LLMsIcon/>,
+    icon: <LLMsIcon />,
     status: "active",
-    tags: [
-      { label: "general-purpose", color: "yellow" },
-      { label: "api-based", color: "blue" },
-      { label: "production", color: "green" },
-    ],
+    tags: ["general-purpose", "api-based", "production"],
     requests: "1,234",
     avgres: "2.3s",
     deploy: false,
@@ -40,13 +37,9 @@ const LLMs = [
     id: "mistral-7B-instruct",
     name: "Mistral 7B Instruct",
     description: "Self-hosted Mistral Model",
-    icon:<LLMsIcon/>,
+    icon: <LLMsIcon />,
     status: "active",
-    tags: [
-      { label: "open-source", color: "yellow" },
-      { label: "self-hosted", color: "blue" },
-      { label: "production", color: "green" },
-    ],
+    tags: ["open-source", "self-hosted", "production"],
     requests: "1,234",
     avgres: "2.3s",
     deploy: false,
@@ -55,13 +48,9 @@ const LLMs = [
     id: "llama-2-7B",
     name: "Llama 2 7B",
     description: "Self-hosted Open Source",
-    icon:<LLMsIcon/>,
+    icon: <LLMsIcon />,
     status: "active",
-    tags: [
-      { label: "open-source", color: "yellow" },
-      { label: "self-hosted", color: "blue" },
-      { label: "development", color: "green" },
-    ],
+    tags: ["open-source", "self-hosted", "development"],
     requests: "1,234",
     avgres: "2.3s",
     deploy: true,
@@ -70,13 +59,9 @@ const LLMs = [
     id: "custom-insurance-model",
     name: "Custom Insurance Model",
     description: "Fine-tuned Model",
-    icon:<LLMsIcon/>,
+    icon: <LLMsIcon />,
     status: "active",
-    tags: [
-      { label: "fine-tuned", color: "yellow" },
-      { label: "insurance", color: "blue" },
-      { label: "specialized", color: "green" },
-    ],
+    tags: ["fine-tuned", "insurance", "specialized"],
     requests: "1,234",
     avgres: "2.3s",
     performance: true,
@@ -89,36 +74,68 @@ const Recent = [
   {
     content: "Mistral 7B Instruct deployment completed",
     recentActivity: "30 minutes ago",
-        color:'green',
+    color: "green",
   },
   {
     content: "GPT-4 Turbo deployment completed",
     recentActivity: "2 hours ago",
-        color:'green',
-
+    color: "green",
   },
-  { content: "Llama 2 7B deployment started", recentActivity: "4 hours ago",   color:'green',
- },
-  { content: "Custom Insurance Model retrained", recentActivity: "1 day ago",   color:'red',
- },
+  {
+    content: "Llama 2 7B deployment started",
+    recentActivity: "4 hours ago",
+    color: "green",
+  },
+  {
+    content: "Custom Insurance Model retrained",
+    recentActivity: "1 day ago",
+    color: "red",
+  },
 ];
 
 export default function LLMsPage() {
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [openImportModal, setOpenImportModal] = useState(false);
+const [openDeployModal, setOpenDeployModal] = useState(false);
 
-  const filteredLLMs = useMemo(() => {
+
+  // filter states
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+
+  // Collect unique tags
+  const availableTags = useMemo(() => {
+    const all = new Set();
+    LLMs.forEach((llm) => llm.tags.forEach((t) => all.add(t)));
+    return Array.from(all).sort();
+  }, []);
+
+  // Apply search + tag filter
+  let filteredLLMs = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return LLMs;
+
     return LLMs.filter((llm) => {
-      const inName = llm.name.toLowerCase().includes(q);
-      const inDesc = llm.description.toLowerCase().includes(q);
-      const inTags = (llm.tags || []).some((t) =>
-        (t.label || "").toLowerCase().includes(q)
-      );
-      return inName || inDesc || inTags;
+      const matchesSearch =
+        llm.name.toLowerCase().includes(q) ||
+        llm.description.toLowerCase().includes(q) ||
+        llm.tags.some((tag) => tag.toLowerCase().includes(q));
+
+      const matchesTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => llm.tags.includes(tag));
+
+      return matchesSearch && matchesTags;
     });
-  }, [query]);
+  }, [query, selectedTags]);
+
+  // Sorting
+  if (sortOrder === "asc") {
+    filteredLLMs = filteredLLMs.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sortOrder === "desc") {
+    filteredLLMs = filteredLLMs.sort((a, b) => b.name.localeCompare(a.name));
+  }
 
   const ctx = { filteredLLMs, query };
 
@@ -130,7 +147,16 @@ export default function LLMsPage() {
       name: "All",
       render: ({ filteredLLMs, query }) =>
         filteredLLMs.length > 0 ? (
-          <LLMGrid items={filteredLLMs} />
+          <LLMGrid
+            items={filteredLLMs}
+            view={view}
+            selectedTags={selectedTags}
+            onTagsChange={setSelectedTags}
+            availableTags={availableTags}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+            setView={setView}
+          />
         ) : (
           <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground border border-border-color-0 rounded-xl">
             No LLMs found matching "{query}"
@@ -142,9 +168,7 @@ export default function LLMsPage() {
       value: "selfHosted",
       label: "Self Hosted",
       name: "Self Hosted",
-      render: () => (
-        <EmptyCard>No Self Hosted LLM is available at this point</EmptyCard>
-      ),
+      render: () => <SelfHosted />,
     },
     {
       id: "tab-api",
@@ -165,6 +189,7 @@ export default function LLMsPage() {
       ),
     },
   ];
+
   const separatorVariants = {
     hidden: { scaleX: 0, originX: 0 },
     visible: (i) => ({
@@ -180,14 +205,14 @@ export default function LLMsPage() {
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
-      {/* Header section */}
       <ScaleDown>
         <div className="space-y-6 p-6">
-          {/* <FadeUp> */}
+          {/* HEADER */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
             </div>
+
             <div className="gap-2 flex">
               <RippleButton>
                 <Link href={"/agent-studio/llms/llm-finetuning"}>
@@ -202,9 +227,11 @@ export default function LLMsPage() {
                   </Button>
                 </Link>
               </RippleButton>
+
               <RippleButton>
                 <Button
                   variant="outline"
+                  onClick={() => setOpenImportModal(true)}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
@@ -213,9 +240,10 @@ export default function LLMsPage() {
                   Import Model
                 </Button>
               </RippleButton>
+
               <RippleButton>
                 <Link href="#">
-                  <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <Button onClick={() => setOpenDeployModal(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                     <PlusIcon />
                     Deploy New Model
                   </Button>
@@ -223,39 +251,43 @@ export default function LLMsPage() {
               </RippleButton>
             </div>
           </div>
-          {/* </FadeUp> */}
 
-          {/* <FadeUp delay={0.02}> */}
+          {/* SEARCH */}
           <SearchBar
             placeholder="Search LLMs..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          {/* </FadeUp> */}
 
-          {/* <FadeUp delay={0.04}> */}
+          {/* TABS */}
           <AnimatedTabsSection
             items={items}
             ctx={ctx}
             onValueChange={setActiveTab}
             defaultValue="all"
           />
-          {/* </FadeUp> */}
 
-          {/* Recent Activity (still shows under "All") */}
+          {/* RECENT ACTIVITY */}
           {activeTab === "all" && (
-            // <FadeUp delay={0.06}>
             <div className="space-y-10 mt-20">
               <h2 className="text-2xl font-medium">Recent Activity</h2>
+
               <div className="w-full space-y-4">
                 {Recent.map((recent, id) => (
                   <div
                     key={id}
-                    className="w-full h-fit flex gap-6 items-center group "
+                    className="w-full h-fit flex gap-6 items-center group"
                   >
                     <div className="w-3 h-3">
-                      <div className={`h-full w-full rounded-full ${recent.color==='green'? 'bg-badge-green': 'bg-red-500'}`} />
+                      <div
+                        className={`h-full w-full rounded-full ${
+                          recent.color === "green"
+                            ? "bg-badge-green"
+                            : "bg-red-500"
+                        }`}
+                      />
                     </div>
+
                     <div className="flex flex-col w-full">
                       <div className="w-full flex justify-between items-center pt-5 pb-8">
                         <p>{recent.content}</p>
@@ -263,6 +295,7 @@ export default function LLMsPage() {
                           {recent.recentActivity}
                         </p>
                       </div>
+
                       <motion.div
                         custom={id}
                         initial="hidden"
@@ -278,10 +311,16 @@ export default function LLMsPage() {
                 ))}
               </div>
             </div>
-            // {/* </FadeUp> */}
           )}
         </div>
       </ScaleDown>
+      <ImportModal
+  open={openImportModal}
+  onOpenChange={setOpenImportModal}
+/>
+          <DeployModal open={openDeployModal} onOpenChange={setOpenDeployModal} />
+
+
     </div>
   );
 }

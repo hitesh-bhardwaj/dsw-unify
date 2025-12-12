@@ -89,28 +89,30 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
             <p className="text-sm pb-1 block">Upload Documents</p>
 
             <label
-              htmlFor="file-upload"
-              className="w-full h-40 border-2 border-dashed border-border-color-0 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-background"
-            >
-              <UploadIcon className="text-gray-500 h-4 w-4  " />
-              <p className="text-sm opacity-70">Drag and drop files here, or click to browse</p>
+  htmlFor="file-upload"
+  className="w-full h-40 border-2 border-dashed border-border-color-0 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-background"
+>
+  <UploadIcon className="text-gray-500 h-4 w-4" />
+  <p className="text-sm opacity-70">Drag and drop files here, or click to browse</p>
 
-              <Button
-                type="button"
-                variant="outline"
-                className="mt-3 px-4 !h-9 border border-border-color-0"
-              >
-                Select Files
-              </Button>
+  <label htmlFor="file-upload">
+    <Button
+      type="button"
+      variant="outline"
+      className="mt-3 px-4 !h-9 border border-border-color-0 cursor-pointer"
+    >
+      Select Files
+    </Button>
+  </label>
 
-              <Input
-                id="file-upload"
-                type="file"
-                multiple
-                className="hidden"
-                onChange={handleFileChange}
-              />
-            </label>
+  <Input
+    id="file-upload"
+    type="file"
+    multiple
+    className="hidden"
+    onChange={handleFileChange}
+  />
+</label>
 
             {files.length > 0 && (
               <p className="text-xs mt-2 opacity-70">{files.length} file(s) selected</p>
