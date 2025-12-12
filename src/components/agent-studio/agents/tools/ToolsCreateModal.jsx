@@ -1,9 +1,20 @@
 "use client";
 
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { useState } from "react";
 
 export default function ToolCreateModal({ open, onOpenChange }) {
@@ -21,7 +32,8 @@ export default function ToolCreateModal({ open, onOpenChange }) {
           <DialogTitle className="text-xl font-semibold ">
             Create New Tool
             <p className="text-sm font-normal opacity-60 mt-1">
-                Create a new tool that will be immediately available for your agent
+              Create a new tool that will be immediately available for your
+              agent
             </p>
           </DialogTitle>
         </DialogHeader>
@@ -59,8 +71,12 @@ export default function ToolCreateModal({ open, onOpenChange }) {
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="border border-border-color-0 ">
-                  <SelectItem className='cursor-pointer' value="API">API</SelectItem>
-                  <SelectItem className='cursor-pointer' value="Custom">Custom</SelectItem>
+                  <SelectItem className="cursor-pointer" value="API">
+                    API
+                  </SelectItem>
+                  <SelectItem className="cursor-pointer" value="Custom">
+                    Custom
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -72,9 +88,15 @@ export default function ToolCreateModal({ open, onOpenChange }) {
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent className="border border-border-color-0 ">
-                  <SelectItem className='cursor-pointer' value="Utility">Utility</SelectItem>
-                  <SelectItem className='cursor-pointer' value="AI">AI</SelectItem>
-                  <SelectItem className='cursor-pointer' value="Communication">Communication</SelectItem>
+                  <SelectItem className="cursor-pointer" value="Utility">
+                    Utility
+                  </SelectItem>
+                  <SelectItem className="cursor-pointer" value="AI">
+                    AI
+                  </SelectItem>
+                  <SelectItem className="cursor-pointer" value="Communication">
+                    Communication
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -99,23 +121,34 @@ export default function ToolCreateModal({ open, onOpenChange }) {
                 <SelectValue placeholder="GET" />
               </SelectTrigger>
               <SelectContent className="border border-border-color-0 ">
-                <SelectItem className='cursor-pointer' value="GET">GET</SelectItem>
-                <SelectItem className='cursor-pointer' value="POST">POST</SelectItem>
-                <SelectItem className='cursor-pointer' value="PUT">PUT</SelectItem>
-                <SelectItem className='cursor-pointer' value="DELETE">DELETE</SelectItem>
+                <SelectItem className="cursor-pointer" value="GET">
+                  GET
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="POST">
+                  POST
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="PUT">
+                  PUT
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="DELETE">
+                  DELETE
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="flex justify-end gap-2 items-center pt-4">
             <Button
-                          variant="outline"
-                          className="px-6 !h-10 border border-border-color-0"
-                          onClick={() => setOpen(false)}
-                        >
-                          Cancel
+              variant="outline"
+              className="px-6 !h-10 border border-border-color-0"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancel
             </Button>
-            <Button onClick={() => setOpen(false)} className="bg-primary !h-10 text-white">
+            <Button
+              onClick={() => onOpenChange(false)}
+              className="bg-primary !h-10 text-white"
+            >
               Create & Add to Agent
             </Button>
           </div>

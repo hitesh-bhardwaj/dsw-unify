@@ -246,17 +246,26 @@ public class APIPredict {
                 <p className="text-sm text-foreground/80">
                   Requests per minute
                 </p>
-                <p className="text-4xl font-medium mt-1">1,000</p>
+                <p className="text-4xl font-medium mt-1">
+                      <CountUp value='1000' duration={1.2} startOnView once />
+                  
+                  </p>
               </div>
 
               <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
                 <p className="text-sm text-foreground/80">Requests per day</p>
-                <p className="text-4xl font-medium mt-1">50,000</p>
+                <p className="text-4xl font-medium mt-1">                      <CountUp value='1000' duration={1.2} startOnView once />
+
+
+                </p>
               </div>
 
               <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
                 <p className="text-sm text-foreground/80">Average latency</p>
-                <p className="text-4xl font-medium mt-1">100ms</p>
+                <p className="text-4xl font-medium mt-1">                      <CountUp value='100' duration={1.2} startOnView once />
+
+                  ms
+                </p>
               </div>
             </div>
           </div>
@@ -325,25 +334,7 @@ function CodeBlock({ code }) {
   );
 }
 
-function RateBox({ label, value }) {
-  return (
-    <div className="border border-border-color-0 rounded-xl p-4 bg-background text-center">
-      <p className="text-sm text-foreground/80">{label}</p>
-      <p className="text-xl font-medium mt-1">{value}</p>
-    </div>
-  );
-}
 
-function ErrorBox({ code, title, desc }) {
-  return (
-    <div className="border border-border-color-0 rounded-xl p-4 bg-background">
-      <p className="font-semibold">
-        {code} — {title}
-      </p>
-      <p className="text-xs text-foreground/80 mt-1">{desc}</p>
-    </div>
-  );
-}
 
 /* ------------------------------------------------------------- */
 /* Version History Data */

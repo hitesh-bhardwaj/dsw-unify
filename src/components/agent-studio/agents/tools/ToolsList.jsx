@@ -1,65 +1,55 @@
 "use client";
 
 import React, { useState } from "react";
-import SwitchPopover from "../SwitchPopover";
 import Link from "next/link";
+import SwitchPopover from "../SwitchPopover";
+import ToolCreateModal from "./ToolsCreateModal";
+import ToolConfigModal from "./ToolsConfigModal";
+
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@/components/Icons";
-import ToolCreateModal from "./ToolsCreateModal";
+
+
 const tools = [
-  {
-    id: 1,
-    name: "Web Search",
-    description: "Search the web for information",
-  },
-  {
-    id: 2,
-    name: "Calculator",
-    description: "Perform mathematical calculations",
-  },
-  {
-    id: 3,
-    name: "Code Interpreter",
-    description: "Execute and analyze code",
-  },
-  {
-    id: 4,
-    name: "Image Generator",
-    description: "Generate images from text",
-  },
-  {
-    id: 5,
-    name: "File Reader",
-    description: "Read and analyze files",
-  },
-  {
-    id: 6,
-    name: "Email Sender",
-    description: "Send emails",
-  },
-  {
-    id: 7,
-    name: "Calendar",
-    description: "Manage calendar events",
-  },
-  {
-    id: 8,
-    name: "Weather",
-    description: "Get weather information",
-  },
+  { id: 1, name: "Web Search", description: "Search the web for information" },
+  { id: 2, name: "Calculator", description: "Perform mathematical calculations" },
+  { id: 3, name: "Code Interpreter", description: "Execute and analyze code" },
+  { id: 4, name: "Image Generator", description: "Generate images from text" },
+  { id: 5, name: "File Reader", description: "Read and analyze files" },
+  { id: 6, name: "Email Sender", description: "Send emails" },
+  { id: 7, name: "Calendar", description: "Manage calendar events" },
+  { id: 8, name: "Weather", description: "Get weather information" },
 ];
 
 export default function ToolsList() {
+  // Create modal
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+
+  // Config modal
+  const [openConfigModal, setOpenConfigModal] = useState(false);
+  const [selectedTool, setSelectedTool] = useState(null);
+
+  const [searchEngine, setSearchEngine] = useState("Google");
+  const [maxResults, setMaxResults] = useState("5");
+
   const handleConfigSave = (toolId, configData) => {
     console.log("Saved config for:", toolId, configData);
   };
 
-    const [openCreateModal, setOpenCreateModal] = useState(false); 
+  const openModal = (tool) => {
+    setSelectedTool(tool);
+    setOpenConfigModal(true);
+  };
 
+  const saveConfig = () => {
+    handleConfigSave(selectedTool.id, { searchEngine, maxResults });
+    setOpenConfigModal(false);
+  };
 
   return (
     <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-background">
+      {/* HEADER */}
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-xl font-medium ">Tools Selection</h2>
@@ -67,11 +57,12 @@ export default function ToolsList() {
             Select tools and configure them for your agent
           </p>
         </div>
+
         <div>
           <Link href="/agent-studio/agents/create">
             <RippleButton>
               <Button
-                onClick={() => setOpenCreateModal(true)} 
+                onClick={() => setOpenCreateModal(true)}
                 variant="outline"
                 className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10"
               >
@@ -83,13 +74,35 @@ export default function ToolsList() {
         </div>
       </div>
 
+      {/* TOOL ROWS */}
       <div className="space-y-2">
         {tools.map((tool) => (
-          <SwitchPopover key={tool.id} tool={tool} onSave={handleConfigSave} />
+          <SwitchPopover
+            key={tool.id}
+            tool={tool}
+            onOpenConfig={openModal}   
+          />
         ))}
       </div>
-            <ToolCreateModal open={openCreateModal} onOpenChange={setOpenCreateModal} />
 
+      {/* CREATE TOOL MODAL */}
+      <ToolCreateModal
+        open={openCreateModal}
+        onOpenChange={setOpenCreateModal}
+      />
+
+      <ToolConfigModal
+  open={openConfigModal}
+  onOpenChange={setOpenConfigModal}
+  tool={selectedTool}
+  searchEngine={searchEngine}
+  setSearchEngine={setSearchEngine}
+  maxResults={maxResults}
+  setMaxResults={setMaxResults}
+  saveConfig={saveConfig}
+/>
+
+     
     </div>
   );
 }

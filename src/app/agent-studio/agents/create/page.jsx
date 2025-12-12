@@ -18,6 +18,8 @@ import ModelGrid from "@/components/agent-studio/agents/ModelGrid";
 import ToolsList from "@/components/agent-studio/agents/tools/ToolsList";
 import GuardrailsGrid from "@/components/agent-studio/agents/GuardrailsGrid";
 import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
+import KnowledgeBaseList from "@/components/agent-studio/agents/KnowledgeBase/KnowledgeList";
+import MemoriesList from "@/components/agent-studio/agents/MemoryList";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -56,7 +58,7 @@ export default function CreateAgentPage() {
       label: "Knowledge",
       name: "Knowledge",
       render: () => (
-        <EmptyCard children={"Knowledge configuration coming soon..."} />
+        <KnowledgeBaseList />
       ),
     },
     {
@@ -65,7 +67,7 @@ export default function CreateAgentPage() {
       label: "Memory",
       name: "Memory",
       render: () => (
-        <EmptyCard children={"Memory configuration coming soon..."} />
+        <MemoriesList/>
       ),
     },
     {
