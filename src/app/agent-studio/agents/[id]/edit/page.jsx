@@ -156,7 +156,7 @@ export default function CreateAgentPage() {
 
       {/* Main Content */}
       <div className="flex-1 p-6">
-        <div className="max-w-6xl mx-auto space-y-4">
+        <div className=" mx-auto space-y-4">
           {/* Basic Information */}
           {/* <FadeUp delay={0.02}> */}
             <Card className={"h-full py-10 shadow-none border-border-color-0 bg-background"}>

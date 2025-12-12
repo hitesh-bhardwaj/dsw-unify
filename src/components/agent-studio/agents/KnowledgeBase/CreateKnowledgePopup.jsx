@@ -1,0 +1,141 @@
+"use client";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+
+import { Textarea } from "@/components/ui/textarea"; 
+
+import { useState } from "react";
+import { UploadCloud } from "lucide-react";
+import { UploadIcon } from "@/components/Icons";
+
+export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [sourceType, setSourceType] = useState("Documents");
+  const [files, setFiles] = useState([]);
+
+  const handleFileChange = (e) => {
+    setFiles([...e.target.files]);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="w-[45%] rounded-xl p-6 bg-background border border-border-color-0">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold">
+            Create Knowledge Base
+            <p className="text-sm opacity-60 font-normal mt-1">
+              Create a new knowledge base that will be immediately available for your agent
+            </p>
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="space-y-5 pt-4">
+          {/* Knowledge Base Name */}
+          <div>
+            <label className="text-sm">Knowledge Base Name</label>
+            <Input
+              placeholder="e.g., Company Documentation"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="mt-1"
+            />
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="text-sm">Description</label>
+            <Textarea
+              placeholder="Describe what this knowledge base contains..."
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              rows={3}
+              className="mt-1"
+            />
+          </div>
+
+          {/* Source Type */}
+          <div>
+            <label className="text-sm">Source Type</label>
+            <Select value={sourceType} onValueChange={setSourceType}>
+              <SelectTrigger className="mt-1 w-full border border-border-color-0 cursor-pointer px-5">
+                <SelectValue placeholder="Select source type" />
+              </SelectTrigger>
+              <SelectContent className="border border-border-color-0 bg-background">
+                <SelectItem className="cursor-pointer" value="Documents">Documents</SelectItem>
+                <SelectItem className="cursor-pointer" value="Web URLs">Web URLs</SelectItem>
+                <SelectItem className="cursor-pointer" value="Custom">Custom</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Upload Documents */}
+          <div>
+            <p className="text-sm pb-1 block">Upload Documents</p>
+
+            <label
+              htmlFor="file-upload"
+              className="w-full h-40 border-2 border-dashed border-border-color-0 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-background"
+            >
+              <UploadIcon className="text-gray-500 h-4 w-4  " />
+              <p className="text-sm opacity-70">Drag and drop files here, or click to browse</p>
+
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-3 px-4 !h-9 border border-border-color-0"
+              >
+                Select Files
+              </Button>
+
+              <Input
+                id="file-upload"
+                type="file"
+                multiple
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </label>
+
+            {files.length > 0 && (
+              <p className="text-xs mt-2 opacity-70">{files.length} file(s) selected</p>
+            )}
+          </div>
+
+          {/* FOOTER BUTTONS */}
+          <div className="flex justify-end gap-3 pt-4">
+            <Button
+              variant="outline"
+              className="px-6 !h-10 border border-border-color-0"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              className="bg-primary text-white !h-10 px-6"
+              onClick={() => onOpenChange(false)}
+            >
+              Create & Add to Agent
+            </Button>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
