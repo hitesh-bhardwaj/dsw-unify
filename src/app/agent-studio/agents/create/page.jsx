@@ -16,6 +16,8 @@ import PromptCardGrid from "@/components/prompt-card-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import ModelGrid from "@/components/agent-studio/agents/ModelGrid";
 import ToolsList from "@/components/agent-studio/agents/tools/ToolsList";
+import GuardrailsGrid from "@/components/agent-studio/agents/GuardrailsGrid";
+import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
@@ -72,7 +74,7 @@ export default function CreateAgentPage() {
       label: "Guardrails",
       name: "Guardrails",
       render: () => (
-        <EmptyCard children={"Guardrails configuration coming soon..."} />
+        <GuardrailsGrid/>
       ),
     },
     {
@@ -81,7 +83,7 @@ export default function CreateAgentPage() {
       label: "Finetuning",
       name: "Finetuning",
       render: () => (
-        <EmptyCard children={"Finetuning configuration coming soon..."} />
+        <FinetuningGrid/>
       ),
     },
     {

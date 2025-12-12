@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 
 /**
  * Component to display a grid of prompt cards with search and generation functionality.
@@ -15,9 +16,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
  * @returns {React.JSX.Element} The rendered PromptCardGrid component.
  */
 const ModelGrid = () => {
-  const [systemPrompt, setSystemPrompt] = useState("");
-  const [query, setQuery] = useState("");
-  const [enhancePrompt, setEnhancePrompt] = useState("");
+const [topP, setTopP] = useState([0.3])
+const [temperature, setTemperature] = useState([0.7])
+const [frequency, setFrequency] = useState([0])
+
+
     const [showProgress, setShowProgress] = useState(false);
       const [useCase, setUseCase] = useState("");
     const useCases = [
@@ -69,28 +72,28 @@ const ModelGrid = () => {
              <div className="py-2">
             <div className="w-full flex justify-between">
               <p className="text-xs">Temperature</p>
-              <p>0.7</p>
+              <p>{temperature}</p>
             </div>
-            <div className="w-full h-[4px] bg-sidebar-accent rounded-full flex items-center dark:bg-gray-700">
-              <div
-                className={`h-full bg-primary rounded-full relative duration-700 ease-in-out w-[20%] delay-300`}
-              />
-              <div className="w-5 h-5 rounded-full bg-background border-3 border-foreground -ml-1 relative z-[2]" />
-            </div>
+            <Slider
+        value={temperature}
+        onValueChange={setTemperature}
+        max={2}
+        step={0.1}
+      />
             <p className="text-xs text-foreground/80 py-2">Controls randomness in responses</p>
             </div>
 
 <div className="py-2">
           <div className="w-full flex justify-between">
               <p className="text-xs">Top P</p>
-              <p>0.9</p>
+             <p>{topP}</p>
             </div>
-            <div className="w-full h-[4px] bg-sidebar-accent rounded-full flex items-center dark:bg-gray-700">
-              <div
-                className={`h-full bg-primary rounded-full relative duration-700 ease-in-out w-[40%] delay-300`}
-              />
-              <div className="w-5 h-5 rounded-full bg-background border-3 border-foreground -ml-1 relative z-[2]" />
-            </div>
+           <Slider
+        value={topP}
+        onValueChange={setTopP}
+        max={1}
+        step={0.1}
+      />
             <p className="text-xs text-foreground/80 py-2">Controls diversity via nucleus sampling</p>
           </div>
           </div>
@@ -106,14 +109,15 @@ const ModelGrid = () => {
           <div className="py-2">
           <div className="w-full flex justify-between">
               <p className="text-xs">Frequency Penalty</p>
-              <p>0.9</p>
+              <p>{frequency}</p>
             </div>
-            <div className="w-full h-[4px] bg-sidebar-accent rounded-full flex items-center dark:bg-gray-700">
-              <div
-                className={`h-full bg-primary rounded-full relative duration-700 ease-in-out w-[40%] delay-300`}
-              />
-              <div className="w-5 h-5 rounded-full bg-background border-3 border-foreground -ml-1 relative z-[2]" />
-            </div>
+           <Slider
+        value={frequency}
+        onValueChange={setFrequency}
+        max={2}
+        min={-2}
+        step={0.1}
+      />
             <p className="text-xs text-foreground/80 py-2">Reduces repetition in responses</p>
           </div>
 
