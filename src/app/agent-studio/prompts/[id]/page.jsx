@@ -87,7 +87,7 @@ export default function CreateAgentPage() {
                  Delete
                 </Button>
               </RippleButton>
-              <RippleButton>
+              {/* <RippleButton>
                 <Button
                   variant="outline"
                   className="gap-2 text-foreground border border-primary"
@@ -97,7 +97,7 @@ export default function CreateAgentPage() {
                   </div>
                  Copy
                 </Button>
-              </RippleButton>
+              </RippleButton> */}
               <Link href={`#`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">

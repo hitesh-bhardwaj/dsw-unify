@@ -23,13 +23,11 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
   });
 
   const CATEGORY_OPTIONS = [
-    "General",
-    "Marketing",
-    "Sales",
-    "Support",
-    "Engineering",
-    "Product",
-    "HR",
+   "Aggregations",
+    "Encoding",
+    "Calculations",
+    "Time-based",
+    "Custom"
   ];
 
   const validate = () => {

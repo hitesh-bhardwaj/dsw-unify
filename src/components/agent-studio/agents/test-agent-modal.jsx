@@ -165,7 +165,7 @@ export default function TestAgentModal({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange} className="rounded-3xl overflow-hidden">
+    <Dialog open={open} onOpenChange={onOpenChange} className=" overflow-hidden">
       <DialogContent
         className="w-3/5 h-[70%]  rounded-3xl flex flex-col p-0 gap-0 overflow-hidden"
       >

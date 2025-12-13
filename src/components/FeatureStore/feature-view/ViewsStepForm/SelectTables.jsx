@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { LeftArrow } from "@/components/Icons";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function SelectTables({ goNext, goBack }) {
   const tables = [
@@ -16,7 +16,15 @@ export default function SelectTables({ goNext, goBack }) {
     { name: "Medical_records", columns: "12 column", rows: "1.2M rows" },
   ];
 
-  const [selected, setSelected] = useState("Customers");
+  const [selectedTables, setSelectedTables] = useState(["Customers"]);
+
+  const toggleTable = (tableName) => {
+    setSelectedTables((prev) =>
+      prev.includes(tableName)
+        ? prev.filter((name) => name !== tableName)
+        : [...prev, tableName]
+    );
+  };
 
   return (
     <div className="space-y-2 pb-2 pr-2">
@@ -26,45 +34,45 @@ export default function SelectTables({ goNext, goBack }) {
         Choose tables to automatically generate features from all columns
       </p>
 
-      <RadioGroup
-        value={selected}
-        onValueChange={setSelected}
-        className="grid grid-cols-3 gap-4 pt-5"
-      >
-        {tables.map((item) => (
-          <label
-            key={item.name}
-            className={`border border-border-color-0 rounded-lg p-4 cursor-pointer transition-all
+      <div className="grid grid-cols-3 gap-4 pt-5">
+        {tables.map((item) => {
+          const isSelected = selectedTables.includes(item.name);
+          
+          return (
+            <label
+              key={item.name}
+              className={`border rounded-lg p-4 cursor-pointer transition-all
                 flex flex-col justify-between h-22 hover:bg-sidebar-accent
                 ${
-                  selected === item.name
-                    ? ""
-                    : "bg-white dark:bg-sidebar-accent "
+                  isSelected
+                    ? "border-sidebar-primary "
+                    : "border-border-color-0 bg-white dark:bg-sidebar-accent"
                 }`}
-          >
-            <div className="flex items-center gap-2">
-              <RadioGroupItem
-                value={item.name}
-                className="text-primary checked:bg-primary h-4.5 w-4.5 border-black/20"
-              />
-              <span
-                className={`text-sm font-medium ${
-                  selected === item.name
-                    ? "text-sidebar-primary"
-                    : "text-foreground"
-                }`}
-              >
-                {item.name}
-              </span>
-            </div>
+            >
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  checked={isSelected}
+                  onCheckedChange={() => toggleTable(item.name)}
+                />
+                <span
+                  className={`text-sm font-medium ${
+                    isSelected
+                      ? "text-sidebar-primary"
+                      : "text-foreground"
+                  }`}
+                >
+                  {item.name}
+                </span>
+              </div>
 
-            <div className="flex justify-between pl-6 text-xs text-foreground/80 pt-2">
-              <span>{item.columns}</span>
-              <span>{item.rows}</span>
-            </div>
-          </label>
-        ))}
-      </RadioGroup>
+              <div className="flex justify-between pl-6 text-xs text-foreground/80 pt-2">
+                <span>{item.columns}</span>
+                <span>{item.rows}</span>
+              </div>
+            </label>
+          );
+        })}
+      </div>
 
       {/* Footer Buttons */}
       <div className="w-full flex justify-end gap-2 pt-6">

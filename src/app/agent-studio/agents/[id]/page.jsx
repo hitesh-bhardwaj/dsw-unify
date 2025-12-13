@@ -25,7 +25,7 @@ export default function AgentDetailPage({ params }) {
    const { id } = use(params);
 
   const [apiModalOpen, setApiModalOpen] = useState(false);
-  const [testModalOpen, setTestModalOpen] = useState(false);
+ 
   // Show skeleton only once per agent id
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
@@ -291,7 +291,7 @@ export default function AgentDetailPage({ params }) {
               <RippleButton>
                 <Button
                   variant="outline"
-                   onClick={() => setTestModalOpen(true)}
+                  
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
@@ -340,11 +340,7 @@ export default function AgentDetailPage({ params }) {
         onOpenChange={setApiModalOpen}
         agentId={agent.id}
       />
-      <TestAgentModal
-        open={testModalOpen}
-        onOpenChange={setTestModalOpen}
-        agentId={agent.id}
-      />
+      
     </div>
   );
 }

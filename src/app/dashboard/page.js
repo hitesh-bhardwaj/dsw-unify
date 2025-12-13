@@ -648,7 +648,7 @@ export default function Home() {
               <MetricsBoard metricsData={metricsData} view={view} setView={setView} />
             </motion.div>
 
-            <motion.div layout className="below-sections flex-1 overflow-auto p-6 pt-0 space-y-12 mt-6">
+            <motion.div layout className="below-sections flex-1 overflow-auto p-6 pt-4 space-y-12 mt-6">
             {/* Data Engineering Section */}
             {filteredDataEngineering.length > 0 && (
               <motion.div layout className="space-y-6">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LeftArrow } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -11,22 +11,30 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-const TransformLogic = ({ goNext, goBack, isLastStep }) => {
-  const [language, setLanguage] = useState();
+const TransformLogic = ({ goNext, goBack, isLastStep, onCloseModal }) => {
+  const [language, setLanguage] = useState("");
   const [code, setCode] = useState("");
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [errors, setErrors] = useState({
     language: "",
+    code: "",
   });
 
   const LANGUAGE_OPTIONS = ["C++", "JAVA", "JavaScript"];
 
+  // Check if all required fields are filled
+  const isFormValid = language && code.trim();
+
   const validate = () => {
-    const newErrors = { language: "" };
+    const newErrors = { language: "", code: "" };
     let valid = true;
 
     if (!language) {
       newErrors.language = "Language is required.";
+      valid = false;
+    }
+    if (!code.trim()) {
+      newErrors.code = "Code is required.";
       valid = false;
     }
 
@@ -40,8 +48,10 @@ const TransformLogic = ({ goNext, goBack, isLastStep }) => {
     if (isLastStep) {
       // Final step – here you can call an API or close modal from parent
       console.log("Final transformation payload:", { language, code });
-      if (typeof goNext === "function") {
-        goNext();
+      
+      // Close the modal after successful validation
+      if (typeof onCloseModal === "function") {
+        onCloseModal();
       }
     } else if (typeof goNext === "function") {
       goNext();
@@ -96,16 +106,22 @@ const TransformLogic = ({ goNext, goBack, isLastStep }) => {
           {/* CODE */}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm text-foreground">
-              Transformation Code
+              Transformation Code*
             </label>
             <div className="flex gap-2">
               <Textarea
                 value={code}
-                onChange={(e) => setCode(e.target.value)}
+                onChange={(e) => {
+                  setCode(e.target.value);
+                  setErrors((prev) => ({ ...prev, code: "" }));
+                }}
                 className="border border-border-color-0 !text-xs h-32 placeholder:text-foreground/80 font-mono"
                 placeholder={`def calculate_age(dob):\n    today = datetime.now()\n    return (today - dob).days // 365`}
               />
             </div>
+            {errors.code && (
+              <p className="text-xs text-red-500">{errors.code}</p>
+            )}
           </div>
 
           {/* BUTTONS */}
@@ -121,8 +137,9 @@ const TransformLogic = ({ goNext, goBack, isLastStep }) => {
             </RippleButton>
             <RippleButton>
               <Button
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
-                // onClick={handleNextOrSubmit}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-sidebar-primary"
+                onClick={handleNextOrSubmit}
+                disabled={!isFormValid}
               >
                 {isLastStep ? "Create Transformation" : "Next Step"}
                 <div className="w-4 h-auto">

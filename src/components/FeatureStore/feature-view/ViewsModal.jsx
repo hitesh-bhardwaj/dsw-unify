@@ -38,7 +38,7 @@ export default function ViewsModal({ open, onOpenChange, onSelect }) {
       id: "basic",
       label: "Basic Info",
       required: true,
-      element: <BasicInfo />,
+      element: <BasicInfo  onClose={showStepsModal}/>,
     },
     {
       id: "select-tables",

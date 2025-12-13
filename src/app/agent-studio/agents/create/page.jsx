@@ -21,11 +21,13 @@ import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
 import KnowledgeBaseList from "@/components/agent-studio/agents/KnowledgeBase/KnowledgeList";
 import MemoriesList from "@/components/agent-studio/agents/MemoryList";
 import TagsGrid from "@/components/agent-studio/agents/TagsGrid";
+import TestAgentModal from "@/components/agent-studio/agents/test-agent-modal";
 
 export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("");
   const [description, setDescription] = useState("");
+   const [testModalOpen, setTestModalOpen] = useState(false);
 
   const items = [
     {
@@ -132,6 +134,7 @@ export default function CreateAgentPage() {
               </RippleButton>
               <RippleButton>
                 <Button
+                 onClick={() => setTestModalOpen(true)}
                   variant="outline"
                   className="gap-2 text-foreground border border-primary"
                 >
@@ -213,6 +216,11 @@ export default function CreateAgentPage() {
         open={apiModalOpen}
         onOpenChange={setApiModalOpen}
         agentId="my-ai-assistant"
+      />
+      <TestAgentModal
+        open={testModalOpen}
+        onOpenChange={setTestModalOpen}
+        agentId={"Agent Builder"}
       />
     </div>
   );

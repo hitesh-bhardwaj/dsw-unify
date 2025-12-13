@@ -147,7 +147,7 @@ const Page = () => {
       id: "logic",
       label: "Transformation Logic",
       required: false,
-      element: <TransformLogic />,
+      element: <TransformLogic setIsModalOpen={setIsModalOpen} onCloseModal={setIsModalOpen}/>,
     },
   ];
 
