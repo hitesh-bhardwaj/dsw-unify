@@ -36,6 +36,7 @@ export function TestingCardResults({ test ,tab}) {
     description,
     tags = [],
     tests,
+    totalTest,
     date,
     time,
     width,
@@ -54,7 +55,7 @@ export function TestingCardResults({ test ,tab}) {
     <Link href={`#`} className="block group" aria-label={`${name} test card`}>
       <Card
         className={cn(
-           "overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
+           "overflow-hidden group  cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
         )}
       >
         <CardHeader>
@@ -113,7 +114,7 @@ export function TestingCardResults({ test ,tab}) {
               <div className="flex items-center justify-between text-sm font-medium">
                 <div className="space-x-1">
                   <span className="text-primary">Tests:</span>
-                  <span className="group-hover:text-foreground ">{tests}</span>
+                  <span className="text-black ">{totalTest}</span>
                 </div>
                 <div className="space-x-1 ">
                   <span className="text-primary">
@@ -121,7 +122,7 @@ export function TestingCardResults({ test ,tab}) {
                       ? `${successRate}%`
                       : successRate}
                   </span>
-                  <span>Success Rate</span>
+                  <span className="text-black">Success Rate</span>
                 </div>
               </div>
 
@@ -139,7 +140,7 @@ export function TestingCardResults({ test ,tab}) {
               />
             </div>
 
-            <div className="flex items-end justify-end p-3 text-sm py-6 group-hover:text-white">
+            <div className="flex items-end justify-end p-3 text-sm py-6 g">
               <div className="flex items-center gap-1 text-foreground/80">
                 <span>Run on</span>
                 <span>{date},</span>

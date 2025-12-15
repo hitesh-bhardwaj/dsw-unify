@@ -1,4 +1,5 @@
 import React from "react";
+import CountUp from "@/components/animations/CountUp";
 
 const stats = [
   {
@@ -31,12 +32,15 @@ const Overviews = () => {
         {stats.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col gap-8 border border-border-color-0 rounded-xl py-4 px-4 w-full"
+            className="flex flex-col gap-8 border border-border-color-0 rounded-3xl py-4 px-4 w-full"
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-medium">{item.value}</span>
+              <span className="text-2xl font-medium">
+
+              {index==0 ?  <CountUp value={item.value} startOnView /> : `${item.value}` }                
+              </span>
               {item.isActive && (
                 <span className="text-xs border border-badge-green px-3 py-1 rounded-full">
                   Active

@@ -6,55 +6,45 @@ import Link from "next/link";
 import { PlusIcon, ToolsIcon } from "@/components/Icons";
 import { ToolsCard } from "@/components/tools-card";
 import SearchBar from "@/components/search-bar";
-// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
-import { cn } from "@/lib/utils";
 import { ScaleDown } from "@/components/animations/Animations";
 import AddToolModal from "@/components/agent-studio/CreateToolsModal";
+import { motion, AnimatePresence } from "framer-motion";
+import CountUp from "@/components/animations/CountUp";
 
-// Mock data for tools
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+
+
 const tools = [
   {
     id: "web-search",
     name: "Web Search",
     description: "Search the web for current information",
-    icon:<ToolsIcon/>,
+    icon: <ToolsIcon />,
     status: "active",
-    tags: [
-      { label: "api", color: "yellow" },
-      { label: "search", color: "blue" },
-    ],
+    tags: ["api", "search"],
     variant: "light",
   },
   {
     id: "calculator",
     name: "Calculator",
     description: "Perform mathematical calculations",
-    icon:<ToolsIcon/>,
+    icon: <ToolsIcon />,
     status: "active",
-    tags: [
-      { label: "function", color: "yellow" },
-      { label: "utility", color: "blue" },
-    ],
+    tags: ["function", "utility"],
     variant: "light",
   },
   {
     id: "code-executor",
     name: "Code Executor",
     description: "Execute Python code safely",
-    icon:<ToolsIcon/>,
+    icon: <ToolsIcon />,
     status: "beta",
-    tags: [
-      { label: "sandbox", color: "yellow" },
-      { label: "development", color: "blue" },
-    ],
+    tags: ["sandbox", "development"],
     variant: "light",
   },
-  // duplicates (will be deduped)
- 
 ];
 
-// de-dupe by id+name
 const uniqueTools = (() => {
   const seen = new Set();
   return tools.filter((t) => {
@@ -65,32 +55,59 @@ const uniqueTools = (() => {
   });
 })();
 
+const stats = [
+  { title: "Total Tools", value: "03" },
+  { title: "Active Tools", value: "02" },
+  { title: "Categories", value: "03" },
+];
+
 export default function ToolsPage() {
   const [query, setQuery] = useState("");
-      const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // FILTER BAR STATE
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
 
-  const filteredTools = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return uniqueTools;
+  // AVAILABLE TAGS
+  const availableTags = useMemo(() => {
+    const setTag = new Set();
+    uniqueTools.forEach((t) =>
+      t.tags?.forEach((tag) => setTag.add(tag.toLowerCase()))
+    );
+    return Array.from(setTag).sort();
+  }, []);
 
-    return uniqueTools.filter((tool) => {
-      const inName = tool.name.toLowerCase().includes(q);
-      const inDesc = tool.description.toLowerCase().includes(q);
-      const inTags = (tool.tags || []).some((t) =>
-        (t.label || "").toLowerCase().includes(q)
-      );
-      return inName || inDesc || inTags;
-    });
-  }, [query]);
+  // SEARCH + TAG FILTER
+  let filteredTools = uniqueTools.filter((tool) => {
+    const matchSearch =
+      tool.name.toLowerCase().includes(query.toLowerCase()) ||
+      tool.description.toLowerCase().includes(query.toLowerCase());
+
+    const matchTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((t) => tool.tags.includes(t));
+
+    return matchSearch && matchTags;
+  });
+
+  // SORTING
+  if (sortOrder === "asc") {
+    filteredTools = [...filteredTools].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredTools = [...filteredTools].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
+  }
 
   return (
-    <div className="flex flex-col h-full w-full overflow-hidden">
-      {/* Header section */}
+    <div className="flex flex-col h-full w-full overflow-hidden pb-5">
       <ScaleDown>
-      <div className="space-y-6 p-6">
-        {/* Title and CTA */}
-        {/* <FadeUp> */}
+        <div className="space-y-6 p-6">
+          {/* HEADER */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">Tools</h1>
@@ -98,50 +115,91 @@ export default function ToolsPage() {
                 Manage agent tools and capabilities
               </p>
             </div>
+
             <RippleButton>
               <Link href="#">
                 <Button
                   onClick={() => setIsModalOpen(true)}
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 duration-300 cursor-pointer"
+                >
                   <PlusIcon />
                   Add Tools
                 </Button>
               </Link>
             </RippleButton>
           </div>
-        {/* </FadeUp> */}
 
-        {/* <FadeUp delay={0.02}> */}
+          {/* STATS */}
+          <div className="w-full flex items-center justify-between gap-4">
+            {stats.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full"
+              >
+                <span className="text-sm text-foreground/80">{item.title}</span>
+                <span className="text-4xl font-medium mt-1">
+                  <CountUp value={item.value} startOnView />
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* SEARCH */}
           <SearchBar
             placeholder="Search Tools..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-        {/* </FadeUp> */}
-      </div>
 
-      {/* <FadeUp delay={0.04}> */}
-        <div className="flex-1 pt-0 px-6 h-fit w-full relative">
-          <div className={cn("relative inset-0 pt-0 transition-all h-full")}>
-            {filteredTools.length > 0 ? (
-              <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch">
-                {filteredTools.map((tool, i) => (
-                  <ToolsCard key={`${tool.id}-${i}`} tools={tool} index={i} />
-                ))}
-              </div>
-            ) : (
-              <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground">
-                No tools found matching "{query}"
-              </div>
-            )}
-          </div>
+          {/* FILTER BAR */}
+          <FilterBar
+            selectedTags={selectedTags}
+            onTagsChange={setSelectedTags}
+            availableTags={availableTags}
+            view={view}
+            setView={setView}
+            sortOrder={sortOrder}
+            setSortOrder={setSortOrder}
+            cards={uniqueTools}
+          />
         </div>
-      {/* </FadeUp> */}
+
+        {/* GRID / LIST */}
+        <div className="flex-1 px-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={view}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className={`items-stretch ${
+                view === "grid"
+                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  : "flex flex-col gap-5"
+              }`}
+            >
+              {filteredTools.map((tool, i) => (
+                <ToolsCard
+                  key={`${tool.id}-${i}`}
+                  tools={tool}
+                  index={i}
+                  view={view}
+                />
+              ))}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* EMPTY STATE */}
+          {filteredTools.length === 0 && (
+            <div className="flex h-64 items-center justify-center text-border-color-0 border border-border-color-0 rounded-xl mt-6">
+              No tools found matching "{query}"
+            </div>
+          )}
+        </div>
       </ScaleDown>
-      <AddToolModal 
-                  open={isModalOpen}
-                        onOpenChange={setIsModalOpen}
-            />
+
+      <AddToolModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }

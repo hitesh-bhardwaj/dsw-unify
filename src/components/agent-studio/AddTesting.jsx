@@ -97,7 +97,7 @@ export default function AddTestings({ open, onOpenChange }) {
                 placeholder="e.g. Customer Support Validation"
                 onChange={(e) => setTestSuiteName(e.target.value)}
                 className={`border placeholder:text-xs placeholder:text-foreground/80 ${
-                  errors.testSuiteName ? "border-red-500" : "border-foreground/20"
+                  errors.testSuiteName ? "border-red-500" : "border-border-color-0"
                 }`}
               />
               {errors.testSuiteName && (
@@ -113,7 +113,7 @@ export default function AddTestings({ open, onOpenChange }) {
                 placeholder="Describe what this test suite validates..."
                 onChange={(e) => setDescription(e.target.value)}
                 className={`border placeholder:text-xs h-32 placeholder:text-foreground/80 ${
-                  errors.description ? "border-red-500" : "border-foreground/20"
+                  errors.description ? "border-red-500" : "border-border-color-0"
                 }`}
               />
               {errors.description && (
@@ -128,19 +128,19 @@ export default function AddTestings({ open, onOpenChange }) {
                 value={selectedAgent}
                 onValueChange={setSelectedAgent}
                 onOpenChange={(open) => setIsOpenAgent(open)}
-                className="w-full"
+                className="w-full "
               >
                 <SelectTrigger
                   className={`border w-full ${
-                    errors.selectedAgent ? "border-red-500" : "border-foreground/20"
-                  } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                    errors.selectedAgent ? "border-red-500" : "border-border-color-0"
+                  } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-11 cursor-pointer px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                     isOpenAgent ? "[&>svg]:rotate-180" : ""
                   }`}
                 >
                   <SelectValue placeholder="Choose an agent to test" />
                 </SelectTrigger>
 
-                <SelectContent>
+                <SelectContent className="border border-border-color-0">
                   <SelectItem value="agent1" className="!cursor-pointer text-xs">
                     Agent 1
                   </SelectItem>

@@ -9,6 +9,8 @@ import { ScaleDown } from "@/components/animations/Animations";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import Overviews from "@/components/agent-studio/tools/Overviews";
+import ToolsConfigure from "@/components/agent-studio/tools/ToolsConfig";
+import ToolsUsage from "@/components/agent-studio/tools/ToolsUsage";
 
 const toolsData = {
   id: "web-search",
@@ -32,7 +34,7 @@ const items = [
     label: "Configuration",
     name: "Configuration",
     render: () => (
-      <EmptyCard children={"Models configuration coming soon..."} />
+      <ToolsConfigure />
     ),
   },
   {
@@ -40,7 +42,7 @@ const items = [
     value: "usage",
     label: "Usage",
     name: "Usage",
-    render: () => <EmptyCard children={"Tools usage coming soon..."} />,
+    render: () => <ToolsUsage/>,
   },
 ];
 

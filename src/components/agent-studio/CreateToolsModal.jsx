@@ -88,10 +88,10 @@ export default function AddToolModal({ open, onOpenChange }) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="w-[80%] h-[80%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 py-8">
         <DialogHeader className="justify-center pb-4">
-          <DialogTitle className="text-2xl font-medium">
+          <DialogTitle className="text-3xl font-medium">
             Add New Tool
           </DialogTitle>
-          <p className="text-xs text-foreground/80">
+          <p className="text-sm text-foreground/80">
             Create a new tool for your agents
           </p>
         </DialogHeader>
@@ -112,7 +112,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                 placeholder="e.g. Web search"
                 onChange={(e) => setToolName(e.target.value)}
                 className={`border placeholder:text-xs placeholder:text-foreground/80 ${
-                  errors.toolName ? "border-red-500" : "border-foreground/20"
+                  errors.toolName ? "border-red-500" : "border-border-color-0"
                 }`}
               />
               {errors.toolName && (
@@ -128,7 +128,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                 placeholder="Describe what this tool does..."
                 onChange={(e) => setDescription(e.target.value)}
                 className={`border placeholder:text-xs h-32 placeholder:text-foreground/80 ${
-                  errors.description ? "border-red-500" : "border-foreground/20"
+                  errors.description ? "border-red-500" : "border-border-color-0"
                 }`}
               />
               {errors.description && (
@@ -148,7 +148,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                 >
                   <SelectTrigger
                     className={`border w-full ${
-                      errors.type ? "border-red-500" : "border-foreground/20"
+                      errors.type ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenType ? "[&>svg]:rotate-180" : ""
                     }`}
@@ -183,7 +183,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                 >
                   <SelectTrigger
                     className={`border w-full ${
-                      errors.category ? "border-red-500" : "border-foreground/20"
+                      errors.category ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenCategory ? "[&>svg]:rotate-180" : ""
                     }`}
@@ -220,7 +220,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                 placeholder="https://api.example.com/v1/endpoint"
                 onChange={(e) => setApiEndpoint(e.target.value)}
                 className={`border placeholder:text-xs placeholder:text-foreground/80 ${
-                  errors.apiEndpoint ? "border-red-500" : "border-foreground/20"
+                  errors.apiEndpoint ? "border-red-500" : "border-border-color-0"
                 }`}
               />
               {errors.apiEndpoint && (
@@ -240,7 +240,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                 >
                   <SelectTrigger
                     className={`border w-full ${
-                      errors.httpMethod ? "border-red-500" : "border-foreground/20"
+                      errors.httpMethod ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenMethod ? "[&>svg]:rotate-180" : ""
                     }`}
@@ -281,7 +281,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                 >
                   <SelectTrigger
                     className={`border w-full ${
-                      errors.status ? "border-red-500" : "border-foreground/20"
+                      errors.status ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenStatus ? "[&>svg]:rotate-180" : ""
                     }`}

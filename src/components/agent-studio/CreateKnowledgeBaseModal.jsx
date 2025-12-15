@@ -84,7 +84,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
         </div>
         <div className="space-y-6 py-1">
           {/* Upload Drop Box */}
-          <div className="border border-foreground/20 rounded-lg py-13 p-10 flex flex-col items-center justify-center text-center">
+          <div className="border border-border-color-0 rounded-lg py-13 p-10 flex flex-col items-center justify-center text-center">
             <TextFile className="w-5 h-5" />
             <p className="text-sm font-semibold mt-4 text-foreground/80">
               Drag and drop files here, or click to browse
@@ -103,7 +103,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               className="w-full"
             >
               <SelectTrigger
-                className={`border w-full border-foreground/20 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isOpenFormat ? "[&>svg]:rotate-180" : ""
                 }`}
               >
@@ -155,7 +155,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               placeholder="e.g. Company Documentation"
               onChange={(e) => setKbName(e.target.value)}
               className={`border placeholder:text-xs placeholder:text-foreground/80 ${
-                errors.kbName ? "border-red-500" : "border-foreground/20"
+                errors.kbName ? "border-red-500" : "border-border-color-0"
               }`}
             />
             {errors.kbName && (
@@ -170,7 +170,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               placeholder="Describe what this knowledge base contains..."
               onChange={(e) => setDescription(e.target.value)}
               className={`border placeholder:text-xs h-28 placeholder:text-foreground/80 ${
-                errors.description ? "border-red-500" : "border-foreground/20"
+                errors.description ? "border-red-500" : "border-border-color-0"
               }`}
             />
             {errors.description && (
@@ -250,7 +250,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
             <RippleButton>
               <Button
                 variant="outline"
-                className="border-foreground/40 text-foreground/80 px-6"
+                className="border-border-color-0 text-foreground/80 px-6"
                 onClick={() => onOpenChange(false)}
               >
                 Cancel

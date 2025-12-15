@@ -132,19 +132,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
               </div>
             </div>
             <div className="flex items-center gap-3">
-                <RippleButton>
-                <Link href={"#"}>
-                  <Button
-                    variant="outline"
-                    className="gap-2 text-foreground border border-primary"
-                  >
-                    <div className="!w-4 text-red">
-                     <Bin/>
-                    </div>
-                    Delete
-                  </Button>
-                </Link>
-              </RippleButton>
+               
               <RippleButton>
                 <Link href={"#"}>
                   <Button
@@ -155,6 +143,19 @@ export default function KnowledgeBaseDetailPage({ params }) {
                       <ConfigureIcon/>
                     </div>
                     Settings
+                  </Button>
+                </Link>
+              </RippleButton>
+               <RippleButton>
+                <Link href={"#"}>
+                  <Button
+                    variant="outline"
+                    className="gap-2 text-foreground border border-primary"
+                  >
+                    <div className="!w-4 text-red">
+                     <Bin/>
+                    </div>
+                    Delete
                   </Button>
                 </Link>
               </RippleButton>

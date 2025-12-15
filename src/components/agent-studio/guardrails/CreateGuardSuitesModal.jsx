@@ -9,16 +9,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowDown, ArrowRight, ArrowRightIcon, ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUp } from "lucide-react";
 import { useState } from "react";
 
 export default function CreateGuardSuitesModal({ open, onOpenChange }) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
+  const [nameError, setNameError] = useState("");
 
   const inputGuardrails = [
     {
@@ -74,9 +74,19 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
     },
   ];
 
+  const handleCreate = () => {
+    if (!name.trim()) {
+      setNameError("Name is required");
+      return;
+    }
+
+    setNameError("");
+    onOpenChange(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[70%] max-h-[90vh] rounded-xl p-6  bg-background border border-border-color-0 flex flex-col">
+      <DialogContent className="w-[70%] max-h-[90vh] rounded-xl p-6 bg-background border border-border-color-0 flex flex-col">
         <DialogHeader>
           <DialogTitle className="text-2xl font-medium">
             Create Guard Suite
@@ -84,15 +94,23 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto space-y-5 pt-4">
-          {/* Knowledge Base Name */}
+          {/* Name */}
           <div>
             <label className="text-sm">Name*</label>
             <Input
               placeholder="e.g., Production Safety Suite"
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="mt-1"
+              onChange={(e) => {
+                setName(e.target.value);
+                if (nameError) setNameError("");
+              }}
+              className={`mt-1 ${
+                nameError ? "border-red-500 focus-visible:ring-red-500" : ""
+              }`}
             />
+            {nameError && (
+              <p className="text-xs text-red-500 mt-1">{nameError}</p>
+            )}
           </div>
 
           {/* Description */}
@@ -107,7 +125,7 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+         <div className="grid grid-cols-2 gap-4">
             {/* Left Column - Input Guardrails */}
             <div>
               <div className="space-y-2 mb-3">
@@ -182,23 +200,22 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
           </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-4  mt-4">
-          
+        <div className="flex justify-end gap-3 pt-4 mt-4">
           <RippleButton>
-          <Button
-            variant="outline"
-            className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
-             onClick={() => onOpenChange(false)}
-          >
-            Cancel
-          </Button>
-        </RippleButton>
+            <Button
+              variant="outline"
+              className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
+              onClick={() => onOpenChange(false)}
+            >
+              Cancel
+            </Button>
+          </RippleButton>
 
-          <RippleButton
-            onClick={() => onOpenChange(false)}
-            className={"rounded-full"}
-          >
-            <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2  cursor-pointer  !px-6 rounded-lg">
+          <RippleButton className="rounded-full">
+            <Button
+              onClick={handleCreate}
+              className="bg-primary hover:bg-[#E64A19] text-white gap-2 cursor-pointer !px-6 rounded-lg"
+            >
               Create Suite
               <ArrowRight />
             </Button>

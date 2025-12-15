@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
@@ -12,7 +12,7 @@ import TestingResultsGrid from "@/components/testing/testing-results-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import AddTestings from "@/components/agent-studio/AddTesting";
 
-const testsSuites = [
+const initialTestSuites = [
   {
     id: "customer-support-validation",
     name: "Customer Support Validation",
@@ -22,56 +22,44 @@ const testsSuites = [
       { label: "92% Success", color: "orange" },
     ],
     tests: "25",
+    successRate: "92.0%",
+    lastRun: '22/01/25',
+    width: "w-[92.0%]",
+     totalTest:'23 passed, 2 failed',
+
+    date: "22/01/2024",
+    time: "20:00:00",
     agent: "agent_001",
-    lastrun: "22/01/2024",
     variant: "light",
+
+    // STATE FLAGS
+    isRunning: false, 
+    hasRun: false,    
   },
   {
     id: "tech-assistant-tests",
     name: "Technical Assistant Tests",
+        lastRun: '22/01/25',
+
     description: "Testing technical knowledge and accuracy",
     tags: [
-      { label: "Error", color: "red" },
+      { label: "Completed", color: "green" },
       { label: "67% Success", color: "orange" },
     ],
     tests: "18",
-    agent: "agent_002",
-    lastrun: "21/01/2024",
-    variant: "light",
-  },
-];
-const testsResults = [
-  {
-    id: "customer-support-validation",
-    name: "Customer Support Validation",
-    description: "Support Agent v2.1",
-    tags: [
-      { label: "Completed", color: "green" },
-      { label: "4m 32s", color: "orange" },
-    ],
-    tests: "23 passed, 2 failed",
-    successRate: "92.0%",
-    width: "w-[92.0%]",
-    date: "22/01/2024",
-    time: "20:00:00",
-    variant: "light",
-  },
-  {
-    id: "tech-assistant-tests",
-    name: "Technical Assistant Tests",
-    description: "Tech Assistant v1.3",
-    tags: [
-      { label: "Completed", color: "green" },
-      { label: "3m 18s", color: "orange" },
-    ],
-    tests: "12 passed, 6 failed",
+    totalTest:'23 passed, 2 failed',
     successRate: "66.7%",
     width: "w-[66.7%]",
     date: "21/01/2024",
     time: "22:15:00",
+    agent: "agent_002",
     variant: "light",
+
+    isRunning: false,
+    hasRun: false,
   },
 ];
+
 const analyticsCardData = [
   {
     id: "average-response-time",
@@ -99,74 +87,98 @@ const analyticsCardData = [
     heading: "Error Rate",
     progress: "2.1%",
     remarks: "-1.2% from last week",
-    posictive: false,
+    positive: false,
   },
 ];
 
 export default function TestingPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [testSuitesState, setTestSuitesState] = useState(initialTestSuites);
 
-          const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  // RUN TEST (2s running, permanent result)
+  const handleRunTest = (id) => {
+    setTestSuitesState((prev) =>
+      prev.map((suite) =>
+        suite.id === id
+          ? { ...suite, isRunning: true, hasRun: true }
+          : suite
+      )
+    );
+
+    setTimeout(() => {
+      setTestSuitesState((prev) =>
+        prev.map((suite) =>
+          suite.id === id
+            ? { ...suite, isRunning: false }
+            : suite
+        )
+      );
+    }, 2000);
+  };
+
+  // Derived results (SAME DATA)
+  const testResults = useMemo(
+    () => testSuitesState.filter((t) => t.hasRun),
+    [testSuitesState]
+  );
 
   const items = [
     {
       id: "test-suites",
       value: "test-suites",
       label: "Test Suites",
-      name: "Test Suites",
-      render: () => <TestingSuitesGrid items={testsSuites} />,
+      render: () => (
+        <TestingSuitesGrid
+          items={testSuitesState}
+          onRunTest={handleRunTest}
+        />
+      ),
     },
     {
       id: "test-results",
       value: "test-results",
       label: "Test Results",
-      name: "Test Results",
-      render: () => <TestingResultsGrid items={testsResults} />,
+      render: () => <TestingResultsGrid items={testResults} />,
     },
     {
       id: "analytics",
       value: "analytics",
       label: "Analytics",
-      name: "Analytics",
-      render: () => <TestingAnalyticsComp cardData={analyticsCardData} />,
+      render: () => (
+        <TestingAnalyticsComp cardData={analyticsCardData} />
+      ),
     },
   ];
+
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       <ScaleDown>
-      <div className="space-y-6 p-6">
-        {/* Title and CTA */}
-        {/* <FadeUp> */}
+        <div className="space-y-6 p-6">
           <div className="flex items-center justify-between">
             <div className="space-y-2">
-              <h1 className="text-3xl font-medium text-foreground">Testing</h1>
+              <h1 className="text-3xl font-medium text-foreground">
+                Testing
+              </h1>
               <p className="mt-1 text-sm text-gray-600 dark:text-foreground">
                 Validate agent performance with comprehensive test suites
               </p>
             </div>
+
             <RippleButton>
-              <Link
-                onClick={() => setIsModalOpen(true)}
-              href="#">
-                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+              <Link href="#" onClick={() => setIsModalOpen(true)}>
+                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 cursor-pointer rounded-full !px-6 !py-6">
                   <PlusIcon />
                   Create Test Suite
                 </Button>
               </Link>
             </RippleButton>
           </div>
-        {/* </FadeUp> */}
-        {/* <FadeUp delay={0.04}> */}
-          <AnimatedTabsSection
-            items={items}
-            // ctx={ctx}
-            defaultValue="test-suites"
-          />
-        {/* </FadeUp> */}
-      </div>
+
+          <AnimatedTabsSection items={items} defaultValue="test-suites" />
+        </div>
       </ScaleDown>
-              <AddTestings open={isModalOpen} onOpenChange={setIsModalOpen} />
-      
+
+      <AddTestings open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }

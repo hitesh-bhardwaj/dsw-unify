@@ -10,6 +10,8 @@ import { ScaleDown } from "@/components/animations/Animations";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import Overviews from "@/components/agent-studio/memories/Overviews";
+import MemoryEntries from "@/components/agent-studio/memories/Entries";
+import Settings from "@/components/agent-studio/memories/Settings";
 
 const toolsData = {
   id: "user-preference",
@@ -34,7 +36,7 @@ const items = [
     label: "Entries",
     name: "Entries",
     render: () => (
-      <EmptyCard children={"Coming soon..."} />
+      <MemoryEntries />
     ),
   },
   {
@@ -42,7 +44,7 @@ const items = [
     value: "settings",
     label: "Settings",
     name: "settings",
-    render: () => <EmptyCard children={"Coming soon..."} />,
+    render: () => <Settings/>,
   },
 ];
 

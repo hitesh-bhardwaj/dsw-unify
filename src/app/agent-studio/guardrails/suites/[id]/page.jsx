@@ -6,7 +6,7 @@ import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
-import { Bin, GuardrailsIcon } from "@/components/Icons";
+import { Bin, GuardrailsIcon, EditIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
 import CountUp from "@/components/animations/CountUp";
 import { Card } from "@/components/ui/card";
@@ -222,6 +222,9 @@ export default function GuardSuiteDetailPage() {
 
               <RippleButton>
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                   <div className="!w-4 text-white">
+                    <EditIcon />
+                  </div>
                   Edit
                 </Button>
               </RippleButton>
@@ -255,7 +258,7 @@ export default function GuardSuiteDetailPage() {
                 <span className="text-3xl font-medium">
                   {guardSuite.status === "active" ? "Active" : "Inactive"}
                 </span>
-                <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-badge-green/10 text-badge-green border border-badge-green">
+                <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-white text-badge-green border border-badge-green">
                   {guardSuite.status === "active" ? "Active" : "Inactive"}
                 </Badge>
               </div>

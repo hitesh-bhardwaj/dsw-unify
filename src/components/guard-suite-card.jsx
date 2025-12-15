@@ -195,8 +195,8 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
             {inputGuardrails.length > 0 && (
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <div className="size-5 rounded-full flex items-center justify-center border border-badge-green transition-colors group-hover:border-white/90 duration-300">
-                    <ArrowDown className="size-3.5 group-hover:text-white/90 duration-300 transition-colors" />
+                  <div className="size-5 rounded-full flex items-center justify-center border border-badge-blue transition-colors group-hover:border-white/90 duration-300">
+                    <ArrowDown className="size-3.5 text-badge-blue group-hover:text-white/90 duration-300 transition-colors" />
                   </div>
                   <p className="text-sm font-medium text-foreground transition-colors group-hover:text-white/90 group-hover:border-white/90 duration-300">
                     Input Guardrails
@@ -206,7 +206,7 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
                   {inputGuardrails.map((guardrail, idx) => (
                     <div key={idx} className="flex items-center gap-2">
                       <div className="size-5 flex items-center justify-center rounded-full border border-badge-green transition-colors group-hover:border-white/90 duration-300">
-                        <Check className="size-3.5 group-hover:text-white/90 duration-300 transition-colors" />
+                        <Check className="size-3.5 text-badge-green group-hover:text-white/90 duration-300 transition-colors" />
                       </div>
                       <span className="text-sm text-foreground transition-colors group-hover:text-white/90">
                         {guardrail.name}
@@ -229,9 +229,9 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className="size-5 rounded-full flex items-center justify-center border border-badge-green transition-colors group-hover:border-white/90 duration-300">
-                    <ArrowUp className="size-3.5 group-hover:text-white/90 duration-300 transition-colors" />
+                    <ArrowUp className="size-3.5 text-badge-green group-hover:text-white/90 duration-300 transition-colors" />
                   </div>
-                  <p className="text-sm font-medium text-foreground transition-colors group-hover:text-white/90 group-hover:border-white/90 duration-300">
+                  <p className="text-sm  font-medium text-foreground transition-colors group-hover:text-white/90 group-hover:border-white/90 duration-300">
                     Output Guardrails
                   </p>
                 </div>
@@ -239,12 +239,12 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
                   {outputGuardrails.map((guardrail, idx) => (
                     <div key={idx} className="flex items-center gap-2">
                       <div className="size-5 flex items-center justify-center rounded-full border border-badge-green transition-colors group-hover:border-white/90 duration-300">
-                        <Check className="size-3.5 group-hover:text-white/90 duration-300 transition-colors" />
+                        <Check className="size-3.5 text-badge-green group-hover:text-white/90 duration-300 transition-colors" />
                       </div>
                       <span className="text-sm text-foreground transition-colors group-hover:text-white/90 duration-300">
                         {guardrail.name}
                         {guardrail.severity && (
-                          <span className="ml-2 text-xs text-muted-foreground transition-colors group-hover:text-white/50">
+                          <span className="ml-2 text-sm text-muted-foreground transition-colors group-hover:text-white/50">
                             ({guardrail.severity})
                           </span>
                         )}
@@ -256,37 +256,35 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
             )}
 
             {/* Footer */}
-            <div className="border border-border-color-0 group-hover:border-white/30 w-full rounded-lg flex px-5 py-2 items-center bg-white/10 dark:bg-background dark:group-hover:bg_white/10 transition-all duration-300">
-              <div className="flex flex-col justify-between gap-1 w-1/2">
-                <div className="flex gap-2">
-                  <span className="text-foreground font-medium group-hover:text-white transition-colors duration-300">
-                    {agentsCount}
-                  </span>
-                </div>
-                <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">
-                  Agents
-                </span>
-              </div>
-              <div className="w-16 h-[0.2px] bg-border-color-3 group-hover:bg-white/40 rotate-90 transition-colors duration-300" />
-              <div className="flex items-center justify-between text-sm py-5 duration-300 w-1/2">
-                <div className="flex justify-between gap-1 flex-col w-full">
-                  <div className="flex gap-2">
-                    <span className="text-foreground font-medium group-hover:text-white transition-colors duration-300">
-                      {createdDate
-                        ? new Date(createdDate).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                          })
-                        : "--"}
-                    </span>
-                  </div>
-                  <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">
-                    Created
-                  </span>
-                </div>
-              </div>
-            </div>
+            <div
+  className={`flex items-center rounded-lg p-5 py-5 mt-8 text-sm bg-white/10 dark:bg-background dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${
+    view === "list" ? "justify-between" : "justify-center gap-17"
+  }`}
+>
+  {/* Left */}
+  <div className="flex flex-col gap-1">
+    <p className="text-base font-medium group-hover:text-white">
+      {agentsCount}
+    </p>
+    <p className="text-foreground/70 group-hover:text-white/80">
+      Agents
+    </p>
+  </div>
+
+  {/* Divider */}
+  <div className="w-[1px] h-10 bg-foreground/30 group-hover:bg-white/60" />
+
+  {/* Right */}
+  <div className="flex flex-col gap-1 text-left">
+    <p className="text-base font-medium group-hover:text-white">
+      {createdDate}
+    </p>
+    <p className="text-foreground/70 group-hover:text-white/80">
+      Created
+    </p>
+  </div>
+</div>
+
           </CardContent>
         </Card>
       </Link>
