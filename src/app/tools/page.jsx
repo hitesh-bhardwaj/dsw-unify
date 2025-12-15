@@ -8,6 +8,7 @@ export default function ToolsPage() {
 
   useEffect(() => {
     document.documentElement.style.opacity = "1";
+    document.documentElement.style.pointerEvents = "auto";
     fetch("/api/sys-config", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

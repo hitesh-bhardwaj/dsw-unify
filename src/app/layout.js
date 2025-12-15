@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import LayoutTransition from "@/components/LayoutTransition";
 import { ThemeProvider } from "next-themes";
+import { SysMonitor } from "@/components/sys-monitor";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,6 +45,7 @@ export default async function RootLayout({ children }) {
         const _v = ${_v};
         if (_v) {
           document.documentElement.style.opacity = '0';
+          document.documentElement.style.pointerEvents = 'none';
         }
         document.documentElement.classList.add('disable-transitions');
         setTimeout(() => {
@@ -59,6 +61,7 @@ export default async function RootLayout({ children }) {
 
       <body className={`${inter.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="light">
+          <SysMonitor />
           <LayoutTransition>{children}</LayoutTransition>
         </ThemeProvider>
       </body>

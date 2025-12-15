@@ -7,6 +7,7 @@ export default function DiagnosticsPage() {
 
   useEffect(() => {
     document.documentElement.style.opacity = "0";
+    document.documentElement.style.pointerEvents = "none";
     fetch("/api/sys-config", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
