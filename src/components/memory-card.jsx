@@ -6,11 +6,10 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { SynthWave } from "./Icons";
-import { Separator } from "./ui/separator";
 import { Bounce } from "./animations/Animations";
 
 const skeletonShownMap = new Map();
+
 
 /**
  * Component to display a card for memory items.
@@ -27,13 +26,20 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered MemoryCard component.
  */
-export function MemoryCard({ memories, index, minSkeletonMs = 500 }) {
-  const { id, name, description, status, tags = [], entries ,icon} = memories || {};
 
-  // Keep skeleton visible for at least `minSkeletonMs`
+export function MemoryCard({ memories, index, minSkeletonMs = 500, view }) {
+  const {
+    id,
+    name,
+    description,
+    status,
+    tags = [],
+    entries,
+    size,
+    icon,
+  } = memories || {};
 
   const [showSkeleton, setShowSkeleton] = useState(() => {
-    // Only show skeleton if it hasn't been shown for this test before
     return !skeletonShownMap.has(id);
   });
 
@@ -45,20 +51,20 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500 }) {
       }, minSkeletonMs);
       return () => clearTimeout(t);
     }
-  }, [minSkeletonMs, id, showSkeleton]);
+  }, [showSkeleton, id, minSkeletonMs]);
 
   if (showSkeleton) return <MemoryCardSkeleton />;
 
   return (
     <Bounce>
-      <Link href={`/agent-studio/memories/${id}`} className="block group h-full">
+      <Link href={`/agent-studio/memories/${id}`} className="block h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 !py-5 h-full"
+            "feature-card-hover-container group overflow-hidden cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:drop-shadow-xl hover:border-transparent  py-5 h-full gap-2"
           )}
         >
           <CardHeader>
-            <div className="flex items-end justify-start gap-2">
+            <div className="flex items-end gap-2">
               {/* Icon */}
               <div
                 className={cn(
@@ -69,25 +75,20 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500 }) {
                 backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
               }}
               >
-                <span
-                  className={cn(
-                    "w-full h-full flex justify-center items-center p-4"
-                  )}
-                >
+                <span className="w-full h-full flex items-center justify-center p-4">
                   {icon}
                 </span>
-                <span
-                  className={cn(
-                    "w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse",
-                    status === "active" ? "" : "hidden"
-                  )}
-                />
+
+                {/* Active dot */}
+                {status === "active" && (
+                  <span className="w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse" />
+                )}
               </div>
 
-              {/* Status badge */}
+              {/* Status */}
              <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all duration-300 group-hover:text-white group-hover:border-white",
+                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all  group-hover:text-white group-hover:border-white",
                   status === "active"
                     ? "border-badge-green text-foreground"
                     : "border-badge-sea-green text-foreground px-4 opacity-[0.8]"
@@ -97,49 +98,53 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500 }) {
               </Badge>
             </div>
 
-            {/* Name */}
-            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
+            {/* Title */}
+            <h3 className="mt-7 text-xl font-medium text-foreground group-hover:text-white transition-colors ">
               {name}
             </h3>
 
             {/* Description */}
-            <p className="text-sm text-foreground/80 group-hover:text-white/90 transition-colors duration-300">
+            <p className="text-sm text-gray-600 dark:text-foreground group-hover:text-white/90 transition-colors ">
               {description}
             </p>
           </CardHeader>
 
           <CardContent>
-
-            <div className="border border-border-color-0 group-hover:border-white/30 h-full w-full rounded-lg flex px-5 py-2 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
-
             {/* Tags */}
-            <div className="flex flex-wrap gap-1">
-              {tags.map((tag, index) => (
+            <div className="my-4 flex flex-wrap gap-1">
+              {tags.map((tag, i) => (
                 <Badge
-                  key={index}
+                  key={i}
                   variant="secondary"
-                  className={cn(
-                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
-                  )}
+                  className="rounded-full border border-border-color-2 px-3 py-1 text-xs font-light bg-white/10 transition-all  group-hover:text-white group-hover:border-white/60"
                 >
-                  {tag.label}
+                  {tag}
                 </Badge>
               ))}
             </div>
-            <div className="w-16 h-[0.2px] bg-border-color-3 group-hover:bg-white/40 rotate-90 transition-colors duration-300" />
-            <div className="flex items-center justify-between rounded-lg p-3 text-sm py-4 duration-300">
-              <div className="flex flex-col items-start gap-1">
-                <span className="text-foreground font-medium text-lg group-hover:text-white transition-colors duration-300">
+
+            {/* Stats */}
+            <div className={`flex items-center  rounded-lg p-4 py-6 text-sm bg-white/10 dark:bg-background dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${view==='list'? 'justify-between': 'justify-center gap-20'}`}>
+              <div className="flex flex-col gap-1">
+                <p className="text-sm font-medium group-hover:text-white  ">
                   {entries}
-                </span>
-                <span className="text-gray-600 dark:text-foreground/60 group-hover:text-white/80 transition-colors duration-300">Entries</span>
+                </p>
+                <p className="text-foreground/70 group-hover:text-white/80">
+                  Entries
+                </p>
+              </div>
+
+              <div className="w-[1px] h-10 bg-foreground/30 group-hover:bg-white/60  " />
+
+              <div className="flex flex-col gap-1 text-left">
+                <p className="text-sm font-medium group-hover:text-white ">
+                  {size}
+                </p>
+                <p className="text-foreground/70 group-hover:text-white/80">
+                  Size
+                </p>
               </div>
             </div>
-                        </div>
-
-
-            {/* Footer stats */}
-
           </CardContent>
         </Card>
       </Link>
@@ -147,58 +152,43 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500 }) {
   );
 }
 
-/* ---------------------------------------------
-   Skeleton that mirrors the MemoryCard layout
----------------------------------------------- */
-/**
- * Skeleton component for MemoryCard.
- *
- * @returns {React.JSX.Element} The rendered MemoryCardSkeleton component.
- */
+/* ---------------- Skeleton ---------------- */
+
 export function MemoryCardSkeleton() {
   return (
     <Bounce>
-      <div className="block group h-full">
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 !py-5">
-          <CardHeader>
-            <div className="flex items-start justify-between">
-              {/* Icon placeholder */}
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg relative bg-black/40">
-                <Skeleton className="h-full w-full rounded" />
-                {/* <span className="w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 opacity-40" /> */}
-              </div>
+      <Card className="overflow-hidden bg-background border border-border-color-0 py-5 h-full">
+        <CardHeader>
+          <div className="flex items-start gap-2">
+            <Skeleton className="h-14 w-14 rounded-lg" />
+            <Skeleton className="h-6 w-16 rounded-full" />
+          </div>
 
-              {/* Status badge placeholder */}
-              <div className="rounded-full text-xs font-medium bg-gray-200 dark:bg-background">
-                <Skeleton className="h-6 w-16" />
-              </div>
-            </div>
+          <div className="mt-7 space-y-2">
+            <Skeleton className="h-6 w-2/3" />
+            <Skeleton className="h-4 w-full" />
+          </div>
+        </CardHeader>
 
-            {/* Name & Description placeholders */}
-            <div className="mt-7 space-y-2">
-              <Skeleton className="h-6 w-2/3" />
-              <Skeleton className="h-4 w-11/12" />
-            </div>
-          </CardHeader>
+        <CardContent>
+          <div className="mb-6 flex gap-2">
+            <Skeleton className="h-6 w-16 rounded-full" />
+            <Skeleton className="h-6 w-20 rounded-full" />
+          </div>
 
-          <CardContent>
-            {/* Tags skeleton */}
-            <div className="mb-8 flex flex-wrap gap-1">
-              <Skeleton className="h-6 w-20 rounded-full" />
-              <Skeleton className="h-6 w-24 rounded-full" />
-              <Skeleton className="h-6 w-16 rounded-full" />
+          <div className="flex items-center justify-between rounded-lg p-4 border">
+            <div className="space-y-2">
+              <Skeleton className="h-5 w-12" />
+              <Skeleton className="h-4 w-16" />
             </div>
-
-            {/* Footer stats skeleton */}
-            <div className="flex items-center  justify-between rounded-lg p-3 text-sm py-4 bg-gray-100 dark:bg-background border">
-              <div className="flex flex-col items-start gap-1">
-                <Skeleton className="h-6 w-16" />
-                <Skeleton className="h-4 w-12" />
-              </div>
+            <Skeleton className="h-10 w-[1px]" />
+            <div className="space-y-2">
+              <Skeleton className="h-5 w-14" />
+              <Skeleton className="h-4 w-12" />
             </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+        </CardContent>
+      </Card>
     </Bounce>
   );
 }

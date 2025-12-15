@@ -105,7 +105,7 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                 placeholder="e.g. User Preferences"
                 onChange={(e) => setMemoryName(e.target.value)}
                 className={`border placeholder:text-xs placeholder:text-foreground/80 ${
-                  errors.memoryName ? "border-red-500" : "border-foreground/20"
+                  errors.memoryName ? "border-red-500" : "border-border-color-0"
                 }`}
               />
               {errors.memoryName && (
@@ -121,7 +121,7 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                 placeholder="Describe what this memory stores..."
                 onChange={(e) => setDescription(e.target.value)}
                 className={`border placeholder:text-xs h-32 placeholder:text-foreground/80 ${
-                  errors.description ? "border-red-500" : "border-foreground/20"
+                  errors.description ? "border-red-500" : "border-border-color-0"
                 }`}
               />
               {errors.description && (
@@ -140,8 +140,8 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
-                      errors.type ? "border-red-500" : "border-foreground/20"
+                    className={`border w-full cursor-pointer ${
+                      errors.type ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenType ? "[&>svg]:rotate-180" : ""
                     }`}
@@ -149,7 +149,7 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                     <SelectValue placeholder="Session" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem value="session" className="!cursor-pointer text-xs">
                       Session
                     </SelectItem>
@@ -175,8 +175,8 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
-                      errors.scope ? "border-red-500" : "border-foreground/20"
+                    className={`border w-full cursor-pointer ${
+                      errors.scope ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenScope ? "[&>svg]:rotate-180" : ""
                     }`}
@@ -184,7 +184,7 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                     <SelectValue placeholder="User" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem value="user" className="!cursor-pointer text-xs">
                       User
                     </SelectItem>
@@ -210,8 +210,8 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
-                      errors.status ? "border-red-500" : "border-foreground/20"
+                    className={`border w-full cursor-pointer ${
+                      errors.status ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenStatus ? "[&>svg]:rotate-180" : ""
                     }`}
@@ -219,7 +219,7 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
                     <SelectValue placeholder="Active" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem value="active" className="!cursor-pointer text-xs">
                       Active
                     </SelectItem>

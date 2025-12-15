@@ -58,14 +58,14 @@ const Settings = () => {
               className="w-full"
             >
               <SelectTrigger
-                className={`border w-full border-foreground/20 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 cursor-pointer ${
                   isOpenFormat ? "[&>svg]:rotate-180" : ""
                 }`}
               >
                 <SelectValue placeholder=" Every hour" />
               </SelectTrigger>
 
-              <SelectContent>
+              <SelectContent className="border border-border-color-0">
                 <SelectItem value="auto" className="!cursor-pointer text-xs">
                   Every hour
                 </SelectItem>

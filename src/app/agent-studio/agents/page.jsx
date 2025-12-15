@@ -11,11 +11,10 @@ import { cn } from "@/lib/utils";
 import { RippleButton } from "@/components/ui/ripple-button";
 import CardDetails from "@/components/CardDetails";
 import { motion, AnimatePresence } from "framer-motion";
+import CountUp from "@/components/animations/CountUp";
 
-// SAME FILTER BAR
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 
-// CLEAN TAGS
 const agents = [
   {
     id: "auto-claims-processing-agent",
@@ -180,7 +179,20 @@ export default function AgentsPage() {
           </div>
 
           {/* STATS */}
-          <CardDetails data={stats} textSize="text-4xl" />
+          <div className="w-full flex items-center justify-between gap-4">
+                                                {stats.map((item, index) => (
+                                                  <div
+                                                    key={index}
+                                                    className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full"
+                                                  >
+                                                    <span className="text-sm text-foreground/80">{item.title}</span>
+                                                    <span className="text-4xl font-medium mt-1">
+                                                      <CountUp value={item.value} startOnView />
+                                                    </span>
+                                                   
+                                                  </div>
+                                                ))}
+                                              </div>
 
           {/* SEARCH */}
           <SearchBar

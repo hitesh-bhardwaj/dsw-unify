@@ -26,7 +26,7 @@ const Overviews = () => {
         {stats.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col gap-10 border border-border-color-0 rounded-lg py-6 px-4 w-full"
+            className="flex flex-col gap-10 border border-border-color-0 rounded-3xl py-6 px-4 w-full"
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 
@@ -42,34 +42,42 @@ const Overviews = () => {
         ))}
       </div>
 
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8">
-        {/* Query */}
-        <div className="space-y-2">
-          <h2 className="text-xl font-medium mb-6">Parameters</h2>
-          <label className="text-sm font-medium text-foreground dark:text-foreground">
-            Query
-          </label>
-          <div className="flex gap-2 mt-2">
-            <Input
-              placeholder="Search query"
-              className="h-12 flex-1 !text-xs p-4 border-border-color-0 shadow-none text-foreground placeholder:text-foreground/80"
-            />
-          </div>
-        </div>
+      <div className="h-full rounded-3xl border border-border-color-0 p-6  space-y-2">
+  {/* Header */}
+  <h2 className="text-xl font-medium mb-6">Parameters</h2>
 
-        {/* Limit number */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground dark:text-foreground">
-            Limit number
-          </label>
-          <div className="flex gap-2 mt-2">
-            <Input
-              placeholder="Number of results"
-              className="h-12 flex-1 !text-xs p-4 border-border-color-0 shadow-none text-foreground placeholder:text-foreground/80"
-            />
-          </div>
-        </div>
-      </div>
+  {/* Query Field */}
+  <div className="rounded-2xl border border-border-color-0 p-4 space-y-3">
+    {/* Top Row */}
+    <div className="flex items-center gap-3">
+      <span className="text-sm font-medium">Query</span>
+      <span className="text-sm text-muted-foreground">String</span>
+      <span className="px-3 py-1 text-xs rounded-full border border-badge-blue text-black">
+        Required
+      </span>
+    </div>
+
+    
+
+    {/* Helper Text */}
+    <p className="text-xs text-muted-foreground">Search query</p>
+  </div>
+
+  {/* Limit Field */}
+  <div className="rounded-2xl border border-border-color-0 p-4 space-y-3">
+    {/* Top Row */}
+    <div className="flex items-center gap-3">
+      <span className="text-sm font-medium">Limit</span>
+      <span className="text-sm text-muted-foreground">Number</span>
+    </div>
+
+    
+
+    {/* Helper Text */}
+    <p className="text-xs text-muted-foreground">Number of results</p>
+  </div>
+</div>
+
     </div>
   );
 };

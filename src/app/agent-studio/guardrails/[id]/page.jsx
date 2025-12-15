@@ -143,7 +143,9 @@ export default function GuardrailDetailPage() {
             <Card className="p-6 space-y-3 border border-border-color-0 bg-white">
               <span className="text-sm text-foreground/80">Pass Rate</span>
               <span className="text-2xl font-medium block text-badge-green">
-                {guardrail.passRate}%
+                <CountUp value={guardrail.passRate} startOnView />
+                
+                %
               </span>
             </Card>
           </div>
@@ -152,14 +154,14 @@ export default function GuardrailDetailPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Configuration */}
             <Card className="p-6 space-y-4 border border-border-color-0 bg-white">
-              <h2 className="text-lg font-medium">Configuration</h2>
+              <h2 className="text-xl font-medium">Configuration</h2>
 
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-foreground/80 mb-2">
                     Detection Method
                   </p>
-                  <p className="text-base font-medium">
+                  <p className="text-lg font-medium">
                     {guardrail.detectionMethod}
                   </p>
                 </div>
@@ -168,7 +170,7 @@ export default function GuardrailDetailPage() {
                   <p className="text-sm text-foreground/80 mb-2">
                     Response Time
                   </p>
-                  <p className="text-base font-medium">
+                  <p className="text-lg font-medium">
                     {guardrail.responseTime}
                   </p>
                 </div>
@@ -357,8 +359,8 @@ export default function GuardrailDetailPage() {
           </Card>
 
           {/* USED IN GUARD SUITES */}
-          <Card className="p-6 space-y-6 border border-border-color-0 bg_white">
-            <h2 className="text-lg font-medium">Used in Guard Suites</h2>
+          <Card className="p-6 space-y-2 border border-border-color-0 bg_white">
+            <h2 className="text-xl font-medium">Used in Guard Suites</h2>
 
             <div className="space-y-4">
               {guardrail.guardSuites.map((suite) => (

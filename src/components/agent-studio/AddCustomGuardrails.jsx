@@ -61,10 +61,10 @@ function GuardrailCard({ guardrail, onSelect }) {
   return (
     <motion.button
       onClick={() => onSelect(guardrail)}
-      className="w-full p-4 border border-border-color-0 rounded-lg hover:border-orange-500 hover:bg-orange-50/5 transition-all text-left group"
+      className="w-full p-4 border border-border-color-0 rounded-lg hover:border-primary hover:bg-orange-50/5 transition-all text-left group"
     >
-      <div className="flex flex-col gap-2">
-        <h3 className="font-medium text-foreground group-hover:text-orange-500 transition-colors">
+      <div className="flex flex-col gap-1">
+        <h3 className="font-medium text-foreground group-hover:text-primary transition-colors">
           {guardrail.name}
         </h3>
         <p className="text-xs text-foreground/60">{guardrail.description}</p>
@@ -93,13 +93,13 @@ function SelectBaseGuardrail({ onSelect }) {
       className="flex flex-col h-full"
     >
       <div className="mb-6">
-        <h3 className="text-sm font-medium mb-2">Select Base Guardrail *</h3>
+        <h3 className="text-base font-medium mb-2">Select Base Guardrail *</h3>
         <p className="text-xs text-foreground/60">
           Choose a default guardrail to base your custom version on
         </p>
       </div>
       <div className="p-4 rounded-lg border border-border-color-0 overflow-y-auto">
-        <div className="flex-1 space-y-3">
+        <div className="flex-1 space-y-2">
           {BASE_GUARDRAILS.map((guardrail) => (
             <GuardrailCard
               key={guardrail.id}
@@ -152,7 +152,7 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
       className="flex flex-col h-full overflow-y-auto pr-2"
     >
       {/* Base guardrail info */}
-      <div className="mb-6 pb-4">
+      <div className="mb-2 pb-4">
         <div className="flex items-start justify-between mb-6">
           <div>
             <p className="text-xs text-foreground/60 mb-1">Based on:</p>
@@ -168,7 +168,7 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
       </div>
 
       {/* Configuration form */}
-      <div className="flex-1 pr-2 space-y-6">
+      <div className="flex-1 pr-2 space-y-4">
         {/* Name */}
         <div className="flex flex-col gap-2">
           <label className="text-sm">Name*</label>
@@ -203,13 +203,13 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
             onOpenChange={setIsOpenSensitivity}
           >
             <SelectTrigger
-              className={`border border-border-color-0 [&>svg]:transition-transform [&>svg]:duration-200 w-full !h-12 ${
+              className={`border cursor-pointer border-border-color-0 [&>svg]:transition-transform [&>svg]:duration-200 w-full !h-12 ${
                 isOpenSensitivity ? "[&>svg]:rotate-180" : ""
               }`}
             >
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="border border-border-color-0 ">
               <SelectItem value="low" className="cursor-pointer">
                 Low - Permissive
               </SelectItem>

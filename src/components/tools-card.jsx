@@ -25,7 +25,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered ToolsCard component.
  */
-export function ToolsCard({ tools,index, minSkeletonMs = 500 }) {
+export function ToolsCard({ tools,index, view, minSkeletonMs = 500 }) {
   const {id,name, description, status, tags = [],icon } = tools || {};
 
   // Keep a skeleton up for at least `minSkeletonMs`
@@ -49,12 +49,15 @@ export function ToolsCard({ tools,index, minSkeletonMs = 500 }) {
 
   if (showSkeleton) return <ToolsCardSkeleton />;
 
+   const isGrid = view === "grid";
+  const isList = view === "list";
+
   return (
     <Bounce>
-      <Link href={`/agent-studio/tools/${id}`} className="block group h-full">
+      <Link href={`/agent-studio/tools/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 !py-5 h-full"
+            "feature-card-hover-container overflow-hidden group hover:border-transparent hover:drop-shadow-xl cursor-pointer transition-all duration-300 bg-background border border-border-color-0 !py-5 h-full gap-16", isList && 'gap-10'
           )}
         >
           <CardHeader>
@@ -108,7 +111,7 @@ export function ToolsCard({ tools,index, minSkeletonMs = 500 }) {
 
           <CardContent>
 
-            <div className="border border-border-color-0 group-hover:border-white/30 h-full w-full rounded-lg flex px-5 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
+            <div className="border border-border-color-2 py-10 group-hover:border-white/60 h-full w-full rounded-lg flex px-5 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
 
             {/* Tags */}
             <div className="h-fit flex flex-wrap gap-1">
@@ -117,10 +120,10 @@ export function ToolsCard({ tools,index, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                 )}
                 >
-                  {tag.label}
+                  {tag}
                 </Badge>
               ))}
               </div>

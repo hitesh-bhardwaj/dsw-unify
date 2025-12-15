@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { Download, Upload } from "lucide-react";
-import { AiGenerator, SynthWave } from "../Icons";
+import {  DocFile } from "../Icons";
 import { cn } from "@/lib/utils";
 import { RippleButton } from "../ui/ripple-button";
 import Link from "next/link";
@@ -45,7 +45,7 @@ export default function Documents() {
   return (
     <div className="w-full h-full mx-auto">
         <div className="w-full flex items-center justify-between mt-4">
-      <h2 className="text-lg font-semibold my-2">Documents</h2>
+      <h2 className="text-2xl font-medium my-2">Documents</h2>
       <RippleButton>
                 <Link href={"#"}>
                   <Button
@@ -71,18 +71,18 @@ export default function Documents() {
                  <div className="w-13 h-12">
                                        <span
                                          className={cn(
-                                           "w-full h-full flex justify-center items-center p-3.5 text-foreground bg-sidebar-accent rounded-lg -mt-1"
+                                           "w-full h-full flex justify-center items-center border border-border-color-2 p-3.5 text-foreground bg-sidebar-accent rounded-lg -mt-1"
                                          )}
                                        >
-                                         <SynthWave />
+                                         <DocFile className='h-5 w-5' />
                                        </span>
                                      </div>
                 <div className="">
                    
-              <p className="font-semibold text-sm">
+              <p className="text-base">
                 {item.name}
               </p>
-               <p className="text-foreground/80 mt-2 text-xs flex gap-2 items-center">
+               <p className="text-foreground/80 mt-1 text-xs flex gap-2 items-center">
                <span>{item.storage}</span>
                <span className="h-1 w-1 rounded-full bg-gray-400"/>
                <span>{item.time}</span>

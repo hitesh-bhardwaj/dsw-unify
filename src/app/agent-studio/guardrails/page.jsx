@@ -52,7 +52,7 @@ const mockGuardSuites = [
       { name: "Toxic Language", severity: "High" },
       { name: "Offensive Check", severity: "High" },
     ],
-    agentsCount: 8,
+    agentsCount: '08',
     createdDate: "2024-01-20",
     tags: ["moderation", "content", "safety"],
   },
@@ -276,6 +276,7 @@ export default function GuardrailsPage() {
             <TabsList className="w-fit border border-border">
               <TabsTrigger className="px-4 font-normal" value="suites">
                 Guard Suites
+                
               </TabsTrigger>
               <TabsTrigger className="px-4 font-normal" value="guardrails">
                 Guardrails

@@ -46,9 +46,9 @@ const Activity = () => {
   return (
    <>
    <ScaleDown>
-   <Card className={"border-none"}>
+   <Card className={"border-none bg-background"}>
                 <CardHeader>
-                  <h2 className="text-xl font-semibold">Recent Activity</h2>
+                  <h2 className="text-xl font-medium">Recent Activity</h2>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -65,7 +65,7 @@ const Activity = () => {
                                 getActivityColor(activity.type)
                               )}
                             />
-                            <span className="text-sm text-gray-900 dark:text-foreground">
+                            <span className="text-md text-gray-900 dark:text-foreground">
                               {activity.event}
                             </span>
                           </div>
@@ -78,7 +78,7 @@ const Activity = () => {
                           initial="hidden"
                           animate="visible"
                           variants={separatorVariants}
-                          className="w-full h-[1px] bg-foreground/40"
+                          className="w-full h-[1px] bg-border-color-0"
                         >
                           <div className="w-full h-full bg-primary scale-x-0 group-hover:scale-x-100 duration-500 ease-in-out origin-left" />
                         </motion.div>

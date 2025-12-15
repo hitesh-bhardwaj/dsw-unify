@@ -12,6 +12,7 @@ import {
   SelectItem,
   SelectValue,
 } from "@/components/ui/select";
+import { Slider } from "../ui/slider";
 
 /**
  * Component to configure storage strategy settings.
@@ -22,13 +23,32 @@ export default function StorageStrategy() {
   const [chunkingStrategy, setChunkingStrategy] = useState("");
   const [embeddingModel, setEmbeddingModel] = useState("");
   const [embeddingDimensions, setEmbeddingDimensions] = useState("");
-  const [chunkSize, setChunkSize] = useState(1000);
-  const [chunkOverlap, setChunkOverlap] = useState(200);
+  const MIN_CHUNK_SIZE = 200;
+const MAX_CHUNK_SIZE = 2000;
+
+const [chunkSizee, setChunkSizee] = useState(0.7);
+
+// derived value
+const chunkSize = Math.round(
+  MIN_CHUNK_SIZE + chunkSizee * (MAX_CHUNK_SIZE - MIN_CHUNK_SIZE)
+);
+
+const MIN_CHUNK_OVERLAP = 0;
+const MAX_CHUNK_OVERLAP = 500;
+
+const [chunkOverlape, setChunkOverlape] = useState(0.4);
+
+// derived value
+const chunkOverlap = Math.round(
+  MIN_CHUNK_OVERLAP +
+    chunkOverlape * (MAX_CHUNK_OVERLAP - MIN_CHUNK_OVERLAP)
+);
   const [showProgress, setShowProgress] = useState(false);
 
   const [isOpenChunking, setIsOpenChunking] = useState(false);
   const [isOpenEmbedding, setIsOpenEmbedding] = useState(false);
   const [isOpenDimensions, setIsOpenDimensions] = useState(false);
+  
 
   const [errors, setErrors] = useState({});
 
@@ -44,7 +64,6 @@ export default function StorageStrategy() {
   };
 
   // Calculate percentages for progress bars
-  const chunkSizePercentage = ((chunkSize - 200) / 1800) * 100;
   const chunkOverlapPercentage = (chunkOverlap / 500) * 100;
 
   // Calculate estimated metrics
@@ -84,7 +103,7 @@ export default function StorageStrategy() {
           className="w-full"
         >
           <SelectTrigger
-            className={`border w-full border-foreground/20 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+            className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
               isOpenChunking ? "[&>svg]:rotate-180" : ""
             }`}
           >
@@ -111,27 +130,17 @@ export default function StorageStrategy() {
       {/* Chunk Size */}
       <div className="space-y-2">
         <div className="w-full flex justify-between">
-          <p className="text-sm font-medium">Chunk Size</p>
-          <p className="text-sm font-medium">{chunkSize} characters</p>
+          <p className="text-sm ">Chunk Size</p>
+          <p className="text-sm ">{chunkSize} characters</p>
         </div>
-        <div className="w-full h-1.5 bg-sidebar-accent rounded-full flex items-center relative">
-          <input
-            type="range"
-            min="200"
-            max="2000"
-            step="100"
-            value={chunkSize}
-            onChange={(e) => setChunkSize(Number(e.target.value))}
-            className="absolute w-full h-full opacity-0 cursor-pointer z-10"
-          />
-          <div
-            className={`h-full bg-primary rounded-full relative duration-700 ease-in-out ${
-              showProgress ? `w-[${chunkSizePercentage}%]` : "w-0"
-            } delay-300`}
-            style={{ width: showProgress ? `${chunkSizePercentage}%` : "0%" }}
-          />
-          <div className="w-5 h-5 rounded-full bg-background border-3 border-foreground -ml-1 relative z-[2]" />
-        </div>
+            <Slider
+                value={[chunkSizee]}            
+                min={0}
+                max={1}
+                step={0.01}
+                onValueChange={(v) => setChunkSizee(v[0])}   
+                className="w-full"
+              />
         <p className="text-xs text-foreground/60">
           Maximum number of characters per chunk. Smaller chunks provide more precise retrieval, larger chunks preserve more context.
         </p>
@@ -143,24 +152,15 @@ export default function StorageStrategy() {
           <p className="text-sm">Chunk Overlap</p>
           <p className="text-sm">{chunkOverlap} characters</p>
         </div>
-        <div className="w-full h-1.5 bg-sidebar-accent rounded-full flex items-center relative">
-          <input
-            type="range"
-            min="0"
-            max="500"
-            step="50"
-            value={chunkOverlap}
-            onChange={(e) => setChunkOverlap(Number(e.target.value))}
-            className="absolute w-full h-full opacity-0 cursor-pointer z-10"
-          />
-          <div
-            className={`h-full bg-primary rounded-full relative duration-700 ease-in-out ${
-              showProgress ? `w-[${chunkOverlapPercentage}%]` : "w-0"
-            } delay-300`}
-            style={{ width: showProgress ? `${chunkOverlapPercentage}%` : "0%" }}
-          />
-          <div className="w-5 h-5 rounded-full bg-background border-3 border-foreground -ml-1 relative z-[2]" />
-        </div>
+        <Slider
+  value={[chunkOverlape]}
+  min={0}
+  max={1}
+  step={0.01}
+  onValueChange={(v) => setChunkOverlape(v[0])}
+  className="w-full"
+/>
+
         <p className="text-xs text-foreground/60">
           Number of overlapping characters between consecutive chunks to maintain context continuity.
         </p>
@@ -168,7 +168,7 @@ export default function StorageStrategy() {
 
       {/* Embedding Configuration Section */}
       <div className="pt-4">
-        <h3 className="text-xl font-medium mb-3">Embedding Configuration</h3>
+        <h3 className="text-xl font-medium mb-6">Embedding Configuration</h3>
 
         {/* Embedding Model */}
         <div className="flex flex-col gap-2 text-foreground/80 w-full mb-6">
@@ -180,7 +180,7 @@ export default function StorageStrategy() {
             className="w-full"
           >
             <SelectTrigger
-              className={`border w-full border-foreground/20 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+              className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                 isOpenEmbedding ? "[&>svg]:rotate-180" : ""
               }`}
             >
@@ -214,7 +214,7 @@ export default function StorageStrategy() {
             className="w-full"
           >
             <SelectTrigger
-              className={`border w-full border-foreground/20 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+              className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                 isOpenDimensions ? "[&>svg]:rotate-180" : ""
               }`}
             >
@@ -242,17 +242,17 @@ export default function StorageStrategy() {
       {/* Estimated Impact */}
       <div className="space-y-3 pt-4">
         <h4 className="text-sm font-medium">Estimated Impact</h4>
-        <div className="border border-foreground/20 rounded-lg p-4 space-y-3 bg-background">
+        <div className="border border-border-color-0 rounded-lg p-4 space-y-3 bg-background">
           <div className="flex justify-between items-center">
-            <span className="text-xs text-foreground/70">Chunks per 1000 words:</span>
+            <span className="text-sm text-foreground/70">Chunks per 1000 words:</span>
             <span className="text-xs font-medium">~{chunksPerThousandWords} chunks</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-foreground/70">Storage per chunk:</span>
+            <span className="text-sm text-foreground/70">Storage per chunk:</span>
             <span className="text-xs font-medium">{storagePerChunk} KB</span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-xs text-foreground/70">Retrieval latency:</span>
+            <span className="text-sm text-foreground/70">Retrieval latency:</span>
             <span className="text-xs font-medium">{retrievalLatency}</span>
           </div>
         </div>
