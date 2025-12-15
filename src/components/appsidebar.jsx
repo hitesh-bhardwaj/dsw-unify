@@ -189,6 +189,11 @@ const navigation = [
         icon: GuardrailsIcon,
       },
       {
+        name: "Monitoring",
+        href: "/agent-studio/monitoring",
+        icon: MonitoringIcon,
+      },
+      {
         name: "Testing",
         href: "/agent-studio/testing",
         icon: TestingIcon,

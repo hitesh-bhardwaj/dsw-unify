@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -21,6 +21,7 @@ import { LeftArrow } from "@/components/Icons";
 import { UploadFile } from "@/components/Icons";
 import CardDetails from "@/components/CardDetails";
 import CountUp from "@/components/animations/CountUp";
+import { ArrowRight } from "lucide-react";
 export default function Inference() {
   const [mode, setMode] = useState("single");
 
@@ -174,38 +175,8 @@ export default function Inference() {
             transition={{ duration: 0.25 }}
             className="grid grid-cols-2 gap-6 w-full"
           >
-            <div className="border border-border-color-0 rounded-3xl p-6 flex flex-col gap-4">
-              <h2 className="text-lg font-medium">Configure Inference</h2>
-
-              <div className="flex items-center gap-4">
-                <Input placeholder="By ID" className="w-full" />
-                <Input placeholder="By Date" className="w-full" />
-              </div>
-
-              <h2 className="text-sm font-medium">
-                Upload CSV <span className="font-normal">(Transaction ID)</span>
-              </h2>
-
-              <div className="border border-border-color-0 rounded-xl h-48 flex flex-col justify-center items-center cursor-pointer mt-[-2%]">
-                <UploadFile className="w-8 h-8 text-foreground/80 mb-5" />
-                <span className=" font-medium text-sm mt-3">
-                  Click to upload or drag and drop
-                </span>
-                <span className="text-xs text-foreground/80 mt-1">
-                  CSV files only (max 10MB)
-                </span>
-              </div>
-
-              <div className="w-full flex justify-end ">
-                <Link href="#" className="w-fit">
-                  <RippleButton>
-                    <Button className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                      Run Batch Inference
-                      <LeftArrow className="rotate-180" />
-                    </Button>
-                  </RippleButton>
-                </Link>
-              </div>
+            <div className="w-full">
+              <ConfigureBatchInference/>
             </div>
 
             <div className="border rounded-3xl border-border-color-0 p-6 flex flex-col items-start gap-15 justify-start">
@@ -234,32 +205,8 @@ export default function Inference() {
             className="grid grid-cols-2 gap-6 w-full"
           >
             {/* ----- Left Section: Configure Inference ----- */}
-            <div className="border border-border-color-0 rounded-3xl p-6 flex flex-col gap-6">
-              <h2 className="text-xl font-medium">Configure Inference</h2>
-
-              <div className="flex items-center gap-4">
-                <Input placeholder="By ID" className="w-full border border-border-color-0" />
-                <Input placeholder="By Data" className="w-full" />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <Label className="text-sm">Transaction ID</Label>
-                <Input placeholder="Enter transaction ID" className="w-full" />
-                <span className="text-xs text-foreground/80">
-                  Enter a transaction ID to retrieve and analyze
-                </span>
-              </div>
-
-              <div className="w-full flex justify-end ">
-                <Link href="#" className="w-fit">
-                  <RippleButton>
-                    <Button className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
-                      Run Inference
-                      <LeftArrow className="rotate-180" />
-                    </Button>
-                  </RippleButton>
-                </Link>
-              </div>
+            <div className="w-full">
+              <ConfigureSingleInference/>
             </div>
 
             {/* ----- Right Section: Prediction Result ----- */}
@@ -661,6 +608,329 @@ export default function Inference() {
           </motion.div>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
+
+
+function ConfigureSingleInference() {
+  const [mode, setMode] = useState('byData');
+  return (
+    <div className="flex items-center justify-center">
+      <div className="w-full">
+        <div className="border border-border-color-2 rounded-2xl p-8">
+          <h2 className="text-xl font-medium mb-6">Configure Inference</h2>
+
+          {/* Radio Group Toggle */}
+          <RadioGroup value={mode} onValueChange={setMode} className="mb-6">
+            <div className="grid grid-cols-2 gap-4">
+              <label
+                htmlFor="byId"
+                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+              >
+                <RadioGroupItem value="byId" id="byId" className="text-primary" />
+                <span className={`text-sm ${mode === 'byId' ? 'text-orange-600' : ''}`}>
+                  By ID
+                </span>
+              </label>
+              <label
+                htmlFor="byData"
+                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+              >
+                <RadioGroupItem value="byData" id="byData" className="text-primary" />
+                <span className={`text-sm ${mode === 'byData' ? 'text-orange-600' : ''}`}>
+                  By Data
+                </span>
+              </label>
+            </div>
+          </RadioGroup>
+
+          {mode === 'byData' ? (
+            <>
+              {/* Feature Values */}
+              <div className="space-y-4 mb-6">
+                <h3 className="font-medium  mb-4">Feature Values</h3>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Age</Label>
+                    <Input type="number" defaultValue="35" className="rounded-lg" />
+                  </div>
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Income ($)</Label>
+                    <Input type="number" defaultValue="75000" className="rounded-lg" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Credit Score</Label>
+                    <Input type="number" defaultValue="720" className="rounded-lg" />
+                  </div>
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Account Balance ($)</Label>
+                    <Input type="number" defaultValue="15000" className="rounded-lg" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Transaction Freq.</Label>
+                    <Input type="number" defaultValue="12" className="rounded-lg" />
+                  </div>
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Claim History</Label>
+                    <Input type="number" defaultValue="02" className="rounded-lg" />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Policy Duration (mo)</Label>
+                    <Input type="number" defaultValue="36" className="rounded-lg" />
+                  </div>
+                  <div>
+                    <Label className="text-sm  mb-1.5 block">Coverage Amount ($)</Label>
+                    <Input type="number" defaultValue="250000" className="rounded-lg" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Run Inference Button */}
+              <div className="flex justify-end">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                  Run Inference
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                    <Label className="text-sm  mb-1.5 block">Transaction ID</Label>
+                    <Input  className="rounded-lg" placeholder=" e.g. TXN-2025-001234" />
+                    <p className="text-foreground/80 text-xs py-1">Enter a transaction ID to retrieve and analyze</p>
+                  </div>
+
+              {/* Run Batch Inference Button */}
+              <div className="flex justify-end">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                  Run Inference
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+function ConfigureBatchInference() {
+  const [mode, setMode] = useState('byData');
+  const [dragActive, setDragActive] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      if (file.type === "text/csv" || file.name.endsWith('.csv')) {
+        setSelectedFile(file);
+      } else {
+        alert('Please upload a CSV file');
+      }
+    }
+  };
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (file.type === "text/csv" || file.name.endsWith('.csv')) {
+        setSelectedFile(file);
+      } else {
+        alert('Please upload a CSV file');
+      }
+    }
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  return (
+    <div className="flex items-center justify-center">
+      <div className="w-full">
+        <div className="border border-border-color-2 rounded-2xl p-8">
+          <h2 className="text-xl font-medium mb-6">Configure Inference</h2>
+
+          {/* Radio Group Toggle */}
+          <RadioGroup value={mode} onValueChange={setMode} className="mb-6">
+            <div className="grid grid-cols-2 gap-4">
+              <label
+                htmlFor="byId"
+                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+              >
+                <RadioGroupItem value="byId" id="byId" className="text-primary" />
+                <span className={`text-sm ${mode === 'byId' ? 'text-orange-600' : ''}`}>
+                  By ID
+                </span>
+              </label>
+              <label
+                htmlFor="byData"
+                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+              >
+                <RadioGroupItem value="byData" id="byData" className="text-primary" />
+                <span className={`text-sm ${mode === 'byData' ? 'text-orange-600' : ''}`}>
+                  By Data
+                </span>
+              </label>
+            </div>
+          </RadioGroup>
+
+          {mode === 'byData' ? (
+            <>
+              {/* Feature Values */}
+           <div className="mb-6">
+                <Label className="text-sm  mb-3 block">
+                  Upload CSV File <span className="text-gray-500">(Transaction IDs)</span>
+                </Label>
+                
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".csv"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                
+                <div
+                  onClick={handleUploadClick}
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${
+                    dragActive ? 'border-primary bg-primary/10' : 'border-border-color-2'
+                  }`}
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-10 h-10 flex items-center justify-center mb-4">
+                      <UploadFile className="h-8 w-8 text-gray-400" />
+                    </div>
+                    {selectedFile ? (
+                      <>
+                        <p className=" font-medium mb-1">
+                          {selectedFile.name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {(selectedFile.size / 1024).toFixed(2)} KB
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm font-medium mb-1">
+                          Click to upload or drag and drop
+                        </p>
+                        <p className="text-xs text-foreground/80">
+                         CSV files only (max 10MB)
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Run Inference Button */}
+              <div className="flex justify-end">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                  Run Batch Inference
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Upload CSV File */}
+              <div className="mb-6">
+                <Label className="text-sm  mb-3 block">
+                  Upload CSV File <span className="text-gray-500">(Transaction IDs)</span>
+                </Label>
+                
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".csv"
+                  onChange={handleFileChange}
+                  className="hidden"
+                />
+                
+                <div
+                  onClick={handleUploadClick}
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${
+                    dragActive ? 'border-primary bg-primary/10' : 'border-border-color-2'
+                  }`}
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-10 h-10 flex items-center justify-center mb-4">
+                      <UploadFile className="h-8 w-8 text-gray-400" />
+                    </div>
+                    {selectedFile ? (
+                      <>
+                        <p className=" font-medium mb-1">
+                          {selectedFile.name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          {(selectedFile.size / 1024).toFixed(2)} KB
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm font-medium mb-1">
+                          Click to upload or drag and drop
+                        </p>
+                        <p className="text-xs text-foreground/80">
+                         CSV files only (max 10MB)
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              
+
+              {/* Run Batch Inference Button */}
+              <div className="flex justify-end">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                  Run Batch Inference
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

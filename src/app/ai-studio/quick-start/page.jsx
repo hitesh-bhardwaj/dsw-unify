@@ -1,12 +1,21 @@
 "use client"
 import { ScaleDown } from "@/components/animations/Animations";
 import {PathIcon, PlusIcon, RocketIcon, SelectDataIcon, TrainAndDeployIcon } from "@/components/Icons";
-import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useState } from "react";
 import { QuickCards } from "@/components/AIstudio/QuickCards";
+import StepFormModal from "@/components/common/StepModalForm";
+import BasicInfo from "@/components/FeatureStore/feature-view/ViewsStepForm/BasicInfo";
+import SelectTables from "@/components/FeatureStore/feature-view/ViewsStepForm/SelectTables";
+import DefineJoins from "@/components/FeatureStore/feature-view/ViewsStepForm/DefineJoins";
+import SelectFeatures from "@/components/FeatureStore/feature-view/ViewsStepForm/SelectFeatures";
+import FeatureCreation from "@/components/FeatureStore/feature-view/ViewsStepForm/FeatureCreation";
+import DefineUseCases from "@/components/AIstudio/QuickStartForm/DefineUseCases";
+import SelectData from "@/components/AIstudio/QuickStartForm/SelectData";
+import ConfigureModel from "@/components/AIstudio/QuickStartForm/ConfigureModel";
+import ModelTraining from "@/components/AIstudio/QuickStartForm/SelectFeatures";
 
 const quickFeatures = [
   {
@@ -32,8 +41,40 @@ const quickFeatures = [
   },
 ];
 
+
+
 const page = () => {
      const [query, setQuery] = useState("");
+       const [isModalOpen, setIsModalOpen] = useState(false);
+       const [sharedState, setSharedState] = useState({
+    selectedTables: ["Customers"]
+  });
+
+   const manualSteps = [
+    {
+      id: "define-use-case",
+      label: "Define Use Case",
+      required: true,
+      element: <DefineUseCases/>,
+    },
+    {
+      id: "select-data",
+      label: "Select Data",
+      element: <SelectData sharedState={sharedState} setSharedState={setSharedState}/>,
+    },
+    {
+      id:"configure-model",
+      label: "Configure Model",
+      element: <ConfigureModel sharedState={sharedState} setSharedState={setSharedState}/>
+    },
+    {
+      id: "model-training",
+      label: "Model Training",
+      element: <ModelTraining />,
+    }
+  ];
+
+     
 
       const filteredQuickFeature = quickFeatures.filter(
     (f) =>
@@ -64,7 +105,7 @@ const page = () => {
 
               <Link href="#">
                 <RippleButton>
-                  <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <Button onClick={() => setIsModalOpen(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                     <PlusIcon />
                    Get Started
                   </Button>
@@ -94,6 +135,12 @@ const page = () => {
           </div>
         </ScaleDown>
       </div>
+      <StepFormModal
+        title="Quick Start"
+        open={isModalOpen}
+              onOpenChange={setIsModalOpen}
+        steps={manualSteps}
+      />
     </>
   );
 };

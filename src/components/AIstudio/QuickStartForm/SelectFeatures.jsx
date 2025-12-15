@@ -2,58 +2,57 @@
 
 import React, { useEffect, useState } from "react";
 import AnimatedProgressBar from "@/components/animations/ProgressBar";
-import { CheckCircle, Circle } from "lucide-react";
 import { CompleteCircleIcon, InProgressIcon } from "@/components/Icons";
 
-export default function FeatureCreation({ onCloseModal }) {
+export default function ModelTraining({ onCloseModal }) {
   const [progress, setProgress] = useState(0);
 
   const steps = [
-    { label: "Analyzing table schemas" },
-    { label: "Generating features from columns" },
-    { label: "Applying transformations" },
-    { label: "Validating feature definitions" },
-    { label: "Registering features" },
+    { label: "Creating use case" },
+    { label: "Preparing data" },
+    { label: "Training models" },
+    { label: "Evaluating performance" },
+    { label: "Registering model" },
+    { label: "Deploying model" }
   ];
 
-  // Auto-increment progress for demo
   const progressIncrement = 100 / steps.length;
-  
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setProgress((p) => {
-          if (p >= 100) return 100;
-          return Math.min(p + progressIncrement, 100);
-        });
-      }, 1500);
-  
-      return () => clearInterval(interval);
-    }, [progressIncrement]);
-  
-    useEffect(() => {
-      if (progress >= 100) {
-        const timeout = setTimeout(() => {
-          onCloseModal?.();
-        }, 2000);
-        return () => clearTimeout(timeout);
-      }
-    }, [progress, onCloseModal]);
-  
-    const completedSteps = Math.floor((progress / 100) * steps.length);
-    const currentStepIndex = Math.min(completedSteps, steps.length - 1);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((p) => {
+        if (p >= 100) return 100;
+        return Math.min(p + progressIncrement, 100);
+      });
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, [progressIncrement]);
+
+  useEffect(() => {
+    if (progress >= 100) {
+      const timeout = setTimeout(() => {
+        onCloseModal?.();
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [progress, onCloseModal]);
+
+  const completedSteps = Math.floor((progress / 100) * steps.length);
+  const currentStepIndex = Math.min(completedSteps, steps.length - 1);
 
   return (
     <div className="space-y-4 pb-10 pr-2">
       {/* Title */}
-      <h2 className="text-xl font-medium text-foreground">Creating Features</h2>
+      <h2 className="text-xl font-medium text-foreground">Model Training</h2>
       <p className="text-sm text-foreground/80 pt-2">
-        Automatically generating features from your selected tables
+        Creating your use case and training your model
       </p>
 
       {/* Card */}
       <div className="border border-border-color-0 rounded-3xl p-8 space-y-5">
-        {/* Subtitle */}
-       <div className="relative h-7 overflow-hidden">
+        {/* Current Step with Fade Animation */}
+        <div className="relative h-7 overflow-hidden">
           {steps.map((step, index) => (
             <h3
               key={index}
@@ -71,7 +70,7 @@ export default function FeatureCreation({ onCloseModal }) {
         </div>
 
         {/* Progress Text */}
-        <p className="text-sm text-foreground/80">{progress}% Complete</p>
+        <p className="text-sm text-foreground/80">{Math.round(progress)}% Complete</p>
 
         {/* Progress Bar */}
         <AnimatedProgressBar
