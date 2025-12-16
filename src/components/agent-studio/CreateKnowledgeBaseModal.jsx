@@ -46,6 +46,17 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
 
   const [errors, setErrors] = useState({});
 
+  const [websiteURL, setwebsiteURL] = useState("");
+  const [maximumPages, setmaximumPages] = useState("");
+  const [crawlSettings, setcrawlSettings] = useState("");
+  const [isOpenCrawlSettings, setIsOpenCrawlSettings] = useState(false);
+  const [databaseType, setdatabaseType] = useState("");
+  const [isOpenDatabaseType, setIsOpenDatabaseType] = useState(false);
+  const [connectionString, setConnectionString] = useState("");
+  const [tableNames, setTableNames] = useState([]);
+
+
+
   useEffect(() => {
     if (!open) {
       setKbName("");
@@ -128,8 +139,125 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
         </div>
       </>
     ),
-    website: <EmptyCard>Website source coming soon</EmptyCard>,
-    database: <EmptyCard>Database source coming soon</EmptyCard>,
+    website: (<>
+    <div className="space-y-5">
+<div className="flex flex-col gap-3">
+            <label className="text-sm text-foreground">
+              Website URL
+            </label>
+            <Input
+              value={websiteURL}
+              placeholder="e.g. htttps://example.com"
+              onChange={(e) => setwebsiteURL(e.target.value)}
+              className={`border placeholder:text-xs placeholder:text-foreground/80`}
+            />
+            
+          </div>
+
+          <div className="flex flex-col gap-2 text-foreground/80 w-full">
+            <label className="text-sm">Crawl Settings</label>
+            <Select
+              value={crawlSettings}
+              onValueChange={setcrawlSettings}
+              onOpenChange={(open) => setIsOpenCrawlSettings(open)}
+              className="w-full"
+            >
+              <SelectTrigger
+                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                  isOpenCrawlSettings ? "[&>svg]:rotate-180" : ""
+                }`}
+              >
+                <SelectValue placeholder="Single Page Only" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="auto" className="!cursor-pointer text-xs">
+                 Single Page only
+                </SelectItem>
+
+                <SelectItem value="text" className="!cursor-pointer text-xs">
+                 Entire Domain
+                </SelectItem>
+
+                <SelectItem value="ocr" className="!cursor-pointer text-xs">
+                  Include subdomains
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-3">
+            <label className="text-sm text-foreground">
+             Maximum pages
+            </label>
+            <Input
+              value={maximumPages}
+              type="number"
+              placeholder="100"
+              onChange={(e) => setmaximumPages(e.target.value)}
+              className={`border placeholder:text-xs placeholder:text-foreground/80 `}
+            />
+          </div>
+          </div>
+    </>),
+    database: (<>
+    <div className="space-y-5">
+
+          <div className="flex flex-col gap-2 text-foreground/80 w-full">
+            <label className="text-sm">Database Type</label>
+            <Select
+              value={databaseType}
+              onValueChange={setdatabaseType}
+              onOpenChange={(open) => setIsOpenDatabaseType(open)}
+              className="w-full"
+            >
+              <SelectTrigger
+                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                  isOpenDatabaseType ? "[&>svg]:rotate-180" : ""
+                }`}
+              >
+                <SelectValue placeholder=" Postgre SQL" />
+              </SelectTrigger>
+
+              <SelectContent>
+                <SelectItem value="postgresql" className="!cursor-pointer text-xs">
+                 Postgre SQL
+                </SelectItem>
+
+                <SelectItem value="mysql" className="!cursor-pointer text-xs">
+                 MySQL
+                </SelectItem>
+
+                <SelectItem value="mongodb" className="!cursor-pointer text-xs">
+                  MongoDB
+                </SelectItem>
+                 <SelectItem value="snowflake" className="!cursor-pointer text-xs">
+                  Snowflake
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="flex flex-col gap-3">
+            <label className="text-sm text-foreground">
+             Connection String
+            </label>
+            <Input
+              value={connectionString}
+              placeholder="postgresql://user:password@host:port/database"
+              onChange={(e) => setConnectionString(e.target.value)}
+              className={`border placeholder:text-xs placeholder:text-foreground/80 `}
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <label className="text-sm text-foreground">Tables to Index</label>
+            <Textarea
+              value={tableNames}
+              placeholder="Enter table names (comma-separated)"
+              onChange={(e) => setTableNames(e.target.value)}
+              className={`border placeholder:text-xs h-20 placeholder:text-foreground/80 `}
+            />
+          </div>
+          </div>
+    </>),
   };
 
   const items = [
