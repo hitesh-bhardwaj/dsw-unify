@@ -18,12 +18,19 @@ import { useRouter } from "next/navigation";
  * @returns {React.JSX.Element} The rendered Header component.
  */
 export function Header({ title = "Agents" }) {
-  const { user, logout } = useAuth();
+  const { user, logout, isLoading } = useAuth();
   const router = useRouter();
 
   const handleLogout = () => {
     logout();
     router.push("/login");
+  };
+
+  // Default user for when not logged in or still loading
+  const displayUser = user || {
+    name: "Guest",
+    email: "guest@example.com",
+    avatar: "https://github.com/shadcn.png",
   };
 
   return (
@@ -64,7 +71,7 @@ export function Header({ title = "Agents" }) {
 
         {/* User avatar with dropdown */}
         <div className="flex items-center gap-2 cursor-pointer">
-          <NavUser user={user} onLogout={handleLogout} />
+          <NavUser user={displayUser} onLogout={handleLogout} />
         </div>
       </div>
     </header>

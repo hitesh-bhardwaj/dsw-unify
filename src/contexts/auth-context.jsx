@@ -32,14 +32,31 @@ export function AuthProvider({ children }) {
     // Check for existing token on mount
     const token = getAuthToken();
     if (token) {
-      // TODO: Backend team - Fetch current user from token
-      // For now, set a mock user
-      setUser({
-        id: 1,
-        name: "shadcn",
-        email: "m@example.com",
-        avatar: "https://github.com/shadcn.png",
-      });
+      // Try to restore user from localStorage
+      const storedUser = typeof window !== 'undefined'
+        ? localStorage.getItem('auth_user')
+        : null;
+
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch (error) {
+          console.error('Failed to parse stored user:', error);
+          // If parsing fails, remove invalid data
+          localStorage.removeItem('auth_user');
+        }
+      } else {
+        // TODO: Backend team - Fetch current user from token
+        // For now, set a mock user
+        const mockUser = {
+          id: 1,
+          name: "shadcn",
+          email: "m@example.com",
+          avatar: "https://github.com/shadcn.png",
+        };
+        setUser(mockUser);
+        localStorage.setItem('auth_user', JSON.stringify(mockUser));
+      }
     }
     setIsLoading(false);
   }, []);
@@ -52,6 +69,10 @@ export function AuthProvider({ children }) {
   const login = (token, userData) => {
     setAuthToken(token);
     setUser(userData);
+    // Store user data in localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('auth_user', JSON.stringify(userData));
+    }
   };
 
   /**
@@ -60,6 +81,21 @@ export function AuthProvider({ children }) {
   const logout = () => {
     removeAuthToken();
     setUser(null);
+    // Remove user data from localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('auth_user');
+    }
+  };
+
+  /**
+   * Update user data
+   * @param {User} userData - Updated user data
+   */
+  const updateUser = (userData) => {
+    setUser(userData);
+    if (typeof window !== 'undefined' && userData) {
+      localStorage.setItem('auth_user', JSON.stringify(userData));
+    }
   };
 
   const value = {
@@ -68,7 +104,7 @@ export function AuthProvider({ children }) {
     isLoading,
     login,
     logout,
-    setUser,
+    setUser: updateUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
