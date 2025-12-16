@@ -67,7 +67,7 @@ const useCases = [
          <div className="space-y-1">
             <label className="text-sm mb-2 block">Select Guard Suite</label>
               <Select onValueChange={(val) => setUseCase(val)} className="py-2">
-                <SelectTrigger className="w-full py-5 ">
+                <SelectTrigger className="w-full py-5 dark:bg-card ">
                   <SelectValue placeholder="Select a model" className="text-foreground/80" />
                 </SelectTrigger>
                 <SelectContent>

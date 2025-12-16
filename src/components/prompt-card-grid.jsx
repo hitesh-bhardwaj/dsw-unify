@@ -17,7 +17,7 @@ const PromptCardGrid = () => {
   const [enhancePrompt, setEnhancePrompt] = useState("");
   return (
     <>
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 ">
+      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
         <h3 className="text-xl font-medium mb-2">System Prompt</h3>
         <p className="text-sm text-gray-600 mb-4 dark:text-foreground">
           Define how your agent should behave and respond
@@ -28,6 +28,7 @@ const PromptCardGrid = () => {
           <SearchBar
             placeholder="Search by name, tags or content..."
             value={query}
+            className="dark:bg-card"
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
@@ -36,7 +37,7 @@ const PromptCardGrid = () => {
             value={systemPrompt}
             onChange={(e) => setSystemPrompt(e.target.value)}
             placeholder="You are a helpful AI assistant that..."
-            className="min-h-[200px] resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80"
+            className="min-h-[200px] resize-none border-border-color-0 !text-xs p-4 bg-background text-foreground placeholder:text-foreground/80 dark:bg-card"
           />
         </div>
         <div className="space-y-2">

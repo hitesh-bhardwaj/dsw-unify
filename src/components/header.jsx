@@ -10,6 +10,7 @@ import Breadcrumbs from "./common/Breadcrumbs";
 import { GlobalSearch } from "./global-search";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
+import { Bell } from "lucide-react";
 
 /**
  * Header component containing navigation controls, breadcrumbs, theme toggle, notifications, help, and user profile.
@@ -65,7 +66,8 @@ export function Header({ title = "Agents" }) {
           size="icon"
           className="text-foreground hover:text-foreground !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
         >
-          <NotificationsIcon className="!h-5 !w-auto" />
+          {/* <NotificationsIcon className="!h-5 !w-auto" /> */}
+          <Bell  className="!h-5 !w-auto"/>
         </Button>
 
         {/* Help */}

@@ -10,10 +10,13 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@/components/Icons";
 
-
 const tools = [
   { id: 1, name: "Web Search", description: "Search the web for information" },
-  { id: 2, name: "Calculator", description: "Perform mathematical calculations" },
+  {
+    id: 2,
+    name: "Calculator",
+    description: "Perform mathematical calculations",
+  },
   { id: 3, name: "Code Interpreter", description: "Execute and analyze code" },
   { id: 4, name: "Image Generator", description: "Generate images from text" },
   { id: 5, name: "File Reader", description: "Read and analyze files" },
@@ -48,7 +51,7 @@ export default function ToolsList() {
   };
 
   return (
-    <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-background">
+    <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-background dark:bg-card">
       {/* HEADER */}
       <div className="flex justify-between items-start">
         <div>
@@ -64,7 +67,7 @@ export default function ToolsList() {
               <Button
                 onClick={() => setOpenCreateModal(true)}
                 variant="outline"
-                className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10"
+                className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
               >
                 <PlusIcon className="text-primary" />
                 Create Tools
@@ -77,11 +80,7 @@ export default function ToolsList() {
       {/* TOOL ROWS */}
       <div className="space-y-2">
         {tools.map((tool) => (
-          <SwitchPopover
-            key={tool.id}
-            tool={tool}
-            onOpenConfig={openModal}   
-          />
+          <SwitchPopover key={tool.id} tool={tool} onOpenConfig={openModal} />
         ))}
       </div>
 
@@ -92,17 +91,15 @@ export default function ToolsList() {
       />
 
       <ToolConfigModal
-  open={openConfigModal}
-  onOpenChange={setOpenConfigModal}
-  tool={selectedTool}
-  searchEngine={searchEngine}
-  setSearchEngine={setSearchEngine}
-  maxResults={maxResults}
-  setMaxResults={setMaxResults}
-  saveConfig={saveConfig}
-/>
-
-     
+        open={openConfigModal}
+        onOpenChange={setOpenConfigModal}
+        tool={selectedTool}
+        searchEngine={searchEngine}
+        setSearchEngine={setSearchEngine}
+        maxResults={maxResults}
+        setMaxResults={setMaxResults}
+        saveConfig={saveConfig}
+      />
     </div>
   );
 }

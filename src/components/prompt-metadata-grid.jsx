@@ -17,7 +17,7 @@ const PromptMetadataGrid = () => {
 
   return (
     <>
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 ">
+      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground dark:text-foreground">
             Name
@@ -52,7 +52,7 @@ const PromptMetadataGrid = () => {
             value={systemPrompt}
             onChange={(e) => setSystemPrompt(e.target.value)}
             placeholder="Helpful and empathetic customer service responses"
-            className="min-h-[150px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80"
+            className="min-h-[150px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80 dark:!bg-card"
           />
         </div>
         <div className="space-y-2">
@@ -61,7 +61,7 @@ const PromptMetadataGrid = () => {
                  <Badge
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                  "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background dark:bg-card"
                 )}
               >
                 Customer-service

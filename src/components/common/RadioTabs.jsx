@@ -160,7 +160,7 @@ export default function RadioTabs({
         role="radiogroup"
         aria-label={ariaLabel}
         className={cx(
-          "relative flex gap-4 bg-sidebar-accent py-1.5 px-1.5 rounded-lg border border-border-color-0",
+          "relative flex gap-4 bg-sidebar-accent py-1.5 px-1.5 rounded-lg border border-border-color-0 dark:bg-card",
           groupClassName
         )}
         onKeyDown={onKeyDown}

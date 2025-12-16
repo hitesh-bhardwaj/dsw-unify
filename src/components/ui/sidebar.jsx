@@ -306,7 +306,7 @@ function SidebarTrigger({ className, onClick, ...props }) {
       variant="ghost"
       size="icon"
       className={cn(
-        "size-10 hover:bg-sidebar-accent flex items-center justify-center duration-800",
+        "size-6 hover:bg-sidebar-accent flex items-center justify-center duration-800",
         className
       )}
       onClick={(event) => {
@@ -315,7 +315,7 @@ function SidebarTrigger({ className, onClick, ...props }) {
       }}
       {...props}
     >
-      <SidebarIcon className="size-5"/>
+      <SidebarIcon className="w-4 h-4"/>
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

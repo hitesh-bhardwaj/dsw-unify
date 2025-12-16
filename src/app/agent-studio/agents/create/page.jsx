@@ -124,7 +124,7 @@ export default function CreateAgentPage() {
                 <Button
                   variant="outline"
                   onClick={() => setApiModalOpen(true)}
-                  className="gap-2 text-foreground border border-primary"
+                  className="gap-2 text-foreground border border-primary dark:bg-transparent dark:border-primary"
                 >
                   <div className="w-4 h-4">
                     <APIIcon className='w-4 h-4' />
@@ -136,7 +136,7 @@ export default function CreateAgentPage() {
                 <Button
                  onClick={() => setTestModalOpen(true)}
                   variant="outline"
-                  className="gap-2 text-foreground border border-primary"
+                  className="gap-2 text-foreground border border-primary dark:bg-transparent dark:border-primary"
                 >
                   <div className="!w-4">
                     <AiGenerator />

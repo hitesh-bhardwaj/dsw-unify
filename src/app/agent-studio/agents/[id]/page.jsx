@@ -7,7 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { AiGenerator, APIIcon, Bin, EditIcon, RunTestsIcon, SettingIcon } from "@/components/Icons";
+import {
+  AiGenerator,
+  APIIcon,
+  Bin,
+  EditIcon,
+  RunTestsIcon,
+  SettingIcon,
+} from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import CountUp from "@/components/animations/CountUp";
@@ -23,34 +30,30 @@ import TestAgentModal from "@/components/agent-studio/agents/test-agent-modal";
 import { useRouter } from "next/navigation";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
-
 export default function AgentDetailPage({ params }) {
-   const { id } = use(params);
+  const { id } = use(params);
 
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const router = useRouter();
-const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
- 
   // Show skeleton only once per agent id
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
 
   const handleConfirmDelete = () => {
-  // Redirect to agents page with delete instruction
-  router.push(`/agent-studio/agents?deleteId=${id}`);
+    // Redirect to agents page with delete instruction
+    router.push(`/agent-studio/agents?deleteId=${id}`);
 
-  // Close modal
-  setIsDeleteOpen(false);
-};
-
+    // Close modal
+    setIsDeleteOpen(false);
+  };
 
   const handleTrashClick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  setIsDeleteOpen(true);
-};
-
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDeleteOpen(true);
+  };
 
   const items = [
     {
@@ -58,7 +61,7 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
       value: "overview",
       label: "Overview",
       name: "Overview",
-      render: () => <Overview/>,
+      render: () => <Overview />,
     },
     {
       id: "monitoring",
@@ -83,25 +86,22 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
       value: "guardrails",
       label: "Guardrails",
       name: "Guardrails",
-      render: () => (
-        <Guardrails/>
-      ),
+      render: () => <Guardrails />,
     },
     {
       id: "conversations",
       value: "conversations",
       label: "Conversations",
       name: "Conversations",
-      render: () => (
-        <Conversations/>
-      ),
-    }
+      render: () => <Conversations />,
+    },
   ];
 
   const agent = {
     id: 0,
     name: "Auto Claims Processing Agent",
-    description: "Automates auto insurance claims intake, validation, and processing",
+    description:
+      "Automates auto insurance claims intake, validation, and processing",
     status: "active",
     tags: ["support", "customer-service"],
     lastModified: "2 Hours Ago",
@@ -120,7 +120,11 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
     recentActivity: [
       { type: "success", event: "API call completed", time: "2 minutes ago" },
       { type: "success", event: "User interaction", time: "5 minutes ago" },
-      { type: "success", event: "Knowledge base query", time: "12 minutes ago" },
+      {
+        type: "success",
+        event: "Knowledge base query",
+        time: "12 minutes ago",
+      },
       { type: "error", event: "Guardrail triggered", time: "18 minutes ago" },
       { type: "success", event: "Model inference", time: "25 minutes ago" },
     ],
@@ -132,13 +136,13 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   }, []);
 
   function slugToTitle(slug) {
-  if (!slug) return "";
-  
-  return slug
-    .split("-")                // break into words
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  // capitalize
-    .join(" ");                // rejoin with spaces
-}
+    if (!slug) return "";
+
+    return slug
+      .split("-") // break into words
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1)) // capitalize
+      .join(" "); // rejoin with spaces
+  }
   const title = slugToTitle(id);
 
   useEffect(() => {
@@ -162,11 +166,8 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   }, [mounted, id]);
 
   // Mock data - in real app, fetch based on id
-  
 
-    const [query, setQuery] = useState("");
-
-
+  const [query, setQuery] = useState("");
 
   // Skeleton cards
   const InfoCardSkeleton = () => (
@@ -305,7 +306,7 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
-                    <APIIcon/>
+                    <APIIcon />
                   </div>
                   API
                 </Button>
@@ -313,11 +314,10 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
               <RippleButton>
                 <Button
                   variant="outline"
-                  
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
-                    <RunTestsIcon/>
+                    <RunTestsIcon />
                   </div>
                   Test
                 </Button>
@@ -325,17 +325,16 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
               <RippleButton>
                 <Button
                   variant="outline"
-                      onClick={handleTrashClick}
-
+                  onClick={handleTrashClick}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4 text-red-500">
-                    <Bin/>
+                    <Bin />
                   </div>
                   Delete
                 </Button>
               </RippleButton>
-              
+
               <Link href={`/agent-studio/agents/${id}/edit`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
@@ -350,12 +349,9 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
           </div>
         </div>
         <div className="p-6 py-3 space-y-3">
-        {/* Main Content */}
-       <AnimatedTabsSection
-                    items={items}
-                    defaultValue="overview"
-                  />
-                  </div>
+          {/* Main Content */}
+          <AnimatedTabsSection items={items} defaultValue="overview" />
+        </div>
       </ScaleDown>
 
       {/* API Modal */}
@@ -366,16 +362,14 @@ const [isDeleteOpen, setIsDeleteOpen] = useState(false);
       />
 
       <ConfirmDialog
-  open={isDeleteOpen}
-  onOpenChange={setIsDeleteOpen}
-  title="Delete Agent?"
-  description="This action cannot be undone. The agent will be permanently deleted."
-  confirmText="Delete"
-  variant="destructive"
-  onConfirm={handleConfirmDelete}
-/>
-
-      
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete Agent?"
+        description="This action cannot be undone. The agent will be permanently deleted."
+        confirmText="Delete"
+        variant="destructive"
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

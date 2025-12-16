@@ -54,7 +54,7 @@ export default function KnowledgeBaseList() {
   };
 
   return (
-    <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-background">
+    <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-background dark:bg-card">
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-xl font-medium ">Tools Selection</h2>

@@ -183,7 +183,7 @@ export function AgentCard({ agent,index , view, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10 dark:bg-card"
                 )}>
                   {tag}
                 </Badge>
@@ -193,7 +193,7 @@ export function AgentCard({ agent,index , view, minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between border border-color-2 rounded-lg px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60"
+                "flex items-center justify-between border border-color-2 rounded-lg px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 dark:bg-card"
               )}
             >
               <div className="flex items-center gap-2 ">

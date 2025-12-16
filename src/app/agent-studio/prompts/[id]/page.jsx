@@ -87,17 +87,7 @@ export default function CreateAgentPage() {
                  Delete
                 </Button>
               </RippleButton>
-              {/* <RippleButton>
-                <Button
-                  variant="outline"
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4">
-                    <AiGenerator />
-                  </div>
-                 Copy
-                </Button>
-              </RippleButton> */}
+              
               <Link href={`#`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">

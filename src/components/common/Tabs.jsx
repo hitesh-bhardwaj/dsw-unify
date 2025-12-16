@@ -92,7 +92,7 @@ export default function Tabs({
       <div
         ref={barRef}
         className={cx(
-          "relative flex gap-4 bg-sidebar-accent p-1.5 rounded-lg border border-foreground/20",
+          "relative flex gap-4 bg-sidebar-accent p-1.5 rounded-lg border border-foreground/20 dark:bg-card",
           barClassName
         )}
       >

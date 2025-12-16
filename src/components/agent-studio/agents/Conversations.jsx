@@ -76,7 +76,7 @@ const Conversations = () => {
             
                 <CardDetails data={stats} textSize="text-4xl"/>
 
-              <Card className={"border-none bg-background gap-2 mx-auto"}>
+              <Card className={"border-none bg-background gap-2 mx-auto dark:bg-background"}>
                 <CardHeader className='px-0'>
                   <h2 className="text-2xl font-medium">Recent Conversations</h2>
                 </CardHeader>
@@ -85,7 +85,7 @@ const Conversations = () => {
                     {agent.recentActivity.map((activity, index) => (
                       <div
                         key={index}
-                        className="w-full flex flex-col gap-2 items-end group border border-border-color-0 px-5 py-0.5 rounded-xl"
+                        className="w-full flex flex-col gap-2 items-end group border border-border-color-0 px-5 py-0.5 rounded-xl dark:bg-card"
                       >
                         <div className="flex items-center justify-between py-4 w-full">
                           <div className="flex items-center gap-3">

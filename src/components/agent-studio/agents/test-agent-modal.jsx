@@ -172,7 +172,7 @@ export default function TestAgentModal({
         <TooltipProvider delayDuration={200}>
           <div className="flex flex-col h-full overflow-hidden">
             {/* Header */}
-            <div className="flex items-center  bg-white justify-between px-8 py-6 ">
+            <div className="flex items-center  bg-white justify-between px-8 py-6  dark:bg-transparent">
               <h2 className="text-2xl font-normal">
                 Test Agent: Unnamed Agent
               </h2>
@@ -180,9 +180,9 @@ export default function TestAgentModal({
                 variant="ghost"
                 size="icon"
                 onClick={() => onOpenChange(false)}
-                className="h-10 w-10 rounded-none hover:bg-transparent"
+                className="h-7 w-7 rounded-none hover:bg-transparent"
               >
-                <X className="h-6 w-6" />
+                <X className="h-full w-full " />
               </Button>
             </div>
 
@@ -192,7 +192,7 @@ export default function TestAgentModal({
             <div
               ref={scrollRef}
               onScroll={onScroll}
-              className="flex-1 overflow-y-auto px-8 py-8 space-y-6 bg-white customScrollbar"
+              className="flex-1 overflow-y-auto px-8 py-8 space-y-6 bg-white customScrollbar dark:bg-transparent"
             >
               {messages.map((message) => (
                 <div
@@ -206,15 +206,15 @@ export default function TestAgentModal({
                       </div>
                     )}
                     <div className="flex flex-col">
-                    <div className="bg-white border border-border-color-0 rounded-lg px-6 py-4  ">
-                      <p className="text-xs text-gray-900 ">{message.text}</p>
+                    <div className="bg-white border border-border-color-0 rounded-lg px-6 py-4 dark:bg-sidebar-accent ">
+                      <p className="text-xs text-gray-900 dark:text-foreground">{message.text}</p>
                      
                     </div>
                      <p className="text-xs text-foreground/80 ml-1 mt-1">{message.timestamp}</p>
                       </div>
                     {message.sender === 'user' && (
-                      <div className="w-10 h-10 rounded-full border border-border-color-0 bg-white flex items-center justify-center flex-shrink-0">
-                        <User className="w-5 h-5 text-gray-700" />
+                      <div className="w-10 h-10 rounded-full border border-border-color-0 bg-white flex items-center justify-center flex-shrink-0 dark:bg-transparent">
+                        <User className="w-5 h-5 text-gray-700 " />
                       </div>
                     )}
                   </div>
@@ -225,7 +225,7 @@ export default function TestAgentModal({
             <div className="w-[95%] h-[1px] bg-border-color-0 mx-auto" />
 
             {/* Input Area - Fixed at bottom */}
-            <div className="bg-white border-none px-8 py-6">
+            <div className="bg-white border-none px-8 py-6 dark:bg-transparent">
               <div className="flex items-center gap-3">
                 <input
                   type="file"
@@ -241,7 +241,7 @@ export default function TestAgentModal({
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Type your message..."
-                    className="w-full px-6 py-3 border border-border-color-0 rounded-xl text-base"
+                    className="w-full px-6 py-3 border border-border-color-0 rounded-xl text-base "
                   />
                 </div>
                 
@@ -249,7 +249,7 @@ export default function TestAgentModal({
                   onClick={handleFileUpload}
                   variant="outline"
                   size="icon"
-                  className="h-10 w-10 rounded-md border-border-color-0 p-2.5"
+                  className="h-11.5 w-11.5 flex items-center justify-center rounded-md border-border-color-0 p-2.5"
                 >
                   <UploadIcon className="w-4 h-4" />
                 </Button>
@@ -258,13 +258,13 @@ export default function TestAgentModal({
                   onClick={handleSend}
                   disabled={!inputValue.trim()}
                   size="icon"
-                  className={`h-10 w-15 rounded-md flex items-center justify-center  ${
+                  className={`h-11.5 w-15 rounded-md flex items-center justify-center  ${
                     inputValue.trim()
                       ? 'bg-primary '
                       : 'bg-primary/80 cursor-not-allowed '
                   }`}
                 >
-                  <Send className="w-10 h-10 text-white rotate-45" />
+                  <Send className="w-10 h-10 text-white rotate-45 -ml-1.5" />
                 </Button>
               </div>
             </div>

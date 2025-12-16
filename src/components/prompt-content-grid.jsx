@@ -18,7 +18,7 @@ const PromptContentGrid = () => {
   const [enhancePrompt, setEnhancePrompt] = useState("");
   return (
     <>
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-100 pb-8 ">
+      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-100 pb-8 dark:bg-card ">
         <h3 className="text-lg font-medium mb-2">Prompt Content</h3>
         <p className="text-sm text-gray-600 mb-4 dark:text-foreground">
           You are a helpful and empathetic customer service representative...
