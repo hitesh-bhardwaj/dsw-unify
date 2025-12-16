@@ -24,7 +24,7 @@ const PerformanceTab = () => {
   }, []);
 
   return (
-    <div className="space-y-6 py-3 bg-slate-50 min-h-screen">
+    <div className="space-y-6 py-3 bg-slate-50 min-h-screen dark:!bg-background">
       <div className="space-y-2">
         <h1 className="text-2xl font-medium ">Performance Analytics</h1>
       </div>
@@ -56,7 +56,7 @@ const PerformanceTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="shadow-lg border-slate-200">
+      <Card className="shadow-lg border-slate-200 dark:border-border-color-0 ">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-medium">Token Usage Over Time</CardTitle>
         </CardHeader>
