@@ -10,10 +10,16 @@ import { Bin, Editor, Eye, Calendar } from "../../Icons";
 import HotEncoding from "./TransformationCard";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
-
 const skeletonShownMap = new Map();
 
-export function FeatureCard({ feature, view, onDelete, index, editPopupOpen, minSkeletonMs = 500 }) {
+export function FeatureCard({
+  feature,
+  view,
+  onDelete,
+  index,
+  editPopupOpen,
+  minSkeletonMs = 500,
+}) {
   const {
     id,
     name,
@@ -28,35 +34,33 @@ export function FeatureCard({ feature, view, onDelete, index, editPopupOpen, min
 
   const isDark = variant === "dark";
   const handleNoOpClick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-};
-
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const handleEditClick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
+    e.preventDefault();
+    e.stopPropagation();
 
-  if (editPopupOpen) {
-    editPopupOpen(true);
-  }
-};
-
+    if (editPopupOpen) {
+      editPopupOpen(true);
+    }
+  };
 
   const handleTrashClick = (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  setIsDeleteOpen(true);
-};
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDeleteOpen(true);
+  };
 
-const handleConfirmDelete = () => {
-  if (onDelete && id != null) {
-    onDelete(id);
-  }
-};
+  const handleConfirmDelete = () => {
+    if (onDelete && id != null) {
+      onDelete(id);
+    }
+  };
 
   // keep a skeleton up for at least `minSkeletonMs`
   const [showSkeleton, setShowSkeleton] = useState(() => {
@@ -85,56 +89,64 @@ const handleConfirmDelete = () => {
 
   return (
     <>
-    <ConfirmDialog
-    open={isDeleteOpen}
-    onOpenChange={setIsDeleteOpen}
-    title="Delete transformation?"
-    description={
-      name
-        ? `This action cannot be undone. This will permanently remove "${name}" from Feature Transformations.`
-        : "This action cannot be undone. This will permanently remove this transformation."
-    }
-    confirmLabel="Delete"
-    destructive
-    onConfirm={handleConfirmDelete}
-  />
-    <Card
-      onClick={() => setIsModalOpen(true)}
-      className={cn(
-        "cursor-pointer transition-all duration-300 feature-card-hover-container hover:border-transparent group hover:drop-shadow-xl",
-        
-        isGrid && " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
-        // List view styles
-        isList && "w-full rounded-xl  py-6 bg-white dark:bg-background"
-      )}
-    >
-      {/* Header Section */}
-      <CardHeader className={cn(isGrid && "pb-2")}>
-        <div className={cn(
-          "flex items-center mb-4",
-          isGrid && "justify-between",
-          isList && "flex-col items-start w-full"
-        )}>
-          {/* Icon */}
-          <div className={cn(
-            "flex items-center justify-center rounded-lg p-3 group-hover:!bg-white group-hover:!text-black duration-300",
-            isGrid && "h-14 w-14 transition-all   ",
-            isList && "h-15 w-15  mb-4"
-          )}
-          style={{
-                color: `var(--icon-color-${(index % 4) + 1})`,
-                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
-              }}>
-            {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-7 w-7")} />}
-          </div>
-           
+      <ConfirmDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete transformation?"
+        description={
+          name
+            ? `This action cannot be undone. This will permanently remove "${name}" from Feature Transformations.`
+            : "This action cannot be undone. This will permanently remove this transformation."
+        }
+        confirmLabel="Delete"
+        destructive
+        onConfirm={handleConfirmDelete}
+      />
+      <Card
+        onClick={() => setIsModalOpen(true)}
+        className={cn(
+          "cursor-pointer transition-all duration-300 feature-card-hover-container hover:border-transparent group hover:drop-shadow-xl",
 
-            <div className={cn(
-              "flex items-center gap-1 transition-opacity duration-300",
-              "opacity-0 pointer-events-none",
-              "group-hover:opacity-100 group-hover:pointer-events-auto",
-              `${isList?"absolute top-4 right-6 ":""}`
-            )}>
+          isGrid &&
+            " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
+          // List view styles
+          isList && "w-full rounded-xl  py-6 bg-white dark:bg-card"
+        )}
+      >
+        {/* Header Section */}
+        <CardHeader className={cn(isGrid && "pb-2")}>
+          <div
+            className={cn(
+              "flex items-center mb-4",
+              isGrid && "justify-between",
+              isList && "flex-col items-start w-full"
+            )}
+          >
+            {/* Icon */}
+            <div
+              className={cn(
+                "flex items-center justify-center rounded-lg p-3 group-hover:!bg-white group-hover:!text-black duration-300",
+                isGrid && "h-14 w-14 transition-all   ",
+                isList && "h-15 w-15  mb-4"
+              )}
+              style={{
+                color: `var(--icon-color-${(index % 4) + 1})`,
+                backgroundColor: `rgb(from var(--icon-color-${
+                  (index % 4) + 1
+                }) r g b / 0.1)`,
+              }}
+            >
+              {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-7 w-7")} />}
+            </div>
+
+            <div
+              className={cn(
+                "flex items-center gap-1 transition-opacity duration-300",
+                "opacity-0 pointer-events-none",
+                "group-hover:opacity-100 group-hover:pointer-events-auto",
+                `${isList ? "absolute top-4 right-6 " : ""}`
+              )}
+            >
               <Button
                 variant="ghost"
                 size="icon"
@@ -145,95 +157,109 @@ const handleConfirmDelete = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                  onClick={handleNoOpClick}
+                onClick={handleNoOpClick}
                 className="h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
               >
                 <Editor />
               </Button>
               <Button
-  variant="ghost"
-  size="icon"
-  className="h-7 w-7 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-  onClick={handleTrashClick}
->
-  <Bin />
-</Button>
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+                onClick={handleTrashClick}
+              >
+                <Bin />
+              </Button>
             </div>
-        </div>
+          </div>
 
-        {/* Title */}
-        <h3 className={cn(
-          "font-medium mb-2  group-hover:text-white transition-colors duration-300",
-          isGrid && "text-xl",
-          isList && "text-2xl mb-1 group-hover:text-white"
-        )}>
-          {name}
-        </h3>
+          {/* Title */}
+          <h3
+            className={cn(
+              "font-medium mb-2  group-hover:text-white transition-colors duration-300",
+              isGrid && "text-xl",
+              isList && "text-2xl mb-1 group-hover:text-white"
+            )}
+          >
+            {name}
+          </h3>
 
-        {/* Description */}
-        <p className={cn(
-          "text-muted-foreground group-hover:text-white/90 transition-colors duration-300",
-          isGrid && "text-xs line-clamp-2 ",
-          isList && "text-sm"
-        )}>
-          {description}
-        </p>
-      </CardHeader>
+          {/* Description */}
+          <p
+            className={cn(
+              "text-muted-foreground group-hover:text-white/90 transition-colors duration-300",
+              isGrid && "text-xs line-clamp-2 ",
+              isList && "text-sm"
+            )}
+          >
+            {description}
+          </p>
+        </CardHeader>
 
-      {/* Content Section */}
-      <CardContent className={cn(
-        "w-full mx-auto space-y-4 rounded-xl duration-300",
-        isGrid && "pt-5"
-      )}>
-        {/* Tags */}
-        <div className={cn(
-          "flex flex-wrap gap-1",
-          isGrid && "pt-2",
-          isList && "mb-4"
-        )}>
-          {tags.map((tag, index) => (
-            <Badge
-              key={index}
-              variant="secondary"
+        {/* Content Section */}
+        <CardContent
+          className={cn(
+            "w-full mx-auto space-y-4 rounded-xl duration-300",
+            isGrid && "pt-5"
+          )}
+        >
+          {/* Tags */}
+          <div
+            className={cn(
+              "flex flex-wrap gap-1",
+              isGrid && "pt-2",
+              isList && "mb-4"
+            )}
+          >
+            {tags.map((tag, index) => (
+              <Badge
+                key={index}
+                variant="secondary"
+                className={cn(
+                  "rounded-full px-3 py-1 text-xs font-light transition-all duration-300 border border-color-2 dark:bg-card group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                )}
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
+
+          {/* Code Block */}
+          <pre
+            className={cn(
+              "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all dark:bg-card border-border-color-2 border text-foreground/80 group-hover:text-white bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 py-5 px-4"
+            )}
+          >
+            <code>{previewCode}</code>
+          </pre>
+
+          {/* Last Updated */}
+          <div
+            className={cn(
+              "flex items-center gap-3",
+              isGrid && "pl-2",
+              isList && "mt-4"
+            )}
+          >
+            <div className={cn(isGrid ? "w-5 h-5" : "w-4 h-4")}>
+              <Calendar
+                className={cn(
+                  "text-foreground/80 group-hover:text-white transition-colors duration-300",
+                  "w-4 h-4"
+                )}
+              />
+            </div>
+            <span
               className={cn(
-                "rounded-full px-3 py-1 text-xs font-light transition-all duration-300 border border-color-2 dark:bg-background group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10",
+                "text-xs text-foreground/80 group-hover:text-white/80 transition-colors duration-300"
               )}
             >
-              {tag}
-            </Badge>
-          ))}
-        </div>
-
-
-
-        {/* Code Block */}
-        <pre className={cn(
-          "w-full whitespace-pre overflow-x-auto rounded-lg text-xs font-mono transition-all dark:bg-background border-border-color-2 border text-foreground/80 group-hover:text-white bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 py-5 px-4",
-        )}>
-          <code>{previewCode}</code>
-        </pre>
-
-        {/* Last Updated */}
-        <div className={cn(
-          "flex items-center gap-3",
-          isGrid && "pl-2",
-          isList && "mt-4"
-        )}>
-          <div className={cn(isGrid ? "w-5 h-5" : "w-4 h-4")}>
-            <Calendar className={cn(
-               "text-foreground/80 group-hover:text-white transition-colors duration-300",
-             "w-4 h-4"
-            )} />
+              Updated {lastUpdated}
+            </span>
           </div>
-          <span className={cn(
-            "text-xs text-foreground/80 group-hover:text-white/80 transition-colors duration-300",
-          )}>
-            Updated {lastUpdated}
-          </span>
-        </div>
-      </CardContent>
-    </Card>
-   
+        </CardContent>
+      </Card>
+
       <HotEncoding
         open={isModalOpen}
         onOpenChange={setIsModalOpen}

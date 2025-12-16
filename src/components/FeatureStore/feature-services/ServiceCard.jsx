@@ -101,7 +101,7 @@ const isGrid = view === "grid";
           "feature-card-hover-container gap-2 hover:drop-shadow-xl hover:border-transparent  transition-all duration-300 group",
           isGrid && " h-full flex flex-col justify-between gap-0 py-5  ",
         // List view styles
-        isList && "w-full rounded-xl  py-6 bg-white dark:bg-background"
+        isList && "w-full rounded-xl  py-6 bg-white dark:bg-card"
         )}
       >
         <CardHeader className={cn(isGrid && "")}>
@@ -191,7 +191,7 @@ const isGrid = view === "grid";
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                 )}
               >
                 {tag}
@@ -203,7 +203,7 @@ const isGrid = view === "grid";
 
           <div
             className={cn(
-              "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-0",
+              "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-card bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-0",
               `${isList ? "justify-between gap-10 w-full":"justify-between w-full"}`
             )}
           >

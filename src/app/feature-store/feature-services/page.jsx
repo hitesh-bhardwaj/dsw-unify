@@ -112,9 +112,8 @@ const page = () => {
   const [error, setError] = useState(null);
 
   const handleDeleteService = (id) => {
-  setFeatureServices((prev) => prev.filter((s) => s.id !== id));
-};
-
+    setFeatureServices((prev) => prev.filter((s) => s.id !== id));
+  };
 
   // Fetch feature services and stats
   useEffect(() => {
@@ -130,8 +129,14 @@ const page = () => {
 
         setFeatureServices(servicesData);
         setStatsData([
-          { title: "Total Feature Services", value: statsResponse.totalFeatureServices },
-          { title: "Total Featured Views", value: statsResponse.totalFeaturedViews },
+          {
+            title: "Total Feature Services",
+            value: statsResponse.totalFeatureServices,
+          },
+          {
+            title: "Total Featured Views",
+            value: statsResponse.totalFeaturedViews,
+          },
           { title: "Total Features", value: statsResponse.totalFeatures },
         ]);
       } catch (err) {
@@ -171,7 +176,9 @@ const page = () => {
 
   //  Apply Search + Tag Filter
   let filteredFeatures = featureServices.filter((feature) => {
-    const matchesSearch = feature.name.toLowerCase().includes(query.toLowerCase());
+    const matchesSearch = feature.name
+      .toLowerCase()
+      .includes(query.toLowerCase());
     const matchesTags =
       selectedTags.length === 0 ||
       selectedTags.some((tag) => feature.tags?.includes(tag));
@@ -179,7 +186,7 @@ const page = () => {
     return matchesSearch && matchesTags;
   });
 
-  //  Apply Sorting 
+  //  Apply Sorting
   if (sortOrder === "asc") {
     filteredFeatures = [...filteredFeatures].sort((a, b) =>
       a.name.localeCompare(b.name)
@@ -195,7 +202,6 @@ const page = () => {
       <div className="flex flex-col h-full w-full overflow-hidden">
         <ScaleDown>
           <div className="space-y-6 p-6">
-      
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <h1 className="text-3xl font-medium text-foreground">
@@ -220,34 +226,31 @@ const page = () => {
             </div>
 
             <div className="w-full flex items-center justify-between gap-4">
-              {isLoading ? (
-                Array.from({ length: 3 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
-                  >
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
-                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                  </div>
-                ))
-              ) : (
-                statsData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
-                  >
-                    <span className="text-sm text-foreground/80">
-                      {item.title}
-                    </span>
-                    <span className="text-4xl font-medium mt-2">
-                      <CountUp value={item.value} startOnView/>
-                    </span>
-                  </div>
-                ))
-              )}
+              {isLoading
+                ? Array.from({ length: 3 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
+                    >
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                    </div>
+                  ))
+                : statsData.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                    >
+                      <span className="text-sm text-foreground/80">
+                        {item.title}
+                      </span>
+                      <span className="text-4xl font-medium mt-2">
+                        <CountUp value={item.value} startOnView />
+                      </span>
+                    </div>
+                  ))}
             </div>
 
-      
             <div className="flex gap-2">
               <div className="relative flex-1">
                 <SearchBar
@@ -257,7 +260,6 @@ const page = () => {
                 />
               </div>
             </div>
-
 
             <FilterBar
               selectedTags={selectedTags}
@@ -280,11 +282,13 @@ const page = () => {
 
             {/* Loading State */}
             {isLoading && !error && (
-              <div className={`items-stretch ${
-                view === "grid"
-                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                  : "flex flex-col gap-5"
-              }`}>
+              <div
+                className={`items-stretch ${
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                    : "flex flex-col gap-5"
+                }`}
+              >
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
@@ -310,27 +314,30 @@ const page = () => {
                   className={`items-stretch ${
                     view === "grid"
                       ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                    : "flex flex-col gap-5"
-                }`}
-              >
-                {filteredFeatures.map((feature, index) => (
-                  <ServiceCard key={feature.id} feature={feature} view={view} index={index} onEditPopupOpen={setIsModalOpen} onDelete={handleDeleteService}
- />
-                ))}
+                      : "flex flex-col gap-5"
+                  }`}
+                >
+                  {filteredFeatures.map((feature, index) => (
+                    <ServiceCard
+                      key={feature.id}
+                      feature={feature}
+                      view={view}
+                      index={index}
+                      onEditPopupOpen={setIsModalOpen}
+                      onDelete={handleDeleteService}
+                    />
+                  ))}
 
-                {filteredFeatures.length === 0 && (
-                  <div className="flex h-64 items-center justify-center text-gray-500">
-                   
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+                  {filteredFeatures.length === 0 && (
+                    <div className="flex h-64 items-center justify-center text-gray-500"></div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             )}
           </div>
         </ScaleDown>
       </div>
 
-     
       <StepFormModal
         title="Create Feature Service"
         open={isModalOpen}

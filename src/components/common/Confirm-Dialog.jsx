@@ -47,7 +47,7 @@ export function ConfirmDialog({
           <RippleButton>
             <Button
               variant="outline"
-              className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
+              className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7 dark:bg-background"
               onClick={handleCancel}
             >
               {cancelLabel}
@@ -57,7 +57,7 @@ export function ConfirmDialog({
           <RippleButton onClick={handleConfirm} className="rounded-full">
             <Button
               variant={destructive ? "destructive" : "default"}
-              className="text-white gap-2 cursor-pointer !px-6 rounded-lg"
+              className="text-white gap-2 cursor-pointer !px-6 rounded-lg dark:bg-red"
             >
               {confirmLabel}
               <ArrowRight />

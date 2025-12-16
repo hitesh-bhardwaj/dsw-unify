@@ -183,7 +183,7 @@ export function GlobalSearch({ compact = false }) {
           type="button"
           aria-label="Open search"
           onClick={() => setOpen(true)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-md border-none md:border border-border-color-0 bg-none md:bg-background text-foreground hover:border-border-color-3 hover:bg-sidebar-accent transition-colors duration-200"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md border-none md:border border-border-color-0 bg-none md:bg-background text-foreground hover:border-border-color-3 hover:bg-sidebar-accent transition-colors duration-200 dark:hover:border-border-color-0"
         >
           <SearchIcon className="md:size-5 size-4" />
         </button>
