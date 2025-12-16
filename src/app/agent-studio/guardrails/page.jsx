@@ -58,6 +58,8 @@ const mockGuardSuites = [
   },
 ];
 
+
+
 // Default Guardrails data
 const defaultGuardrails = [
   {
@@ -165,12 +167,14 @@ export default function GuardrailsPage() {
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortOrder, setSortOrder] = useState("none");
   const [view, setView] = useState("grid");
+  const [guardSuites, setGuardSuites] = useState(mockGuardSuites);
+
 
   // Get available tags dynamically based on active tab
   const availableTags = useMemo(() => {
     const tags = new Set();
     if (activeTab === "suites") {
-      mockGuardSuites.forEach((suite) =>
+      guardSuites.forEach((suite) =>
         suite.tags?.forEach((tag) => tags.add(tag))
       );
     } else {
@@ -182,7 +186,7 @@ export default function GuardrailsPage() {
   }, [activeTab, guardrailsSubTab]);
 
   // Search + Tag Filtering
-  let filteredSuites = mockGuardSuites.filter((suite) => {
+  let filteredSuites = guardSuites.filter((suite) => {
     const matchSearch =
       suite.name.toLowerCase().includes(query.toLowerCase()) ||
       suite.description.toLowerCase().includes(query.toLowerCase());
@@ -224,6 +228,11 @@ export default function GuardrailsPage() {
 
     return filtered;
   };
+
+  const handleDeleteSuite = (suiteId) => {
+  setGuardSuites((prev) => prev.filter((s) => s.id !== suiteId));
+};
+
 
   const activeGuardrailList =
     guardrailsSubTab === "default" ? defaultGuardrails : customGuardrails;
@@ -344,7 +353,7 @@ export default function GuardrailsPage() {
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
             cards={
-              activeTab === "suites" ? mockGuardSuites : activeGuardrailList
+              activeTab === "suites" ? guardSuites : activeGuardrailList
             }
           />
         </div>
@@ -371,6 +380,8 @@ export default function GuardrailsPage() {
                     suite={suite}
                     view={view}
                     index={index}
+                      onDelete={handleDeleteSuite}
+
                   />
                 ))}
 

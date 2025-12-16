@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { MemoriesIcon, PlusIcon } from "@/components/Icons";
@@ -11,9 +11,9 @@ import { ScaleDown } from "@/components/animations/Animations";
 import AddMemoriesModal from "@/components/agent-studio/AddMemoriesModal";
 import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "@/components/animations/CountUp";
+import { useSearchParams } from "next/navigation";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
-
 
 const memories = [
   {
@@ -23,7 +23,7 @@ const memories = [
     icon: <MemoriesIcon />,
     status: "active",
     tags: ["session", "user"],
-    size:'2.4 MB',
+    size: "2.4 MB",
     entries: 1250,
     variant: "light",
   },
@@ -34,7 +34,7 @@ const memories = [
     icon: <MemoriesIcon />,
     status: "active",
     tags: ["agent"],
-        size:'12.4 MB',
+    size: "12.4 MB",
     entries: 890,
     variant: "light",
   },
@@ -44,13 +44,12 @@ const memories = [
     description: "Company-wide shared knowledge and insights",
     icon: <MemoriesIcon />,
     status: "active",
-        size:'6.4 MB',
+    size: "6.4 MB",
     tags: ["organization"],
     entries: 2340,
     variant: "light",
   },
 ];
-
 
 const stats = [
   { title: "Total Memories", value: "03" },
@@ -58,12 +57,20 @@ const stats = [
   { title: "Total Entries", value: "4480" },
 ];
 
-
-export default function MemoriesPage() {
+function MemoriesContent() {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [memoriesState, setMemoriesState] = useState(memories);
+  const searchParams = useSearchParams();
 
-  // FILTER BAR STATE 
+  useEffect(() => {
+    const deleteId = searchParams.get("deleteId");
+    if (!deleteId) return;
+
+    setMemoriesState((prev) => prev.filter((m) => m.id !== deleteId));
+  }, [searchParams]);
+
+  // FILTER BAR STATE
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
@@ -71,14 +78,14 @@ export default function MemoriesPage() {
   // AVAILABLE TAGS
   const availableTags = useMemo(() => {
     const setTag = new Set();
-    memories.forEach((m) =>
+    memoriesState.forEach((m) =>
       m.tags?.forEach((tag) => setTag.add(tag.toLowerCase()))
     );
     return Array.from(setTag).sort();
-  }, []);
+  }, [memoriesState]);
 
   // SEARCH + TAG FILTER
-  let filteredMemories = memories.filter((memory) => {
+  let filteredMemories = memoriesState.filter((memory) => {
     const matchSearch =
       memory.name.toLowerCase().includes(query.toLowerCase()) ||
       memory.description.toLowerCase().includes(query.toLowerCase());
@@ -162,7 +169,7 @@ export default function MemoriesPage() {
             setView={setView}
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
-            cards={memories}
+            cards={memoriesState}
           />
         </div>
 
@@ -203,5 +210,13 @@ export default function MemoriesPage() {
 
       <AddMemoriesModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
+  );
+}
+
+export default function MemoriesPage() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center">Loading...</div>}>
+      <MemoriesContent />
+    </Suspense>
   );
 }

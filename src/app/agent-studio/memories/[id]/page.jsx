@@ -12,6 +12,9 @@ import EmptyCard from "@/components/common/EmptyCard";
 import Overviews from "@/components/agent-studio/memories/Overviews";
 import MemoryEntries from "@/components/agent-studio/memories/Entries";
 import Settings from "@/components/agent-studio/memories/Settings";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
 const toolsData = {
   id: "user-preference",
@@ -19,8 +22,6 @@ const toolsData = {
   description: "Individual user preferences and settings",
   variant: "light",
 };
-
-
 
 const items = [
   {
@@ -35,16 +36,14 @@ const items = [
     value: "entries",
     label: "Entries",
     name: "Entries",
-    render: () => (
-      <MemoryEntries />
-    ),
+    render: () => <MemoryEntries />,
   },
   {
     id: "settings",
     value: "settings",
     label: "Settings",
     name: "settings",
-    render: () => <Settings/>,
+    render: () => <Settings />,
   },
 ];
 
@@ -52,15 +51,29 @@ export default function Page() {
   const { id } = useParams();
 
   function slugToTitle(slug) {
-  if (!slug) return "";
-  
-  return slug
-    .split("-")                
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
-    .join(" ");                
-}
+    if (!slug) return "";
 
-    const title = slugToTitle(id);
+    return slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+
+  const title = slugToTitle(id);
+
+  const router = useRouter();
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const handleTrashClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDeleteOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    router.push(`/agent-studio/memories?deleteId=${id}`);
+    setIsDeleteOpen(false);
+  };
 
   return (
     <div className="flex flex-col h-full p-6">
@@ -81,6 +94,7 @@ export default function Page() {
               <RippleButton>
                 <Button
                   variant="outline"
+                  onClick={handleTrashClick}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4 text-red-500">
@@ -120,9 +134,16 @@ export default function Page() {
           // ctx={ctx}
           defaultValue="overview"
         />
-
-       
       </ScaleDown>
+      <ConfirmDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete Memory?"
+        description="This action cannot be undone. The memory and all its entries will be permanently deleted."
+        confirmText="Delete"
+        variant="destructive"
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

@@ -199,6 +199,8 @@ export function GuardrailsCard({
                 >
                   <Eye />
                 </Button>
+
+                {isCustom && (
                 <Button
                   variant="ghost"
                   size="icon"
@@ -214,6 +216,7 @@ export function GuardrailsCard({
                 >
                   <Editor />
                 </Button>
+                )}
                 <Button
                   variant="ghost"
                   size="icon"
@@ -229,6 +232,7 @@ export function GuardrailsCard({
                 >
                   <Copy className="h-4 w-4" />
                 </Button>
+                {isCustom && (
                 <Button
                   variant="ghost"
                   size="icon"
@@ -240,6 +244,7 @@ export function GuardrailsCard({
                 >
                   <Bin className="h-4 w-4" />
                 </Button>
+                )}
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon, ToolsIcon } from "@/components/Icons";
@@ -11,9 +11,9 @@ import { ScaleDown } from "@/components/animations/Animations";
 import AddToolModal from "@/components/agent-studio/CreateToolsModal";
 import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "@/components/animations/CountUp";
+import { useSearchParams } from "next/navigation";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
-
 
 const tools = [
   {
@@ -61,26 +61,38 @@ const stats = [
   { title: "Categories", value: "03" },
 ];
 
-export default function ToolsPage() {
+function ToolsContent() {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const searchParams = useSearchParams();
+
+  //  make tools stateful (same as agents)
+  const [toolsState, setToolsState] = useState(uniqueTools);
 
   // FILTER BAR STATE
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
 
+  useEffect(() => {
+    const deleteId = searchParams.get("deleteId");
+    if (!deleteId) return;
+
+    setToolsState((prev) => prev.filter((t) => t.id !== deleteId));
+  }, [searchParams]);
+
   // AVAILABLE TAGS
   const availableTags = useMemo(() => {
     const setTag = new Set();
-    uniqueTools.forEach((t) =>
+    toolsState.forEach((t) =>
       t.tags?.forEach((tag) => setTag.add(tag.toLowerCase()))
     );
     return Array.from(setTag).sort();
-  }, []);
+  }, [toolsState]);
 
   // SEARCH + TAG FILTER
-  let filteredTools = uniqueTools.filter((tool) => {
+  let filteredTools = toolsState.filter((tool) => {
     const matchSearch =
       tool.name.toLowerCase().includes(query.toLowerCase()) ||
       tool.description.toLowerCase().includes(query.toLowerCase());
@@ -91,7 +103,7 @@ export default function ToolsPage() {
 
     return matchSearch && matchTags;
   });
-
+  
   // SORTING
   if (sortOrder === "asc") {
     filteredTools = [...filteredTools].sort((a, b) =>
@@ -201,5 +213,13 @@ export default function ToolsPage() {
 
       <AddToolModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
+  );
+}
+
+export default function ToolsPage() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center">Loading...</div>}>
+      <ToolsContent />
+    </Suspense>
   );
 }

@@ -11,6 +11,10 @@ import EmptyCard from "@/components/common/EmptyCard";
 import Overviews from "@/components/agent-studio/tools/Overviews";
 import ToolsConfigure from "@/components/agent-studio/tools/ToolsConfig";
 import ToolsUsage from "@/components/agent-studio/tools/ToolsUsage";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+
 
 const toolsData = {
   id: "web-search",
@@ -58,6 +62,21 @@ export default function Page() {
     .join(" ");                
 }
 
+  const router = useRouter();
+const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+const handleConfirmDelete = () => {
+  router.push(`/agent-studio/tools?deleteId=${id}`);
+  setIsDeleteOpen(false);
+};
+
+
     const title = slugToTitle(id);
 
   return (
@@ -79,6 +98,7 @@ export default function Page() {
               <RippleButton>
                 <Button
                   variant="outline"
+                  onClick={handleTrashClick}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4 text-red-500">
@@ -119,6 +139,16 @@ export default function Page() {
           defaultValue="overview"
         />
       </ScaleDown>
+      <ConfirmDialog
+  open={isDeleteOpen}
+  onOpenChange={setIsDeleteOpen}
+  title="Delete Tool?"
+  description="This action cannot be undone. The tool will be permanently deleted."
+  confirmText="Delete"
+  variant="destructive"
+  onConfirm={handleConfirmDelete}
+/>
+
     </div>
   );
 }
