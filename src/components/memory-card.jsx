@@ -116,7 +116,7 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500, view }) {
                 <Badge
                   key={i}
                   variant="secondary"
-                  className="rounded-full border border-border-color-2 px-3 py-1 text-xs font-light bg-white/10 transition-all  group-hover:text-white group-hover:border-white/60"
+                  className="rounded-full border border-border-color-2 px-3 py-1 text-xs font-light bg-white/10 transition-all  group-hover:text-white group-hover:border-white/60 dark:bg-card dark:group-hover:bg-white/10"
                 >
                   {tag}
                 </Badge>
@@ -124,7 +124,7 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500, view }) {
             </div>
 
             {/* Stats */}
-            <div className={`flex items-center  rounded-lg p-4 py-6 text-sm bg-white/10 dark:bg-background dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${view==='list'? 'justify-between': 'justify-center gap-20'}`}>
+            <div className={`flex items-center  rounded-lg p-4 py-6 text-sm bg-white/10 dark:bg-card dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${view==='list'? 'justify-between': 'justify-center gap-20'}`}>
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-medium group-hover:text-white  ">
                   {entries}

@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 export default function ToolsConfigure() {
   return (
-    <div className="h-full rounded-3xl bg-white border border-border-color-0 p-6 space-y-4">
+    <div className="h-full rounded-3xl bg-white border border-border-color-0 p-6 space-y-4 dark:bg-card">
       {/* Tool Name */}
       <div className="space-y-2">
         <p className="text-sm text-muted-foreground">Tool Name</p>
@@ -19,7 +19,7 @@ export default function ToolsConfigure() {
         </label>
         <Textarea
           placeholder="Internal company policies and procedures"
-          className="min-h-[120px] resize-none border-border-color-0 shadow-none text-sm placeholder:text-muted-foreground"
+          className="min-h-[120px] resize-none border-border-color-0 shadow-none text-sm placeholder:text-muted-foreground dark:!bg-card"
         />
       </div>
 

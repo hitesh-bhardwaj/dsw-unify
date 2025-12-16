@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { Download, Upload } from "lucide-react";
-import {  DocFile } from "../Icons";
+import { DocFile } from "../Icons";
 import { cn } from "@/lib/utils";
 import { RippleButton } from "../ui/ripple-button";
 import Link from "next/link";
@@ -10,29 +10,26 @@ const documnetsData = [
   {
     name: "Employee Handbook.pdf",
     description: "Added 2 new features and updated transformation logic",
-    storage:"2.4 MB",
-    time:"Updated 2 hours ago"
+    storage: "2.4 MB",
+    time: "Updated 2 hours ago",
   },
   {
     name: "Company Policies.docx",
     description: "Updated join configuration for orders table",
-    storage:"1.8 MB",
-    time:"Updated 1 day ago"
-   
+    storage: "1.8 MB",
+    time: "Updated 1 day ago",
   },
   {
     name: "Benefits Guide.pdf",
     description: "Initial feature view creation",
-    storage:"3.2 MB",
-    time:"Updated 3 days ago"
-    
+    storage: "3.2 MB",
+    time: "Updated 3 days ago",
   },
   {
     name: "Code of Conduct.pdf",
     description: "Initial feature view creation",
-    storage:"1.1 MB",
-    time:"Updated 1 week ago"
-    
+    storage: "1.1 MB",
+    time: "Updated 1 week ago",
   },
 ];
 
@@ -44,55 +41,51 @@ const documnetsData = [
 export default function Documents() {
   return (
     <div className="w-full h-full mx-auto">
-        <div className="w-full flex items-center justify-between mt-4">
-      <h2 className="text-2xl font-medium my-2">Documents</h2>
-      <RippleButton>
-                <Link href={"#"}>
-                  <Button
-                    variant="outline"
-                    className="gap-2 text-foreground border border-primary"
-                  >
-                    <div className="!w-4 text-primary">
-                     <Upload/>
-                    </div>
-                    Upload Documents
-                  </Button>
-                </Link>
-              </RippleButton>
+      <div className="w-full flex items-center justify-between mt-4">
+        <h2 className="text-2xl font-medium my-2">Documents</h2>
+        <RippleButton>
+          <Link href={"#"}>
+            <Button
+              variant="outline"
+              className="gap-2 text-foreground border border-primary"
+            >
+              <div className="!w-4 text-primary">
+                <Upload />
+              </div>
+              Upload Documents
+            </Button>
+          </Link>
+        </RippleButton>
       </div>
 
       <div className="space-y-4 py-2 mt-4">
         {documnetsData.map((item, index) => (
           <div
             key={index}
-            className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center"
+            className="!border  border-border-color-0 rounded-lg p-4 bg-white text-xs flex justify-between items-center dark:bg-card"
           >
             <div className="flex gap-5">
-                 <div className="w-13 h-12">
-                                       <span
-                                         className={cn(
-                                           "w-full h-full flex justify-center items-center border border-border-color-2 p-3.5 text-foreground bg-sidebar-accent rounded-lg -mt-1"
-                                         )}
-                                       >
-                                         <DocFile className='h-5 w-5' />
-                                       </span>
-                                     </div>
-                <div className="">
-                   
-              <p className="text-base">
-                {item.name}
-              </p>
-               <p className="text-foreground/80 mt-1 text-xs flex gap-2 items-center">
-               <span>{item.storage}</span>
-               <span className="h-1 w-1 rounded-full bg-gray-400"/>
-               <span>{item.time}</span>
-               </p>
-                </div>
+              <div className="w-13 h-12">
+                <span
+                  className={cn(
+                    "w-full h-full flex justify-center items-center border border-border-color-2 p-3.5 text-foreground bg-sidebar-accent rounded-lg -mt-1"
+                  )}
+                >
+                  <DocFile className="h-5 w-5" />
+                </span>
+              </div>
+              <div className="">
+                <p className="text-base">{item.name}</p>
+                <p className="text-foreground/80 mt-1 text-xs flex gap-2 items-center">
+                  <span>{item.storage}</span>
+                  <span className="h-1 w-1 rounded-full bg-gray-400" />
+                  <span>{item.time}</span>
+                </p>
+              </div>
             </div>
             <div className="">
-                <Download className="w-5"/>
-                </div>
-    
+              <Download className="w-5" />
+            </div>
           </div>
         ))}
       </div>

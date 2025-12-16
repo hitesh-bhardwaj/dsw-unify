@@ -2,7 +2,7 @@
 
 export default function Settings() {
   return (
-    <div className="w-full rounded-3xl border border-border-color-0 bg-background p-8">
+    <div className="w-full rounded-3xl border border-border-color-0 bg-background p-8 dark:bg-card">
       <div className="space-y-6 max-w-3xl">
         {/* Memory Name */}
         <div className="space-y-1">

@@ -32,7 +32,7 @@ const Overviews = () => {
         {stats.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col gap-8 border border-border-color-0 rounded-3xl py-4 px-4 w-full"
+            className="flex flex-col gap-8 border border-border-color-0 rounded-3xl py-4 px-4 w-full dark:bg-card"
           >
             <span className="text-sm text-foreground/80">{item.title}</span>
 
@@ -51,7 +51,7 @@ const Overviews = () => {
         ))}
       </div>
 
-      <div className="w-full border border-border-color-0 rounded-3xl px-4 py-8 space-y-8">
+      <div className="w-full border border-border-color-0 rounded-3xl px-4 py-8 space-y-8 dark:bg-card">
   <h2 className="text-xl font-medium text-foreground">Memory Statistics</h2>
 
   <div className="flex justify-between gap-6 pr-10">

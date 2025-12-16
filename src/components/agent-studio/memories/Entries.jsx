@@ -34,7 +34,7 @@ const entries = [
 
 export default function MemoryEntries() {
   return (
-    <div className="w-full rounded-3xl border border-border-color-0 bg-background p-6 space-y-6">
+    <div className="w-full rounded-3xl border border-border-color-0 bg-background p-6 space-y-6 dark:bg-card">
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-medium">Recent Entries</h2>
@@ -44,7 +44,7 @@ export default function MemoryEntries() {
           className="rounded-full border-primary !h-10 text-pimary !px-8 gap-2 justify-start"
         >
           <Database className="h-5 w-5 text-primary" />
-          <p className="text-black">
+          <p className="text-black dark:text-foreground">
 
           View All
           </p>
@@ -59,7 +59,7 @@ export default function MemoryEntries() {
             className={cn(
               "w-full rounded-2xl border border-border-color-0",
               "px-5 py-3 flex items-center justify-between",
-              "hover:bg-muted/40 transition-colors"
+              "hover:bg-muted/40 transition-colors dark:hover:bg-card"
             )}
           >
             <div className="space-y-1">
