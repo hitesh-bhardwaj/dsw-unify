@@ -122,6 +122,10 @@ export default function TestingPage() {
     [testSuitesState]
   );
 
+   const handleDeleteTest = (id) => {
+    setTestSuitesState((prev) => prev.filter((suite) => suite.id !== id));
+  };
+
   const items = [
     {
       id: "test-suites",
@@ -131,6 +135,7 @@ export default function TestingPage() {
         <TestingSuitesGrid
           items={testSuitesState}
           onRunTest={handleRunTest}
+          onDeleteTest={handleDeleteTest}
         />
       ),
     },
@@ -138,14 +143,14 @@ export default function TestingPage() {
       id: "test-results",
       value: "test-results",
       label: "Test Results",
-      render: () => <TestingResultsGrid items={testResults} />,
+      render: () => <TestingResultsGrid items={testResults}   />,
     },
     {
       id: "analytics",
       value: "analytics",
       label: "Analytics",
       render: () => (
-        <TestingAnalyticsComp cardData={analyticsCardData} />
+        <TestingAnalyticsComp cardData={analyticsCardData}  items={testResults} />
       ),
     },
   ];

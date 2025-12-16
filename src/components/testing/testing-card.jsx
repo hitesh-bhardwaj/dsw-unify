@@ -10,6 +10,8 @@ import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { RippleButton } from "../ui/ripple-button";
 import { Bin } from "../Icons";
+import TestingSuiteViewModal from "../agent-studio/testing/TestingSuiteViewModal";
+import { ConfirmDialog } from "../common/Confirm-Dialog";
 
 // Track which tests have already shown their skeleton
 const skeletonShownMap = new Map();
@@ -31,7 +33,7 @@ const skeletonShownMap = new Map();
  * @returns {React.JSX.Element} The rendered TestingCard component.
  */
 
-export function TestingCard({ test, onRunTest, minSkeletonMs = 500 }) {
+export function TestingCard({ test, onRunTest, minSkeletonMs = 500, onDeleteTest }) {
   const {
     id,
     name,
@@ -47,6 +49,18 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500 }) {
   const [showSkeleton, setShowSkeleton] = useState(() => {
     return !skeletonShownMap.has(id);
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const handleDeleteClick = (e) => {
+    e.stopPropagation();
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    onDeleteTest?.(id);
+    setDeleteDialogOpen(false);
+  };
 
   useEffect(() => {
     if (showSkeleton && id) {
@@ -102,6 +116,7 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500 }) {
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
+                onClick={() => setIsModalOpen(true)}
                 size="icon"
                 className="h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
               >
@@ -110,6 +125,7 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500 }) {
 
               <Button
                 variant="ghost"
+                 onClick={handleDeleteClick}
                 size="icon"
                 className="h-7 w-7 flex items-center justify-center px-1 py-1 text-red-500 hover:bg-white dark:text-foreground dark:hover:text-black"
               >
@@ -150,6 +166,17 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500 }) {
           </div>
         </CardContent>
       </Card>
+       <TestingSuiteViewModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+       <ConfirmDialog
+        open={deleteDialogOpen}
+        onOpenChange={setDeleteDialogOpen}
+        title="Delete Test Suite"
+        description={`Are you sure you want to delete "${name}"? This action cannot be undone.`}
+        onConfirm={handleConfirmDelete}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        destructive={true}
+      />
     </div>
   );
 }

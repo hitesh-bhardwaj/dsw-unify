@@ -202,7 +202,7 @@ const navigation = [
   },
 
   { name: "Workflow Builder", href: "#", icon: WorkFlowBuilderIcon },
-  { name: "Settings", href: "#", icon: SettingsIcon },
+  { name: "Settings", href: "/settings", icon: SettingsIcon },
 ];
 
 // Store animation state outside component to persist across renders

@@ -1,15 +1,15 @@
-
 "use client";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Eye } from "lucide-react";
+import { Download, Eye } from "lucide-react";
 import { Button } from "../ui/button";
 // import { motion, useAnimationControls, useInView } from "motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import AnimatedProgressBar from "../animations/ProgressBar";
+import TestingResultViewModal from "../agent-studio/testing/TestingResultViewModel";
 
 /**
  * Component to display testing results in a card format.
@@ -29,7 +29,7 @@ import AnimatedProgressBar from "../animations/ProgressBar";
  * @param {string} props.tab - The current tab key to trigger re-animation.
  * @returns {React.JSX.Element} The rendered TestingCardResults component.
  */
-export function TestingCardResults({ test ,tab}) {
+export function TestingCardResults({ test, tab }) {
   const {
     id,
     name,
@@ -42,114 +42,175 @@ export function TestingCardResults({ test ,tab}) {
     width,
     successRate,
     variant = "light",
+    // Additional fields needed for download
+    suite_id,
+    suite_name,
+    agent_name,
+    timestamp,
+    passed,
+    failed,
+    duration,
+    status,
+    test_cases,
   } = test;
-
-// console.log(tab)
-
 
   // ---- Animate when visible ----
   const ref = useRef(null);
- 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  /**
+   * Handle download of test results as JSON
+   */
+  const handleDownload = () => {
+    // Construct the JSON object in the required format
+    const downloadData = {
+      id: id,
+      suite_id: suite_id || `suite_${id.split('_')[1]}`,
+      suite_name: suite_name || name,
+      agent_name: agent_name || name,
+      timestamp: timestamp || new Date().toISOString(),
+      total_tests: totalTest || tests,
+      passed: passed || totalTest,
+      failed: failed || 0,
+      duration: duration || "0m 0s",
+      status: status || "completed",
+      test_cases: test_cases || []
+    };
+
+    // Convert to JSON string with formatting
+    const jsonString = JSON.stringify(downloadData, null, 2);
+
+    // Create a blob from the JSON string
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    // Create a download link
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${suite_name || name}_${id}.json`;
+
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   return (
-    <Link href={`#`} className="block group" aria-label={`${name} test card`}>
-      <Card
-        className={cn(
-           "overflow-hidden group  cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
-        )}
-      >
-        <CardHeader>
-          <div className="flex items-center w-full justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center gap-[3vw] mt-4">
-                {/* Agent name */}
-                <h3 className="text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
-                  {name}
-                </h3>
+    <>
+      <div className="block group" aria-label={`${name} test card`}>
+        <Card
+          className={cn(
+            "overflow-hidden group  cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
+          )}
+        >
+          <CardHeader>
+            <div className="flex items-center w-full justify-between">
+              <div className="space-y-3">
+                <div className="flex items-center gap-[3vw] mt-4">
+                  {/* Agent name */}
+                  <h3 className="text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
+                    {name}
+                  </h3>
 
-                {/* Tags */}
-                 <div className="flex flex-wrap gap-1">
-  {tags.map((tag, index) => (
-    <Badge
-      key={index}
-      variant="secondary"
-      className={cn(
-        "rounded-full border px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background",
-        
-        // Conditional border color
-        tag.color === "green" && "border-badge-green",
-        tag.color === "orange" && "border-primary",
-        tag.color === "red" && "border-red-500"
-      )}
-    >
-      {tag.label}
-    </Badge>
-  ))}
-</div>
-              </div>
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1">
+                    {tags.map((tag, index) => (
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className={cn(
+                          "rounded-full border px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background",
 
-              {/* Description */}
-              <p className="text-sm text-foreground/80 transition-all duration-500 ease-out">
-                {description}
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-             <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
-                )}
-              >
-                <Eye />
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent>
-          <div ref={ref}>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between text-sm font-medium">
-                <div className="space-x-1">
-                  <span className="text-primary">Tests:</span>
-                  <span className="text-black ">{totalTest}</span>
+                          // Conditional border color
+                          tag.color === "green" && "border-badge-green",
+                          tag.color === "orange" && "border-primary",
+                          tag.color === "red" && "border-red-500"
+                        )}
+                      >
+                        {tag.label}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
-                <div className="space-x-1 ">
-                  <span className="text-primary">
-                    {typeof successRate === "number"
-                      ? `${successRate}%`
-                      : successRate}
-                  </span>
-                  <span className="text-black">Success Rate</span>
+
+                {/* Description */}
+                <p className="text-sm text-foreground/80 transition-all duration-500 ease-out">
+                  {description}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  onClick={() => setIsModalOpen(true)}
+                  size="icon"
+                  className={cn(
+                    "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
+                  )}
+                >
+                  <Eye />
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={handleDownload}
+                  size="icon"
+                  className={cn(
+                    "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
+                  )}
+                >
+                  <Download />
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+
+          <CardContent>
+            <div ref={ref}>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between text-sm font-medium">
+                  <div className="space-x-1">
+                    <span className="text-primary">Tests:</span>
+                    <span className="text-black ">{totalTest}</span>
+                  </div>
+                  <div className="space-x-1 ">
+                    <span className="text-primary">
+                      {typeof successRate === "number"
+                        ? `${successRate}%`
+                        : successRate}
+                    </span>
+                    <span className="text-black">Success Rate</span>
+                  </div>
+                </div>
+
+                {/* Animated Progress Bar */}
+
+                <AnimatedProgressBar
+                  value={width} // 65 or "65%"
+                  duration={1.2}
+                  ease="easeInOut"
+                  animateOnMount
+                  playKey={tab}
+                  className="w-full"
+                  trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                  barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
+                />
+              </div>
+
+              <div className="flex items-end justify-end p-3 text-sm py-6 g">
+                <div className="flex items-center gap-1 text-foreground/80">
+                  <span>Run on</span>
+                  <span>{date},</span>
+                  <span>{time}</span>
                 </div>
               </div>
-
-              {/* Animated Progress Bar */}
-
-              <AnimatedProgressBar
-                value={width} // 65 or "65%"
-                duration={1.2}
-                ease="easeInOut"
-                animateOnMount
-                playKey={tab}
-                className="w-full"
-                trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
-                barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
-              />
             </div>
-
-            <div className="flex items-end justify-end p-3 text-sm py-6 g">
-              <div className="flex items-center gap-1 text-foreground/80">
-                <span>Run on</span>
-                <span>{date},</span>
-                <span>{time}</span>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </Link>
+          </CardContent>
+        </Card>
+      </div>
+      <TestingResultViewModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+    </>
   );
 }

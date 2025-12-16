@@ -59,7 +59,6 @@ export default function AddTestings({ open, onOpenChange }) {
   const handleSubmit = () => {
     const errs = {
       testSuiteName: !testSuiteName.trim() ? "Test Suite Name is required" : "",
-      description: !description.trim() ? "Description is required" : "",
       selectedAgent: !selectedAgent ? "Agent selection is required" : "",
     };
     setErrors(errs);
@@ -68,6 +67,8 @@ export default function AddTestings({ open, onOpenChange }) {
 
     onOpenChange(false);
   };
+
+  const isFormValid = testSuiteName.trim() && selectedAgent;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -112,13 +113,8 @@ export default function AddTestings({ open, onOpenChange }) {
                 value={description}
                 placeholder="Describe what this test suite validates..."
                 onChange={(e) => setDescription(e.target.value)}
-                className={`border placeholder:text-xs h-32 placeholder:text-foreground/80 ${
-                  errors.description ? "border-red-500" : "border-border-color-0"
-                }`}
+                className="border placeholder:text-xs h-32 placeholder:text-foreground/80 border-border-color-0"
               />
-              {errors.description && (
-                <p className="text-xs text-red-500">{errors.description}</p>
-              )}
             </div>
 
             {/* Select Agent */}
@@ -142,13 +138,19 @@ export default function AddTestings({ open, onOpenChange }) {
 
                 <SelectContent className="border border-border-color-0">
                   <SelectItem value="agent1" className="!cursor-pointer text-xs">
-                    Agent 1
+                    Auto Claims Processing Agent
                   </SelectItem>
                   <SelectItem value="agent2" className="!cursor-pointer text-xs">
-                    Agent 2
+                    Property Claims Agent
                   </SelectItem>
                   <SelectItem value="agent3" className="!cursor-pointer text-xs">
-                    Agent 3
+                   Health Claims Adjudication Agent
+                  </SelectItem>
+                   <SelectItem value="agent4" className="!cursor-pointer text-xs">
+                   Policyholder Support Agent
+                  </SelectItem>
+                   <SelectItem value="agent5" className="!cursor-pointer text-xs">
+                   Auto Quote Generation Agent
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -164,6 +166,7 @@ export default function AddTestings({ open, onOpenChange }) {
                 variant="outline"
                 className="border-foreground/40 text-foreground/80 px-6"
                 onClick={() => onOpenChange(false)}
+                disabled={!isFormValid}
               >
                 Cancel
               </Button>
@@ -172,7 +175,8 @@ export default function AddTestings({ open, onOpenChange }) {
             <RippleButton>
               <Button
                 onClick={handleSubmit}
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50 disabled:!cursor-not-allowed disabled:!pointer-events-none"
+                disabled={!isFormValid}
               >
                 Create Test Suite
                 <LeftArrow className="ml-2 rotate-180 w-4" />
