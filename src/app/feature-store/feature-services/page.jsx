@@ -111,6 +111,11 @@ const page = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const handleDeleteService = (id) => {
+  setFeatureServices((prev) => prev.filter((s) => s.id !== id));
+};
+
+
   // Fetch feature services and stats
   useEffect(() => {
     async function fetchData() {
@@ -309,12 +314,13 @@ const page = () => {
                 }`}
               >
                 {filteredFeatures.map((feature, index) => (
-                  <ServiceCard key={feature.id} feature={feature} view={view} index={index} />
+                  <ServiceCard key={feature.id} feature={feature} view={view} index={index} onEditPopupOpen={setIsModalOpen} onDelete={handleDeleteService}
+ />
                 ))}
 
                 {filteredFeatures.length === 0 && (
                   <div className="flex h-64 items-center justify-center text-gray-500">
-                    No Feature Services found matching "{query}"
+                   
                   </div>
                 )}
               </motion.div>

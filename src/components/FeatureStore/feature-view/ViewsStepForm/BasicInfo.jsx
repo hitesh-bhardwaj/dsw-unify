@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { LeftArrow } from "@/components/Icons";
 
-export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
+export default function BasicInfo({ goNext, goBack, onClose, isLastStep, stepId }) {
   // FORM STATE
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -98,7 +98,7 @@ export default function BasicInfo({ goNext, goBack, isLastStep, stepId }) {
           <Button
             variant="outline"
             className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
-            onClick={goBack}
+            onClick={onClose}
           >
             Cancel
           </Button>

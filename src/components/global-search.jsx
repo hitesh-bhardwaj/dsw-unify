@@ -3,14 +3,25 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { SearchIcon } from "./Icons";
+import { Command } from "@/components/ui/command";
+
+
 import {
-  CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+
+import { DialogClose } from "@/components/ui/dialog";
+import { X } from "lucide-react";
+
+import {
+  Dialog,
+  DialogContent,
+} from "@/components/ui/dialog";
+
 import {
   AgentsIcon,
   PromptsIcon,
@@ -85,7 +96,7 @@ export function GlobalSearch({ compact = false }) {
 
   return (
     <>
-      {/* Search Button - Styled to match SearchBar */}
+      {/* Search Button */}
       {compact ? (
         <button
           type="button"
@@ -102,44 +113,61 @@ export function GlobalSearch({ compact = false }) {
           </div>
           <button
             onClick={() => setOpen(true)}
-            className="w-full h-10 bg-background border border-border-color-0 rounded-md pl-12 pr-3 text-left text-sm placeholder:text-border-color-3 hover:border-border-color-3 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+            className="w-full h-10 bg-background border border-border-color-0 rounded-md pl-12 pr-3 text-left text-sm hover:border-border-color-3 transition-colors duration-200"
           >
             <span className="text-border-color-3">Search...</span>
           </button>
         </div>
       )}
 
-      {/* Command Dialog */}
-      <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search across UnifyAI..." />
-        <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
+      {/* Dialog */}
+     <Dialog open={open} onOpenChange={setOpen} className=''>
+  <DialogContent className="w-[35%] !py-4 p-0 px-2 bg-white">
 
-          {Object.entries(searchItems).map(([category, items]) => (
-            <CommandGroup key={category} heading={category}>
-              {items.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <CommandItem
-                    key={item.href}
-                    value={`${item.name} ${item.description}`}
-                    onSelect={() => handleSelect(item.href)}
-                    className="cursor-pointer"
-                  >
-                    <Icon className="mr-2 h-4 w-4" />
-                    <div className="flex flex-col">
-                      <span>{item.name}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {item.description}
-                      </span>
-                    </div>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
-          ))}
-        </CommandList>
-      </CommandDialog>
+     <DialogClose asChild>
+      <button className="absolute right-4 cursor-pointer top-4 rounded-sm opacity-70 hover:opacity-100 transition">
+        <X className="h-4 w-4" />
+      </button>
+    </DialogClose>
+
+    <Command>
+      <CommandInput
+        placeholder="Search across UnifyAI..."
+        className="!py-4"
+      />
+
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+
+        {Object.entries(searchItems).map(([category, items]) => (
+          <CommandGroup key={category} heading={category} className="pt-5">
+            {items.map((item) => {
+              const Icon = item.icon;
+              return (
+                <CommandItem
+                  key={item.href}
+                  value={`${item.name} ${item.description}`}
+                  onSelect={() => handleSelect(item.href)}
+                  className="cursor-pointer"
+                >
+                  <Icon className="mr-2 h-4 w-4" />
+                  <div className="flex flex-col">
+                    <span>{item.name}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {item.description}
+                    </span>
+                  </div>
+                </CommandItem>
+              );
+            })}
+          </CommandGroup>
+        ))}
+      </CommandList>
+    </Command>
+
+  </DialogContent>
+</Dialog>
+
     </>
   );
 }

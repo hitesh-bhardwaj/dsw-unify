@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export default function CopyButton({ textToCopy }) {
+export default function CopyButton({ textToCopy, tooltip }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {

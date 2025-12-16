@@ -118,12 +118,10 @@ const stats = [
 ];
 
 
-
 const page = () => {
 
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isStepModalOpen, setIsStepModalOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
@@ -133,6 +131,11 @@ const page = () => {
   const [statsData, setStatsData] = useState(stats);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const handleDeleteView = (id) => {
+  setFeatureViews((prev) => prev.filter((v) => v.id !== id));
+};
+
 
   // Fetch feature views and stats
   useEffect(() => {
@@ -310,11 +313,12 @@ const page = () => {
                   }`}
               >
                 {filteredFeatures.map((feature, index) => (
-                  <ViewCard key={feature.id} view={view} feature={feature} index={index} />
+                  <ViewCard key={feature.id} view={view} feature={feature} index={index}  setEditModalOpen={setIsModalOpen}   onDelete={handleDeleteView}
+ />
                 ))}
                 {filteredFeatures.length === 0 && (
                   <div className="flex h-64 items-center justify-center text-gray-500">
-                    No Features found matching "{query}"
+                    
                   </div>
                 )}
               </motion.div>

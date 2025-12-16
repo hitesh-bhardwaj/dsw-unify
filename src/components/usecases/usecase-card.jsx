@@ -19,9 +19,15 @@ import {
 } from "../Icons";
 const skeletonShownMap = new Map();
 import Link from "next/link";
-import CopyButton from "../animate-ui/components/buttons/CopyButton";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
-export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
+export function UseCaseCard({
+  feature,
+  view,
+  index,
+  onDelete,
+  minSkeletonMs = 500,
+}) {
   const {
     id,
     name,
@@ -46,6 +52,27 @@ export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
     return !skeletonShownMap.has(id);
   });
 
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const handleTrashClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDeleteOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (onDelete && id != null) {
+      onDelete(id);
+    }
+    setIsDeleteOpen(false);
+  };
+
+  const handleNoOpClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
+
   useEffect(() => {
     if (showSkeleton && id) {
       const t = setTimeout(() => {
@@ -65,6 +92,19 @@ export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
 
   return (
     <div className=" w-full h-full">
+      <ConfirmDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete use case?"
+        description={
+          name
+            ? `This action cannot be undone. This will permanently remove "${name}" from Use Cases.`
+            : "This action cannot be undone. This will permanently remove this use case."
+        }
+        confirmLabel="Delete"
+        destructive
+        onConfirm={handleConfirmDelete}
+      />
       <Link href={`/ai-studio/use-cases/${slug}`}>
         <Card
           onClick={() => setIsModalOpen(true)}
@@ -72,22 +112,23 @@ export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
             "feature-card-hover-container gap-2 hover:drop-shadow-xl  transition-all duration-300 group",
             isGrid &&
               " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
-            isList &&
-              "w-full rounded-xl  py-6 bg-white dark:bg-background"
+            isList && "w-full rounded-xl  py-6 bg-white dark:bg-background"
           )}
         >
           <CardHeader className="pb-2">
             <div className="flex items-center justify-between mb-4">
               {/* Icon, Rating, and Version */}
-             <div
-              className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
-              style={{
-                color: `var(--icon-color-${(index % 4) + 1})`,
-                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
-              }}
-            >
-              {Icon && <Icon className="h-6 w-6" />}
-            </div>
+              <div
+                className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
+                style={{
+                  color: `var(--icon-color-${(index % 4) + 1})`,
+                  backgroundColor: `rgb(from var(--icon-color-${
+                    (index % 4) + 1
+                  }) r g b / 0.1)`,
+                }}
+              >
+                {Icon && <Icon className="h-6 w-6" />}
+              </div>
               {/* Action buttons */}
               <div className="flex items-center gap-1">
                 <Button
@@ -103,9 +144,12 @@ export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
                 <Button
                   variant="ghost"
                   size="icon"
+                  onClick={handleNoOpClick}
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
                     "hover:bg-white/30 group-hover:text-white transition-all duration-300"
+                      
+
                   )}
                 >
                   <Editor />
@@ -117,6 +161,7 @@ export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
                     "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                   )}
+                  onClick={handleTrashClick}
                 >
                   <Bin />
                 </Button>
@@ -142,8 +187,6 @@ export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
               "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300"
             )}
           >
-            
-
             <div className="flex flex-wrap gap-1 pt-2">
               {tags.map((tag, index) => (
                 <Badge
@@ -158,9 +201,7 @@ export function UseCaseCard({ feature, view, index, minSkeletonMs = 500 }) {
               ))}
             </div>
 
-            <div
-              className={` flex flex-col gap-4`}
-            >
+            <div className={` flex flex-col gap-4`}>
               <div
                 className={cn(
                   "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2 justify-between w-full"

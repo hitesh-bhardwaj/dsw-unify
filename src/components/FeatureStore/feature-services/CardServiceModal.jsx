@@ -16,15 +16,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import AnimatedTabsSection from "../../common/TabsPane";
-import EmptyCard from "../../common/EmptyCard";
 import { Bin, Editor } from "../../Icons";
 import { cn } from "@/lib/utils";
+import ServiceOverview from "./ServiceOverview";
 import { Badge } from "../../ui/badge";
-import Overview from "./Overview";
-import Features from "./Features";
-import DataPreview from "./DataPreview";
-import History from "./History";
+import EmptyCard from "@/components/common/EmptyCard";
 import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
+import FeatureView from "./FeatureView";
+import UsageService from "./UsageService";
 
 function CopyWithTooltip({
   text,
@@ -76,7 +75,7 @@ function CopyWithTooltip({
  * @param {"light"|"dark"} [props.feature.variant="light"] - The variant of the card.
  * @returns {React.JSX.Element} The rendered ViewsCardModal component.
  */
-export default function ViewsCardModal({ open, onOpenChange, feature, setEditModalOpen }) {
+export default function CardsServiceModal({ open, onOpenChange, feature }) {
   const {
     id,
     name,
@@ -92,15 +91,6 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
 
   const [activeTab, setActiveTab] = useState("overview");
 
-  const handleEditClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (setEditModalOpen) {
-      setEditModalOpen(true);
-    }
-  };
-
   const items = [
     {
       id: "tab-overview",
@@ -108,35 +98,27 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
       label: "Overview",
       name: "Overview",
       render: () => (
-        <Overview description={description} featureNo={featureNo} tablesCount={tablesCount} createdAt={createdAt} lastUpdated={lastUpdated} />
+        <ServiceOverview description={description} featureNo={featureNo} tablesCount={tablesCount} createdAt={createdAt} lastUpdated={lastUpdated} />
       ),
     },
 
     {
       id: "tab-features",
-      value: "features",
-      label: "Features",
-      name: "Features",
-      render: () => <Features />,
+      value: "Feature View",
+      label: "Feature View",
+      name: "Feature View",
+      render: () => <FeatureView />,
     },
 
     {
-      id: "tab-data-preview",
-      value: "data-preview",
-      label: "Data Preview",
-      name: "Data Preview",
-      render: () => <DataPreview />,
+      id: "usage-service",
+      value: "usage-service",
+      label: "Usage Service",
+      name: "Usage Service",
+      render: () => <UsageService />,
     },
 
-    {
-      id: "tab-history",
-      value: "history",
-      label: "History",
-      name: "History",
-      render: () => (
-        <History />
-      ),
-    },
+    
   ];
 
   return (
@@ -151,7 +133,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
             <div className="space-y-3">
               <DialogTitle className="text-2xl font-medium">{name}</DialogTitle>
 
-              <div className="flex gap-2 w-fit">
+              {/* <div className="flex gap-2 w-fit">
                 {tags.map((tag, index) => (
                   <Badge
                     key={index}
@@ -163,7 +145,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
                     {tag}
                   </Badge>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             <div className="flex items-center gap-2">
@@ -180,7 +162,6 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
                 <Button
                   variant="ghost"
                   size="icon"
-                   onClick={handleEditClick}
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1",
                     "hover:bg-sidebar-accent dark:hover:bg-accent duration-500 ease-out"

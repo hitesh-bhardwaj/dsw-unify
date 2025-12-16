@@ -134,6 +134,10 @@ const Page = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const handleDeleteFeature = (id) => {
+    setTransformations((prev) => prev.filter((t) => t.id !== id));
+  };
+
   // Fetch transformations and stats
   useEffect(() => {
     async function fetchData() {
@@ -148,9 +152,18 @@ const Page = () => {
 
         setTransformations(transformationsData);
         setStatsData([
-          { title: "Total Transformations", value: statsResponse.totalTransformations },
-          { title: "Active Transformations", value: statsResponse.activeTransformations },
-          { title: "Transformation Types", value: statsResponse.transformationTypes },
+          {
+            title: "Total Transformations",
+            value: statsResponse.totalTransformations,
+          },
+          {
+            title: "Active Transformations",
+            value: statsResponse.activeTransformations,
+          },
+          {
+            title: "Transformation Types",
+            value: statsResponse.transformationTypes,
+          },
         ]);
       } catch (err) {
         setError(err.message || "Failed to load transformations");
@@ -183,30 +196,36 @@ const Page = () => {
       id: "logic",
       label: "Transformation Logic",
       required: false,
-      element: <TransformLogic setIsModalOpen={setIsModalOpen} onCloseModal={setIsModalOpen}/>,
+      element: (
+        <TransformLogic
+          setIsModalOpen={setIsModalOpen}
+          onCloseModal={setIsModalOpen}
+        />
+      ),
     },
   ];
 
   let filteredFeatures = transformations.filter((feature) => {
-  const matchesSearch = feature.name.toLowerCase().includes(query.toLowerCase());
-  const matchesTags =
-    selectedTags.length === 0 ||
-    selectedTags.some((tag) => feature.tags?.includes(tag));
+    const matchesSearch = feature.name
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => feature.tags?.includes(tag));
 
-  return matchesSearch && matchesTags;
-});
+    return matchesSearch && matchesTags;
+  });
 
-//  APPLY SORTING ONLY IF USER SELECTED SOMETHING
-if (sortOrder === "asc") {
-  filteredFeatures = [...filteredFeatures].sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
-} else if (sortOrder === "desc") {
-  filteredFeatures = [...filteredFeatures].sort((a, b) =>
-    b.name.localeCompare(a.name)
-  );
-}
-
+  //  APPLY SORTING ONLY IF USER SELECTED SOMETHING
+  if (sortOrder === "asc") {
+    filteredFeatures = [...filteredFeatures].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredFeatures = [...filteredFeatures].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
+  }
 
   return (
     <>
@@ -237,32 +256,30 @@ if (sortOrder === "asc") {
             </div>
 
             <div className="w-full  flex items-center justify-between gap-4">
-              {isLoading ? (
-                // Loading skeleton
-                Array.from({ length: 3 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
-                  >
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
-                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                  </div>
-                ))
-              ) : (
-                statsData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
-                  >
-                    <span className="text-sm text-foreground/80">
-                      {item.title}
-                    </span>
-                    <span className="text-4xl font-medium mt-2">
-                      <CountUp value={item.value} startOnView/>
-                    </span>
-                  </div>
-                ))
-              )}
+              {isLoading
+                ? // Loading skeleton
+                  Array.from({ length: 3 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
+                    >
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                    </div>
+                  ))
+                : statsData.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
+                    >
+                      <span className="text-sm text-foreground/80">
+                        {item.title}
+                      </span>
+                      <span className="text-4xl font-medium mt-2">
+                        <CountUp value={item.value} startOnView />
+                      </span>
+                    </div>
+                  ))}
             </div>
 
             <div className="flex gap-3">
@@ -287,7 +304,6 @@ if (sortOrder === "asc") {
               />
             </div>
 
-
             {/* Error State */}
             {error && (
               <div className="p-4 text-center text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
@@ -298,11 +314,13 @@ if (sortOrder === "asc") {
 
             {/* Loading State */}
             {isLoading && !error && (
-              <div className={`items-stretch ${
-                view === "grid"
-                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                  : "flex flex-col gap-5"
-              }`}>
+              <div
+                className={`items-stretch ${
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                    : "flex flex-col gap-5"
+                }`}
+              >
                 {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
@@ -332,12 +350,17 @@ if (sortOrder === "asc") {
                   }`}
                 >
                   {filteredFeatures.map((feature, index) => (
-                    <FeatureCard key={feature.id} view={view} feature={feature} index={index} />
+                    <FeatureCard
+                      key={feature.id}
+                      view={view}
+                      feature={feature}
+                      index={index}
+                      onDelete={handleDeleteFeature}
+                    />
                   ))}
+
                   {filteredFeatures.length === 0 && (
-                    <div className="flex h-64 items-center justify-center text-gray-500">
-                      No Features found matching "{query}"
-                    </div>
+                    <div className="flex h-64 items-center justify-center text-gray-500"></div>
                   )}
                 </motion.div>
               </AnimatePresence>

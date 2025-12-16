@@ -6,9 +6,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, FeaturesIcon, TablesIcon } from "../Icons";
+import {
+  Bin,
+  Editor,
+  Eye,
+  SynthWave,
+  Calendar,
+  FileTimeout,
+  FeaturesIcon,
+  TablesIcon,
+} from "../Icons";
 import ViewsCardModal from "./feature-view/ViewsModalCard";
-import CopyButton from "../animate-ui/components/buttons/CopyButton";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
 const skeletonShownMap = new Map();
 
@@ -30,7 +39,14 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered ViewCard component.
  */
-export function ViewCard({ feature, view, index, minSkeletonMs = 500 }) {
+export function ViewCard({
+  feature,
+  view,
+  index,
+  onDelete,
+  setEditModalOpen,
+  minSkeletonMs = 500,
+}) {
   const {
     id,
     name,
@@ -41,19 +57,42 @@ export function ViewCard({ feature, view, index, minSkeletonMs = 500 }) {
     tags = [],
     featureNo,
     createdAt,
-    
+
     variant = "light",
   } = feature || {};
 
   const isDark = variant === "dark";
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleEditClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (setEditModalOpen) {
+      setEditModalOpen(true);
+    }
+  };
 
   // keep a skeleton up for at least `minSkeletonMs`
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this test before
     return !skeletonShownMap.has(id);
   });
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const handleTrashClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDeleteOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (onDelete && id != null) {
+      onDelete(id);
+    }
+    setIsDeleteOpen(false);
+  };
 
   useEffect(() => {
     if (showSkeleton && id) {
@@ -68,45 +107,69 @@ export function ViewCard({ feature, view, index, minSkeletonMs = 500 }) {
   if (showSkeleton) {
     return <ViewCardSkelton />;
   }
-const isGrid = view === "grid";
+  const isGrid = view === "grid";
   const isList = view === "list";
   return (
     <div className=" w-full h-full">
+      <ConfirmDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete feature view?"
+        description={
+          name
+            ? `This action cannot be undone. This will permanently remove "${name}" from Feature Views.`
+            : "This action cannot be undone. This will permanently remove this feature view."
+        }
+        confirmLabel="Delete"
+        destructive
+        onConfirm={handleConfirmDelete}
+      />
+
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
           "feature-card-hover-container cursor-pointer hover:border-transparent gap-2  transition-all duration-300 group hover:drop-shadow-xl",
           isGrid && " h-full flex flex-col justify-between gap-0 py-5 ",
-        // List view styles
-        isList && "w-full rounded-xl py-6 bg-white dark:bg-background"
+          // List view styles
+          isList && "w-full rounded-xl py-6 bg-white dark:bg-background"
         )}
       >
         <CardHeader className={cn(isGrid && "pb-2")}>
-          <div className={cn(
-          "flex items-center mb-4",
-          isGrid && "justify-between",
-          isList && "flex-col items-start w-full"
-        )}>
+          <div
+            className={cn(
+              "flex items-center mb-4",
+              isGrid && "justify-between",
+              isList && "flex-col items-start w-full"
+            )}
+          >
             {/* Icon, Rating, and Version */}
-            <div className={cn(
-            "flex items-center justify-center rounded-lg  p-3 group-hover:!bg-white group-hover:!text-black duration-300",
-            isGrid && "h-14 w-14 transition-all   ",
-            isList && "h-14 w-14  mb-4"
-          )}
-          style={{
+            <div
+              className={cn(
+                "flex items-center justify-center rounded-lg  p-3 group-hover:!bg-white group-hover:!text-black duration-300",
+                isGrid && "h-14 w-14 transition-all   ",
+                isList && "h-14 w-14  mb-4"
+              )}
+              style={{
                 color: `var(--icon-color-${(index % 4) + 1})`,
-                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
-              }}>
-            {Icon && <Icon className={cn(isGrid ? "h-6 w-6" : "h-20 w-20")} />}
-          </div>
+                backgroundColor: `rgb(from var(--icon-color-${
+                  (index % 4) + 1
+                }) r g b / 0.1)`,
+              }}
+            >
+              {Icon && (
+                <Icon className={cn(isGrid ? "h-6 w-6" : "h-20 w-20")} />
+              )}
+            </div>
 
             {/* Action buttons */}
-            <div className={cn(
-              "flex items-center gap-1 transition-opacity duration-300",
-              "opacity-0 pointer-events-none",
-              "group-hover:opacity-100 group-hover:pointer-events-auto",
-              `${isList?"absolute top-4 right-6 ":""}`
-            )}>
+            <div
+              className={cn(
+                "flex items-center gap-1 transition-opacity duration-300",
+                "opacity-0 pointer-events-none",
+                "group-hover:opacity-100 group-hover:pointer-events-auto",
+                `${isList ? "absolute top-4 right-6 " : ""}`
+              )}
+            >
               <Button
                 variant="ghost"
                 size="icon"
@@ -120,6 +183,7 @@ const isGrid = view === "grid";
               <Button
                 variant="ghost"
                 size="icon"
+                onClick={handleEditClick}
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1  text-white",
                   "hover:bg-white/30  transition-all duration-300 opacity-0 group-hover:opacity-100"
@@ -134,6 +198,7 @@ const isGrid = view === "grid";
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-white",
                   "hover:bg-white/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
                 )}
+                onClick={handleTrashClick}
               >
                 <Bin />
               </Button>
@@ -141,7 +206,9 @@ const isGrid = view === "grid";
           </div>
 
           {/* Title */}
-          <h3 className="text-xl font-medium mb-2 group-hover:text-white transition-colors duration-300">{name}</h3>
+          <h3 className="text-xl font-medium mb-2 group-hover:text-white transition-colors duration-300">
+            {name}
+          </h3>
 
           {/* Description */}
           <p className="text-sm text-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
@@ -154,10 +221,9 @@ const isGrid = view === "grid";
         <CardContent
           className={cn(
             isDark ? "bg-background" : "",
-            "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300",
+            "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300"
           )}
         >
-
           <div className="flex flex-wrap gap-1 pt-2">
             {tags.map((tag, index) => (
               <Badge
@@ -173,49 +239,63 @@ const isGrid = view === "grid";
           </div>
 
           <div className={` flex flex-col gap-4`}>
-
-          <div
-            className={cn(
-              "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border  border-color-2 ",
-              `${isList ? "justify-between gap-10 w-full":"justify-between w-full"}`
-            )}
-          >
-            <div className="flex items-center gap-2 ">
-              <div className="w-5 h-5">
-                <FeaturesIcon className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground"/>
+            <div
+              className={cn(
+                "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border  border-color-2 ",
+                `${
+                  isList
+                    ? "justify-between gap-10 w-full"
+                    : "justify-between w-full"
+                }`
+              )}
+            >
+              <div className="flex items-center gap-2 ">
+                <div className="w-5 h-5">
+                  <FeaturesIcon className="text-primary group-hover:text-white transition-all duration-300 dark:text-foreground" />
+                </div>
+                <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">
+                  {featureNo} features
+                </span>
               </div>
-              <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{featureNo} features</span>
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5">
+                  <TablesIcon className="text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground " />
+                </div>
+                <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">
+                  {tablesCount} tables
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5">
-                <TablesIcon className="text-badge-blue group-hover:text-white transition-all duration-300 dark:text-foreground "/>
+
+            <div
+              className={cn(
+                "flex items-center  gap-2",
+                isGrid && "pl-2",
+                isList && "mt-4"
+              )}
+            >
+              <div className={cn(isGrid ? "w-5 h-5" : "w-4 h-4")}>
+                <Calendar
+                  className={cn(
+                    "text-foreground/80 group-hover:text-white transition-colors duration-300",
+                    "w-4 h-4"
+                  )}
+                />
               </div>
-              <span className="text-foreground text-xs group-hover:text-white transition-colors duration-300">{tablesCount} tables</span>
+              <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
+                {" "}
+                Updated {lastUpdated}
+              </span>
             </div>
           </div>
-
-          <div className={cn(
-          "flex items-center  gap-2",
-          isGrid && "pl-2",
-          isList && "mt-4"
-        )}>
-            <div className={cn(isGrid ? "w-5 h-5" : "w-4 h-4")}>
-              <Calendar className={cn(
-               "text-foreground/80 group-hover:text-white transition-colors duration-300",
-             "w-4 h-4"
-            )} />
-            </div>
-            <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
-              {" "}
-              Updated {lastUpdated}
-            </span>
-          </div>
-                    </div>
-
         </CardContent>
       </Card>
-      <ViewsCardModal open={isModalOpen} onOpenChange={setIsModalOpen} feature={feature} />
-      
+      <ViewsCardModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        feature={feature}
+        setEditModalOpen={setEditModalOpen}
+      />
     </div>
   );
 }

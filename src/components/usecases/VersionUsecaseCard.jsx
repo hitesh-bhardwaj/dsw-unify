@@ -19,7 +19,6 @@ import {
   LineGraph,
   RocketIcon,
 } from "../Icons";
-import CopyButton from "../animate-ui/components/buttons/CopyButton";
 
 const skeletonShownMap = new Map();
 
@@ -74,6 +73,8 @@ export default function VersionUsecaseCard({
     const params = useParams();
 const { id: routeId, modelId } = params;
 
+
+
   // keep skeleton visible for minSkeletonMs
   const [showSkeleton, setShowSkeleton] = useState(() => {
     return !skeletonShownMap.has(id);
@@ -91,6 +92,12 @@ const { id: routeId, modelId } = params;
 
   const isGrid = view === "grid";
   const isList = view === "list";
+
+  const handleNoOpClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
 
   if (showSkeleton) return <UsecaseInternalCardSkeleton />;
 
@@ -135,6 +142,7 @@ const { id: routeId, modelId } = params;
               <div className="flex items-center gap-1">
                 <Button
                   variant="ghost"
+                    onClick={handleNoOpClick}
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
@@ -158,6 +166,8 @@ const { id: routeId, modelId } = params;
                 <Button
                   variant="ghost"
                   size="icon"
+                    onClick={handleNoOpClick}
+
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
                     "hover:bg-white/30 group-hover:text-white transition-all duration-300"

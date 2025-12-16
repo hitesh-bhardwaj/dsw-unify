@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -160,11 +160,17 @@ export default function ViewsModal({ open, onOpenChange, onSelect }) {
       </Dialog>
 
       <StepFormModal
-        title="Create Feature View"
-        open={showStepsModal}
-        onOpenChange={setShowStepsModal}
-        steps={currentSteps}
-      />
+  title="Create Feature View"
+  open={showStepsModal}
+  onOpenChange={setShowStepsModal}
+  steps={currentSteps.map(step => ({
+    ...step,
+    element: React.cloneElement(step.element, {
+      onClose: () => setShowStepsModal(false),
+    }),
+  }))}
+/>
+
     </>
   );
 }

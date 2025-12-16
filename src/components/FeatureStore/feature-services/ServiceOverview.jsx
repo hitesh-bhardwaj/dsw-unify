@@ -1,0 +1,108 @@
+import React from "react";
+import { ActiveIcon, Calendar, DocumentIcon, FeaturesIcon, FeatureTransformationIcon, SynthWave, TablesIcon } from "@/components/Icons";
+
+/**
+ * Component to display an overview of a feature view.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.description - The description of the feature view.
+ * @param {string|number} props.featureNo - The number of features.
+ * @param {string|number} props.tablesCount - The number of tables.
+ * @param {string} props.createdAt - The creation timestamp or text.
+ * @param {string} props.lastUpdated - The last updated timestamp or text.
+ * @returns {React.JSX.Element} The rendered Overview component.
+ */
+const ServiceOverview = ({
+  description,
+  featureNo,
+  tablesCount,
+  createdAt,
+  lastUpdated,
+}) => {
+  return (
+    <div>
+      <div className="space-y-8 pb-10">
+        {/* Description */}
+        <div className="space-y-2">
+          <div className="text-sm font-medium pb-2">Description</div>
+          <div className="border border-border-color-0 rounded-lg py-8 px-6 text-xs bg-white dark:bg-background">
+            {description || "No description available"}
+          </div>
+        </div>
+
+        {/* Details Section */}
+        <div className="space-y-3">
+          <div className="text-sm font-medium">Details</div>
+          <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-border-color-0">
+            <div className=" p-4 flex gap-4 items-center">
+          <div className="w-10 h-10 bg-icon-color-1/10 text-icon-color-1 rounded-lg flex items-center justify-center p-3">   
+                <FeaturesIcon className="h-full w-full"/>
+              </div>
+              <div className="space-y-1">
+                <div className="text-xs text-foreground/70">Features Views</div>
+                <div className="text-sm font-medium">{featureNo || 0}</div>
+              </div>
+            </div>
+
+            
+
+            <div className=" p-4 flex gap-4 items-center min-w-48">
+          <div className="w-10 h-10 bg-icon-color-3/10 text-icon-color-3 rounded-lg flex items-center justify-center p-2">   
+               <FeatureTransformationIcon />
+              </div>
+              <div className="space-y-1">
+                <div className="text-xs text-foreground/70">
+                  Total Features
+                </div>
+                <div className="text-sm font-medium">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+       
+
+        {/* Metadata */}
+        <div className="space-y-3">
+          <div className="text-sm font-medium">Metadata</div>
+          <div className="flex justify-between items-center gap-4 border rounded-xl overflow-hidden border-border-color-0">
+            <div className=" p-4 flex gap-4 items-center">
+          <div className="w-10 h-10 bg-icon-color-1/10 text-icon-color-1 rounded-lg flex items-center justify-center p-3">   
+                <DocumentIcon/>
+              </div>
+              <div className="space-y-0.5">
+                <div className="text-xs text-foreground/70">Created</div>
+                <div className="text-sm font-medium">{createdAt || "N/A"}</div>
+              </div>
+            </div>
+
+            <div className=" p-4 flex gap-4 items-center">
+          <div className="w-10 h-10 bg-icon-color-2/10 text-icon-color-2 rounded-lg flex items-center justify-center p-3">   
+               <Calendar/>
+              </div>
+              <div className="space-y-0.5">
+                <div className="text-xs text-foreground/70">Last Modified</div>
+                <div className="text-sm font-medium">
+                  {lastUpdated || "Just now"}
+                </div>
+              </div>
+            </div>
+
+            <div className=" p-4 flex gap-4 items-center min-w-48 ">
+          <div className="w-10 h-10 bg-icon-color-3/10 text-icon-color-3 rounded-lg flex items-center justify-center p-3">   
+                <ActiveIcon/>
+              </div>
+              <div className="space-y-0.5">
+                <div className="text-xs text-foreground/70">Status</div>
+                <div className="text-sm font-medium">Active</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ServiceOverview;

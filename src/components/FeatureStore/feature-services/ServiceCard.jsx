@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, FeaturesIcon, TablesIcon, ViewsIcon } from "@/components/Icons";
-import ViewsCardModal from "../feature-view/ViewsModalCard";
+import CardsServiceModal from "./CardServiceModal"; 
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+
 
 const skeletonShownMap = new Map();
 
-export function ServiceCard({ feature,view, index, minSkeletonMs = 500 }) {
+export function ServiceCard({ feature,view, index, onDelete, onEditPopupOpen, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -28,6 +30,32 @@ export function ServiceCard({ feature,view, index, minSkeletonMs = 500 }) {
 
   const isDark = variant === "dark";
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+    const handleEditClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (onEditPopupOpen) {
+    onEditPopupOpen(true);
+  }
+};
+
+
+const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+const handleConfirmDelete = () => {
+  if (onDelete && id != null) {
+    onDelete(id);
+  }
+  setIsDeleteOpen(false);
+};
+
 
 
   // keep a skeleton up for at least `minSkeletonMs`
@@ -53,6 +81,20 @@ const isGrid = view === "grid";
   const isList = view === "list";
   return (
     <div className=" w-full h-full">
+  <ConfirmDialog
+    open={isDeleteOpen}
+    onOpenChange={setIsDeleteOpen}
+    title="Delete feature service?"
+    description={
+      name
+        ? `This action cannot be undone. This will permanently remove "${name}" from Feature Services.`
+        : "This action cannot be undone. This will permanently remove this feature service."
+    }
+    confirmLabel="Delete"
+    destructive
+    onConfirm={handleConfirmDelete}
+  />
+
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
@@ -101,6 +143,8 @@ const isGrid = view === "grid";
               <Button
                 variant="ghost"
                 size="icon"
+                  onClick={handleEditClick}
+
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1  text-white",
                   "hover:bg-white/30  transition-all duration-300 opacity-0 group-hover:opacity-100"
@@ -108,16 +152,18 @@ const isGrid = view === "grid";
               >
                 <Editor />
               </Button>
-              <Button
-                variant="ghost"
-                size="icon"
-                className={cn(
-                  "h-7 w-7 flex items-center justify-center px-1 py-1 text-white",
-                  "hover:bg-white/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
-                )}
-              >
-                <Bin />
-              </Button>
+             <Button
+  variant="ghost"
+  size="icon"
+  className={cn(
+    "h-7 w-7 flex items-center justify-center px-1 py-1 text-white",
+    "hover:bg-white/30 transition-all duration-300 opacity-0 group-hover:opacity-100"
+  )}
+  onClick={handleTrashClick}
+>
+  <Bin />
+</Button>
+
             </div>
           </div>
 
@@ -196,7 +242,7 @@ const isGrid = view === "grid";
 
         </CardContent>
       </Card>
-      <ViewsCardModal open={isModalOpen} onOpenChange={setIsModalOpen} feature={feature} />
+      <CardsServiceModal open={isModalOpen} onOpenChange={setIsModalOpen} feature={feature} />
       
     </div>
   );

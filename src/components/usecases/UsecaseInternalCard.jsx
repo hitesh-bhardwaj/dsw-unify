@@ -70,6 +70,14 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
   const isGrid = view === "grid";
   const isList = view === "list";
 
+  const handleNoOpClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
+
+  
+
   if (showSkeleton) return <UsecaseInternalCardSkeleton />;
 
   return (
@@ -132,6 +140,7 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
               <Button
                 variant="ghost"
                 size="icon"
+                onClick={handleNoOpClick}
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
                   "hover:bg-white/30 group-hover:text-white transition-all duration-300"

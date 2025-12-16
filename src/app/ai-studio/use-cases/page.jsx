@@ -123,6 +123,12 @@ const stats = [
 const page = () => {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [useCases, setUseCases] = useState(Features);
+
+  const handleDeleteUseCase = (id) => {
+  setUseCases((prev) => prev.filter((u) => u.id !== id));
+};
+
 
  
   const [selectedTags, setSelectedTags] = useState([]);
@@ -137,7 +143,7 @@ const page = () => {
   }, []);
 
   //  Search + Tag Filtering
-  let filteredFeatures = Features.filter((feature) => {
+let filteredFeatures = useCases.filter((feature) => {
     const matchSearch = feature.name.toLowerCase().includes(query.toLowerCase());
     const matchTags =
       selectedTags.length === 0 ||
@@ -238,7 +244,8 @@ const page = () => {
                 }`}
               >
                 {filteredFeatures.map((feature, index) => (
-                  <UseCaseCard key={feature.id} feature={feature} view={view} index={index} />
+                  <UseCaseCard key={feature.id} feature={feature} view={view} index={index}  onDelete={handleDeleteUseCase}
+ />
                 ))}
 
                 {filteredFeatures.length === 0 && (

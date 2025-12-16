@@ -20,15 +20,37 @@ import AnimatedTabsSection from "@/components/common/TabsPane";
 import Guardrails from "@/components/agent-studio/agents/Guardrails";
 import Conversations from "@/components/agent-studio/agents/Conversations";
 import TestAgentModal from "@/components/agent-studio/agents/test-agent-modal";
+import { useRouter } from "next/navigation";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+
 
 export default function AgentDetailPage({ params }) {
    const { id } = use(params);
 
   const [apiModalOpen, setApiModalOpen] = useState(false);
+  const router = useRouter();
+const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
  
   // Show skeleton only once per agent id
   const [isLoading, setIsLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+
+  const handleConfirmDelete = () => {
+  // Redirect to agents page with delete instruction
+  router.push(`/agent-studio/agents?deleteId=${id}`);
+
+  // Close modal
+  setIsDeleteOpen(false);
+};
+
+
+  const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
 
   const items = [
     {
@@ -303,6 +325,8 @@ export default function AgentDetailPage({ params }) {
               <RippleButton>
                 <Button
                   variant="outline"
+                      onClick={handleTrashClick}
+
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4 text-red-500">
@@ -340,6 +364,17 @@ export default function AgentDetailPage({ params }) {
         onOpenChange={setApiModalOpen}
         agentId={agent.id}
       />
+
+      <ConfirmDialog
+  open={isDeleteOpen}
+  onOpenChange={setIsDeleteOpen}
+  title="Delete Agent?"
+  description="This action cannot be undone. The agent will be permanently deleted."
+  confirmText="Delete"
+  variant="destructive"
+  onConfirm={handleConfirmDelete}
+/>
+
       
     </div>
   );

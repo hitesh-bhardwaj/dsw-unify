@@ -8,10 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, Calendar } from "../../Icons";
 import HotEncoding from "./TransformationCard";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+
 
 const skeletonShownMap = new Map();
 
-export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
+export function FeatureCard({ feature, view, onDelete, index, editPopupOpen, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -25,8 +27,36 @@ export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
   } = feature || {};
 
   const isDark = variant === "dark";
+  const handleNoOpClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const handleEditClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  if (editPopupOpen) {
+    editPopupOpen(true);
+  }
+};
+
+
+  const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+const handleConfirmDelete = () => {
+  if (onDelete && id != null) {
+    onDelete(id);
+  }
+};
 
   // keep a skeleton up for at least `minSkeletonMs`
   const [showSkeleton, setShowSkeleton] = useState(() => {
@@ -55,6 +85,19 @@ export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
 
   return (
     <>
+    <ConfirmDialog
+    open={isDeleteOpen}
+    onOpenChange={setIsDeleteOpen}
+    title="Delete transformation?"
+    description={
+      name
+        ? `This action cannot be undone. This will permanently remove "${name}" from Feature Transformations.`
+        : "This action cannot be undone. This will permanently remove this transformation."
+    }
+    confirmLabel="Delete"
+    destructive
+    onConfirm={handleConfirmDelete}
+  />
     <Card
       onClick={() => setIsModalOpen(true)}
       className={cn(
@@ -102,17 +145,19 @@ export function FeatureCard({ feature, view, index, minSkeletonMs = 500 }) {
               <Button
                 variant="ghost"
                 size="icon"
+                  onClick={handleNoOpClick}
                 className="h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground hover:bg-white/30 group-hover:text-white transition-colors duration-300"
               >
                 <Editor />
               </Button>
               <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
-              >
-                <Bin />
-              </Button>
+  variant="ghost"
+  size="icon"
+  className="h-7 w-7 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
+  onClick={handleTrashClick}
+>
+  <Bin />
+</Button>
             </div>
         </div>
 
