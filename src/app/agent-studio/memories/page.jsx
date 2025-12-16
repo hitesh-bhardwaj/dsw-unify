@@ -14,8 +14,9 @@ import CountUp from "@/components/animations/CountUp";
 import { useSearchParams } from "next/navigation";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import * as memoriesApi from "@/lib/api/memories";
 
-const memories = [
+const FALLBACK_MEMORIES = [
   {
     id: "user-preferences",
     name: "User Preferences",
@@ -51,7 +52,7 @@ const memories = [
   },
 ];
 
-const stats = [
+const FALLBACK_STATS = [
   { title: "Total Memories", value: "03" },
   { title: "Active Memories", value: "03" },
   { title: "Total Entries", value: "4480" },
@@ -60,14 +61,72 @@ const stats = [
 function MemoriesContent() {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [memoriesState, setMemoriesState] = useState(memories);
+  const [memoriesState, setMemoriesState] = useState(FALLBACK_MEMORIES);
+  const [stats, setStats] = useState(FALLBACK_STATS);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const searchParams = useSearchParams();
 
+  // Fetch memories and stats from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [memoriesData, statsData] = await Promise.all([
+          memoriesApi.getMemories(),
+          memoriesApi.getMemoryStats(),
+        ]);
+
+        setMemoriesState(memoriesData);
+
+        // Transform stats object to array format
+        setStats([
+          { title: "Total Memories", value: statsData.totalMemories },
+          { title: "Active Memories", value: statsData.activeMemories },
+          { title: "Total Entries", value: statsData.totalEntries },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load memories");
+        console.error("Error fetching memories:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Handle memory deletion from URL parameter
   useEffect(() => {
     const deleteId = searchParams.get("deleteId");
     if (!deleteId) return;
 
-    setMemoriesState((prev) => prev.filter((m) => m.id !== deleteId));
+    async function deleteMemory() {
+      try {
+        // Call API to delete the memory
+        await memoriesApi.deleteMemory(deleteId);
+
+        // Refresh the memories list after successful deletion
+        const [memoriesData, statsData] = await Promise.all([
+          memoriesApi.getMemories(),
+          memoriesApi.getMemoryStats(),
+        ]);
+
+        setMemoriesState(memoriesData);
+        setStats([
+          { title: "Total Memories", value: statsData.totalMemories },
+          { title: "Active Memories", value: statsData.activeMemories },
+          { title: "Total Entries", value: statsData.totalEntries },
+        ]);
+
+        // Remove deleteId from URL after successful deletion
+        window.history.replaceState({}, "", "/agent-studio/memories");
+      } catch (err) {
+        setError(err.message || "Failed to delete memory");
+        console.error("Error deleting memory:", err);
+      }
+    }
+
+    deleteMemory();
   }, [searchParams]);
 
   // FILTER BAR STATE

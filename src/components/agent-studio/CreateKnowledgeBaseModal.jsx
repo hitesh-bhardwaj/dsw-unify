@@ -25,6 +25,7 @@ import {
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
 import { LeftArrow, TextFile } from "@/components/Icons";
+import * as knowledgeBasesApi from "@/lib/api/knowledge-bases";
 
 /**
  * Modal component for creating a new knowledge base.
@@ -45,6 +46,8 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
   const [sourceType, setSourceType] = useState("documents");
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
 
   const [websiteURL, setwebsiteURL] = useState("");
   const [maximumPages, setmaximumPages] = useState("");
@@ -73,8 +76,8 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
     exit: { opacity: 0 },
   };
 
-  /** =============== FORM VALIDATION =============== */
-  const handleSubmit = () => {
+  /** =============== FORM VALIDATION & SUBMIT =============== */
+  const handleSubmit = async () => {
     const errs = {
       kbName: !kbName.trim() ? "Knowledge Base Name is required" : "",
       description: !description.trim() ? "Description is required" : "",
@@ -83,7 +86,44 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
 
     if (Object.values(errs).some(Boolean)) return;
 
-    onOpenChange(false);
+    try {
+      setIsLoading(true);
+      setApiError(null);
+
+      // Collect data based on source type
+      const kbData = {
+        name: kbName,
+        description: description,
+        sourceType: sourceType,
+        status: "active",
+      };
+
+      // Add source-specific data
+      if (sourceType === "documents") {
+        kbData.processingOptions = format || "auto";
+      } else if (sourceType === "website") {
+        kbData.websiteURL = websiteURL;
+        kbData.crawlSettings = crawlSettings || "single";
+        kbData.maximumPages = maximumPages || "100";
+      } else if (sourceType === "database") {
+        kbData.databaseType = databaseType;
+        kbData.connectionString = connectionString;
+        kbData.tableNames = tableNames;
+      }
+
+      await knowledgeBasesApi.createKnowledgeBase(kbData);
+
+      // Close modal on success
+      onOpenChange(false);
+
+      // Refresh the page to show the new KB (or parent could handle this via callback)
+      window.location.reload();
+    } catch (err) {
+      setApiError(err.message || "Failed to create knowledge base");
+      console.error("Error creating knowledge base:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   /** --- SOURCE TYPE Inner Tab Content --- */
@@ -374,12 +414,19 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
             defaultValue={mainTab}
           />
 
+          {apiError && (
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+              {apiError}
+            </div>
+          )}
+
           <div className="py-6 flex justify-end gap-3">
             <RippleButton>
               <Button
                 variant="outline"
                 className="border-border-color-0 text-foreground/80 px-6"
                 onClick={() => onOpenChange(false)}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
@@ -388,10 +435,11 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
             <RippleButton>
               <Button
                 onClick={handleSubmit}
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                disabled={isLoading}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50"
               >
-                Create Knowledge Base
-                <LeftArrow className="ml-2 rotate-180 w-4" />
+                {isLoading ? "Creating..." : "Create Knowledge Base"}
+                {!isLoading && <LeftArrow className="ml-2 rotate-180 w-4" />}
               </Button>
             </RippleButton>
           </div>

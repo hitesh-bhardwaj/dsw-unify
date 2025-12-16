@@ -14,8 +14,9 @@ import CountUp from "@/components/animations/CountUp";
 import { useSearchParams } from "next/navigation";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import * as toolsApi from "@/lib/api/tools";
 
-const tools = [
+const FALLBACK_TOOLS = [
   {
     id: "web-search",
     name: "Web Search",
@@ -45,17 +46,7 @@ const tools = [
   },
 ];
 
-const uniqueTools = (() => {
-  const seen = new Set();
-  return tools.filter((t) => {
-    const key = `${t.id}::${t.name}`;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-})();
-
-const stats = [
+const FALLBACK_STATS = [
   { title: "Total Tools", value: "03" },
   { title: "Active Tools", value: "02" },
   { title: "Categories", value: "03" },
@@ -67,19 +58,76 @@ function ToolsContent() {
 
   const searchParams = useSearchParams();
 
-  //  make tools stateful (same as agents)
-  const [toolsState, setToolsState] = useState(uniqueTools);
+  const [toolsState, setToolsState] = useState(FALLBACK_TOOLS);
+  const [stats, setStats] = useState(FALLBACK_STATS);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch tools and stats from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [toolsData, statsData] = await Promise.all([
+          toolsApi.getTools(),
+          toolsApi.getToolStats(),
+        ]);
+
+        setToolsState(toolsData);
+
+        // Transform stats object to array format
+        setStats([
+          { title: "Total Tools", value: statsData.totalTools },
+          { title: "Active Tools", value: statsData.activeTools },
+          { title: "Categories", value: statsData.categories },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load tools");
+        console.error("Error fetching tools:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   // FILTER BAR STATE
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
 
+  // Handle tool deletion from URL parameter
   useEffect(() => {
     const deleteId = searchParams.get("deleteId");
     if (!deleteId) return;
 
-    setToolsState((prev) => prev.filter((t) => t.id !== deleteId));
+    async function deleteTool() {
+      try {
+        // Call API to delete the tool
+        await toolsApi.deleteTool(deleteId);
+
+        // Refresh the tools list after successful deletion
+        const [toolsData, statsData] = await Promise.all([
+          toolsApi.getTools(),
+          toolsApi.getToolStats(),
+        ]);
+
+        setToolsState(toolsData);
+        setStats([
+          { title: "Total Tools", value: statsData.totalTools },
+          { title: "Active Tools", value: statsData.activeTools },
+          { title: "Categories", value: statsData.categories },
+        ]);
+
+        // Remove deleteId from URL after successful deletion
+        window.history.replaceState({}, "", "/agent-studio/tools");
+      } catch (err) {
+        setError(err.message || "Failed to delete tool");
+        console.error("Error deleting tool:", err);
+      }
+    }
+
+    deleteTool();
   }, [searchParams]);
 
   // AVAILABLE TAGS
@@ -172,7 +220,7 @@ function ToolsContent() {
             setView={setView}
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
-            cards={uniqueTools}
+            cards={toolsState}
           />
         </div>
 

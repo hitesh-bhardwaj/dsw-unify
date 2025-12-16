@@ -31,6 +31,7 @@ import { useRouter } from "next/navigation";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 import MonitoringTab from "@/components/agent-studio/agents/MonitoringTab";
 import PerformanceTab from "@/components/agent-studio/agents/PerformanceTab";
+import * as agentsApi from "@/lib/api/agents";
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -99,7 +100,8 @@ export default function AgentDetailPage({ params }) {
     },
   ];
 
-  const agent = {
+  // Fallback mock data
+  const FALLBACK_AGENT = {
     id: 0,
     name: "Auto Claims Processing Agent",
     description:
@@ -131,6 +133,36 @@ export default function AgentDetailPage({ params }) {
       { type: "success", event: "Model inference", time: "25 minutes ago" },
     ],
   };
+
+  const [agent, setAgent] = useState(FALLBACK_AGENT);
+  const [error, setError] = useState(null);
+
+  // Fetch agent data from API
+  useEffect(() => {
+    async function fetchAgentData() {
+      try {
+        const [agentData, metricsData, healthData, activityData] = await Promise.all([
+          agentsApi.getAgentById(id),
+          agentsApi.getAgentMetrics(id),
+          agentsApi.getAgentHealth(id),
+          agentsApi.getAgentActivity(id),
+        ]);
+
+        setAgent({
+          ...agentData,
+          metrics: metricsData,
+          health: healthData,
+          recentActivity: activityData,
+        });
+      } catch (err) {
+        setError(err.message || "Failed to load agent");
+        console.error("Error fetching agent:", err);
+      }
+    }
+    if (id) {
+      fetchAgentData();
+    }
+  }, [id]);
 
   // hydrate gate to avoid SSR mismatch
   useEffect(() => {

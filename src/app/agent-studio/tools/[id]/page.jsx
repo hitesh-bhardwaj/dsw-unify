@@ -12,11 +12,11 @@ import Overviews from "@/components/agent-studio/tools/Overviews";
 import ToolsConfigure from "@/components/agent-studio/tools/ToolsConfig";
 import ToolsUsage from "@/components/agent-studio/tools/ToolsUsage";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+import * as toolsApi from "@/lib/api/tools";
 
-
-const toolsData = {
+const FALLBACK_TOOL = {
   id: "web-search",
   name: "Web Search",
   description: "Search the web for current information",
@@ -53,13 +53,32 @@ const items = [
 export default function Page() {
   const { id } = useParams();
 
+  const [toolsData, setToolsData] = useState(FALLBACK_TOOL);
+  const [error, setError] = useState(null);
+
+  // Fetch tool data from API
+  useEffect(() => {
+    async function fetchToolData() {
+      try {
+        const toolData = await toolsApi.getToolById(id);
+        setToolsData(toolData);
+      } catch (err) {
+        setError(err.message || "Failed to load tool");
+        console.error("Error fetching tool:", err);
+      }
+    }
+    if (id) {
+      fetchToolData();
+    }
+  }, [id]);
+
   function slugToTitle(slug) {
   if (!slug) return "";
-  
+
   return slug
-    .split("-")                
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
-    .join(" ");                
+    .split("-")
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
 }
 
   const router = useRouter();

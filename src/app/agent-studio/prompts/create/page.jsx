@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,18 +20,55 @@ import {
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { ScaleDown } from "@/components/animations/Animations";
+import * as promptsApi from "@/lib/api/prompts";
 
-export default function CreateAgentPage() {
+export default function CreatePromptPage() {
+  const router = useRouter();
+
   const [apiModalOpen, setApiModalOpen] = useState(false);
-  const [agentName, setAgentName] = useState("MY AI Assistant");
-  const [description, setDescription] = useState(
-    "A Helpful AI Assistant for..."
-  );
-  const [systemPrompt, setSystemPrompt] = useState(
-    "You are a helpful AI assistant that..."
-  );
+  const [promptName, setPromptName] = useState("");
+  const [description, setDescription] = useState("");
+  const [systemPrompt, setSystemPrompt] = useState("");
   const [searchPrompt, setSearchPrompt] = useState("");
   const [enhancePrompt, setEnhancePrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Handle save prompt
+  const handleSavePrompt = async () => {
+    if (!promptName.trim()) {
+      setError("Prompt name is required");
+      return;
+    }
+
+    if (!systemPrompt.trim()) {
+      setError("System prompt content is required");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const promptData = {
+        name: promptName,
+        description: description,
+        content: systemPrompt,
+        type: "system",
+        tags: [],
+      };
+
+      const newPrompt = await promptsApi.createPrompt(promptData);
+
+      // Redirect to prompts list page after successful creation
+      router.push("/agent-studio/prompts");
+    } catch (err) {
+      setError(err.message || "Failed to create prompt");
+      console.error("Error creating prompt:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -39,11 +77,11 @@ export default function CreateAgentPage() {
       <div className=" bg-background p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-start gap-3">
-            <LeftArrowAnim link={"/prompts"} />
+            <LeftArrowAnim link={"/agent-studio/prompts"} />
             <div className="space-y-2">
-              <h1 className="text-2xl font-medium">Agent Builder</h1>
+              <h1 className="text-2xl font-medium">Prompt Builder</h1>
               <p className="text-sm text-gray-600">
-                Configure your AI agent with custom prompts, models, and tools
+                Create a new prompt for your AI agents
               </p>
             </div>
           </div>
@@ -67,14 +105,16 @@ export default function CreateAgentPage() {
               </div>
               Test
             </Button>
-            <Link href={`/agents/edit`}>
-              <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
-                <div className="!w-4">
-                  <EditIcon className={"text-white"} />
-                </div>
-                Save Agent
-              </Button>
-            </Link>
+            <Button
+              onClick={handleSavePrompt}
+              disabled={isLoading}
+              className="bg-primary hover:bg-[#E64A19] text-white gap-2 disabled:opacity-50"
+            >
+              <div className="!w-4">
+                <EditIcon className={"text-white"} />
+              </div>
+              {isLoading ? "Saving..." : "Save Prompt"}
+            </Button>
           </div>
         </div>
       </div>
@@ -94,12 +134,12 @@ export default function CreateAgentPage() {
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <label className="text-sm font-medium text-[#111111]">
-                    Agent Name
+                    Prompt Name
                   </label>
                   <Input
-                    value={agentName}
-                    onChange={(e) => setAgentName(e.target.value)}
-                    placeholder="MY AI Assistant"
+                    value={promptName}
+                    onChange={(e) => setPromptName(e.target.value)}
+                    placeholder="Customer Support Prompt"
                     className="h-11 border-[#AAAAAA] mt-3"
                   />
                 </div>
@@ -110,11 +150,16 @@ export default function CreateAgentPage() {
                   <Input
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    placeholder="A Helpful AI Assistant for..."
+                    placeholder="A helpful prompt for..."
                     className="h-11 border-[#AAAAAA] mt-3"
                   />
                 </div>
               </div>
+              {error && (
+                <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+                  {error}
+                </div>
+              )}
             </CardContent>
           </Card>
 

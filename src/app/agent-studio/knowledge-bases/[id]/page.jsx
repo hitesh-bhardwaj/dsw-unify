@@ -18,6 +18,7 @@ import { RefreshCcw } from "lucide-react";
 import Activity from "@/components/knowledge-bases/activity";
 import Settings from "@/components/knowledge-bases/settings";
 import StorageStrategy from "@/components/knowledge-bases/storage-strategy";
+import * as knowledgeBasesApi from "@/lib/api/knowledge-bases";
 
 export default function KnowledgeBaseDetailPage({ params }) {
   const { id } = use(params);
@@ -97,8 +98,8 @@ export default function KnowledgeBaseDetailPage({ params }) {
     },
   ];
 
-  // Mock data
-  const knowledgeBase = {
+  // Fallback mock data
+  const FALLBACK_KB = {
     id,
     name: "Company Documentation",
     description: "Internal company policies and procedures",
@@ -107,6 +108,25 @@ export default function KnowledgeBaseDetailPage({ params }) {
     storage: "2.3 GB",
     source:"Google Drive"
   };
+
+  const [knowledgeBase, setKnowledgeBase] = useState(FALLBACK_KB);
+  const [error, setError] = useState(null);
+
+  // Fetch knowledge base data from API
+  useEffect(() => {
+    async function fetchKBData() {
+      try {
+        const kbData = await knowledgeBasesApi.getKnowledgeBaseById(id);
+        setKnowledgeBase(kbData);
+      } catch (err) {
+        setError(err.message || "Failed to load knowledge base");
+        console.error("Error fetching knowledge base:", err);
+      }
+    }
+    if (id) {
+      fetchKBData();
+    }
+  }, [id]);
 
   if (!mounted) return null;
 

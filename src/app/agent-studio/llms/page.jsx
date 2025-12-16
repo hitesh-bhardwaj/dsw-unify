@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
@@ -22,8 +22,9 @@ import SelfHosted from "@/components/LLM/SelfHosted";
 import ImportModal from "@/components/LLM/ImportModal";
 import DeployModal from "@/components/LLM/DeployModal";
 import FineTunedCards from "@/components/LLM/FineTunedCards";
+import * as llmsApi from "@/lib/api/llms";
 
-const LLMs = [
+const FALLBACK_LLMS = [
   {
     id: "gpt-4-turbo",
     name: "GPT-4 Turbo",
@@ -72,7 +73,7 @@ const LLMs = [
   },
 ];
 
-const Recent = [
+const FALLBACK_RECENT = [
   {
     content: "Mistral 7B Instruct deployment completed",
     recentActivity: "30 minutes ago",
@@ -99,8 +100,34 @@ export default function LLMsPage() {
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   const [openImportModal, setOpenImportModal] = useState(false);
-const [openDeployModal, setOpenDeployModal] = useState(false);
+  const [openDeployModal, setOpenDeployModal] = useState(false);
 
+  const [llms, setLlms] = useState(FALLBACK_LLMS);
+  const [recentActivity, setRecentActivity] = useState(FALLBACK_RECENT);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch LLMs and activity from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [llmsData, activityData] = await Promise.all([
+          llmsApi.getLLMs(),
+          llmsApi.getLLMActivity(),
+        ]);
+
+        setLlms(llmsData);
+        setRecentActivity(activityData);
+      } catch (err) {
+        setError(err.message || "Failed to load LLMs");
+        console.error("Error fetching LLMs:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   // filter states
   const [selectedTags, setSelectedTags] = useState([]);
@@ -110,15 +137,15 @@ const [openDeployModal, setOpenDeployModal] = useState(false);
   // Collect unique tags
   const availableTags = useMemo(() => {
     const all = new Set();
-    LLMs.forEach((llm) => llm.tags.forEach((t) => all.add(t)));
+    llms.forEach((llm) => llm.tags.forEach((t) => all.add(t)));
     return Array.from(all).sort();
-  }, []);
+  }, [llms]);
 
   // Apply search + tag filter
   let filteredLLMs = useMemo(() => {
     const q = query.trim().toLowerCase();
 
-    return LLMs.filter((llm) => {
+    return llms.filter((llm) => {
       const matchesSearch =
         llm.name.toLowerCase().includes(q) ||
         llm.description.toLowerCase().includes(q) ||
@@ -130,7 +157,7 @@ const [openDeployModal, setOpenDeployModal] = useState(false);
 
       return matchesSearch && matchesTags;
     });
-  }, [query, selectedTags]);
+  }, [query, selectedTags, llms]);
 
   // Sorting
   if (sortOrder === "asc") {
@@ -275,7 +302,7 @@ const [openDeployModal, setOpenDeployModal] = useState(false);
               <h2 className="text-2xl font-medium">Recent Activity</h2>
 
               <div className="w-full space-y-4">
-                {Recent.map((recent, id) => (
+                {recentActivity.map((recent, id) => (
                   <div
                     key={id}
                     className="w-full h-fit flex gap-6 items-center group"

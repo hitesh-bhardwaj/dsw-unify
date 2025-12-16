@@ -13,10 +13,11 @@ import Overviews from "@/components/agent-studio/memories/Overviews";
 import MemoryEntries from "@/components/agent-studio/memories/Entries";
 import Settings from "@/components/agent-studio/memories/Settings";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+import * as memoriesApi from "@/lib/api/memories";
 
-const toolsData = {
+const FALLBACK_MEMORY = {
   id: "user-preference",
   name: "User Preference",
   description: "Individual user preferences and settings",
@@ -49,6 +50,25 @@ const items = [
 
 export default function Page() {
   const { id } = useParams();
+
+  const [memoryData, setMemoryData] = useState(FALLBACK_MEMORY);
+  const [error, setError] = useState(null);
+
+  // Fetch memory data from API
+  useEffect(() => {
+    async function fetchMemoryData() {
+      try {
+        const data = await memoriesApi.getMemoryById(id);
+        setMemoryData(data);
+      } catch (err) {
+        setError(err.message || "Failed to load memory");
+        console.error("Error fetching memory:", err);
+      }
+    }
+    if (id) {
+      fetchMemoryData();
+    }
+  }, [id]);
 
   function slugToTitle(slug) {
     if (!slug) return "";
@@ -85,7 +105,7 @@ export default function Page() {
               <div className="space-y-1">
                 <h1 className="text-xl font-medium">{title}</h1>
                 <p className="text-sm text-foreground/80 pl-0.5 dark:text-foreground">
-                  {toolsData.description}
+                  {memoryData.description}
                 </p>
               </div>
             </div>

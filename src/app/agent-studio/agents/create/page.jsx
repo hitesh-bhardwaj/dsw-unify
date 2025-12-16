@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -22,12 +23,49 @@ import KnowledgeBaseList from "@/components/agent-studio/agents/KnowledgeBase/Kn
 import MemoriesList from "@/components/agent-studio/agents/MemoryList";
 import TagsGrid from "@/components/agent-studio/agents/TagsGrid";
 import TestAgentModal from "@/components/agent-studio/agents/test-agent-modal";
+import * as agentsApi from "@/lib/api/agents";
 
 export default function CreateAgentPage() {
+  const router = useRouter();
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("");
   const [description, setDescription] = useState("");
-   const [testModalOpen, setTestModalOpen] = useState(false);
+  const [testModalOpen, setTestModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Handle save agent
+  const handleSaveAgent = async () => {
+    if (!agentName.trim()) {
+      setError("Agent name is required");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // TODO: Collect data from all tabs (prompt, model, tools, knowledge, memory, guardrails, finetuning, tags)
+      // For now, just save basic information
+      const agentData = {
+        name: agentName,
+        description: description,
+        // Additional fields will be collected from child components
+        status: "active",
+        tags: [],
+      };
+
+      const newAgent = await agentsApi.createAgent(agentData);
+
+      // Redirect to agents list page after successful creation
+      router.push("/agent-studio/agents");
+    } catch (err) {
+      setError(err.message || "Failed to create agent");
+      console.error("Error creating agent:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const items = [
     {
@@ -144,16 +182,18 @@ export default function CreateAgentPage() {
                   Test
                 </Button>
               </RippleButton>
-              <Link href={`#`}>
-                <RippleButton>
-                  <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
-                    <div className="!w-4">
-                      <SaveAgentIcon className={"text-white"} />
-                    </div>
-                    Save Agent
-                  </Button>
-                </RippleButton>
-              </Link>
+              <RippleButton>
+                <Button
+                  onClick={handleSaveAgent}
+                  disabled={isLoading}
+                  className="bg-primary hover:bg-[#E64A19] text-white gap-2 disabled:opacity-50"
+                >
+                  <div className="!w-4">
+                    <SaveAgentIcon className={"text-white"} />
+                  </div>
+                  {isLoading ? "Saving..." : "Save Agent"}
+                </Button>
+              </RippleButton>
             </div>
           </div>
         {/* </FadeUp> */}
@@ -196,6 +236,11 @@ export default function CreateAgentPage() {
                     />
                   </div>
                 </div>
+                {error && (
+                  <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+                    {error}
+                  </div>
+                )}
               </CardContent>
             </Card>
           {/* </FadeUp> */}

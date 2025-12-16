@@ -15,8 +15,10 @@ import CountUp from "@/components/animations/CountUp";
 import { useSearchParams } from "next/navigation";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import * as agentsApi from "@/lib/api/agents";
 
-const agents = [
+// Fallback mock data
+const FALLBACK_AGENTS = [
   {
     id: "auto-claims-processing-agent",
     name: "Auto Claims Processing Agent",
@@ -115,7 +117,7 @@ const agents = [
   },
 ];
 
-const stats = [
+const FALLBACK_STATS = [
   { title: "Total Agents", value: "42" },
   { title: "Active Agents", value: "41" },
   { title: "Total Requests", value: "100,800" },
@@ -123,14 +125,72 @@ const stats = [
 
 export default function AgentsPage() {
   const [query, setQuery] = useState("");
-  const [agentsState, setAgentsState] = useState(agents);
+  const [agentsState, setAgentsState] = useState(FALLBACK_AGENTS);
+  const [stats, setStats] = useState(FALLBACK_STATS);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const searchParams = useSearchParams();
 
+  // Fetch agents and stats from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [agentsData, statsData] = await Promise.all([
+          agentsApi.getAgents(),
+          agentsApi.getAgentStats(),
+        ]);
+
+        setAgentsState(agentsData);
+
+        // Transform stats object to array format
+        setStats([
+          { title: "Total Agents", value: statsData.totalAgents },
+          { title: "Active Agents", value: statsData.activeAgents },
+          { title: "Total Requests", value: statsData.totalRequests },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load agents");
+        console.error("Error fetching agents:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Handle agent deletion from URL parameter
   useEffect(() => {
     const deleteId = searchParams.get("deleteId");
     if (!deleteId) return;
 
-    setAgentsState((prev) => prev.filter((a) => a.id !== deleteId));
+    async function deleteAgent() {
+      try {
+        // Call API to delete the agent
+        await agentsApi.deleteAgent(deleteId);
+
+        // Refresh the agents list after successful deletion
+        const [agentsData, statsData] = await Promise.all([
+          agentsApi.getAgents(),
+          agentsApi.getAgentStats(),
+        ]);
+
+        setAgentsState(agentsData);
+        setStats([
+          { title: "Total Agents", value: statsData.totalAgents },
+          { title: "Active Agents", value: statsData.activeAgents },
+          { title: "Total Requests", value: statsData.totalRequests },
+        ]);
+
+        // Remove deleteId from URL after successful deletion
+        window.history.replaceState({}, "", "/agent-studio/agents");
+      } catch (err) {
+        setError(err.message || "Failed to delete agent");
+        console.error("Error deleting agent:", err);
+      }
+    }
+
+    deleteAgent();
   }, [searchParams]);
 
   // FILTER BAR STATE
@@ -221,7 +281,7 @@ export default function AgentsPage() {
             setView={setView}
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
-            cards={agents}
+            cards={agentsState}
           />
         </div>
 

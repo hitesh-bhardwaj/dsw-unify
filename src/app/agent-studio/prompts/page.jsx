@@ -23,14 +23,15 @@ import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import * as promptsApi from "@/lib/api/prompts";
 
-const stats = [
+const FALLBACK_STATS = [
   { title: "Total Prompts", value: "03" },
   { title: "Total Uses", value: 2296 },
   { title: "Categories", value: "03" },
 ];
 
-const prompts = [
+const FALLBACK_PROMPTS = [
   {
     id: 1,
     name: "Customer Support Assistant",
@@ -78,7 +79,7 @@ const prompts = [
   },
 ];
 
-const templates = [
+const FALLBACK_TEMPLATES = [
   {
     id: 1,
     name: "Customer Service Template",
@@ -107,7 +108,41 @@ function PromptsContent() {
   const [createPrompt, setCreatePrompt] = useState(false);
   const [tab, setTab] = useState("prompts");
 
-  const [promptsState, setPromptsState] = useState(prompts);
+  const [promptsState, setPromptsState] = useState(FALLBACK_PROMPTS);
+  const [templatesState, setTemplatesState] = useState(FALLBACK_TEMPLATES);
+  const [stats, setStats] = useState(FALLBACK_STATS);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch prompts, templates, and stats from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [promptsData, templatesData, statsData] = await Promise.all([
+          promptsApi.getPrompts(),
+          promptsApi.getTemplates(),
+          promptsApi.getPromptStats(),
+        ]);
+
+        setPromptsState(promptsData);
+        setTemplatesState(templatesData);
+
+        // Transform stats object to array format
+        setStats([
+          { title: "Total Prompts", value: statsData.totalPrompts },
+          { title: "Total Uses", value: statsData.totalUses },
+          { title: "Categories", value: statsData.categories },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load prompts");
+        console.error("Error fetching prompts:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleDeletePrompt = (id) => {
     setPromptsState((prev) => prev.filter((p) => p.id !== id));
@@ -120,11 +155,40 @@ function PromptsContent() {
 
   const searchParams = useSearchParams();
 
+  // Handle prompt deletion from URL parameter
   useEffect(() => {
-    const deleteSlug = searchParams.get("deleteId");
-    if (!deleteSlug) return;
+    const deleteId = searchParams.get("deleteId");
+    if (!deleteId) return;
 
-    setPromptsState((prev) => prev.filter((p) => p.slug !== deleteSlug));
+    async function deletePrompt() {
+      try {
+        // Call API to delete the prompt
+        await promptsApi.deletePrompt(deleteId);
+
+        // Refresh the prompts list after successful deletion
+        const [promptsData, templatesData, statsData] = await Promise.all([
+          promptsApi.getPrompts(),
+          promptsApi.getTemplates(),
+          promptsApi.getPromptStats(),
+        ]);
+
+        setPromptsState(promptsData);
+        setTemplatesState(templatesData);
+        setStats([
+          { title: "Total Prompts", value: statsData.totalPrompts },
+          { title: "Active Prompts", value: statsData.activePrompts },
+          { title: "Total Usage", value: statsData.totalUsage },
+        ]);
+
+        // Remove deleteId from URL after successful deletion
+        window.history.replaceState({}, "", "/agent-studio/prompts");
+      } catch (err) {
+        setError(err.message || "Failed to delete prompt");
+        console.error("Error deleting prompt:", err);
+      }
+    }
+
+    deletePrompt();
   }, [searchParams]);
 
   // AVAILABLE TAGS FOR PROMPTS
@@ -137,9 +201,9 @@ function PromptsContent() {
   // AVAILABLE TAGS FOR TEMPLATES
   const availableTemplateTags = useMemo(() => {
     const tags = new Set();
-    templates.forEach((t) => t.tags?.forEach((x) => tags.add(x)));
+    templatesState.forEach((t) => t.tags?.forEach((x) => tags.add(x)));
     return Array.from(tags).sort();
-  }, []);
+  }, [templatesState]);
 
   // FILTERING FOR PROMPTS
   let filteredPrompts = promptsState.filter((prompt) => {
@@ -153,7 +217,7 @@ function PromptsContent() {
   });
 
   // FILTERING FOR TEMPLATES
-  let filteredTemplates = templates.filter((template) => {
+  let filteredTemplates = templatesState.filter((template) => {
     const matchesSearch = template.name
       .toLowerCase()
       .includes(query.toLowerCase());
@@ -285,7 +349,7 @@ function PromptsContent() {
                 setView={setView}
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
-                cards={templates}
+                cards={templatesState}
               />
             )}
 

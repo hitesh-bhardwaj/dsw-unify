@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import {
   Dialog,
@@ -18,6 +20,7 @@ import {
 } from "./ui/select";
 import { RippleButton } from "./ui/ripple-button";
 import { ArrowRight } from "lucide-react";
+import * as promptsApi from "@/lib/api/prompts";
 
 const CATEGORY_OPTIONS = [
   "General",
@@ -38,13 +41,50 @@ const CATEGORY_OPTIONS = [
  * @returns {React.JSX.Element} The rendered CreatePromptModal component.
  */
 const CreatePromptModal = ({ open, onOpenChange }) => {
-  const [category, setCategory] = useState();
-  const [isOpen, setIsOpen] = useState(false)
+  const [promptName, setPromptName] = useState("");
+  const [description, setDescription] = useState("");
+  const [content, setContent] = useState("");
+  const [category, setCategory] = useState("");
+  const [tags, setTags] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const handleCreate = () => {
-    // TODO: wire up your submit logic here
-    // You can read `category` and other form values via refs/state or a form lib
-    onOpenChange?.(false);
+  const handleCreate = async () => {
+    if (!promptName.trim()) {
+      setError("Prompt name is required");
+      return;
+    }
+
+    if (!content.trim()) {
+      setError("Prompt content is required");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const promptData = {
+        name: promptName,
+        description: description,
+        content: content,
+        category: category || "General",
+        tags: tags ? tags.split(",").map(t => t.trim()) : [],
+        type: "system",
+      };
+
+      await promptsApi.createPrompt(promptData);
+
+      // Close modal and refresh page on success
+      onOpenChange?.(false);
+      window.location.reload();
+    } catch (err) {
+      setError(err.message || "Failed to create prompt");
+      console.error("Error creating prompt:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,6 +101,8 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-[60%]">
               <label className="text-sm text-foreground">Prompt Name*</label>
               <Input
+                value={promptName}
+                onChange={(e) => setPromptName(e.target.value)}
                 className=" placeholder:text-foreground/40"
                 placeholder="Enter Prompt Name"
               />
@@ -95,6 +137,8 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-full">
               <label className="text-sm text-foreground">Description</label>
               <Input
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className=" placeholder:text-foreground/40"
                 placeholder="Brief Description"
               />
@@ -105,18 +149,28 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             <div className="flex flex-col gap-2 w-full">
               <label className="text-sm text-foreground">Prompt Content*</label>
               <Textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
                 className=" placeholder:text-foreground/40 placeholder:text-xs h-36"
                 placeholder="Enter Prompt Content"
               />
             </div>
           </div>
 
+          {error && (
+            <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+              {error}
+            </div>
+          )}
+
           <div className="flex w-full h-fit gap-2 items-end ">
             <div className="flex flex-col gap-2 w-[85%]">
-              <label className="text-sm text-foreground">Tags</label>
+              <label className="text-sm text-foreground">Tags (comma-separated)</label>
               <Input
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
                 className=" placeholder:text-foreground/40"
-                placeholder="Add a tag"
+                placeholder="e.g. customer-service, support"
               />
             </div>
             <div className="w-[15%] h-full">
@@ -138,18 +192,19 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
                 variant="outline"
                 className="gap-2 border border-border-color-2 text-foreground hover:bg-gray-50 w-fit px-7"
                 onClick={() => onOpenChange?.(false)}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
             </RippleButton>
             <RippleButton>
               <Button
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
-                onClick={() => onOpenChange?.(false)}
+                onClick={handleCreate}
+                disabled={isLoading}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50"
               >
-                
-                Create Prompts
-                <LeftArrow className='rotate-180' />
+                {isLoading ? "Creating..." : "Create Prompt"}
+                {!isLoading && <LeftArrow className='rotate-180' />}
               </Button>
             </RippleButton>
           </div>

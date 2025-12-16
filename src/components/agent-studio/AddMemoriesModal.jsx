@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LeftArrow } from "@/components/Icons";
+import * as memoriesApi from "@/lib/api/memories";
 
 /**
  * Modal component for creating new memories.
@@ -43,6 +44,8 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
   const [isOpenStatus, setIsOpenStatus] = useState(false);
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
     if (!open) {
@@ -61,8 +64,8 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
     exit: { opacity: 0 },
   };
 
-  /** =============== FORM VALIDATION =============== */
-  const handleSubmit = () => {
+  /** =============== FORM VALIDATION & SUBMIT =============== */
+  const handleSubmit = async () => {
     const errs = {
       memoryName: !memoryName.trim() ? "Memory Name is required" : "",
       description: !description.trim() ? "Description is required" : "",
@@ -74,7 +77,32 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
 
     if (Object.values(errs).some(Boolean)) return;
 
-    onOpenChange(false);
+    try {
+      setIsLoading(true);
+      setApiError(null);
+
+      const memoryData = {
+        name: memoryName,
+        description: description,
+        type: type,
+        scope: scope,
+        status: status,
+        entries: 0,
+      };
+
+      await memoriesApi.createMemory(memoryData);
+
+      // Close modal on success
+      onOpenChange(false);
+
+      // Refresh the page to show the new memory
+      window.location.reload();
+    } catch (err) {
+      setApiError(err.message || "Failed to create memory");
+      console.error("Error creating memory:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -235,12 +263,19 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
             </div>
           </motion.div>
 
+          {apiError && (
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+              {apiError}
+            </div>
+          )}
+
           <div className="py-6 my-2  flex justify-end gap-3">
             <RippleButton>
               <Button
                 variant="outline"
                 className="border-foreground/40  text-foreground/80 px-6"
                 onClick={() => onOpenChange(false)}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
@@ -249,10 +284,11 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
             <RippleButton>
               <Button
                 onClick={handleSubmit}
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                disabled={isLoading}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50"
               >
-                Create Memory
-                <LeftArrow className="ml-2 rotate-180 w-4" />
+                {isLoading ? "Creating..." : "Create Memory"}
+                {!isLoading && <LeftArrow className="ml-2 rotate-180 w-4" />}
               </Button>
             </RippleButton>
           </div>

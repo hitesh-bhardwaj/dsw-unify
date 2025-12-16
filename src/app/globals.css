@@ -110,7 +110,7 @@
 }
 
 .dark {
-  --background: #020A2C;
+  --background: #020A2C; 
   --foreground: oklch(0.985 0 0);
   --card: #030A26;
   --card-foreground: oklch(0.985 0 0);

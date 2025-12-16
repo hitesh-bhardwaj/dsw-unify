@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -22,13 +23,71 @@ import GuardrailsGrid from "@/components/agent-studio/agents/GuardrailsGrid";
 import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ArrowRight } from "lucide-react";
+import * as agentsApi from "@/lib/api/agents";
 
+export default function EditAgentPage({ params }) {
+  const { id } = use(params);
+  const router = useRouter();
 
-
-export default function CreateAgentPage() {
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("");
   const [description, setDescription] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch agent data on mount
+  useEffect(() => {
+    async function fetchAgentData() {
+      try {
+        setIsFetching(true);
+        const agentData = await agentsApi.getAgentById(id);
+
+        // Populate form with existing agent data
+        setAgentName(agentData.name || "");
+        setDescription(agentData.description || "");
+      } catch (err) {
+        setError(err.message || "Failed to load agent");
+        console.error("Error fetching agent:", err);
+      } finally {
+        setIsFetching(false);
+      }
+    }
+
+    if (id) {
+      fetchAgentData();
+    }
+  }, [id]);
+
+  // Handle update agent
+  const handleUpdateAgent = async () => {
+    if (!agentName.trim()) {
+      setError("Agent name is required");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      // TODO: Collect data from all tabs (prompt, model, tools, knowledge, memory, guardrails, finetuning, tags)
+      const agentData = {
+        name: agentName,
+        description: description,
+        // Additional fields will be collected from child components
+      };
+
+      await agentsApi.updateAgent(id, agentData);
+
+      // Redirect to agent detail page after successful update
+      router.push(`/agent-studio/agents/${id}`);
+    } catch (err) {
+      setError(err.message || "Failed to update agent");
+      console.error("Error updating agent:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
    const items = [
     {
@@ -116,7 +175,9 @@ export default function CreateAgentPage() {
               <LeftArrowAnim link={"/agent-studio/agents"} />
 
               <div className="space-y-2">
-                <h1 className="text-2xl font-medium">Edit Agent: Auto Claims Processing Agent</h1>
+                <h1 className="text-2xl font-medium">
+                  {isFetching ? "Loading..." : `Edit Agent: ${agentName || "Untitled"}`}
+                </h1>
                 <p className="text-sm text-gray-600  dark:text-foreground">
                   Modify your existing agent configuration
                 </p>
@@ -146,16 +207,18 @@ export default function CreateAgentPage() {
                   Test
                 </Button>
               </RippleButton>
-              <Link href={`#`}>
-                <RippleButton>
-                  <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
-                    <div className="!w-4">
-                      <EditIcon className={"text-white"} />
-                    </div>
-                    Save Agent
-                  </Button>
-                </RippleButton>
-              </Link>
+              <RippleButton>
+                <Button
+                  onClick={handleUpdateAgent}
+                  disabled={isLoading || isFetching}
+                  className="bg-primary hover:bg-[#E64A19] text-white gap-2 disabled:opacity-50"
+                >
+                  <div className="!w-4">
+                    <EditIcon className={"text-white"} />
+                  </div>
+                  {isLoading ? "Saving..." : "Save Agent"}
+                </Button>
+              </RippleButton>
             </div>
           </div>
         {/* </FadeUp> */}
@@ -183,7 +246,8 @@ export default function CreateAgentPage() {
                       value={agentName}
                       onChange={(e) => setAgentName(e.target.value)}
                       placeholder="MY AI Assistant"
-                      className="h-11 border-border-color-0 mt-3 text-foreground placeholder:text-foreground/80 "
+                      disabled={isFetching}
+                      className="h-11 border-border-color-0 mt-3 text-foreground placeholder:text-foreground/80 disabled:opacity-50"
                     />
                   </div>
                   <div className="space-y-4">
@@ -194,10 +258,16 @@ export default function CreateAgentPage() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="A Helpful AI Assistant for..."
-                      className="h-11 border-border-color-0 mt-3 text-foreground placeholder:text-foreground/80"
+                      disabled={isFetching}
+                      className="h-11 border-border-color-0 mt-3 text-foreground placeholder:text-foreground/80 disabled:opacity-50"
                     />
                   </div>
                 </div>
+                {error && (
+                  <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
+                    {error}
+                  </div>
+                )}
               </CardContent>
             </Card>
           {/* </FadeUp> */}
@@ -210,19 +280,18 @@ export default function CreateAgentPage() {
             />
           {/* </FadeUp> */}
           <div className="flex items-end w-full justify-end">
-             <Link href={`#`}>
-                <RippleButton>
-                  <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
-                    
-                    Save to Library
-                    <div className="!w-4">
-                        <ArrowRight className="text-white"/>
-                    
-                    </div>
-                  </Button>
-                </RippleButton>
-              </Link>
-
+            <RippleButton>
+              <Button
+                onClick={handleUpdateAgent}
+                disabled={isLoading || isFetching}
+                className="bg-primary hover:bg-[#E64A19] text-white gap-2 disabled:opacity-50"
+              >
+                {isLoading ? "Saving..." : "Save Changes"}
+                <div className="!w-4">
+                  <ArrowRight className="text-white" />
+                </div>
+              </Button>
+            </RippleButton>
           </div>
         </div>
       </div>

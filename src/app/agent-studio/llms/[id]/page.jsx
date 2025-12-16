@@ -12,6 +12,7 @@ import EmptyCard from "@/components/common/EmptyCard";
 import LLMConfigurationGrid from "@/components/llm-configuration-grid";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScaleDown } from "@/components/animations/Animations";
+import * as llmsApi from "@/lib/api/llms";
 
 export default function LLMsDetailPage({ params }) {
   const { id } = use(params);
@@ -90,8 +91,8 @@ export default function LLMsDetailPage({ params }) {
     },
   ];
 
-  // Mock data
-  const llm = {
+  // Fallback mock data
+  const FALLBACK_LLM = {
     id,
     name: "GPT-4 Turbo",
     description: "OpenAI API Model | Version: 2024-04-09",
@@ -101,6 +102,32 @@ export default function LLMsDetailPage({ params }) {
     upTime: "99.2%",
     cost: "$45.67",
   };
+
+  const [llm, setLlm] = useState(FALLBACK_LLM);
+  const [error, setError] = useState(null);
+
+  // Fetch LLM data from API
+  useEffect(() => {
+    async function fetchLLMData() {
+      try {
+        const [llmData, metricsData] = await Promise.all([
+          llmsApi.getLLMById(id),
+          llmsApi.getLLMMetrics(id),
+        ]);
+
+        setLlm({
+          ...llmData,
+          ...metricsData,
+        });
+      } catch (err) {
+        setError(err.message || "Failed to load LLM");
+        console.error("Error fetching LLM:", err);
+      }
+    }
+    if (id) {
+      fetchLLMData();
+    }
+  }, [id]);
 
   if (!mounted) return null;
 

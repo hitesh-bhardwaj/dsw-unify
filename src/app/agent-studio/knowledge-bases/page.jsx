@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { KnowledgeBaseIcon, PlusIcon } from "@/components/Icons";
@@ -14,15 +14,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "@/components/animations/CountUp";
 
 import ListGridFilter from "@/components/common/ListGridFilter";
+import * as knowledgeBasesApi from "@/lib/api/knowledge-bases";
 
-const stats = [
+const FALLBACK_STATS = [
   { title: "Total Knowledge Bases", value: "04" },
   { title: "Synced", value: "02" },
   { title: "Total Documents", value: "4,580" },
 ];
 
-
-const knowledgeBases = [
+const FALLBACK_KNOWLEDGE_BASES = [
   {
     id: "company-documentation",
     name: "Company Documentation",
@@ -53,13 +53,46 @@ export default function KnowledgePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [view, setView] = useState("grid");
 
+  const [knowledgeBases, setKnowledgeBases] = useState(FALLBACK_KNOWLEDGE_BASES);
+  const [stats, setStats] = useState(FALLBACK_STATS);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch knowledge bases and stats from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [kbData, statsData] = await Promise.all([
+          knowledgeBasesApi.getKnowledgeBases(),
+          knowledgeBasesApi.getKnowledgeBaseStats(),
+        ]);
+
+        setKnowledgeBases(kbData);
+
+        // Transform stats object to array format
+        setStats([
+          { title: "Total Knowledge Bases", value: statsData.totalKnowledgeBases },
+          { title: "Synced", value: statsData.synced },
+          { title: "Total Documents", value: statsData.totalDocuments },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load knowledge bases");
+        console.error("Error fetching knowledge bases:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
   const filteredKb = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return knowledgeBases;
     return knowledgeBases.filter((kb) =>
       kb.name.toLowerCase().includes(q)
     );
-  }, [query]);
+  }, [query, knowledgeBases]);
 
   return (
     <>

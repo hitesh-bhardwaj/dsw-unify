@@ -12,12 +12,54 @@ import PromptMetadataGrid from "@/components/prompt-metadata-grid";
 import PromptUsageGrid from "@/components/prompt-usage-grid";
 import { useRouter } from "next/navigation";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
+import * as promptsApi from "@/lib/api/prompts";
 
-import { usePathname } from "next/navigation";
+export default function PromptDetailPage({ params }) {
+  const { id } = use(params);
+  const router = useRouter();
 
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [promptData, setPromptData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-export default function CreateAgentPage() {
+  // Fetch prompt data on mount
+  useEffect(() => {
+    async function fetchPromptData() {
+      try {
+        setIsLoading(true);
+        const data = await promptsApi.getPromptById(id);
+        setPromptData(data);
+      } catch (err) {
+        setError(err.message || "Failed to load prompt");
+        console.error("Error fetching prompt:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    if (id) {
+      fetchPromptData();
+    }
+  }, [id]);
+
+  const handleConfirmDelete = () => {
+    setIsDeleteOpen(false);
+    router.push(`/agent-studio/prompts?deleteId=${id}`);
+  };
+
+  function slugToTitle(slug) {
+    if (!slug) return "";
+
+    return slug
+      .split("-")
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+
+  const title = promptData?.name || slugToTitle(id) || "Loading...";
+  const description = promptData?.description || "Loading description...";
   const items = [
     {
       id: "content",
@@ -46,31 +88,6 @@ export default function CreateAgentPage() {
     },
   ];
 
-  const pathname = usePathname(); 
-  const slug = pathname.split("/").pop();
-   const router = useRouter();
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
- const handleConfirmDelete = () => {
-  setIsDeleteOpen(false);
-  router.push(`/agent-studio/prompts?deleteId=${slug}`);
-};
-
-
-
-  function slugToTitle(slug) {
-  if (!slug) return "";
-  
-  return slug
-    .split("-")                
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
-    .join(" ");                
-}
-
-    const title = slugToTitle(slug);
-
-
-
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
       <ConfirmDialog
@@ -96,9 +113,11 @@ export default function CreateAgentPage() {
               <LeftArrowAnim link={"/agent-studio/prompts"} />
 
               <div className="space-y-2">
-                <h1 className="text-2xl font-medium">{title}</h1>
+                <h1 className="text-2xl font-medium">
+                  {isLoading ? "Loading..." : title}
+                </h1>
                 <p className="text-sm text-gray-600  dark:text-foreground">
-                  Helpful and empathetic customer service responses
+                  {isLoading ? "Loading description..." : description}
                 </p>
               </div>
             </div>
