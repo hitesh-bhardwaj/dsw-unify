@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { ScaleDown } from "@/components/animations/Animations";
 import { PlusIcon, FeatureTransformationIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
@@ -14,6 +14,7 @@ import BasicInfo from "@/components/FeatureStore/feature-transformation/create-t
 import TransformLogic from "@/components/FeatureStore/feature-transformation/create-transformation/TransformLogic";
 import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "@/components/animations/CountUp";
+import * as transformationsApi from "@/lib/api/transformations";
 
 const Features = [
   {
@@ -124,17 +125,52 @@ const Page = () => {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [view, setView] = useState("grid"); 
+  const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
+
+  // API state
+  const [transformations, setTransformations] = useState(Features);
+  const [statsData, setStatsData] = useState(stats);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch transformations and stats
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const [transformationsData, statsResponse] = await Promise.all([
+          transformationsApi.getTransformations(),
+          transformationsApi.getTransformationStats(),
+        ]);
+
+        setTransformations(transformationsData);
+        setStatsData([
+          { title: "Total Transformations", value: statsResponse.totalTransformations },
+          { title: "Active Transformations", value: statsResponse.activeTransformations },
+          { title: "Transformation Types", value: statsResponse.transformationTypes },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load transformations");
+        console.error("Transformations error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   // Get all unique tags from features
   const availableTags = useMemo(() => {
     const tags = new Set();
-    Features.forEach((feature) => {
+    transformations.forEach((feature) => {
       feature.tags?.forEach((tag) => tags.add(tag));
     });
     return Array.from(tags).sort();
-  }, []);
+  }, [transformations]);
 
   const steps = [
     {
@@ -151,7 +187,7 @@ const Page = () => {
     },
   ];
 
-  let filteredFeatures = Features.filter((feature) => {
+  let filteredFeatures = transformations.filter((feature) => {
   const matchesSearch = feature.name.toLowerCase().includes(query.toLowerCase());
   const matchesTags =
     selectedTags.length === 0 ||
@@ -201,19 +237,32 @@ if (sortOrder === "asc") {
             </div>
 
             <div className="w-full  flex items-center justify-between gap-4">
-              {stats.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
-                >
-                  <span className="text-sm text-foreground/80">
-                    {item.title}
-                  </span>
-                  <span className="text-4xl font-medium mt-2">
-                    <CountUp value={item.value} startOnView/>
-                  </span>
-                </div>
-              ))}
+              {isLoading ? (
+                // Loading skeleton
+                Array.from({ length: 3 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
+                  >
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                  </div>
+                ))
+              ) : (
+                statsData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
+                  >
+                    <span className="text-sm text-foreground/80">
+                      {item.title}
+                    </span>
+                    <span className="text-4xl font-medium mt-2">
+                      <CountUp value={item.value} startOnView/>
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
 
             <div className="flex gap-3">
@@ -234,34 +283,65 @@ if (sortOrder === "asc") {
                 setView={setView}
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
-                cards={Features}
+                cards={transformations}
               />
             </div>
 
-            
-            <AnimatePresence mode="wait">
-  <motion.div
-    key={view} // This triggers re-animation when view changes
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.3 }}
-    className={`items-stretch ${
-      view === "grid"
-        ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "
-        : "flex flex-col gap-5"
-    }`}
-  >
-    {filteredFeatures.map((feature, index) => (
-      <FeatureCard key={feature.id} view={view} feature={feature} index={index} />
-    ))}
-    {filteredFeatures.length === 0 && (
-      <div className="flex h-64 items-center justify-center text-gray-500">
-        No Features found matching "{query}"
-      </div>
-    )}
-  </motion.div>
-</AnimatePresence>
+
+            {/* Error State */}
+            {error && (
+              <div className="p-4 text-center text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                <p className="font-medium">Failed to load transformations</p>
+                <p className="text-sm mt-2">{error}</p>
+              </div>
+            )}
+
+            {/* Loading State */}
+            {isLoading && !error && (
+              <div className={`items-stretch ${
+                view === "grid"
+                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  : "flex flex-col gap-5"
+              }`}>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="border border-border-color-0 rounded-lg p-6 animate-pulse"
+                  >
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Content */}
+            {!isLoading && !error && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`items-stretch ${
+                    view === "grid"
+                      ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "
+                      : "flex flex-col gap-5"
+                  }`}
+                >
+                  {filteredFeatures.map((feature, index) => (
+                    <FeatureCard key={feature.id} view={view} feature={feature} index={index} />
+                  ))}
+                  {filteredFeatures.length === 0 && (
+                    <div className="flex h-64 items-center justify-center text-gray-500">
+                      No Features found matching "{query}"
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            )}
           </div>
         </ScaleDown>
       </div>

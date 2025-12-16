@@ -97,8 +97,11 @@ export default function ApiEndpointModal({
   onOpenChange,
   agentId = "unnamed-agent",
 }) {
-  const apiKey = "sk-agent-...";
-  const endpointUrl = `https://api.agentstudio.com/v1/agents/${agentId}/chat`;
+  const agentApiBase =
+    process.env.NEXT_PUBLIC_AGENT_API_BASE_URL || "https://api.example.com";
+  const apiKey =
+    process.env.NEXT_PUBLIC_AGENT_API_KEY || "sk-agent-placeholder";
+  const endpointUrl = `${agentApiBase}/v1/agents/${agentId}/chat`;
 
   const codeExamples = {
     curl: `curl -X POST "${endpointUrl}" \\

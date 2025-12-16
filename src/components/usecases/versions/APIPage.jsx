@@ -6,10 +6,14 @@ import { Input } from "@/components/ui/input";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import { Copy, Check } from "lucide-react";
 export default function APIPage() {
+  const apiBase =
+    process.env.NEXT_PUBLIC_MODEL_API_BASE_URL || "https://api.example.com";
   const [endpointUrl] = useState(
-    "https://api.unifyai.com/v1/models/1/versions/v1-1/predict"
+    `${apiBase}/v1/models/1/versions/v1-1/predict`
   );
-  const [apiKey] = useState("YOUR_API_KEY");
+  const [apiKey] = useState(
+    process.env.NEXT_PUBLIC_MODEL_API_KEY || "YOUR_API_KEY"
+  );
 
   
 

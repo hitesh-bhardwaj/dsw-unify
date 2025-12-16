@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { AuthLayout } from "@/components/auth/auth-layout";
 import { ReturnToLoginButton } from "@/components/auth/return-to-login-button";
 import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
+import * as authApi from "@/lib/api/auth";
 
 export default function ChangePasswordPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const code = searchParams.get("code");
   const [formData, setFormData] = useState({
     newPassword: "",
     confirmPassword: "",
@@ -31,7 +35,7 @@ export default function ChangePasswordPage() {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setErrors({});
@@ -43,16 +47,24 @@ export default function ChangePasswordPage() {
       return;
     }
 
-    // Simulate password change (no backend integration yet)
-    setTimeout(() => {
+    try {
+      // Call reset password API
+      await authApi.resetPassword(email, code, formData.newPassword);
+
+      // Navigate to login page
       router.push("/login");
-    }, 500);
+    } catch (error) {
+      setErrors({
+        general: error.message || "Failed to reset password. Please try again.",
+      });
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <AuthLayout
       title="Change Password"
-      subtitle="Add a new password for abc@dsw.com"
+      subtitle={`Add a new password for ${email || "your account"}`}
     >
       <div className="space-y-6">
         <div className="flex justify-center">
@@ -60,6 +72,12 @@ export default function ChangePasswordPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* General Error Message */}
+          {errors.general && (
+            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+              {errors.general}
+            </div>
+          )}
           <PasswordInput
             label="New Password"
             placeholder="New Password"

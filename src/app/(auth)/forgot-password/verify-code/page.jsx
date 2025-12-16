@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { AuthLayout } from "@/components/auth/auth-layout";
 import { ReturnToLoginButton } from "@/components/auth/return-to-login-button";
 import { OTPInput } from "@/components/auth/otp-input";
 import { Button } from "@/components/ui/button";
+import * as authApi from "@/lib/api/auth";
 
 export default function VerifyCodePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -36,10 +39,16 @@ export default function VerifyCodePage() {
       return;
     }
 
-    // Simulate verifying code (no backend integration)
-    setTimeout(() => {
-      router.push("/forgot-password/change-password");
-    }, 500);
+    try {
+      // Call verify OTP API
+      await authApi.verifyOTP(email, otp);
+
+      // Navigate to change password page
+      router.push("/forgot-password/change-password?email=" + encodeURIComponent(email) + "&code=" + otp);
+    } catch (error) {
+      setError(error.message || "Invalid code. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (

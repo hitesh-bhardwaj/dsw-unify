@@ -10,9 +10,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useAuth } from "@/contexts/auth-context";
+import * as authApi from "@/lib/api/auth";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,16 +52,38 @@ export default function LoginPage() {
       return;
     }
 
-    // Simulate login (no backend integration)
-    // In a real app, you would make an API call here
-    setTimeout(() => {
+    try {
+      // Call auth API
+      const response = await authApi.login(
+        formData.email,
+        formData.password,
+        formData.rememberMe
+      );
+
+      // Store token and user in auth context
+      login(response.token, response.user);
+
+      // Redirect to dashboard
       router.push("/dashboard");
-    }, 300);
+    } catch (error) {
+      // Handle API errors
+      setErrors({
+        general: error.message || "Login failed. Please try again.",
+      });
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <AuthLayout title="Welcome Back!">
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* General Error Message */}
+        {errors.general && (
+          <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+            {errors.general}
+          </div>
+        )}
+
         {/* Email Input */}
         <div className="space-y-2">
           <Label htmlFor="email">Email / Username</Label>

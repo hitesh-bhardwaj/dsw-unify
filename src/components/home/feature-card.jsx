@@ -26,7 +26,6 @@ export function FeatureCard({
   });
 
   useEffect(() => {
-    console.log(index)
     if (showSkeleton && id) {
       const t = setTimeout(() => {
         setShowSkeleton(false);

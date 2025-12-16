@@ -8,6 +8,7 @@ import { ReturnToLoginButton } from "@/components/auth/return-to-login-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import * as authApi from "@/lib/api/auth";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -34,10 +35,16 @@ export default function ForgotPasswordPage() {
       return;
     }
 
-    // Simulate sending code (no backend integration)
-    setTimeout(() => {
-      router.push("/forgot-password/verify-code");
-    }, 300);
+    try {
+      // Call forgot password API
+      await authApi.forgotPassword(email);
+
+      // Navigate to verify code page
+      router.push("/forgot-password/verify-code?email=" + encodeURIComponent(email));
+    } catch (error) {
+      setError(error.message || "Failed to send code. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (

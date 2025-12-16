@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useRef, useState, useEffect } from "react";
@@ -5,6 +6,7 @@ import { AppLayout } from "@/components/app-layout";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ChevronLeft, ChevronRight, LayoutGrid } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import * as dashboardApi from "@/lib/api/dashboard";
 import {
   Tooltip,
   TooltipContent,
@@ -603,31 +605,89 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [view, setView] = useState("list");
 
-  const filteredDataEngineering = dataEngineeringFeatures.filter(
+  // API state
+  const [metrics, setMetrics] = useState(metricsData);
+  const [features, setFeatures] = useState({
+    dataEngineering: dataEngineeringFeatures,
+    featureStore: featureStoreFeatures,
+    aiStudio: aiStudioFeatures,
+    agentStudio: agentStudioFeatures,
+    workflowBuilder: workflowBuilderFeatures,
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch dashboard data
+  useEffect(() => {
+    async function fetchDashboardData() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        // Fetch metrics and features in parallel
+        const [metricsData, featuresData] = await Promise.all([
+          dashboardApi.getMetrics(),
+          dashboardApi.getFeatures(),
+        ]);
+
+        setMetrics(metricsData);
+        setFeatures(featuresData);
+      } catch (err) {
+        setError(err.message || "Failed to load dashboard data");
+        console.error("Dashboard error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchDashboardData();
+  }, []);
+
+  const filteredDataEngineering = features.dataEngineering.filter(
     (f) =>
       f.title.toLowerCase().includes(query.toLowerCase()) ||
       f.description.toLowerCase().includes(query.toLowerCase())
   );
-  const filteredFeatureStore = featureStoreFeatures.filter(
+  const filteredFeatureStore = features.featureStore.filter(
     (f) =>
       f.title.toLowerCase().includes(query.toLowerCase()) ||
       f.description.toLowerCase().includes(query.toLowerCase())
   );
-  const filteredAIStudio = aiStudioFeatures.filter(
+  const filteredAIStudio = features.aiStudio.filter(
     (f) =>
       f.title.toLowerCase().includes(query.toLowerCase()) ||
       f.description.toLowerCase().includes(query.toLowerCase())
   );
-  const filteredAgentStudio = agentStudioFeatures.filter(
+  const filteredAgentStudio = features.agentStudio.filter(
     (f) =>
       f.title.toLowerCase().includes(query.toLowerCase()) ||
       f.description.toLowerCase().includes(query.toLowerCase())
   );
-  const filteredWorkflowBuilder = workflowBuilderFeatures.filter(
+  const filteredWorkflowBuilder = features.workflowBuilder.filter(
     (f) =>
       f.title.toLowerCase().includes(query.toLowerCase()) ||
       f.description.toLowerCase().includes(query.toLowerCase())
   );
+
+  // Show error if data fetch failed
+  if (error) {
+    return (
+      <AppLayout title="Home">
+        <div className="flex flex-col h-full w-full items-center justify-center p-6">
+          <div className="p-4 max-w-md text-center text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+            <p className="font-medium">Failed to load dashboard</p>
+            <p className="text-sm mt-2">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout title="Home">
@@ -645,7 +705,7 @@ export default function Home() {
 
             {/* Metrics Board */}
             <motion.div layout className="px-0 mt-6">
-              <MetricsBoard metricsData={metricsData} view={view} setView={setView} />
+              <MetricsBoard metricsData={metrics} view={view} setView={setView} isLoading={isLoading} />
             </motion.div>
 
             <motion.div layout className="below-sections flex-1 overflow-auto p-6 pt-4 space-y-12 mt-6">

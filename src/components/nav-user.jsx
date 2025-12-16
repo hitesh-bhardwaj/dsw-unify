@@ -19,6 +19,7 @@ import { Separator } from './ui/separator';
  * @param {string} props.user.name - The user's name.
  * @param {string} props.user.email - The user's email.
  * @param {string} props.user.avatar - The URL of the user's avatar image.
+ * @param {Function} [props.onLogout] - Function to call when logout is clicked.
  * @param {string} [props.side] - The side to render the popover.
  * @param {number} [props.sideOffset] - The offset from the trigger.
  * @param {string} [props.align] - The alignment of the popover.
@@ -27,6 +28,7 @@ import { Separator } from './ui/separator';
  */
 export const NavUser = ({
   user,
+  onLogout,
   side,
   sideOffset,
   align,
@@ -181,6 +183,7 @@ export const NavUser = ({
               initial="hidden"
               animate="visible"
               variants={itemVariants}
+              onClick={onLogout}
             >
               <LogOut className='h-5 w-5' />
               Log out

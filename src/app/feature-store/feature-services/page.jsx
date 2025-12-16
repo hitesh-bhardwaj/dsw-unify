@@ -5,7 +5,7 @@ import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Tune } from "@/components/Icons";
 import StepFormModal from "@/components/common/StepModalForm";
 import BasicInfo from "@/components/FeatureStore/feature-services/BasicInfo";
@@ -14,6 +14,7 @@ import CountUp from "@/components/animations/CountUp";
 import { ServiceCard } from "@/components/FeatureStore/feature-services/ServiceCard";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
+import * as featureServicesApi from "@/lib/api/feature-services";
 
 const Features = [
   {
@@ -104,6 +105,41 @@ const page = () => {
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
 
+  // API state
+  const [featureServices, setFeatureServices] = useState(Features);
+  const [statsData, setStatsData] = useState(stats);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch feature services and stats
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const [servicesData, statsResponse] = await Promise.all([
+          featureServicesApi.getFeatureServices(),
+          featureServicesApi.getFeatureServiceStats(),
+        ]);
+
+        setFeatureServices(servicesData);
+        setStatsData([
+          { title: "Total Feature Services", value: statsResponse.totalFeatureServices },
+          { title: "Total Featured Views", value: statsResponse.totalFeaturedViews },
+          { title: "Total Features", value: statsResponse.totalFeatures },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load feature services");
+        console.error("Feature services error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
   const steps = [
     {
       id: "basic",
@@ -122,14 +158,14 @@ const page = () => {
   //  Compute available tags from services
   const availableTags = useMemo(() => {
     const tags = new Set();
-    Features.forEach((feature) => {
+    featureServices.forEach((feature) => {
       feature.tags?.forEach((tag) => tags.add(tag));
     });
     return Array.from(tags).sort();
-  }, []);
+  }, [featureServices]);
 
   //  Apply Search + Tag Filter
-  let filteredFeatures = Features.filter((feature) => {
+  let filteredFeatures = featureServices.filter((feature) => {
     const matchesSearch = feature.name.toLowerCase().includes(query.toLowerCase());
     const matchesTags =
       selectedTags.length === 0 ||
@@ -179,19 +215,31 @@ const page = () => {
             </div>
 
             <div className="w-full flex items-center justify-between gap-4">
-              {stats.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
-                >
-                  <span className="text-sm text-foreground/80">
-                    {item.title}
-                  </span>
-                  <span className="text-4xl font-medium mt-2">
-                    <CountUp value={item.value} startOnView/>
-                  </span>
-                </div>
-              ))}
+              {isLoading ? (
+                Array.from({ length: 3 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
+                  >
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                  </div>
+                ))
+              ) : (
+                statsData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
+                  >
+                    <span className="text-sm text-foreground/80">
+                      {item.title}
+                    </span>
+                    <span className="text-4xl font-medium mt-2">
+                      <CountUp value={item.value} startOnView/>
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
 
       
@@ -205,7 +253,7 @@ const page = () => {
               </div>
             </div>
 
-       
+
             <FilterBar
               selectedTags={selectedTags}
               onTagsChange={setSelectedTags}
@@ -214,20 +262,49 @@ const page = () => {
               setView={setView}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
-              cards={Features}
+              cards={featureServices}
             />
 
+            {/* Error State */}
+            {error && (
+              <div className="p-4 text-center text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                <p className="font-medium">Failed to load feature services</p>
+                <p className="text-sm mt-2">{error}</p>
+              </div>
+            )}
+
+            {/* Loading State */}
+            {isLoading && !error && (
+              <div className={`items-stretch ${
+                view === "grid"
+                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  : "flex flex-col gap-5"
+              }`}>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="border border-border-color-0 rounded-lg p-6 animate-pulse"
+                  >
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {/* ---------- SERVICE CARDS (GRID/LIST) ---------- */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={view}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`items-stretch ${
-                  view === "grid"
-                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            {!isLoading && !error && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`items-stretch ${
+                    view === "grid"
+                      ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                     : "flex flex-col gap-5"
                 }`}
               >
@@ -242,6 +319,7 @@ const page = () => {
                 )}
               </motion.div>
             </AnimatePresence>
+            )}
           </div>
         </ScaleDown>
       </div>

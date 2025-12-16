@@ -7,6 +7,8 @@ import { NavUser } from "./nav-user";
 import { FAQIcons, HomeIcon, NotificationsIcon } from "./Icons";
 import { ThemeTogglerBtn } from "./headerdark";
 import Breadcrumbs from "./common/Breadcrumbs";
+import { useAuth } from "@/contexts/auth-context";
+import { useRouter } from "next/navigation";
 
 /**
  * Header component containing navigation controls, breadcrumbs, theme toggle, notifications, help, and user profile.
@@ -16,12 +18,13 @@ import Breadcrumbs from "./common/Breadcrumbs";
  * @returns {React.JSX.Element} The rendered Header component.
  */
 export function Header({ title = "Agents" }) {
+  const { user, logout } = useAuth();
+  const router = useRouter();
 
-  const user = {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "https://github.com/shadcn.png",
-  }
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
 
   return (
     <header className="flex h-16 items-center justify-between bg-background/70 px-6  sticky w-full top-0 z-50 backdrop-blur-md">
@@ -61,7 +64,7 @@ export function Header({ title = "Agents" }) {
 
         {/* User avatar with dropdown */}
         <div className="flex items-center gap-2 cursor-pointer">
-          <NavUser user={user} />
+          <NavUser user={user} onLogout={handleLogout} />
         </div>
       </div>
     </header>
