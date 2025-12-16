@@ -169,23 +169,22 @@ export default function TestAgentModal({
       <DialogContent
         className="w-3/5 h-[70%]  rounded-3xl flex flex-col p-0 gap-0 overflow-hidden"
       >
+        
         <TooltipProvider delayDuration={200}>
           <div className="flex flex-col h-full overflow-hidden">
             {/* Header */}
-            <div className="flex items-center  bg-white justify-between px-8 py-6  dark:bg-transparent">
-              <h2 className="text-2xl font-normal">
-                Test Agent: Unnamed Agent
-              </h2>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-                className="h-7 w-7 rounded-none hover:bg-transparent"
-              >
-                <X className="h-full w-full " />
-              </Button>
-            </div>
+            <div className="w-[95%] mt-6">
 
+            <DialogHeader className="justify-center  bg-background">
+
+            <div className="flex items-center  bg-background justify-between px-8 py-6 dark:bg-transparent">
+               <DialogTitle className="text-2xl font-medium">
+                Test Agent: Unnamed Agent
+              </DialogTitle>
+            </div>
+            </DialogHeader>
+
+            </div>
             <div className="w-[95%] h-[1px] bg-border-color-0 mx-auto" />
 
             {/* Messages Container */}

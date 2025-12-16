@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave } from "./Icons";
 import Link from "next/link";
-import CopyButton from "./animate-ui/components/buttons/CopyButton";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
 const skeletonShownMap = new Map();
 
@@ -32,7 +32,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered PromptCard component.
  */
-export function PromptCard({ prompt,index,view, minSkeletonMs = 500 }) {
+export function PromptCard({ prompt,index,view, onDelete, minSkeletonMs = 500 }) {
   const {
     id,
     name,
@@ -58,6 +58,25 @@ export function PromptCard({ prompt,index,view, minSkeletonMs = 500 }) {
 
      const isGrid = view === "grid";
   const isList = view === "list";
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+
+const handleConfirmDelete = () => {
+  if (onDelete && id != null) {
+    onDelete(id);
+  }
+  setIsDeleteOpen(false);
+};
+
+
+
   
     useEffect(() => {
       if (showSkeleton && id) {
@@ -74,7 +93,22 @@ export function PromptCard({ prompt,index,view, minSkeletonMs = 500 }) {
   }
 
   return (
+    <>
+    <ConfirmDialog
+    open={isDeleteOpen}
+    onOpenChange={setIsDeleteOpen}
+    title="Delete prompt?"
+    description={
+      name
+        ? `This action cannot be undone. This will permanently delete "${name}".`
+        : "This action cannot be undone. This will permanently delete this prompt."
+    }
+    confirmLabel="Delete"
+    destructive
+    onConfirm={handleConfirmDelete}
+  />
     <Link href={`/agent-studio/prompts/${slug}`}>
+      
     <div className="group w-full h-full">
       <Card
         className={cn(
@@ -140,6 +174,9 @@ export function PromptCard({ prompt,index,view, minSkeletonMs = 500 }) {
               <Button
                 variant="ghost"
                 size="icon"
+                   onClick={handleTrashClick}
+
+
                 className={cn(
                   "h-7 w-7 flex opacity-0 group-hover:opacity-100 items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
                 )}
@@ -202,6 +239,7 @@ export function PromptCard({ prompt,index,view, minSkeletonMs = 500 }) {
       </Card>
     </div>
     </Link>
+    </>
   );
 }
 

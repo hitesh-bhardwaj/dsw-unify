@@ -304,7 +304,7 @@ export default function AgentDetailPage({ params }) {
               <RippleButton>
                 <Button
                   variant="outline"
-                  onClick={() => setApiModalOpen(true)}
+                  // onClick={() => setApiModalOpen(true)}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">
@@ -317,6 +317,7 @@ export default function AgentDetailPage({ params }) {
                 <Button
                 
                   variant="outline"
+                  onClick={() => router.push("/agent-studio/testing")}
                   className="gap-2 text-foreground border border-primary"
                 >
                   <div className="!w-4">

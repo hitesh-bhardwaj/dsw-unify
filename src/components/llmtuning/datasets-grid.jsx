@@ -9,12 +9,12 @@ import { DataSet } from './dataset-card'
  * @param {Array<Object>} props.items - An array of dataset objects to be displayed.
  * @returns {React.JSX.Element} The rendered DatasetsGrid component.
  */
-const DatasetsGrid = ({items}) => {
+const DatasetsGrid = ({items,onDelete}) => {
   return (
       <>
        <div className="flex-1 h-full w-full relative space-y-4 pb-10">
             {items.map((item) => (
-            <DataSet key={item.id} data={item} id={item.id}/>
+            <DataSet key={item.id} data={item} id={item.id} onDelete={onDelete}/>
             ))}
           </div></>
   )

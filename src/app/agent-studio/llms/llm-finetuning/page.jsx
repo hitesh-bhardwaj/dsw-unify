@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useState } from "react";
 import { UploadIcon } from "@/components/Icons";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -95,6 +96,17 @@ const Models = [
 
 
 export default function LLMFineTuning() {
+  const [datasetsState, setDatasetsState] = useState(datasets);
+  const [modelsState, setModelsState] = useState(Models);
+
+const handleDeleteModel = (id) => {
+  setModelsState((prev) => prev.filter((m) => m.id !== id));
+};
+
+
+  const handleDeleteDataset = (id) => {
+   setDatasetsState((prev) => prev.filter((d) => d.id !== id));
+ };
    const items = [
     {
       id: "datasets",
@@ -102,7 +114,7 @@ export default function LLMFineTuning() {
       label: "Datasets",
       name: "Datasets",
       render: () =>
-          <DatasetsGrid items={datasets}/>   
+          <DatasetsGrid items={datasetsState} onDelete={handleDeleteDataset}/>   
     },
     {
       id: "training-jobs",
@@ -118,7 +130,7 @@ export default function LLMFineTuning() {
       label: "Models",
       name: "Models",
      render: () =>
-          <ModelsGrid items={Models}/>
+         <ModelsGrid items={modelsState} onDelete={handleDeleteModel}/>
     },
     {
       id: "inference",

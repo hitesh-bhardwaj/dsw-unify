@@ -12,10 +12,16 @@ import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
+import ModelGrid from "@/components/agent-studio/agents/ModelGrid";
+import KnowledgeBaseList from "@/components/agent-studio/agents/KnowledgeBase/KnowledgeList";
+import MemoriesList from "@/components/agent-studio/agents/MemoryList";
+import TagsGrid from "@/components/agent-studio/agents/TagsGrid";
+import ToolsList from "@/components/agent-studio/agents/tools/ToolsList";
 import PromptCardGrid from "@/components/prompt-card-grid";
+import GuardrailsGrid from "@/components/agent-studio/agents/GuardrailsGrid";
+import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ArrowRight } from "lucide-react";
-
 
 
 
@@ -24,7 +30,7 @@ export default function CreateAgentPage() {
   const [agentName, setAgentName] = useState("");
   const [description, setDescription] = useState("");
 
-  const items = [
+   const items = [
     {
       id: "prompt",
       value: "prompt",
@@ -38,7 +44,7 @@ export default function CreateAgentPage() {
       label: "Model",
       name: "Model",
       render: () => (
-        <EmptyCard children={"Models configuration coming soon..."} />
+       <ModelGrid/>
       ),
     },
     {
@@ -47,7 +53,7 @@ export default function CreateAgentPage() {
       label: "Tools",
       name: "Tools",
       render: () => (
-        <EmptyCard children={"Tools configuration coming soon..."} />
+        <ToolsList/>
       ),
     },
     {
@@ -56,7 +62,7 @@ export default function CreateAgentPage() {
       label: "Knowledge",
       name: "Knowledge",
       render: () => (
-        <EmptyCard children={"Knowledge configuration coming soon..."} />
+        <KnowledgeBaseList />
       ),
     },
     {
@@ -65,7 +71,7 @@ export default function CreateAgentPage() {
       label: "Memory",
       name: "Memory",
       render: () => (
-        <EmptyCard children={"Memory configuration coming soon..."} />
+        <MemoriesList/>
       ),
     },
     {
@@ -74,7 +80,7 @@ export default function CreateAgentPage() {
       label: "Guardrails",
       name: "Guardrails",
       render: () => (
-        <EmptyCard children={"Guardrails configuration coming soon..."} />
+        <GuardrailsGrid/>
       ),
     },
     {
@@ -83,7 +89,7 @@ export default function CreateAgentPage() {
       label: "Finetuning",
       name: "Finetuning",
       render: () => (
-        <EmptyCard children={"Finetuning configuration coming soon..."} />
+        <FinetuningGrid/>
       ),
     },
     {
@@ -92,10 +98,11 @@ export default function CreateAgentPage() {
       label: "Tags",
       name: "Tags",
       render: () => (
-        <EmptyCard children={"Tags configuration coming soon..."} />
+        <TagsGrid/>
       ),
     },
   ];
+
 
   
   return (

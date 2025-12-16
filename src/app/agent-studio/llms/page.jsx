@@ -11,6 +11,7 @@ import {
   SynthWave,
 } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
+import APIBasedCards from "@/components/LLM/APIBasedCards";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import LLMGrid from "@/components/LLMGrid";
@@ -20,6 +21,7 @@ import { motion } from "framer-motion";
 import SelfHosted from "@/components/LLM/SelfHosted";
 import ImportModal from "@/components/LLM/ImportModal";
 import DeployModal from "@/components/LLM/DeployModal";
+import FineTunedCards from "@/components/LLM/FineTunedCards";
 
 const LLMs = [
   {
@@ -49,7 +51,7 @@ const LLMs = [
     name: "Llama 2 7B",
     description: "Self-hosted Open Source",
     icon: <LLMsIcon />,
-    status: "active",
+    status: "deploying",
     tags: ["open-source", "self-hosted", "development"],
     requests: "1,234",
     avgres: "2.3s",
@@ -176,7 +178,7 @@ const [openDeployModal, setOpenDeployModal] = useState(false);
       label: "API Based",
       name: "API Based",
       render: () => (
-        <EmptyCard>No API Based LLM is available at this point</EmptyCard>
+        <APIBasedCards />
       ),
     },
     {
@@ -185,7 +187,7 @@ const [openDeployModal, setOpenDeployModal] = useState(false);
       label: "Fine Tuned",
       name: "Fine Tuned",
       render: () => (
-        <EmptyCard>No Finetuned LLM is available at this point</EmptyCard>
+        <FineTunedCards />
       ),
     },
   ];

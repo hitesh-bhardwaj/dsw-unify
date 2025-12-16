@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import CreateModal from "./CreateModal";
 
 /**
  * Component to display a grid of prompt cards with search and generation functionality.
@@ -27,6 +28,8 @@ const ModelGrid = () => {
   const [frequency, setFrequency] = useState([0]);
 
   const [showProgress, setShowProgress] = useState(false);
+      const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
   const [useCase, setUseCase] = useState("");
   const useCases = [
     { id: 1, label: "Model 1" },
@@ -36,6 +39,11 @@ const ModelGrid = () => {
 
   return (
     <>
+     <CreateModal
+        open={isCreateModalOpen}
+        onOpenChange={setIsCreateModalOpen}
+      />
+
       <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
         <div className="flex justify-between">
           <div>
@@ -47,7 +55,7 @@ const ModelGrid = () => {
           <Link href="/agent-studio/agents/create">
             <RippleButton>
               <Button
-                variant="outline"
+                onClick={() => setIsCreateModalOpen(true)} variant="outline"
                 className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
               >
                 <PlusIcon className="text-primary" />

@@ -81,7 +81,7 @@ const Recent = [
   },
 ];
 
-export default function SelfHosted() {
+export default function FineTunedCards() {
   const [query, setQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid"); // grid | list
@@ -99,7 +99,7 @@ export default function SelfHosted() {
 
   // Only self-hosted models
   const selfHosted = useMemo(
-    () => LLMs.filter((llm) => llm.tags.includes("self-hosted")),
+    () => LLMs.filter((llm) => llm.tags.includes("fine-tuned")),
     []
   );
 

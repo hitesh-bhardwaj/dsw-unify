@@ -7,6 +7,7 @@ import { Bin, UploadIcon } from "../Icons";
 import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
 const skeletonShownMap = new Map();
 
@@ -24,12 +25,27 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered DataSet component.
  */
-export function DataSet({ data , minSkeletonMs = 500 }) {
+export function DataSet({ data , onDelete, minSkeletonMs = 500 }) {
    const { id, name, description, tags = [], records, createdBy } = data;
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this test before
     return !skeletonShownMap.has(id);
   });
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+const handleConfirmDelete = () => {
+  if (onDelete && id) {
+    onDelete(id);
+  }
+  setIsDeleteOpen(false);
+};
+
 
   useEffect(() => {
     if (showSkeleton && id) {
@@ -92,6 +108,17 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
 
 
   return (
+    <>
+    <ConfirmDialog
+  open={isDeleteOpen}
+  onOpenChange={setIsDeleteOpen}
+  title="Delete dataset?"
+  description={`This action cannot be undone. "${name}" will be permanently deleted.`}
+  confirmLabel="Delete"
+  destructive
+  onConfirm={handleConfirmDelete}
+/>
+
     <Link href={`#`} className="block group">
       <Card
         className={cn(
@@ -169,6 +196,7 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
               <Button
                 variant="ghost"
                 size="icon"
+                onClick={handleTrashClick}
                 className={cn(
                   "h-6.5 w-6.5 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-sidebar-accent"
                 )}
@@ -195,5 +223,6 @@ export function DataSet({ data , minSkeletonMs = 500 }) {
         </CardContent>
       </Card>
     </Link>
+    </>
   );
 }

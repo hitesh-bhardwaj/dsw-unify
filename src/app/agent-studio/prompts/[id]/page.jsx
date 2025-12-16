@@ -10,6 +10,10 @@ import { ScaleDown } from "@/components/animations/Animations";
 import PromptContentGrid from "@/components/prompt-content-grid";
 import PromptMetadataGrid from "@/components/prompt-metadata-grid";
 import PromptUsageGrid from "@/components/prompt-usage-grid";
+import { useRouter } from "next/navigation";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+import { useState } from "react";
+
 import { usePathname } from "next/navigation";
 
 
@@ -44,6 +48,15 @@ export default function CreateAgentPage() {
 
   const pathname = usePathname(); 
   const slug = pathname.split("/").pop();
+   const router = useRouter();
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+ const handleConfirmDelete = () => {
+  setIsDeleteOpen(false);
+  router.push(`/agent-studio/prompts?deleteId=${slug}`);
+};
+
+
 
   function slugToTitle(slug) {
   if (!slug) return "";
@@ -60,6 +73,20 @@ export default function CreateAgentPage() {
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
+      <ConfirmDialog
+  open={isDeleteOpen}
+  onOpenChange={setIsDeleteOpen}
+  title="Delete prompt?"
+  description={
+    title
+      ? `This action cannot be undone. This will permanently delete "${title}".`
+      : "This action cannot be undone. This will permanently delete this prompt."
+  }
+  confirmLabel="Delete"
+  destructive
+  onConfirm={handleConfirmDelete}
+/>
+
       {/* Header */}
       <ScaleDown>
       <div className=" bg-background p-6">
@@ -78,6 +105,8 @@ export default function CreateAgentPage() {
             <div className="flex items-center gap-3">
               <RippleButton>
                 <Button
+                    onClick={() => setIsDeleteOpen(true)}
+
                   variant="outline"
                   className="gap-2 text-foreground border border-primary"
                 >

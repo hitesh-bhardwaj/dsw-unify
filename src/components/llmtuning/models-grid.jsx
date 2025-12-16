@@ -8,12 +8,12 @@ import { ModelsCard } from './models-card'
  * @param {Array<Object>} props.items - An array of model data objects to be displayed.
  * @returns {React.JSX.Element} The rendered ModelsGrid component.
  */
-const ModelsGrid = ({items}) => {
+const ModelsGrid = ({items, onDelete}) => {
   return (
     <>
      <div className="flex-1 h-full w-full relative pb-10 space-y-4">
                 {items.map((item) => (
-                <ModelsCard key={item.id} data={item} playKey={"training-jobs"}/>
+                <ModelsCard key={item.id} data={item} playKey={"training-jobs"} onDelete={onDelete}/>
                 ))}
               </div>
     </>

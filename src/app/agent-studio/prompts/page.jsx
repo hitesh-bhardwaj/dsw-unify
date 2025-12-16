@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { PromptCard } from "@/components/prompt-card";
 import { cn } from "@/lib/utils";
@@ -19,15 +19,16 @@ import RadioTabs from "@/components/common/RadioTabs";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 
 const stats = [
-  { title: "Total Prompts", value: '03' },
+  { title: "Total Prompts", value: "03" },
   { title: "Total Uses", value: 2296 },
-  { title: "Categories", value: '03' },
+  { title: "Categories", value: "03" },
 ];
-
 
 const prompts = [
   {
@@ -41,7 +42,8 @@ const prompts = [
     tags: ["Customer-Service", "Empathy", "+1 more"],
     uses: "1250",
     lastUpdated: "20/01/2024",
-    preview: "You are a helpful and empathetic customer service representative......",
+    preview:
+      "You are a helpful and empathetic customer service representative......",
     variant: "light",
   },
   {
@@ -55,7 +57,8 @@ const prompts = [
     tags: ["Customer-Service", "Empathy", "+1 more"],
     uses: "890",
     lastUpdated: "18/01/2024",
-    preview: "You are an expert technical writer who creates clear, comprehensive documentation......",
+    preview:
+      "You are an expert technical writer who creates clear, comprehensive documentation......",
     variant: "light",
   },
   {
@@ -69,7 +72,8 @@ const prompts = [
     tags: ["Customer-Service", "Empathy", "+1 more"],
     uses: "156",
     lastUpdated: "22/01/2024",
-    preview: "You are a helpful and empathetic customer service representative......",
+    preview:
+      "You are a helpful and empathetic customer service representative......",
     variant: "light",
   },
 ];
@@ -97,22 +101,38 @@ const templates = [
   },
 ];
 
-export default function PromptsPage() {
+// Extract the logic that uses useSearchParams into a separate component
+function PromptsContent() {
   const [query, setQuery] = useState("");
   const [createPrompt, setCreatePrompt] = useState(false);
   const [tab, setTab] = useState("prompts");
+
+  const [promptsState, setPromptsState] = useState(prompts);
+
+  const handleDeletePrompt = (id) => {
+    setPromptsState((prev) => prev.filter((p) => p.id !== id));
+  };
 
   // FILTER BAR STATES
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
 
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const deleteSlug = searchParams.get("deleteId");
+    if (!deleteSlug) return;
+
+    setPromptsState((prev) => prev.filter((p) => p.slug !== deleteSlug));
+  }, [searchParams]);
+
   // AVAILABLE TAGS FOR PROMPTS
   const availablePromptTags = useMemo(() => {
     const tags = new Set();
-    prompts.forEach((p) => p.tags?.forEach((t) => tags.add(t)));
+    promptsState.forEach((p) => p.tags?.forEach((t) => tags.add(t)));
     return Array.from(tags).sort();
-  }, []);
+  }, [promptsState]);
 
   // AVAILABLE TAGS FOR TEMPLATES
   const availableTemplateTags = useMemo(() => {
@@ -122,8 +142,10 @@ export default function PromptsPage() {
   }, []);
 
   // FILTERING FOR PROMPTS
-  let filteredPrompts = prompts.filter((prompt) => {
-    const matchesSearch = prompt.name.toLowerCase().includes(query.toLowerCase());
+  let filteredPrompts = promptsState.filter((prompt) => {
+    const matchesSearch = prompt.name
+      .toLowerCase()
+      .includes(query.toLowerCase());
     const matchesTags =
       selectedTags.length === 0 ||
       selectedTags.some((tag) => prompt.tags?.includes(tag));
@@ -132,7 +154,9 @@ export default function PromptsPage() {
 
   // FILTERING FOR TEMPLATES
   let filteredTemplates = templates.filter((template) => {
-    const matchesSearch = template.name.toLowerCase().includes(query.toLowerCase());
+    const matchesSearch = template.name
+      .toLowerCase()
+      .includes(query.toLowerCase());
     const matchesTags =
       selectedTags.length === 0 ||
       selectedTags.some((tag) => template.tags?.includes(tag));
@@ -141,8 +165,10 @@ export default function PromptsPage() {
 
   // SORTING (for both)
   const applySorting = (arr) => {
-    if (sortOrder === "asc") return [...arr].sort((a, b) => a.name.localeCompare(b.name));
-    if (sortOrder === "desc") return [...arr].sort((a, b) => b.name.localeCompare(a.name));
+    if (sortOrder === "asc")
+      return [...arr].sort((a, b) => a.name.localeCompare(b.name));
+    if (sortOrder === "desc")
+      return [...arr].sort((a, b) => b.name.localeCompare(a.name));
     return arr;
   };
 
@@ -164,7 +190,9 @@ export default function PromptsPage() {
             {/* HEADER */}
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-medium text-foreground">Prompt Library</h1>
+                <h1 className="text-3xl font-medium text-foreground">
+                  Prompt Library
+                </h1>
                 <p className="mt-1 text-sm dark:text-foreground text-black/60">
                   Manage and version your prompt templates and configurations
                 </p>
@@ -175,7 +203,9 @@ export default function PromptsPage() {
                     variant="outline"
                     className="gap-2 border-primary text-foreground hover:bg-gray-50"
                   >
-                    <div className="!w-4"><AiGenerator /></div>
+                    <div className="!w-4">
+                      <AiGenerator />
+                    </div>
                     Generate Prompt
                   </Button>
                 </RippleButton>
@@ -192,19 +222,20 @@ export default function PromptsPage() {
             </div>
 
             <div className="w-full flex items-center justify-between gap-4">
-                          {stats.map((item, index) => (
-                            <div
-                              key={index}
-                              className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
-                            >
-                              <span className="text-sm text-foreground/80">{item.title}</span>
-                              <span className="text-4xl font-medium mt-1">
-                                <CountUp value={item.value} startOnView />
-                              </span>
-                             
-                            </div>
-                          ))}
-                        </div>
+              {stats.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
+                >
+                  <span className="text-sm text-foreground/80">
+                    {item.title}
+                  </span>
+                  <span className="text-4xl font-medium mt-1">
+                    <CountUp value={item.value} startOnView />
+                  </span>
+                </div>
+              ))}
+            </div>
 
             {/* SEARCH */}
             <div className="flex gap-3">
@@ -215,8 +246,6 @@ export default function PromptsPage() {
                   onChange={(e) => setQuery(e.target.value)}
                 />
               </div>
-
-              
             </div>
 
             {/* TABS */}
@@ -243,7 +272,7 @@ export default function PromptsPage() {
                 setView={setView}
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
-                cards={prompts}
+                cards={promptsState}
               />
             )}
 
@@ -281,13 +310,19 @@ export default function PromptsPage() {
                       }
                     >
                       {filteredPrompts.map((prompt, index) => (
-                        <PromptCard key={prompt.id} prompt={prompt} index={index} view={view} />
+                        <PromptCard
+                          key={prompt.id}
+                          prompt={prompt}
+                          index={index}
+                          view={view}
+                          onDelete={handleDeletePrompt}
+                        />
                       ))}
                     </div>
 
                     {filteredPrompts.length === 0 && (
                       <div className="flex h-64 items-center justify-center text-gray-500">
-                        No prompts found matching "{query}"
+                        No prompts found
                       </div>
                     )}
                   </motion.div>
@@ -311,7 +346,12 @@ export default function PromptsPage() {
                       }
                     >
                       {filteredTemplates.map((template, index) => (
-                        <TemplateCard key={template.id} template={template} index={index} view={view} />
+                        <TemplateCard
+                          key={template.id}
+                          template={template}
+                          index={index}
+                          view={view}
+                        />
                       ))}
                     </div>
 
@@ -330,5 +370,14 @@ export default function PromptsPage() {
 
       <CreatePromptModal open={createPrompt} onOpenChange={setCreatePrompt} />
     </>
+  );
+}
+
+// Wrap the component that uses useSearchParams in Suspense
+export default function PromptsPage() {
+  return (
+    <Suspense fallback={<div className="flex h-screen items-center justify-center">Loading...</div>}>
+      <PromptsContent />
+    </Suspense>
   );
 }

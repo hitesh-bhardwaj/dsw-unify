@@ -7,7 +7,7 @@ import EmptyCard from "@/components/common/EmptyCard";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { AnimatePresence, motion } from "framer-motion";
 import { LLMsIcon } from "../Icons";
-import { LLMCard } from "../LLMCard"; // adjust path if needed
+import { LLMCard } from "../LLMCard"; 
 
 const LLMs = [
   {
@@ -21,41 +21,7 @@ const LLMs = [
     avgres: "2.3s",
     deploy: false,
   },
-  {
-    id: "mistral-7B-instruct",
-    name: "Mistral 7B Instruct",
-    description: "Self-hosted Mistral Model",
-    icon: <LLMsIcon />,
-    status: "active",
-    tags: ["open-source", "self-hosted", "production"],
-    requests: "1,234",
-    avgres: "2.3s",
-    deploy: false,
-  },
-  {
-    id: "llama-2-7B",
-    name: "Llama 2 7B",
-    description: "Self-hosted Open Source",
-    icon: <LLMsIcon />,
-    status: "deploying",
-    tags: ["open-source", "self-hosted", "development"],
-    requests: "1,234",
-    avgres: "2.3s",
-    deploy: true,
-  },
-  {
-    id: "custom-insurance-model",
-    name: "Custom Insurance Model",
-    description: "Fine-tuned Model",
-    icon: <LLMsIcon />,
-    status: "active",
-    tags: ["fine-tuned", "insurance", "specialized"],
-    requests: "1,234",
-    avgres: "2.3s",
-    performance: true,
-    accuracy: "94.2%",
-    latency: "1.8s",
-  },
+ 
 ];
 
 const Recent = [
@@ -81,7 +47,7 @@ const Recent = [
   },
 ];
 
-export default function SelfHosted() {
+export default function APIBasedCards() {
   const [query, setQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid"); // grid | list
@@ -99,7 +65,7 @@ export default function SelfHosted() {
 
   // Only self-hosted models
   const selfHosted = useMemo(
-    () => LLMs.filter((llm) => llm.tags.includes("self-hosted")),
+    () => LLMs.filter((llm) => llm.tags.includes("api-based")),
     []
   );
 
@@ -184,7 +150,7 @@ export default function SelfHosted() {
               </motion.div>
             </AnimatePresence>
           ) : (
-            <EmptyCard>No self-hosted LLMs found.</EmptyCard>
+            <EmptyCard>No API-Based LLMs found.</EmptyCard>
           )}
         </div>
       </ScaleDown>

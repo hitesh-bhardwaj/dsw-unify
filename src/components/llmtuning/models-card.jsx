@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { Eye } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RippleButton } from "../ui/ripple-button";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
 const skeletonShownMap = new Map();
 
@@ -27,12 +28,39 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered ModelsCard component.
  */
-export function ModelsCard({ data , minSkeletonMs = 500 }) {
+export function ModelsCard({ data , minSkeletonMs = 500, onDelete }) {
    const { id, name, description, tags = [], records, createdBy, response , deployed} = data;
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this test before
     return !skeletonShownMap.has(id);
   });
+  const [isDeployed, setIsDeployed] = useState(data.deployed);
+
+  const handleDeployToggle = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  setIsDeployed((prev) => !prev);
+
+
+};
+
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+const handleConfirmDelete = () => {
+  if (onDelete && id) {
+    onDelete(id);
+  }
+  setIsDeleteOpen(false);
+};
+
 
   useEffect(() => {
     if (showSkeleton && id) {
@@ -47,6 +75,8 @@ export function ModelsCard({ data , minSkeletonMs = 500 }) {
   if (showSkeleton) {
     return (
       <div className="block">
+       
+
         <Card
           className={cn(
             "overflow-hidden hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 pt-3 pb-8"
@@ -95,6 +125,16 @@ export function ModelsCard({ data , minSkeletonMs = 500 }) {
 
 
   return (
+    <>
+     <ConfirmDialog
+  open={isDeleteOpen}
+  onOpenChange={setIsDeleteOpen}
+  title="Delete model?"
+  description={`This action cannot be undone. "${name}" will be permanently deleted.`}
+  confirmLabel="Delete"
+  destructive
+  onConfirm={handleConfirmDelete}
+/>
     <Link href={`#`} className="block group">
       <Card
         className={cn(
@@ -152,22 +192,22 @@ export function ModelsCard({ data , minSkeletonMs = 500 }) {
               <Button
                 variant="ghost"
                 size="icon"
+                onClick={handleTrashClick}
                 className={cn(
                   "h-6.5 w-6.5 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-sidebar-accent"
                 )}
               >
                 <Bin />
               </Button>
-               <RippleButton>
+               <RippleButton>w
              
-                <Button href="#" className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                <Button onClick={handleDeployToggle} href="#" className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                   <div className="w-4 h-4">
-                    <RocketIcon className="text-white" />
-                  </div>
-                  {deployed ? "Undeploy":"Deploy"}
-                </Button>
-              
-            </RippleButton>
+      <RocketIcon className="text-white" />
+    </div>
+    {isDeployed ? "Undeploy" : "Deploy"}
+  </Button>
+</RippleButton>
             </div>
           </div>
         </CardHeader>
@@ -193,5 +233,6 @@ export function ModelsCard({ data , minSkeletonMs = 500 }) {
         </CardContent>
       </Card>
     </Link>
+    </>
   );
 }

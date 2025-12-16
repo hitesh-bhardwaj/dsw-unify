@@ -84,12 +84,10 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
                 >
                   {icon}
                 </span>
-                <span
-                  className={cn(
-                    "w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse",
-                    status === "active" ? "" : "hidden"
-                  )}
-                />
+               {status?.toLowerCase() === "active" && (
+  <span className="w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse" />
+)}
+
               </div>
 
               {/* Status badge */}
