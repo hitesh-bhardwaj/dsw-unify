@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
-import { LeftArrow } from "@/components/Icons";
+import { Bin, LeftArrow } from "@/components/Icons";
 import {
   Select,
   SelectContent,
@@ -15,9 +15,10 @@ import { Trash2, Plus } from "lucide-react";
 
 export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
   // JOINS STATE
+  const joinIdRef = React.useRef(1);
   const [joins, setJoins] = useState([
     {
-      id: 1,
+      id: joinIdRef.current++,
       leftTable: "",
       leftKey: "",
       rightTable: "",
@@ -119,11 +120,17 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
               </h3>
               {joins.length > 0 && (
                 <button
-                  onClick={() => removeJoin(join.id)}
-                  className="text-red-500 hover:text-red-700 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+  onClick={() => removeJoin(join.id)}
+  disabled={joins.length === 1}
+  className={`transition-colors cursor-pointer ${
+    joins.length === 1
+      ? "text-foreground/30 cursor-not-allowed"
+      : "text-red-500 hover:text-red-700 cursor-pointer"
+  }`}
+>
+  <Trash2 className="w-4 h-4" />
+</button>
+
               )}
             </div>
 
@@ -144,7 +151,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                       className="text-sm"
                     />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem className="!cursor-pointer" value="transactions">Transactions</SelectItem>
                     <SelectItem className="!cursor-pointer" value="users">Users</SelectItem>
                     <SelectItem className="!cursor-pointer" value="products">Products</SelectItem>
@@ -164,7 +171,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                   <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
                     <SelectValue placeholder="Select Column" className="text-sm" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem className="!cursor-pointer" value="id">ID</SelectItem>
                     <SelectItem className="!cursor-pointer" value="user_id">User ID</SelectItem>
                     <SelectItem className="!cursor-pointer" value="transaction_id">Transaction ID</SelectItem>
@@ -184,7 +191,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                   <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
                     <SelectValue placeholder="Inner" className="text-sm" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem className="!cursor-pointer" value="inner">Inner</SelectItem>
                     <SelectItem className="!cursor-pointer" value="left">Left</SelectItem>
                     <SelectItem className="!cursor-pointer" value="right">Right</SelectItem>
@@ -211,7 +218,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                       className="text-sm"
                     />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem className="!cursor-pointer" value="user_events">User_events</SelectItem>
                     <SelectItem className="!cursor-pointer" value="orders">Orders</SelectItem>
                     <SelectItem className="!cursor-pointer" value="payments">Payments</SelectItem>
@@ -231,7 +238,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                   <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
                     <SelectValue placeholder="Select Column" className="text-sm" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="border border-border-color-0">
                     <SelectItem className="!cursor-pointer" value="id">ID</SelectItem>
                     <SelectItem className="!cursor-pointer" value="user_id">User ID</SelectItem>
                     <SelectItem className="!cursor-pointer" value="event_id">Event ID</SelectItem>

@@ -46,7 +46,8 @@ export function Header({ title = "Agents" }) {
       </div>
 
       {/* Right side actions */}
-      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+
+      <div className="flex items-center  gap-2 sm:gap-3 ml-auto ">
         {/* Global Search */}
         <div className="hidden lg:block lg:mr-6">
           <GlobalSearch />

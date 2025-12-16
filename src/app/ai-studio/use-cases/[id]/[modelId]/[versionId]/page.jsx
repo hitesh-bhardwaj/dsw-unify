@@ -5,13 +5,7 @@ import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
-import { SynthWave } from "@/components/Icons";
-import { cn } from "@/lib/utils";
-import VersionUsecaseCard from "@/components/usecases/VersionUsecaseCard";
-import SearchBar from "@/components/search-bar";
-import EmptyCard from "@/components/common/EmptyCard";
 import AnimatedTabsSection from "@/components/common/TabsPane";
-import { Badge } from "@/components/ui/badge";
 import Details from "@/components/usecases/versions/Details";
 import Explainability from "@/components/usecases/versions/Explainability";
 import Monitoring from "@/components/usecases/versions/Monitoring";
@@ -39,45 +33,35 @@ const page = () => {
       value: "explainability",
       label: "Explainability",
       name: "Explainability",
-      render: () => (
-        <Explainability />
-      ),
+      render: () => <Explainability />,
     },
     {
       id: "tab-monitoring",
       value: "monitoring",
       label: "Monitoring",
       name: "Monitoring",
-      render: () => (
-        <Monitoring />
-      ),
+      render: () => <Monitoring />,
     },
     {
       id: "tab-lineage",
       value: "lineage",
       label: "Lineage",
       name: "Lineage",
-      render: () => (
-        <Lineage/>
-      ),
+      render: () => <Lineage />,
     },
     {
       id: "tab-inference",
       value: "inference",
       label: "Inference",
       name: "Inference",
-      render: () => (
-        <Inference />
-      ),
+      render: () => <Inference />,
     },
     {
       id: "tab-api",
       value: "api",
       label: "API",
       name: "API",
-      render: () => (
-        <APIPage  />
-      ),
+      render: () => <APIPage />,
     },
   ];
 
@@ -104,20 +88,28 @@ const page = () => {
       activeUsers: "156",
     },
   };
-   const params = useParams();
-const { id: routeId, modelId,versionId } = params;
+  const params = useParams();
+  const { id: routeId, modelId, versionId } = params;
 
-function slugToTitle(slug) {
-  if (!slug) return "";
-  
-  return slug
-    .split("-")                
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
-    .join(" ");                
-}
+  function slugToTitle(slug) {
+    if (!slug) return "";
 
-    const title = slugToTitle(modelId);
-    const title2 = slugToTitle(versionId);
+    return slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+
+  const title = slugToTitle(modelId);
+  const title2 = slugToTitle(versionId);
+
+  const [deployStatus, setDeployStatus] = useState(versionsData.status);
+
+  const handleDeployToggle = () => {
+    setDeployStatus((prev) =>
+      prev === "Deployed" ? "Undeployed" : "Deployed"
+    );
+  };
 
   return (
     <>
@@ -127,12 +119,24 @@ function slugToTitle(slug) {
           <div className="bg-background p-6 space-y-8">
             <div className="flex items-center justify-between">
               <div className="flex gap-3">
-                <LeftArrowAnim link={`/ai-studio/use-cases/${routeId}/${modelId}`}/>
+                <LeftArrowAnim
+                  link={`/ai-studio/use-cases/${routeId}/${modelId}`}
+                />
                 <div className="space-y-1">
                   <div className="flex gap-3 items-center">
-                    <h1 className="text-xl font-medium">{title} {title2}</h1>
+                    <h1 className="text-xl font-medium">
+                      {title} {title2}
+                    </h1>
 
-                    <div className="flex flex-wrap py-0.5  px-2 border border-badge-green text-xs rounded-full">{versionsData.status}</div>
+                    <div
+                      className={`flex flex-wrap py-0.5 px-2 text-xs text-foreground rounded-full border ${
+                        deployStatus === "Deployed"
+                          ? "border-badge-green "
+                          : "border-red-500 "
+                      }`}
+                    >
+                      {deployStatus}
+                    </div>
                   </div>
                   <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
                     {versionsData.description}
@@ -142,9 +146,12 @@ function slugToTitle(slug) {
               <div className="flex items-center gap-3">
                 <Link href={`#`}>
                   <RippleButton>
-                    <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                    <Button
+                      onClick={handleDeployToggle}
+                      className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                    >
                       <RocketIcon className="text-white" />
-                      Undeploy
+                      {deployStatus === "Deployed" ? "Undeploy" : "Deploy"}
                     </Button>
                   </RippleButton>
                 </Link>
@@ -163,7 +170,7 @@ function slugToTitle(slug) {
                   {item.title === "Accuracy" ? (
                     <span className="text-badge-green text-xl flex items-center gap-1">
                       <LineGraph className="w-5 h-5" />
-                      <CountUp value={item.value} startOnView/>
+                      <CountUp value={item.value} startOnView />
                     </span>
                   ) : (
                     <span className="text-xl font-medium mt-2">

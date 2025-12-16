@@ -93,6 +93,19 @@ const { id: routeId, modelId } = params;
   const isGrid = view === "grid";
   const isList = view === "list";
 
+  const [deployStatus, setDeployStatus] = useState(status);
+
+  const handleDeployToggle = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  setDeployStatus((prev) =>
+    prev === "Deployed" ? "Undeployed" : "Deployed"
+  );
+};
+
+
+
   const handleNoOpClick = (e) => {
   e.preventDefault();
   e.stopPropagation();
@@ -129,12 +142,13 @@ const { id: routeId, modelId } = params;
             </div>
                 <p
                   className={`text-xs border px-2 py-1 rounded-full group-hover:border-white group-hover:text-white duration-300 ${
-                    status === "Deployed"
+                    deployStatus === "Deployed"
                       ? "border-badge-green"
                       : "border-red-500"
                   }`}
                 >
-                  {status}
+                  {deployStatus}
+
                 </p>
               </div>
 
@@ -240,9 +254,9 @@ const { id: routeId, modelId } = params;
                 </div>
               </div>
               <div className="flex items-center gap-2 w-full">
-                <button className={` text-xs  flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground  transition-all duration-300 bg-primary group-hover:bg-white`}>
+                <button onClick={handleDeployToggle} className={`text-xs cursor-pointer flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground  transition-all duration-300 bg-primary group-hover:bg-white`}>
                     <RocketIcon className="w-4 h-4 " />
-                    {status=="Deployed"?"Undeploy":"Deploy"}
+                    {deployStatus=="Deployed"?"Undeploy":"Deploy"}
                   
                   </button>
               </div>
