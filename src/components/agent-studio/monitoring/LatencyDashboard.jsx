@@ -1,70 +1,91 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+// ✅ use OUR reusable component + live hook
+import { CustomLineChart, useLiveSeries } from "@/components/common/Graphs/graphs";
+
+const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const LatencyDashboard = () => {
+  // Live line series (rolling window). time is numeric timestamp (ms)
+  const live = useLiveSeries({
+    updateMs: 3000,
+    maxPoints: 20,
+    timeKey: "time",
+    makePoint: (now) => {
+      // generate reasonable latencies (seconds)
+      const endToEnd = clamp(1.2 + Math.random() * 1.3, 1.2, 2.5);
+      const processing = clamp(0.4 + Math.random() * 0.8, 0.4, 1.2);
+      const toolInvocation = clamp(0.2 + Math.random() * 0.4, 0.2, 0.6);
+
+      return {
+        time: now.getTime(),
+        endToEnd: +endToEnd.toFixed(2),
+        processing: +processing.toFixed(2),
+        toolInvocation: +toolInvocation.toFixed(2),
+      };
+    },
+  });
+
+  // KPI numbers driven from latest point (so cards match the chart)
+  const latest = live.data?.[live.data.length - 1];
+
   const [endToEnd, setEndToEnd] = useState(1.85);
   const [processing, setProcessing] = useState(0.78);
   const [toolInvocation, setToolInvocation] = useState(0.42);
-  const [chartData, setChartData] = useState([
-    { time: '00:00', endToEnd: 1.65, processing: 0.55, toolInvocation: 0.25 },
-    { time: '04:00', endToEnd: 1.58, processing: 0.58, toolInvocation: 0.32 },
-    { time: '08:00', endToEnd: 1.62, processing: 0.65, toolInvocation: 0.35 },
-    { time: '12:00', endToEnd: 2.15, processing: 1.05, toolInvocation: 0.45 },
-    { time: '16:00', endToEnd: 2.05, processing: 1.08, toolInvocation: 0.42 },
-    { time: '20:00', endToEnd: 1.68, processing: 0.62, toolInvocation: 0.38 },
-  ]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Update metrics with random variations
-      setEndToEnd(prev => Math.max(1.2, Math.min(2.5, prev + (Math.random() * 0.2 - 0.1))));
-      setProcessing(prev => Math.max(0.4, Math.min(1.2, prev + (Math.random() * 0.1 - 0.05))));
-      setToolInvocation(prev => Math.max(0.2, Math.min(0.6, prev + (Math.random() * 0.08 - 0.04))));
+    if (!latest) return;
+    setEndToEnd(latest.endToEnd ?? endToEnd);
+    setProcessing(latest.processing ?? processing);
+    setToolInvocation(latest.toolInvocation ?? toolInvocation);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latest]);
 
-      // Update chart data
-      setChartData(prevData => 
-        prevData.map(item => ({
-          ...item,
-          endToEnd: Math.max(1.2, Math.min(2.5, item.endToEnd + (Math.random() * 0.15 - 0.075))),
-          processing: Math.max(0.4, Math.min(1.2, item.processing + (Math.random() * 0.1 - 0.05))),
-          toolInvocation: Math.max(0.2, Math.min(0.6, item.toolInvocation + (Math.random() * 0.06 - 0.03))),
-        }))
-      );
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const lines = useMemo(
+    () => [
+      { dataKey: "endToEnd", name: "End-to-End", color: "#3b82f6" },
+      { dataKey: "processing", name: "Processing", color: "#22c55e" },
+      { dataKey: "toolInvocation", name: "Tool Invocation", color: "#f97316" },
+    ],
+    []
+  );
 
   return (
     <div className="w-full py-3">
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-medium  mb-2">Latency & Performance Metrics</h1>
+          <h1 className="text-2xl font-medium mb-2">
+            Latency &amp; Performance Metrics
+          </h1>
           <p className="text-foreground/80">Speed and efficiency of agent responses</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="!pb-0 !py-7">
-            <CardContent className='!space-y-5'>
-              <div className="text-sm font-medium "> End-to-End Latency </div>
-              <div className="text-4xl font-medium">{endToEnd.toFixed(2)}s</div>
+            <CardContent className="!space-y-5">
+              <div className="text-sm font-medium">End-to-End Latency</div>
+              <div className="text-4xl font-medium">{Number(endToEnd).toFixed(2)}s</div>
               <p className="text-sm text-slate-500">Total time from request to response</p>
             </CardContent>
           </Card>
 
           <Card className="!pb-0 !py-7">
-            <CardContent className='!space-y-5'>
-              <div className="text-sm font-medium "> Processing Latency </div>
-              <div className="text-4xl font-medium">{processing.toFixed(2)}s</div>
-              <p className="text-sm text-slate-500">Time in agent's internal logic</p>
+            <CardContent className="!space-y-5">
+              <div className="text-sm font-medium">Processing Latency</div>
+              <div className="text-4xl font-medium">{Number(processing).toFixed(2)}s</div>
+              <p className="text-sm text-slate-500">Time in agent&apos;s internal logic</p>
             </CardContent>
           </Card>
 
           <Card className="!pb-0 !py-7">
-            <CardContent className='!space-y-5'>
-              <div className="text-sm font-medium "> Tool Invocation Latency </div>
-              <div className="text-4xl font-medium">{toolInvocation.toFixed(2)}s</div>
+            <CardContent className="!space-y-5">
+              <div className="text-sm font-medium">Tool Invocation Latency</div>
+              <div className="text-4xl font-medium">
+                {Number(toolInvocation).toFixed(2)}s
+              </div>
               <p className="text-sm text-slate-500">Latency for tool invocations</p>
             </CardContent>
           </Card>
@@ -74,73 +95,21 @@ const LatencyDashboard = () => {
           <CardHeader>
             <CardTitle className="text-2xl">Latency Breakdown Over Time</CardTitle>
           </CardHeader>
-          <CardContent className='pt-4 flex items-center justify-center'>
-            <ResponsiveContainer width="90%" height={400}>
-              <LineChart data={chartData}>
-                <CartesianGrid strokeDasharray="5 5" stroke="#94a3b8"   />
-                <XAxis 
-                  dataKey="time" 
-                  stroke="#64748b"
-                  style={{ fontSize: '14px' }}
-                />
-                <YAxis 
-                  stroke="#64748b"
-                  style={{ fontSize: '14px' }}
-                  domain={[0, 2.5]}
-                  ticks={[0, 0.6, 1.1, 1.6, 2.2]}
-                  tickFormatter={(value) => `${value.toFixed(1)}s`}
-                />
-                <Tooltip 
-                  contentStyle={{ 
-                    backgroundColor: '#fff',
-                    border: '1px solid #e2e8f0',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
-                  }}
-                  formatter={(value) => `${value.toFixed(2)}s`}
-                />
-                <Legend
-                                  iconType="circle"
-                                  wrapperStyle={{
-                                    paddingTop: 14,
-                                    color: "#334155",
-                                    fontSize: 12,
-                                  }}
-                                  formatter={(value) => (
-                                    <span style={{ color: "#334155", fontWeight: 400 }}>
-                                      {value}
-                                    </span>
-                                  )}
-                                />
-                <Line 
-                  type="monotone" 
-                  dataKey="endToEnd" 
-                  stroke="#3b82f6" 
-                  strokeWidth={2}
-                  name="End-to-End"
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6 }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="processing" 
-                  stroke="#22c55e" 
-                  strokeWidth={2}
-                  name="Processing"
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6 }}
-                />
-                <Line 
-                  type="monotone" 
-                  dataKey="toolInvocation" 
-                  stroke="#f97316" 
-                  strokeWidth={2}
-                  name="Tool Invocation"
-                  dot={{ r: 4 }}
-                  activeDot={{ r: 6 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+
+          <CardContent className="pt-4 flex items-center justify-center">
+            <CustomLineChart
+              data={live.data}
+              xAxisTicks={live.ticks}
+              timeKey="time"
+              lines={lines}
+              dotSize={0}
+              height={400}
+              width="90%"
+              yAxisDomain={[0, 2.5]}
+              yAxisTicks={[0, 0.6, 1.1, 1.6, 2.2]}
+              yAxisFormatter={(v) => `${Number(v).toFixed(1)}s`}
+              tooltipFormatter={(v, name) => [`${Number(v).toFixed(2)}s`, name]}
+            />
           </CardContent>
         </Card>
       </div>

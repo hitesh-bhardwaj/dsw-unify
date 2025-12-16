@@ -29,6 +29,8 @@ import Conversations from "@/components/agent-studio/agents/Conversations";
 import TestAgentModal from "@/components/agent-studio/agents/test-agent-modal";
 import { useRouter } from "next/navigation";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+import MonitoringTab from "@/components/agent-studio/agents/MonitoringTab";
+import PerformanceTab from "@/components/agent-studio/agents/PerformanceTab";
 
 export default function AgentDetailPage({ params }) {
   const { id } = use(params);
@@ -69,7 +71,7 @@ export default function AgentDetailPage({ params }) {
       label: "Monitoring",
       name: "Monitoring",
       render: () => (
-        <EmptyCard children={"Monitoring configuration coming soon..."} />
+        <MonitoringTab/>
       ),
     },
     {
@@ -78,7 +80,7 @@ export default function AgentDetailPage({ params }) {
       label: "Performance",
       name: "Performance",
       render: () => (
-        <EmptyCard children={"Performance configuration coming soon..."} />
+        <PerformanceTab/>
       ),
     },
     {
@@ -313,6 +315,7 @@ export default function AgentDetailPage({ params }) {
               </RippleButton>
               <RippleButton>
                 <Button
+                
                   variant="outline"
                   className="gap-2 text-foreground border border-primary"
                 >
