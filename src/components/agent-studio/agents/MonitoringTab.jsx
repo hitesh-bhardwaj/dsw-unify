@@ -10,7 +10,7 @@ const MonitoringTab = () => {
     return (
         <>
             <div className="space-y-6">
-                <TrafficMetricsDashboard />
+                <TrafficMetricsDashboard  />
                 <GuardrailsDashboard />
                 <LatencyDashboard />
                 <LLMDashboard />

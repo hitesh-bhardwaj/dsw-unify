@@ -11,7 +11,7 @@ import {
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const TrafficMetricsDashboard = () => {
+const TrafficMetricsDashboard = ({}) => {
   // ===== Live traffic series =====
   const live = useLiveSeries({
     updateMs: 3000,
