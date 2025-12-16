@@ -31,9 +31,9 @@ import {
 
 /**
  * Global search component with command palette
- * Styled to match the SearchBar component
+ * Styled to match the SearchBar component; compact mode renders an icon-only trigger.
  */
-export function GlobalSearch() {
+export function GlobalSearch({ compact = false }) {
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
@@ -86,17 +86,28 @@ export function GlobalSearch() {
   return (
     <>
       {/* Search Button - Styled to match SearchBar */}
-      <div className="relative w-64 lg:w-64">
-        <div className="absolute left-5 top-1/2 -translate-y-1/2 text-border-color-3 pointer-events-none z-10">
-          <SearchIcon className="size-4" />
-        </div>
+      {compact ? (
         <button
+          type="button"
+          aria-label="Open search"
           onClick={() => setOpen(true)}
-          className="w-full h-10 bg-background border border-border-color-0 rounded-md pl-12 pr-3 text-left text-sm placeholder:text-border-color-3 hover:border-border-color-3 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md border-none md:border border-border-color-0 bg-none md:bg-background text-foreground hover:border-border-color-3 hover:bg-sidebar-accent transition-colors duration-200"
         >
-          <span className="text-border-color-3">Search...</span>
+          <SearchIcon className="md:size-5 size-4" />
         </button>
-      </div>
+      ) : (
+        <div className="relative w-64 lg:w-64">
+          <div className="absolute left-5 top-1/2 -translate-y-1/2 text-border-color-3 pointer-events-none z-10">
+            <SearchIcon className="size-4" />
+          </div>
+          <button
+            onClick={() => setOpen(true)}
+            className="w-full h-10 bg-background border border-border-color-0 rounded-md pl-12 pr-3 text-left text-sm placeholder:text-border-color-3 hover:border-border-color-3 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          >
+            <span className="text-border-color-3">Search...</span>
+          </button>
+        </div>
+      )}
 
       {/* Command Dialog */}
       <CommandDialog open={open} onOpenChange={setOpen}>

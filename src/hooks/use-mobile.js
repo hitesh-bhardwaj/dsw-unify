@@ -1,6 +1,7 @@
 import * as React from "react"
 
-const MOBILE_BREAKPOINT = 768
+// Treat tablet like mobile for layout (<= 1023px).
+const MOBILE_BREAKPOINT = 1024
 
 /**
  * Hook to determine if the viewport is within the mobile breakpoint.

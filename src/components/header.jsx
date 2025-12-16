@@ -35,25 +35,28 @@ export function Header({ title = "Agents" }) {
   };
 
   return (
-    <header className="flex h-16 items-center justify-between bg-background/70 px-6 sticky w-full top-0 z-50 backdrop-blur-md">
+    <header className="flex min-h-16 flex-wrap items-center justify-between gap-3 bg-background/70 px-4 sm:px-6 sticky w-full top-0 z-50 backdrop-blur-md md:border-none border-b border-border">
       {/* Left side - Trigger and Breadcrumb */}
-      <div className="flex items-center gap-4">
-        <SidebarTrigger />
-        <Separator orientation="vertical" className={"h-8!"} />
-        <div className="flex items-center gap-2 text-sm py-2 rounded-md duration-300">
-          <Breadcrumbs/>
+      <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+        <SidebarTrigger className=""/>
+        <Separator orientation="vertical" className="hidden lg:block h-8!" />
+        <div className="hidden lg:flex items-center gap-2 text-sm py-2 rounded-md duration-300">
+          <Breadcrumbs />
         </div>
       </div>
 
       {/* Right side actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
         {/* Global Search */}
-        <div className="mr-8">
-        <GlobalSearch />
+        <div className="hidden lg:block lg:mr-6">
+          <GlobalSearch />
+        </div>
+        <div className="lg:hidden">
+          <GlobalSearch compact />
         </div>
 
         {/* Theme toggle */}
-        <ThemeTogglerBtn/>
+        <ThemeTogglerBtn />
 
         {/* Notifications */}
         <Button
@@ -72,7 +75,7 @@ export function Header({ title = "Agents" }) {
         >
           <FAQIcons className="!h-5 !w-auto " />
         </Button>
-        <Separator orientation="vertical" className={"h-8!"} />
+        <Separator orientation="vertical" className="hidden sm:block h-8!" />
 
         {/* User avatar with dropdown */}
         <div className="flex items-center gap-2 cursor-pointer">
