@@ -112,7 +112,7 @@ export const NavUser = ({
               animate="visible"
               variants={separatorVariants}
             >
-              <Separator className={"opacity-30"} />
+              <Separator className={"opacity-30 dark:bg-white "} />
             </motion.div>
 
             <motion.div
@@ -132,7 +132,7 @@ export const NavUser = ({
               animate="visible"
               variants={separatorVariants}
             >
-              <Separator className={"opacity-30"} />
+              <Separator className={"opacity-30 dark:bg-white"} />
             </motion.div>
 
             <motion.div
@@ -174,7 +174,7 @@ export const NavUser = ({
               animate="visible"
               variants={separatorVariants}
             >
-              <Separator className={"opacity-30"} />
+              <Separator className={"opacity-30 dark:bg-white"} />
             </motion.div>
 
             <motion.div

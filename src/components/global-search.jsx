@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { SearchIcon } from "./Icons";
 import { Command } from "@/components/ui/command";
 
-
 import {
   CommandEmpty,
   CommandGroup,
@@ -17,10 +16,7 @@ import {
 import { DialogClose } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 import {
   AgentsIcon,
@@ -68,29 +64,114 @@ export function GlobalSearch({ compact = false }) {
   // Searchable items organized by category
   const searchItems = {
     "Agent Studio": [
-      { icon: AgentsIcon, name: "Agents", href: "/agent-studio/agents", description: "Manage AI agents" },
-      { icon: PromptsIcon, name: "Prompts", href: "/agent-studio/prompts", description: "Prompt templates and library" },
-      { icon: LLMsIcon, name: "LLMs", href: "/agent-studio/llms", description: "Language model selection" },
-      { icon: KnowledgeBaseIcon, name: "Knowledge Bases", href: "/agent-studio/knowledge-bases", description: "Knowledge management" },
-      { icon: ToolsIcon, name: "Tools", href: "/agent-studio/tools", description: "Agent tool integrations" },
-      { icon: MemoriesIcon, name: "Memories", href: "/agent-studio/memories", description: "Memory storage" },
-      { icon: GuardrailsIcon, name: "Guardrails", href: "/agent-studio/guardrails", description: "Safety constraints" },
-      { icon: MonitoringIcon, name: "Agent Monitoring", href: "/agent-studio/monitoring", description: "Monitor agent performance" },
-      { icon: TestingIcon, name: "Testing", href: "/agent-studio/testing", description: "Agent testing suites" },
+      {
+        icon: AgentsIcon,
+        name: "Agents",
+        href: "/agent-studio/agents",
+        description: "Manage AI agents",
+      },
+      {
+        icon: PromptsIcon,
+        name: "Prompts",
+        href: "/agent-studio/prompts",
+        description: "Prompt templates and library",
+      },
+      {
+        icon: LLMsIcon,
+        name: "LLMs",
+        href: "/agent-studio/llms",
+        description: "Language model selection",
+      },
+      {
+        icon: KnowledgeBaseIcon,
+        name: "Knowledge Bases",
+        href: "/agent-studio/knowledge-bases",
+        description: "Knowledge management",
+      },
+      {
+        icon: ToolsIcon,
+        name: "Tools",
+        href: "/agent-studio/tools",
+        description: "Agent tool integrations",
+      },
+      {
+        icon: MemoriesIcon,
+        name: "Memories",
+        href: "/agent-studio/memories",
+        description: "Memory storage",
+      },
+      {
+        icon: GuardrailsIcon,
+        name: "Guardrails",
+        href: "/agent-studio/guardrails",
+        description: "Safety constraints",
+      },
+      {
+        icon: MonitoringIcon,
+        name: "Agent Monitoring",
+        href: "/agent-studio/monitoring",
+        description: "Monitor agent performance",
+      },
+      {
+        icon: TestingIcon,
+        name: "Testing",
+        href: "/agent-studio/testing",
+        description: "Agent testing suites",
+      },
     ],
     "AI Studio": [
-      { icon: UseCasesIcon, name: "Use Cases", href: "/ai-studio/use-cases", description: "AI use case templates" },
-      { icon: MonitoringIcon, name: "AI Monitoring", href: "/ai-studio/monitoring", description: "Model monitoring" },
-      { icon: LLMsIcon, name: "Inference", href: "/ai-studio/inference", description: "Model inference" },
+      {
+        icon: UseCasesIcon,
+        name: "Use Cases",
+        href: "/ai-studio/use-cases",
+        description: "AI use case templates",
+      },
+      {
+        icon: MonitoringIcon,
+        name: "AI Monitoring",
+        href: "/ai-studio/monitoring",
+        description: "Model monitoring",
+      },
+      {
+        icon: LLMsIcon,
+        name: "Inference",
+        href: "/ai-studio/inference",
+        description: "Model inference",
+      },
     ],
     "Feature Store": [
-      { icon: FeatureTransformationIcon, name: "Feature Transformations", href: "/feature-store/feature-transformations", description: "Feature engineering" },
-      { icon: FeatureViewsIcon, name: "Feature Views", href: "/feature-store/feature-views", description: "Feature view management" },
-      { icon: FeatureServicesIcon, name: "Feature Services", href: "/feature-store/feature-services", description: "Feature serving" },
+      {
+        icon: FeatureTransformationIcon,
+        name: "Feature Transformations",
+        href: "/feature-store/feature-transformations",
+        description: "Feature engineering",
+      },
+      {
+        icon: FeatureViewsIcon,
+        name: "Feature Views",
+        href: "/feature-store/feature-views",
+        description: "Feature view management",
+      },
+      {
+        icon: FeatureServicesIcon,
+        name: "Feature Services",
+        href: "/feature-store/feature-services",
+        description: "Feature serving",
+      },
     ],
     "Data Engineering": [
-      { icon: DataIngestionIcon2, name: "Data Ingestion", href: "/data-engineering/data-ingestion", description: "Data import and processing" },
-      { icon: DataExplorerIcon, name: "Data Explorer", href: "/data-engineering/data-explorer", description: "Explore your data" },
+      {
+        icon: DataIngestionIcon2,
+        name: "Data Ingestion",
+        href: "/data-engineering/data-ingestion",
+        description: "Data import and processing",
+      },
+      {
+        icon: DataExplorerIcon,
+        name: "Data Explorer",
+        href: "/data-engineering/data-explorer",
+        description: "Explore your data",
+      },
     ],
   };
 
@@ -121,53 +202,54 @@ export function GlobalSearch({ compact = false }) {
       )}
 
       {/* Dialog */}
-     <Dialog open={open} onOpenChange={setOpen} className=''>
-  <DialogContent className="w-[35%] !py-4 p-0 px-2 bg-white">
+      <Dialog open={open} onOpenChange={setOpen} className="">
+        <DialogContent className="w-[35%] !py-4 p-0 px-2 bg-white dark:bg-background">
+          <DialogClose asChild>
+            <button className="absolute right-4 cursor-pointer top-4 rounded-sm opacity-70 hover:opacity-100 transition">
+              <X className="h-4 w-4" />
+            </button>
+          </DialogClose>
 
-     <DialogClose asChild>
-      <button className="absolute right-4 cursor-pointer top-4 rounded-sm opacity-70 hover:opacity-100 transition">
-        <X className="h-4 w-4" />
-      </button>
-    </DialogClose>
+          <Command>
+            <CommandInput
+              placeholder="Search across UnifyAI..."
+              className="!py-4"
+            />
 
-    <Command>
-      <CommandInput
-        placeholder="Search across UnifyAI..."
-        className="!py-4"
-      />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
 
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-
-        {Object.entries(searchItems).map(([category, items]) => (
-          <CommandGroup key={category} heading={category} className="pt-5">
-            {items.map((item) => {
-              const Icon = item.icon;
-              return (
-                <CommandItem
-                  key={item.href}
-                  value={`${item.name} ${item.description}`}
-                  onSelect={() => handleSelect(item.href)}
-                  className="cursor-pointer"
+              {Object.entries(searchItems).map(([category, items]) => (
+                <CommandGroup
+                  key={category}
+                  heading={category}
+                  className="pt-5"
                 >
-                  <Icon className="mr-2 h-4 w-4" />
-                  <div className="flex flex-col">
-                    <span>{item.name}</span>
-                    <span className="text-xs text-muted-foreground">
-                      {item.description}
-                    </span>
-                  </div>
-                </CommandItem>
-              );
-            })}
-          </CommandGroup>
-        ))}
-      </CommandList>
-    </Command>
-
-  </DialogContent>
-</Dialog>
-
+                  {items.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <CommandItem
+                        key={item.href}
+                        value={`${item.name} ${item.description}`}
+                        onSelect={() => handleSelect(item.href)}
+                        className="cursor-pointer dark:hover:bg-sidebar-accent"
+                      >
+                        <Icon className="mr-2 h-4 w-4" />
+                        <div className="flex flex-col">
+                          <span>{item.name}</span>
+                          <span className="text-xs text-muted-foreground">
+                            {item.description}
+                          </span>
+                        </div>
+                      </CommandItem>
+                    );
+                  })}
+                </CommandGroup>
+              ))}
+            </CommandList>
+          </Command>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

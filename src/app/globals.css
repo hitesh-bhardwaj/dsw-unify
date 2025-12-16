@@ -171,6 +171,9 @@ body {
 *::-webkit-scrollbar-track {
   background: #11111111; /* light track */
 }
+.dark *::-webkit-scrollbar-track {
+  background: #fcfcfc11; /* light track */
+}
 *::-webkit-scrollbar-thumb {
   background: var(--primary); /* orange thumb */
   border-radius: 8px;

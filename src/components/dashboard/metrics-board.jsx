@@ -170,7 +170,7 @@ export function MetricsBoard({ metricsData, view, setView, isLoading = false }) 
           <div className="space-x-1 flex items-center gap-1">
 
             <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border border-border-color-0 rounded-md py-1.5 p-1.5 flex items-center gap-3 text-sm">
-              <div className="h-5 w-5 text-[#111111]">
+              <div className="h-5 w-5 text-[#111111] dark:text-white">
                 <Eye />
               </div>
               Manage Cards
