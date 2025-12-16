@@ -23,7 +23,7 @@ const InferenceGrid = () => {
   
   return (
     <>
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 ">
+      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
         <h3 className="text-xl font-medium mb-2">Test Model Inference</h3>
         <p className="text-sm text-gray-600 mb-4 dark:text-foreground">
          Send test requests to your deployed models
@@ -64,7 +64,7 @@ const InferenceGrid = () => {
             value={systemPrompt}
             onChange={(e) => setSystemPrompt(e.target.value)}
             placeholder="Enter your test message here..."
-            className="min-h-[120px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80"
+            className="min-h-[120px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80 dark:!bg-card"
           />
         </div>
         

@@ -61,7 +61,7 @@ const PromptMetadataGrid = () => {
                  <Badge
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-border-color-0 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background dark:bg-card"
+                  "rounded-full border border-border-color-0 px-3 py-1 bg-white text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background dark:bg-card"
                 )}
               >
                 Customer-service
