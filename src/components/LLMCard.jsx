@@ -79,7 +79,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
               >
                 <span
                   className={cn(
-                    "w-full h-full flex justify-center items-center p-4"
+                    "w-full h-full flex justify-center items-center p-4 "
                   )}
                 >
                   {icon}
@@ -94,7 +94,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
               {!llm?.deploy ? (
                  <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium transition-all duration-300 group-hover:text-white group-hover:border-white",
+                  "rounded-full px-3 py-1 text-xs font-medium transition-all duration-300 group-hover:text-white group-hover:border-white ",
                   status === "active"
                     ? "bg-white/10 text-foreground border border-badge-green"
                     : "bg-white/10 text-foreground px-4 border border-foreground"
@@ -128,7 +128,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
                   key={index}
                   variant="secondary"
                   className={cn(
-                   "rounded-full border border-border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                   "rounded-full border border-border-color-2 px-3 py-1  text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10 dark:bg-card"
                   )}
                 >
                   {tag}
@@ -139,7 +139,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
             {/* Footer */}
             {!llm?.deploy ? (
               llm?.performance ? (
-                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300">
+                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-card dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300 ">
                   <p className="group-hover:text-white transition-colors duration-300">Performance</p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
@@ -154,7 +154,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
                   </div>
                 </div>
               ) : (
-                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300">
+                <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-card dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300">
                   <p className="group-hover:text-white transition-colors duration-300">Usage Stats</p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
@@ -170,7 +170,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
                 </div>
               )
             ) : (
-              <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/30 transition-all duration-300">
+              <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-card dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/30 transition-all duration-300">
                 <p className="group-hover:text-white transition-colors duration-300">Deploying Status</p>
                 <div className="w-full flex flex-col gap-4">
                   <p className="text-primary group-hover:text-white transition-colors duration-300">Progress:75%</p>

@@ -257,7 +257,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
 
               <div className="space-y-3">
                 <p className="text-sm">Embedding Model</p>
-                <div className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center">
+                <div className="!border  border-border-color-0 rounded-lg p-4 bg-white  text-xs flex justify-between items-center dark:bg-card">
                   <div className="flex gap-5">
                     <div className="">
                       <p className="text-sm">text-embedding-3-small</p>
@@ -275,7 +275,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                   <p className="text-sm">1536</p>
                 </div>
 
-                <div className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center">
+                <div className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-card text-xs flex justify-between items-center">
                   <div className="space-y-2 w-full">
                     <div className="w-full flex justify-between">
                       <p className="text-sm font-medium">Vector size</p>
@@ -299,7 +299,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
 
               <div className="space-y-3">
                 <p className="text-sm">Storage Impact</p>
-                <div className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs space-y-3">
+                <div className="!border  border-border-color-0 rounded-lg p-4 bg-white dark:bg-card text-xs space-y-3">
                   <div className="flex items-center justify-between w-full">
                     <p className="text-sm">Estimated vectors:</p>
                     <p className="text-xs ">1,250</p>
@@ -327,7 +327,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                 </h3>
               </CardHeader>
               <div className="space-y-3 flex gap-3">
-                <div className="!border w-full border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center">
+                <div className="!border w-full border-border-color-0 rounded-lg p-4 bg-white dark:bg-card text-xs flex justify-between items-center">
                   <div className="space-y-2 max-h-28 w-full py-6 ">
                     <div className="w-full flex justify-between">
                       <p className="text-sm font-medium">Retrieval Speed</p>
@@ -347,7 +347,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                     </div>
                   </div>
                 </div>
-                <div className="!border w-full max-h-28 border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center">
+                <div className="!border w-full max-h-28 border-border-color-0 rounded-lg p-4 bg-white dark:bg-card text-xs flex justify-between items-center">
                   <div className="space-y-2 w-full ">
                     <div className="w-full flex justify-between">
                       <p className="text-sm font-medium">Accuracy</p>
@@ -367,7 +367,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                     </div>
                   </div>
                 </div>
-                <div className="!border w-full max-h-28 border-border-color-0 rounded-lg p-4 bg-white dark:bg-background text-xs flex justify-between items-center">
+                <div className="!border w-full max-h-28 border-border-color-0 rounded-lg p-4 bg-white dark:bg-card text-xs flex justify-between items-center">
                   <div className="space-y-2 w-full">
                     <div className="w-full flex justify-between">
                       <p className="text-sm font-medium">Cost Efficiency</p>

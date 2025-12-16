@@ -24,7 +24,7 @@ const usageStats = [
 
 export default function ToolsUsage() {
   return (
-    <div className="h-full rounded-3xl border border-border-color-0 p-6 space-y-6">
+    <div className="h-full rounded-3xl border border-border-color-0 p-6 space-y-6 dark:bg-card">
       {/* Header */}
       <h2 className="text-xl font-medium">Parameters</h2>
 

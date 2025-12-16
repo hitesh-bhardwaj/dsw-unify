@@ -176,7 +176,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
               {Array.from({ length: 4 }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out"
+                  className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col justify-center items-center py-8 hover:shadow-xl duration-500 ease-out "
                 >
                   <Skeleton className="h-8 w-28 mb-3" />
                   <Skeleton className="h-4 w-40" />
@@ -185,21 +185,21 @@ export default function KnowledgeBaseDetailPage({ params }) {
             </div>
           ) : (
             <div className="w-full flex gap-4">
-              <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+              <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm ">Documents</p>
                 <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={knowledgeBase.documents} duration={1.2} startOnView once />
                 </p>
                 
               </div>
-              <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+              <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Storage</p>
                 <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={knowledgeBase.storage} duration={1.2} startOnView once />
                 </p>
                 
               </div>
-              <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+              <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Source</p>
                 <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   {knowledgeBase.source}

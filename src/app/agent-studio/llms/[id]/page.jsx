@@ -151,27 +151,27 @@ export default function LLMsDetailPage({ params }) {
             </div>
           ) : (
             <div className="w-full flex gap-4">
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm ">Total Requests</p>
                 <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={llm.request} duration={1.2} startOnView once />
                 </p>
                 
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Avg. Response Time</p>
                 <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={llm.avgRes} duration={1.2} startOnView once />
                 </p>
                 
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Uptime</p>
                 <p className="text-3xl font-medium dark:text-foreground text-foreground">
                   <CountUp value={llm.upTime} duration={1.2} startOnView once />
                 </p>
               </div>
-              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer">
+              <div className="w-[25%] h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">This Month Cost</p>
 
                 <p className="text-3xl font-medium dark:text-foreground text-foreground">

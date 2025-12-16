@@ -20,7 +20,7 @@ const Settings = () => {
   const [isOpenFormat, setIsOpenFormat] = useState(false);
   return (
     <>
-      <div className="space-y-4 border rounded-3xl p-6 border-border-color-0 h-full pb-8 ">
+      <div className="space-y-4 border rounded-3xl p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
         <h3 className="text-xl font-medium mb-2">Settings</h3>
         <div className="space-y-2 mt-4">
           <label className="text-sm text-[#111111] dark:text-foreground">
@@ -44,7 +44,7 @@ const Settings = () => {
             value={systemPrompt}
             onChange={(e) => setSystemPrompt(e.target.value)}
             placeholder="Internal company policies and procedures"
-            className="min-h-[120px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80"
+            className="min-h-[120px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80 dark:!bg-card"
           />
           
         </div>
@@ -58,7 +58,7 @@ const Settings = () => {
               className="w-full"
             >
               <SelectTrigger
-                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 cursor-pointer ${
+                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 cursor-pointer dark:bg-card ${
                   isOpenFormat ? "[&>svg]:rotate-180" : ""
                 }`}
               >

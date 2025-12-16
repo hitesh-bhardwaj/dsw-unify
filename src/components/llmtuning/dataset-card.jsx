@@ -177,7 +177,7 @@ const handleConfirmDelete = () => {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-sidebar-accent"
+                  "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-sidebar-accent dark:hover:bg-white/30"
                 )}
               >
                 <Eye />
@@ -187,7 +187,7 @@ const handleConfirmDelete = () => {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "h-6 w-6 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-sidebar-accent"
+                  "h-6 w-6 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-foreground hover:bg-sidebar-accent dark:hover:bg-white/30"
                 )}
               >
                 <UploadIcon />
@@ -198,7 +198,7 @@ const handleConfirmDelete = () => {
                 size="icon"
                 onClick={handleTrashClick}
                 className={cn(
-                  "h-6.5 w-6.5 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-sidebar-accent"
+                  "h-6.5 w-6.5 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 dark:text-foreground text-red hover:bg-sidebar-accent dark:hover:bg-white/30"
                 )}
               >
                 <Bin />

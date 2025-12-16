@@ -111,7 +111,7 @@ export function ToolsCard({ tools,index, view, minSkeletonMs = 500 }) {
 
           <CardContent>
 
-            <div className="border border-border-color-2 py-10 group-hover:border-white/60 h-full w-full rounded-lg flex px-5 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
+            <div className="border border-border-color-2 py-10 group-hover:border-white/60 h-full w-full rounded-lg flex px-5 min-h-20 items-center bg-white/10 dark:bg-card dark:group-hover:bg-white/10 transition-all duration-300">
 
             {/* Tags */}
             <div className="h-fit flex flex-wrap gap-1">
