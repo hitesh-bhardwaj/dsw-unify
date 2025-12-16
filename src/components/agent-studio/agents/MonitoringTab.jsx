@@ -5,13 +5,16 @@ import LatencyDashboard from '../monitoring/LatencyDashboard'
 import LLMDashboard from '../monitoring/LLMDashboard'
 import ErrorMetricsDashboard from '../monitoring/ErrorMetricsDashboard'
 import SuccessMetricsDashboard from '../monitoring/SuccessMetricsDashboard'
+import TrafficMetricsAgents from './MonitoringGraphs/TrafficMetricsAgents'
+import GuardrailsDashboardAgents from './MonitoringGraphs/GuardrailsDashboardAgents'
 
 const MonitoringTab = () => {
     return (
         <>
             <div className="space-y-6">
-                <TrafficMetricsDashboard  />
-                <GuardrailsDashboard />
+                <TrafficMetricsAgents/>
+    <GuardrailsDashboardAgents/>
+                
                 <LatencyDashboard />
                 <LLMDashboard />
                 <ErrorMetricsDashboard />
