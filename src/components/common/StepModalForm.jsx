@@ -95,11 +95,11 @@ export default function StepFormModal({ open, onOpenChange, steps = [] ,title}) 
                         ${
                           isActive
                             ? "bg-primary text-white border-primary"
-                            : "border-foreground/40 text-foreground/40"
+                            : "border-foreground/40 text-foreground/40 dark:bg-background dark:border-border-color-0"
                         }
                          ${
                           isCompleted
-                            ? "bg-white !text-[#111111] border-primary font-medium"
+                            ? "bg-white !text-[#111111] border-primary font-medium dark:bg-sidebar-accent dark:!text-white dark:border-border-color-0"
                             : "border-foreground/40"
                         }
                       `}

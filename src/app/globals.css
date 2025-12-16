@@ -108,9 +108,9 @@
 }
 
 .dark {
-  --background: #10111A;
+  --background: #020A2C;
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: #030A26;
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -130,10 +130,11 @@
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: #f76809;
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: #161821;
+  --sidebar-accent: #101737;
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --border-color-0:#ffffff1a;
   --border-color-1:#ffffff1a;
   --border-color-2:#ffffff10;
   --border-color-3: #fffffffe;

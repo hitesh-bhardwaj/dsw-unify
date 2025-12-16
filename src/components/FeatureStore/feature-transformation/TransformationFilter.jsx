@@ -175,7 +175,7 @@ const filteredTags = useMemo(
        <Popover open={sortOpen} onOpenChange={setSortOpen}>
   <PopoverTrigger asChild>
     <button className="flex cursor-pointer items-center gap-2 border border-border-color-0 rounded-md px-4 py-2 text-xs">
-      <SortIcon className="w-4 h-4" />
+      <SortIcon className="w-4 h-4 dark:!text-white" />
       <span>Sorting</span>
     </button>
   </PopoverTrigger>
