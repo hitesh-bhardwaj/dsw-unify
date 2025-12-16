@@ -86,7 +86,7 @@ const TrafficMetricsAgents = () => {
       {/* Chart */}
       <Card className="border border-border-color-0 shadow-sm">
         <CardHeader className="pb-2">
-          <CardTitle className="font-medium text-xl text-gray-900">
+          <CardTitle className="font-medium text-xl text-foreground ">
             Traffic Over Time
           </CardTitle>
         </CardHeader>

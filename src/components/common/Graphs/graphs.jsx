@@ -193,7 +193,7 @@ export const DoubleAreaChart = ({
           <Legend
             iconType="circle"
             wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
-            formatter={(value) => <span style={{ color: "#334155", fontWeight: 400 }}>{value}</span>}
+            formatter={(value) => <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">{value}</span>}
           />
         )}
 
@@ -303,7 +303,7 @@ export const SingleAreaChart = ({
           <Legend
             iconType="circle"
             wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
-            formatter={(value) => <span style={{ color: "#334155", fontWeight: 400 }}>{value}</span>}
+            formatter={(value) => <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">{value}</span>}
           />
         )}
 
@@ -395,7 +395,7 @@ export const CustomLineChart = ({
           <Legend
             iconType="circle"
             wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
-            formatter={(value) => <span style={{ color: "#334155", fontWeight: 400 }}>{value}</span>}
+            formatter={(value) => <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">{value}</span>}
           />
         )}
 
@@ -508,7 +508,7 @@ export const CustomBarChart = ({
             iconType="circle"
             wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
             formatter={(value) => (
-              <span style={{ color: "#334155", fontWeight: 400 }}>{value}</span>
+              <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">{value}</span>
             )}
           />
         )}

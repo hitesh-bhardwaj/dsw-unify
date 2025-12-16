@@ -1,24 +1,27 @@
 import React from 'react'
-import TrafficMetricsDashboard from '../monitoring/TrafficMonitoringDashboard'
-import GuardrailsDashboard from '../monitoring/GuardrailsDashboard'
-import LatencyDashboard from '../monitoring/LatencyDashboard'
 import LLMDashboard from '../monitoring/LLMDashboard'
 import ErrorMetricsDashboard from '../monitoring/ErrorMetricsDashboard'
-import SuccessMetricsDashboard from '../monitoring/SuccessMetricsDashboard'
 import TrafficMetricsAgents from './MonitoringGraphs/TrafficMetricsAgents'
 import GuardrailsDashboardAgents from './MonitoringGraphs/GuardrailsDashboardAgents'
+import SuccessMonitoringAgents from './MonitoringGraphs/SuccessMonitoringAgents'
+import LatencyDashboardAgents from './MonitoringGraphs/LatencyDashboardAgents'
+import LLMDashboardAgents from './MonitoringGraphs/LLMDashboardAgents'
 
 const MonitoringTab = () => {
     return (
         <>
             <div className="space-y-6">
                 <TrafficMetricsAgents/>
-    <GuardrailsDashboardAgents/>
+
+   <GuardrailsDashboardAgents/>
                 
-                <LatencyDashboard />
-                <LLMDashboard />
+                <LatencyDashboardAgents />
+                <LLMDashboardAgents />
+
                 <ErrorMetricsDashboard />
-                <SuccessMetricsDashboard />
+
+
+               <SuccessMonitoringAgents/>
             </div>
         </>
     )
