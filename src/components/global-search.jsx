@@ -13,7 +13,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
-import { DialogClose } from "@/components/ui/dialog";
+import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { X } from "lucide-react";
 
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -204,6 +204,9 @@ export function GlobalSearch({ compact = false }) {
       {/* Dialog */}
       <Dialog open={open} onOpenChange={setOpen} className="">
         <DialogContent className="w-[35%] !py-4 p-0 px-2 bg-white dark:bg-background">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Global search</DialogTitle>
+          </DialogHeader>
           <DialogClose asChild>
             <button className="absolute right-4 cursor-pointer top-4 rounded-sm opacity-70 hover:opacity-100 transition">
               <X className="h-4 w-4" />

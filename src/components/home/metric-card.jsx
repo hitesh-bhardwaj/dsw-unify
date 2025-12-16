@@ -57,8 +57,8 @@ export function MetricCard({
 
   return (
     <Card className={cn(" min-h-38 py-0 rounded-xl ", className)}>
-      <CardContent className="p-5 flex items-end justify-between">
-        <div className="flex flex-col items-start justify-between w-[70%] gap-4">
+      <CardContent className="p-2 md:p-5 flex items-end justify-between">
+        <div className="flex flex-col items-start justify-between w-1/2 md:w-[70%] gap-4">
           <div className="space-y-2">
             <p className="text-sm  text-nowrap text-muted-foreground">{label}</p>
             <h3 className="text-3xl font-medium tracking-tight">

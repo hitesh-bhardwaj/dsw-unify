@@ -13,21 +13,24 @@ import { ThemeToggler } from "@/components/animate-ui/primitives/effects/theme-t
  */
 export const ThemeTogglerBtn = () => {
   const { theme, resolvedTheme, setTheme } = useTheme();
-  const [dir, setDir] = useState("");
+  const [dir, setDir] = useState("ltr");
+  const [mounted, setMounted] = useState(false);
 
-  // Read theme from localStorage on mount
+  // Read theme from localStorage on mount to align with server-injected class.
   useEffect(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+    setMounted(true);
+    const stored =
+      typeof window !== "undefined" ? localStorage.getItem("theme") : null;
+    const initial = stored || resolvedTheme || theme;
     if (stored) {
       setTheme(stored);
     }
-
-    const html = document.documentElement;
-    const htmlIsDark = html.classList.contains("dark");
-    if (htmlIsDark) {
+    if (initial === "dark") {
       setDir("rtl");
+    } else {
+      setDir("ltr");
     }
-  }, [setTheme]);
+  }, [resolvedTheme, theme, setTheme]);
 
   return (
     <ThemeToggler
@@ -37,11 +40,20 @@ export const ThemeTogglerBtn = () => {
       direction={dir}
     >
       {({ effective, toggleTheme }) => {
-        const htmlIsDark =
-          typeof document !== "undefined" &&
-          document.documentElement.classList.contains("dark");
+        // During SSR/first paint, render a stable placeholder to avoid hydration mismatch.
+        if (!mounted) {
+          return (
+            <button
+              aria-label="Toggle theme"
+              className="text-foreground hover:text-foreground !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
+              type="button"
+            >
+              <Sun className="!h-5 !w-auto" aria-hidden />
+            </button>
+          );
+        }
 
-        const effectiveFixed = htmlIsDark ? "dark" : effective;
+        const effectiveFixed = effective || resolvedTheme || "light";
         const nextTheme = effectiveFixed === "dark" ? "light" : "dark";
 
         return (
@@ -61,11 +73,12 @@ export const ThemeTogglerBtn = () => {
               }
             }}
             className="text-foreground hover:text-foreground !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
+            type="button"
           >
             {effectiveFixed === "dark" ? (
-              <Sun className="!h-5 !w-auto" />
-            ) : (
               <Moon className="!h-5 !w-auto" />
+            ) : (
+              <Sun className="!h-5 !w-auto" />
             )}
           </button>
         );

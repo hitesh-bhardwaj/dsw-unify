@@ -160,7 +160,7 @@ export function MetricsBoard({ metricsData, view, setView, isLoading = false }) 
     <>
       <motion.div layout="position" className="space-y-4 overflow-hidden">
         {/* Header */}
-        <div className="flex items-end justify-between px-6">
+        <div className="flex items-end justify-between px-6 flex-wrap gap-3">
           <div className="space-y-1">
             <h1 className="text-3xl font-medium text-foreground">Overview</h1>
             <p className="text-sm dark:text-foreground text-black/60">
@@ -266,7 +266,7 @@ export function MetricsBoard({ metricsData, view, setView, isLoading = false }) 
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
-              className="w-full grid grid-cols-4 gap-4 px-6"
+              className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-6"
             >
               {items.map((m, i) => (
                 <motion.li
@@ -281,7 +281,7 @@ export function MetricsBoard({ metricsData, view, setView, isLoading = false }) 
                   className="cursor-move"
                   transition={{ type: "spring", stiffness: 100, damping: 25 }}
                 >
-                  <div className="min-w-[280px]">
+                  <div className="min-w-auto lg:min-w-[280px]">
                     <MetricCard {...m} />
                   </div>
                 </motion.li>
