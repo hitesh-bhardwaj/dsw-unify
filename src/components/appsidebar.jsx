@@ -423,7 +423,7 @@ export function AppSidebar() {
                                     className="absolute left-1/2 -translate-x-1/2 w-[10px] h-[10px] bg-sidebar-primary rounded-full z-[100]"
                                     initial={false}
                                     animate={{
-                                      top: `${10 + dotIndex * 43}px`,
+                                      top: `${18 + dotIndex * 40}px`,
                                     }}
                                     transition={{
                                       type: "spring",

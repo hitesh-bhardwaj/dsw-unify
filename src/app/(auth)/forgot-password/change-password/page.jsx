@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { AuthLayout } from "@/components/auth/auth-layout";
@@ -9,7 +9,7 @@ import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
 import * as authApi from "@/lib/api/auth";
 
-export default function ChangePasswordPage() {
+function ChangePasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -62,51 +62,59 @@ export default function ChangePasswordPage() {
   };
 
   return (
+    <div className="space-y-6">
+      <div className="flex justify-center">
+        <ReturnToLoginButton />
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* General Error Message */}
+        {errors.general && (
+          <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+            {errors.general}
+          </div>
+        )}
+        <PasswordInput
+          label="New Password"
+          placeholder="New Password"
+          value={formData.newPassword}
+          onChange={(e) =>
+            setFormData({ ...formData, newPassword: e.target.value })
+          }
+        />
+
+        <PasswordInput
+          label="Verify New Password"
+          placeholder="Verify New Password"
+          value={formData.confirmPassword}
+          onChange={(e) =>
+            setFormData({ ...formData, confirmPassword: e.target.value })
+          }
+          error={errors.confirmPassword}
+        />
+
+        <Button
+          type="submit"
+          className="w-full flex items-center justify-center"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Changing..." : "Change Password"}
+          <ArrowRight className="h-4 w-4" />
+        </Button>
+      </form>
+    </div>
+  );
+}
+
+export default function ChangePasswordPage() {
+  return (
     <AuthLayout
       title="Change Password"
-      subtitle={`Add a new password for ${email || "your account"}`}
+      subtitle="Add a new password for your account"
     >
-      <div className="space-y-6">
-        <div className="flex justify-center">
-          <ReturnToLoginButton />
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* General Error Message */}
-          {errors.general && (
-            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
-              {errors.general}
-            </div>
-          )}
-          <PasswordInput
-            label="New Password"
-            placeholder="New Password"
-            value={formData.newPassword}
-            onChange={(e) =>
-              setFormData({ ...formData, newPassword: e.target.value })
-            }
-          />
-
-          <PasswordInput
-            label="Verify New Password"
-            placeholder="Verify New Password"
-            value={formData.confirmPassword}
-            onChange={(e) =>
-              setFormData({ ...formData, confirmPassword: e.target.value })
-            }
-            error={errors.confirmPassword}
-          />
-
-          <Button
-            type="submit"
-            className="w-full flex items-center justify-center"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Changing..." : "Change Password"}
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        </form>
-      </div>
+      <Suspense fallback={<div className="space-y-6">Loading...</div>}>
+        <ChangePasswordForm />
+      </Suspense>
     </AuthLayout>
   );
 }

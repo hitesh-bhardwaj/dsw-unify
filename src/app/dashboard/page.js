@@ -319,6 +319,9 @@ const workflowBuilderFeatures = [
 
 
 function MetricsBoard({ metricsData, view, setView }) {
+  // State for reorderable items
+  const [items, setItems] = useState(metricsData);
+
   // Initialize visibility - all cards visible by default
   const [cardVisibility, setCardVisibility] = useState(() => {
     const initial = {};
@@ -328,8 +331,10 @@ function MetricsBoard({ metricsData, view, setView }) {
     return initial;
   });
 
-  // Filter visible items based on cardVisibility
-  const items = metricsData.filter((_, index) => cardVisibility[index]);
+  // Update items when metricsData changes (from API)
+  useEffect(() => {
+    setItems(metricsData);
+  }, [metricsData]);
 
   const scrollRef = useRef(null);
 

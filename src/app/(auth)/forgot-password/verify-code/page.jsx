@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { AuthLayout } from "@/components/auth/auth-layout";
@@ -9,7 +9,7 @@ import { OTPInput } from "@/components/auth/otp-input";
 import { Button } from "@/components/ui/button";
 import * as authApi from "@/lib/api/auth";
 
-export default function VerifyCodePage() {
+function VerifyCodeForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
@@ -52,27 +52,35 @@ export default function VerifyCodePage() {
   };
 
   return (
+    <div className="space-y-6">
+      {/* Return to Login Button */}
+      <div className="flex justify-center">
+        <ReturnToLoginButton />
+      </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* OTP Input */}
+        <OTPInput value={otp} onChange={setOtp} error={error} />
+
+        {/* Verify Code Button */}
+        <Button type="submit" className="w-full flex items-center justify-center" disabled={isSubmitting}>
+          {isSubmitting ? "Verifying..." : "Verify Code"}
+          <ArrowRight className="h-4 w-4" />
+        </Button>
+      </form>
+    </div>
+  );
+}
+
+export default function VerifyCodePage() {
+  return (
     <AuthLayout
       title="Forgot Password"
       subtitle="Type the 4 digit code send to your email"
     >
-      <div className="space-y-6">
-        {/* Return to Login Button */}
-        <div className="flex justify-center">
-          <ReturnToLoginButton />
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* OTP Input */}
-          <OTPInput value={otp} onChange={setOtp} error={error} />
-
-          {/* Verify Code Button */}
-          <Button type="submit" className="w-full flex items-center justify-center" disabled={isSubmitting}>
-            {isSubmitting ? "Verifying..." : "Verify Code"}
-            <ArrowRight className="h-4 w-4" />
-          </Button>
-        </form>
-      </div>
+      <Suspense fallback={<div className="space-y-6">Loading...</div>}>
+        <VerifyCodeForm />
+      </Suspense>
     </AuthLayout>
   );
 }
