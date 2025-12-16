@@ -54,7 +54,7 @@ const Breadcrumbs = () => {
           ) : (
             <BreadcrumbLink
               href="/dashboard"
-              className="p-2 hover:bg-sidebar-accent rounded-lg duration-300 ease-out flex items-center gap-2 text-gray-500"
+              className="p-2 hover:bg-sidebar-accent rounded-lg duration-300 ease-out flex items-center gap-2"
             >
               <HomeIcon className="h-5 w-auto" />
             </BreadcrumbLink>

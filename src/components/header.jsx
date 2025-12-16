@@ -7,6 +7,7 @@ import { NavUser } from "./nav-user";
 import { FAQIcons, HomeIcon, NotificationsIcon } from "./Icons";
 import { ThemeTogglerBtn } from "./headerdark";
 import Breadcrumbs from "./common/Breadcrumbs";
+import { GlobalSearch } from "./global-search";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
 
@@ -34,7 +35,7 @@ export function Header({ title = "Agents" }) {
   };
 
   return (
-    <header className="flex h-16 items-center justify-between bg-background/70 px-6  sticky w-full top-0 z-50 backdrop-blur-md">
+    <header className="flex h-16 items-center justify-between bg-background/70 px-6 sticky w-full top-0 z-50 backdrop-blur-md">
       {/* Left side - Trigger and Breadcrumb */}
       <div className="flex items-center gap-4">
         <SidebarTrigger />
@@ -46,6 +47,11 @@ export function Header({ title = "Agents" }) {
 
       {/* Right side actions */}
       <div className="flex items-center gap-3">
+        {/* Global Search */}
+        <div className="mr-8">
+        <GlobalSearch />
+        </div>
+
         {/* Theme toggle */}
         <ThemeTogglerBtn/>
 
@@ -67,7 +73,6 @@ export function Header({ title = "Agents" }) {
           <FAQIcons className="!h-5 !w-auto " />
         </Button>
         <Separator orientation="vertical" className={"h-8!"} />
-
 
         {/* User avatar with dropdown */}
         <div className="flex items-center gap-2 cursor-pointer">
