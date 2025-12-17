@@ -35,7 +35,7 @@ const GuardrailsDashboard = () => {
           <h1 className="text-2xl font-medium mb-2">
             Guardrails &amp; Safety Metrics
           </h1>
-          <p className="text-foreground/80 text-sm">
+          <p className="text-foreground text-sm">
             Safety and policy enforcement monitoring
           </p>
         </div>
@@ -43,11 +43,11 @@ const GuardrailsDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">Pre-Inference Triggers</div>
+              <div className="text-sm">Pre-Inference Triggers</div>
               <div className="text-4xl font-bold text-primary">
                 {preInference}
               </div>
-              <p className="text-sm text-foreground/80">
+              <p className="text-sm text-foreground">
                 Requests blocked by pre-inference guardrails
               </p>
             </CardContent>
@@ -55,9 +55,9 @@ const GuardrailsDashboard = () => {
 
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">Post-Inference Triggers</div>
+              <div className="text-sm">Post-Inference Triggers</div>
               <div className="text-4xl font-bold text-red">{postInference}</div>
-              <p className="text-sm text-foreground/80">
+              <p className="text-sm text-foreground">
                 Requests blocked by post-inference guardrails
               </p>
             </CardContent>
@@ -65,18 +65,18 @@ const GuardrailsDashboard = () => {
 
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">Avg Guardrail Latency</div>
-              <div className="text-4xl font-bold text-[#111111]">
+              <div className="text-sm">Avg Guardrail Latency</div>
+              <div className="text-4xl font-bold text-[#111111] dark:text-foreground">
                 {avgLatency.toFixed(3)}s
               </div>
-              <p className="text-sm text-foreground/80">
+              <p className="text-sm text-foreground">
                 Time spent in guardrail checks
               </p>
             </CardContent>
           </Card>
         </div>
 
-        <Card className="shadow-lg">
+        <Card className="">
           <CardHeader>
             <CardTitle className="text-2xl">Guardrail Activity Over Time</CardTitle>
           </CardHeader>
@@ -89,12 +89,12 @@ const GuardrailsDashboard = () => {
                 {
                   dataKey: "preInference",
                   name: "Pre-Inference",
-                  color: "#f97316",
+                  color: "var(--primary)",
                 },
                 {
                   dataKey: "postInference",
                   name: "Post-Inference",
-                  color: "#ef4444",
+                  color: "var(--red)",
                 },
               ]}
               height={400}

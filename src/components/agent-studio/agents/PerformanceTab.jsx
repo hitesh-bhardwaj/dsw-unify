@@ -56,7 +56,7 @@ const PerformanceTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="shadow-lg border-slate-200 dark:border-border-color-0 ">
+      <Card className="border-border-color-0 ">
         <CardHeader className="pb-4">
           <CardTitle className="text-xl font-medium">Token Usage Over Time</CardTitle>
         </CardHeader>
@@ -67,8 +67,8 @@ const PerformanceTab = () => {
             dataKey2="outputTokens"
             name1="Input Tokens"
             name2="Output Tokens"
-            color1="#6BC631"
-            color2="#3354F4"
+            color1="var(--badge-green)"
+            color2="var(--badge-blue)"
             height={350}
             width="90%"
             showGrid

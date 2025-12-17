@@ -103,7 +103,7 @@ export function TestingCardResults({ test, tab }) {
       <div className="block group" aria-label={`${name} test card`}>
         <Card
           className={cn(
-            "overflow-hidden group  cursor-pointer transition-all duration-500 ease-out bg-background border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
+            "overflow-hidden group transition-all duration-500 ease-out bg-background border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-card group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
           )}
         >
           <CardHeader>
@@ -111,7 +111,7 @@ export function TestingCardResults({ test, tab }) {
               <div className="space-y-3">
                 <div className="flex items-center gap-[3vw] mt-4">
                   {/* Agent name */}
-                  <h3 className="text-xl font-medium text-black dark:text-white transition-all duration-500 ease-out">
+                  <h3 className="text-xl font-medium text-foreground transition-all duration-500 ease-out">
                     {name}
                   </h3>
 
@@ -148,7 +148,7 @@ export function TestingCardResults({ test, tab }) {
                   onClick={() => setIsModalOpen(true)}
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
+                    "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-foreground dark:hover:bg-white/30"
                   )}
                 >
                   <Eye />
@@ -158,7 +158,7 @@ export function TestingCardResults({ test, tab }) {
                   onClick={handleDownload}
                   size="icon"
                   className={cn(
-                    "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
+                    "h-7 w-7 flex items-center bg-sidebar-accent justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-foreground dark:hover:bg-white/30"
                   )}
                 >
                   <Download />
@@ -173,7 +173,7 @@ export function TestingCardResults({ test, tab }) {
                 <div className="flex items-center justify-between text-sm font-medium">
                   <div className="space-x-1">
                     <span className="text-primary">Tests:</span>
-                    <span className="text-black ">{totalTest}</span>
+                    <span className="text-foreground ">{totalTest}</span>
                   </div>
                   <div className="space-x-1 ">
                     <span className="text-primary">
@@ -181,7 +181,7 @@ export function TestingCardResults({ test, tab }) {
                         ? `${successRate}%`
                         : successRate}
                     </span>
-                    <span className="text-black">Success Rate</span>
+                    <span className="text-foreground">Success Rate</span>
                   </div>
                 </div>
 

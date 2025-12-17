@@ -37,7 +37,7 @@ const GuardrailsDashboardAgents = () => {
           <h1 className="text-2xl font-medium mb-2">
             Guardrails &amp; Safety Metrics
           </h1>
-          <p className="text-foreground/80 text-sm">
+          <p className="text-foreground text-sm">
             Safety and policy enforcement monitoring
           </p>
         </div>
@@ -68,7 +68,7 @@ const GuardrailsDashboardAgents = () => {
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
               <div className="text-sm font-medium">Avg Guardrail Latency</div>
-              <div className="text-4xl font-bold text-[#111111]">
+              <div className="text-4xl font-bold text-foreground">
                 {avgLatency.toFixed(3)}s
               </div>
               <p className="text-sm text-foreground/80">
@@ -78,7 +78,7 @@ const GuardrailsDashboardAgents = () => {
           </Card>
         </div>
 
-        <Card className="shadow-lg">
+        <Card className="">
           <CardHeader>
             <CardTitle className="text-2xl">Guardrail Activity Over Time</CardTitle>
           </CardHeader>
@@ -91,12 +91,12 @@ const GuardrailsDashboardAgents = () => {
                 {
                   dataKey: "preInference",
                   name: "Pre-Inference",
-                  color: "#f97316",
+                  color: "var(--primary)",
                 },
                 {
                   dataKey: "postInference",
                   name: "Post-Inference",
-                  color: "#ef4444",
+                  color: "var(--red)",
                 },
               ]}
               height={400}

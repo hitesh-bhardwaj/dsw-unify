@@ -29,9 +29,9 @@ const LatencyDashboard = () => {
 
   const lines = useMemo(
     () => [
-      { dataKey: "endToEnd", name: "End-to-End", color: "#3b82f6" },
-      { dataKey: "processing", name: "Processing", color: "#22c55e" },
-      { dataKey: "toolInvocation", name: "Tool Invocation", color: "#f97316" },
+      { dataKey: "endToEnd", name: "End-to-End", color: "var(--badge-blue)" },
+      { dataKey: "processing", name: "Processing", color: "var(--badge-green)" },
+      { dataKey: "toolInvocation", name: "Tool Invocation", color: "var(--primary)" },
     ],
     []
   );
@@ -43,38 +43,38 @@ const LatencyDashboard = () => {
           <h1 className="text-2xl font-medium mb-2">
             Latency &amp; Performance Metrics
           </h1>
-          <p className="text-foreground/80">Speed and efficiency of agent responses</p>
+          <p className="text-foreground text-sm">Speed and efficiency of agent responses</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">End-to-End Latency</div>
-              <div className="text-4xl font-medium">{Number(endToEnd).toFixed(2)}s</div>
-              <p className="text-sm text-slate-500">Total time from request to response</p>
+              <div className="text-sm">End-to-End Latency</div>
+              <div className="text-4xl font-semibold">{Number(endToEnd).toFixed(2)}s</div>
+              <p className="text-sm text-foreground">Total time from request to response</p>
             </CardContent>
           </Card>
 
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">Processing Latency</div>
-              <div className="text-4xl font-medium">{Number(processing).toFixed(2)}s</div>
-              <p className="text-sm text-slate-500">Time in agent&apos;s internal logic</p>
+              <div className="text-sm">Processing Latency</div>
+              <div className="text-4xl font-semibold">{Number(processing).toFixed(2)}s</div>
+              <p className="text-sm text-foreground">Time in agent&apos;s internal logic</p>
             </CardContent>
           </Card>
 
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">Tool Invocation Latency</div>
-              <div className="text-4xl font-medium">
+              <div className="text-sm">Tool Invocation Latency</div>
+              <div className="text-4xl font-semibold">
                 {Number(toolInvocation).toFixed(2)}s
               </div>
-              <p className="text-sm text-slate-500">Latency for tool invocations</p>
+              <p className="text-sm text-foreground">Latency for tool invocations</p>
             </CardContent>
           </Card>
         </div>
 
-        <Card className="shadow-lg">
+        <Card className="">
           <CardHeader>
             <CardTitle className="text-2xl">Latency Breakdown Over Time</CardTitle>
           </CardHeader>

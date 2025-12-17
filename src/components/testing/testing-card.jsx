@@ -78,7 +78,7 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500, onDeleteTest
     <div>
       <Card
         className={cn(
-          "overflow-hidden group bg-white cursor-pointer transition-all duration-500 ease-out border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
+          "overflow-hidden group bg-white transition-all duration-500 ease-out border border-border-color-0 hover:bg-sidebar-accent group-hover:bg-active-card dark:group-hover:bg-sidebar-accent group-hover:text-white group-hover:border-border-color-0 !py-5 h-full"
         )}
       >
         <CardHeader>
@@ -118,7 +118,7 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500, onDeleteTest
                 variant="ghost"
                 onClick={() => setIsModalOpen(true)}
                 size="icon"
-                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:text-black"
+                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground/80 hover:bg-white dark:text-foreground dark:hover:bg-white/30"
               >
                 <Eye />
               </Button>
@@ -127,7 +127,7 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500, onDeleteTest
                 variant="ghost"
                  onClick={handleDeleteClick}
                 size="icon"
-                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-red-500 hover:bg-white dark:text-foreground dark:hover:text-black"
+                className="h-7 w-7 flex items-center justify-center px-1 py-1 text-red-500 hover:bg-white dark:hover:text-foreground dark:hover:bg-white/30"
               >
                 <Bin />
               </Button>
@@ -137,7 +137,7 @@ export function TestingCard({ test, onRunTest, minSkeletonMs = 500, onDeleteTest
                   variant="outline"
                   disabled={isRunning} // ✅ added
                   onClick={() => onRunTest?.(id)} // ✅ added
-                  className="gap-2 text-white bg-primary !border-none duration-300 ease-out hover:bg-primary hover:text-white dark:bg-primary dark:hover:bg-primary disabled:opacity-70"
+                  className="gap-2 text-white bg-primary !border-none duration-300 ease-out hover:bg-[#E64A19] hover:text-white dark:bg-primary dark:hover:bg-[#E64A19] disabled:opacity-70"
                 >
                   <div className="!w-4">
                     <RunTestsIcon />

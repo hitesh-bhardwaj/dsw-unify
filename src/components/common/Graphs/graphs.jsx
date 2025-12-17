@@ -185,10 +185,10 @@ export const DoubleAreaChart = ({
           tickFormatter={xAxisTickFormatter}
           axisLine={false}
           tickLine={false}
-          tick={{ fill: "#111111", fontSize: 12 }}
+          tick={{ fill: "#64748b", fontSize: 12 }}
         />
 
-        <YAxis axisLine={false} tickLine={false} tick={{ fill: "#111111", fontSize: 12 }} width={36} />
+        <YAxis axisLine={false} tickLine={false} tick={{ fill: "#64748b", fontSize: 12 }} width={36} />
 
         <Tooltip
           cursor={{ strokeDasharray: "4 6", stroke: "#94a3b8", fill:"transparent" }}

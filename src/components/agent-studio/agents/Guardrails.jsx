@@ -102,7 +102,7 @@ const Guardrails = () => {
                       >
                         <div className="flex items-center justify-between py-4 w-full">
                           <div className="flex items-center gap-5">
-                            <div className='text-[#111111]'>
+                            <div className='text-foreground'>
                                 <GuardrailsIcon className="h-5 w-5"/>
 
                             </div>

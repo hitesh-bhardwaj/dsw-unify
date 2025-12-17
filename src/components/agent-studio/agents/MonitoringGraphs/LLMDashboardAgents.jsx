@@ -48,7 +48,7 @@ const LLMDashboardAgents = () => {
   const costTicks = useMemo(() => costData.map((d) => d.time), [costData]);
 
   const costLines = useMemo(
-    () => [{ dataKey: "cost", name: "Cost", color: "#10b981" }],
+    () => [{ dataKey: "cost", name: "Cost", color: "var(--badge-green)" }],
     []
   );
 
@@ -64,41 +64,41 @@ const LLMDashboardAgents = () => {
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
-            <div className="text-sm font-medium">LLM Inference Latency</div>
-            <div className="text-2xl font-medium">{inferenceLatency.toFixed(2)}s</div>
+            <div className="text-sm">LLM Inference Latency</div>
+            <div className="text-3xl font-semibold">{inferenceLatency.toFixed(2)}s</div>
             <p className="text-sm">Average LLM response time</p>
           </CardContent>
         </Card>
 
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
-            <div className="text-sm font-medium">Input Tokens</div>
-            <div className="text-2xl font-medium">{inputTokensTotal.toLocaleString()}</div>
+            <div className="text-sm">Input Tokens</div>
+            <div className="text-3xl font-semibold">{inputTokensTotal.toLocaleString()}</div>
             <p className="text-sm text-foreground/80">Total prompt tokens sent</p>
           </CardContent>
         </Card>
 
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
-            <div className="text-sm font-medium">Output Tokens</div>
-            <div className="text-2xl font-medium">{outputTokensTotal.toLocaleString()}</div>
+            <div className="text-sm">Output Tokens</div>
+            <div className="text-3xl font-semibold">{outputTokensTotal.toLocaleString()}</div>
             <p className="text-sm text-foreground/80">Total completion tokens generated</p>
           </CardContent>
         </Card>
 
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
-            <div className="text-sm font-medium">Total Token Cost</div>
-            <div className="text-4xl font-bold text-slate-900 mb-2">
+            <div className="text-sm">Total Token Cost</div>
+            <div className="text-3xl font-semibold text-foreground mb-2">
               ${totalCost.toFixed(2)}
             </div>
-            <p className="text-sm text-slate-500">Total LLM usage cost (USD)</p>
+            <p className="text-sm text-foreground/80">Total LLM usage cost (USD)</p>
           </CardContent>
         </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="shadow-lg">
+        <Card className="">
           <CardHeader>
             <CardTitle className="text-xl">Token Usage Over Time</CardTitle>
           </CardHeader>
@@ -111,8 +111,8 @@ const LLMDashboardAgents = () => {
               dataKey2="outputTokens"
               name1="Input Tokens"
               name2="Output Tokens"
-              color1="#3b82f6"
-              color2="#22c55e"
+              color1="var(--badge-blue)"
+              color2="var(--badge-green)"
               height={300}
               width="100%"
               showDots={false}
@@ -120,7 +120,7 @@ const LLMDashboardAgents = () => {
           </CardContent>
         </Card>
 
-        <Card className="shadow-lg">
+        <Card className="">
           <CardHeader>
             <CardTitle className="text-xl">LLM Cost Over Time</CardTitle>
           </CardHeader>

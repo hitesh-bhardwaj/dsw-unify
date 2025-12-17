@@ -26,7 +26,7 @@ const ErrorMetricsAgents = () => {
     <div className="space-y-6 py-3">
       <div className="space-y-2">
         <h1 className="text-2xl font-medium">Error Metrics</h1>
-        <p className="text-slate-600">
+        <p className="text-foreground/80">
           Failures across agent, LLM, and integrated tools
         </p>
       </div>
@@ -57,7 +57,7 @@ const ErrorMetricsAgents = () => {
         </Card>
       </div>
 
-      <Card className="shadow-lg">
+      <Card className="">
         <CardHeader>
           <CardTitle className="text-2xl">Error Distribution</CardTitle>
         </CardHeader>
@@ -71,7 +71,7 @@ const ErrorMetricsAgents = () => {
 
               <Bar dataKey="agentErrors" name="Agent Errors" fill="#ef4444" barSize={45} />
               <Bar dataKey="llmErrors" name="LLM Errors" fill="#f97316" barSize={45} />
-              <Bar dataKey="toolErrors" name="Tool Errors" fill="#eab308" barSize={45} />
+              <Bar dataKey="toolErrors" name="Tool Errors" fill="var(--badge-yellow)" barSize={45} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>

@@ -23,7 +23,7 @@ const SuccessMonitoringAgents = () => {
   return (
     <div className="w-full py-3">
       <div className="space-y-3">
-        <div className="space-y-3">
+        <div className="space-y-3 mb-8">
           <h1 className="text-2xl font-medium">Success Metrics</h1>
           <p className="text-sm text-foreground/80">
             Successful outcomes of agent interactions
@@ -33,8 +33,8 @@ const SuccessMonitoringAgents = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">Agent Success Total</div>
-              <div className="text-4xl font-bold text-badge-green">
+              <div className="text-sm">Agent Success Total</div>
+              <div className="text-4xl font-semibold text-badge-green">
                 {successTotal.toLocaleString()}
               </div>
               <p className="text-sm">Count of successful agent responses</p>
@@ -43,8 +43,8 @@ const SuccessMonitoringAgents = () => {
 
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
-              <div className="text-sm font-medium">Success Rate</div>
-              <div className="text-4xl font-bold text-badge-green">
+              <div className="text-sm">Success Rate</div>
+              <div className="text-4xl font-semibold text-badge-green">
                 {Number(successRate).toFixed(1)}%
               </div>
               <p className="text-sm">Percentage of successful responses</p>
@@ -52,7 +52,7 @@ const SuccessMonitoringAgents = () => {
           </Card>
         </div>
 
-        <Card className="shadow-lg">
+        <Card className="">
           <CardHeader>
             <CardTitle className="text-2xl">Success Rate Over Time</CardTitle>
           </CardHeader>
@@ -64,7 +64,7 @@ const SuccessMonitoringAgents = () => {
               timeKey="time"
               dataKey="rate"
               name="Success Rate"
-              color="#22c55e"
+              color="var(--badge-green)"
               height={400}
               width="90%"
               showDots={false}

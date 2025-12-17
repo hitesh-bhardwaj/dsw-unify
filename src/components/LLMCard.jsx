@@ -33,14 +33,14 @@ const skeletonShownMap = new Map();
  * @returns {React.JSX.Element} The rendered LLMCard component.
  */
 export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
-  const { id, name, description, status, tags = [],icon } = llm || {};
+  const { id, name, description, status, tags = [], icon } = llm || {};
 
   const [showSkeleton, setShowSkeleton] = useState(() => {
     // Only show skeleton if it hasn't been shown for this LLM before
     return !skeletonShownMap.has(id);
   });
 
-    const isGrid = view === "grid";
+  const isGrid = view === "grid";
   const isList = view === "list";
 
   useEffect(() => {
@@ -62,20 +62,23 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
       <Link href={`/agent-studio/llms/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5", isList && '!gap-0'
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5",
+            isList && "!gap-0"
           )}
         >
           <CardHeader>
             <div className="flex items-end gap-2">
               {/* Icon */}
-               <div
+              <div
                 className={cn(
                   "flex h-14 w-14 items-center justify-center rounded-lg relative bg-sidebar-accent text-foreground group-hover:!bg-white group-hover:!text-black  transition-all duration-300"
                 )}
-                 style={{
-                color: `var(--icon-color-${(index % 4) + 1})`,
-                backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
-              }}
+                style={{
+                  color: `var(--icon-color-${(index % 4) + 1})`,
+                  backgroundColor: `rgb(from var(--icon-color-${
+                    (index % 4) + 1
+                  }) r g b / 0.1)`,
+                }}
               >
                 <span
                   className={cn(
@@ -84,24 +87,23 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
                 >
                   {icon}
                 </span>
-               {status?.toLowerCase() === "active" && (
-  <span className="w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse" />
-)}
-
+                {status?.toLowerCase() === "active" && (
+                  <span className="w-3 h-3 rounded-full bg-badge-green absolute -top-0.5 -right-0.5 animate-pulse" />
+                )}
               </div>
 
               {/* Status badge */}
               {!llm?.deploy ? (
-                 <Badge
-                className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium transition-all duration-300 group-hover:text-white group-hover:border-white ",
-                  status === "active"
-                    ? "bg-white/10 text-foreground border border-badge-green"
-                    : "bg-white/10 text-foreground px-4 border border-foreground"
-                )}
-              >
-                {status === "active" ? "Active" : "Draft"}
-              </Badge>
+                <Badge
+                  className={cn(
+                    "rounded-full px-3 py-1 text-xs font-medium transition-all duration-300 group-hover:text-white group-hover:border-white ",
+                    status === "active"
+                      ? "bg-white/10 text-foreground border border-badge-green"
+                      : "bg-white/10 text-foreground px-4 border border-foreground"
+                  )}
+                >
+                  {status === "active" ? "Active" : "Draft"}
+                </Badge>
               ) : (
                 <Badge className="rounded-full px-3 py-1 text-xs font-medium text-foreground bg-white/10 border border-[#2563FB] group-hover:text-white group-hover:border-white transition-all duration-300">
                   Deploying
@@ -128,7 +130,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
                   key={index}
                   variant="secondary"
                   className={cn(
-                   "rounded-full border border-border-color-2 px-3 py-1  text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10 dark:bg-card"
+                    "rounded-full border border-border-color-2 px-3 py-1  text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10 dark:bg-card"
                   )}
                 >
                   {tag}
@@ -140,40 +142,64 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
             {!llm?.deploy ? (
               llm?.performance ? (
                 <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-card dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300 ">
-                  <p className="group-hover:text-white transition-colors duration-300">Performance</p>
+                  <p className="group-hover:text-white transition-colors duration-300">
+                    Performance
+                  </p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
-                      <p className="font-medium group-hover:text-white transition-colors duration-300">{llm.accuracy}</p>
-                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">Accuracy</p>
+                      <p className="font-medium group-hover:text-white transition-colors duration-300">
+                        {llm.accuracy}
+                      </p>
+                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">
+                        Accuracy
+                      </p>
                     </div>
                     <div className="w-[1px] bg-foreground/40 group-hover:bg-white/40 transition-colors duration-300" />
                     <div className="w-[40%] h-full flex flex-col">
-                      <p className="font-medium group-hover:text-white transition-colors duration-300">{llm.latency}</p>
-                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">Latency</p>
+                      <p className="font-medium group-hover:text-white transition-colors duration-300">
+                        {llm.latency}
+                      </p>
+                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">
+                        Latency
+                      </p>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-card dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/60 transition-all duration-300">
-                  <p className="group-hover:text-white transition-colors duration-300">Usage Stats</p>
+                  <p className="group-hover:text-white transition-colors duration-300">
+                    Usage Stats
+                  </p>
                   <div className="w-full h-full flex justify-between">
                     <div className="w-[35%] h-full flex flex-col">
-                      <p className="font-medium group-hover:text-white transition-colors duration-300">{llm.requests}</p>
-                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">Requests</p>
+                      <p className="font-medium group-hover:text-white transition-colors duration-300">
+                        {llm.requests}
+                      </p>
+                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">
+                        Requests
+                      </p>
                     </div>
                     <div className="w-[1px] bg-foreground/40 group-hover:bg-white/40 transition-colors duration-300" />
                     <div className="w-[40%] h-full flex flex-col">
-                      <p className="font-medium group-hover:text-white transition-colors duration-300">{llm.avgres}</p>
-                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">Avg. Response</p>
+                      <p className="font-medium group-hover:text-white transition-colors duration-300">
+                        {llm.avgres}
+                      </p>
+                      <p className="text-black/60 dark:text-foreground/80 group-hover:text-white/80 transition-colors duration-300">
+                        Avg. Response
+                      </p>
                     </div>
                   </div>
                 </div>
               )
             ) : (
               <div className="flex flex-col gap-4 rounded-lg p-3 text-sm py-6 bg-white/10 dark:bg-card dark:group-hover:bg-white/10 text-foreground border-border-color-2 border group-hover:border-white/30 transition-all duration-300">
-                <p className="group-hover:text-white transition-colors duration-300">Deploying Status</p>
+                <p className="group-hover:text-white transition-colors duration-300">
+                  Deploying Status
+                </p>
                 <div className="w-full flex flex-col gap-4">
-                  <p className="text-primary group-hover:text-white transition-colors duration-300">Progress:75%</p>
+                  <p className="text-primary group-hover:text-white transition-colors duration-300">
+                    Progress:75%
+                  </p>
                   <div className="w-full h-[4px] rounded-full bg-black/15 overflow-hidden">
                     <div className="w-[75%] h-full bg-primary rounded-full" />
                   </div>

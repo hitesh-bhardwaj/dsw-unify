@@ -199,7 +199,7 @@ export default function TestResultsViewModal({ open, onOpenChange }) {
           <RippleButton>
           <Button
             onClick={handleExport}
-            className="bg-primary hover:bg-primary text-white rounded-full !px-8 gap-2"
+            className="bg-primary hover:bg-[#E64A19] text-white rounded-full !px-8 gap-2 dark:hover:bg-[#E64A19]"
           >
             Export Results
             <DownloadIcon className="!h-5 !w-5"/>

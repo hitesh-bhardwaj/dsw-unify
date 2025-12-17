@@ -72,14 +72,24 @@ export const ThemeTogglerBtn = () => {
                 setDir("ltr");
               }
             }}
-            className="text-foreground hover:text-foreground !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
+            className="text-foreground hover:text-foreground !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md relative"
             type="button"
           >
-            {effectiveFixed === "dark" ? (
-              <Moon className="!h-5 !w-auto" />
-            ) : (
-              <Sun className="!h-5 !w-auto" />
-            )}
+            <Sun
+              className={`!h-5 !w-auto duration-300 absolute ${
+                effectiveFixed === "dark"
+                  ? "rotate-360 delay-500 "
+                  : "opacity-0 scale-[0.1]"
+              } `}
+            />
+
+            <Moon
+              className={`!h-5 !w-auto duration-300 ${
+                effectiveFixed === "dark"
+                  ? "rotate-360 opacity-0 delay-500 scale-[0.1]"
+                  : "rotate-0 delay-300"
+              }`}
+            />
           </button>
         );
       }}

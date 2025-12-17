@@ -33,7 +33,7 @@ const ErrorMetricsDashboard = () => {
     <div className="space-y-6 py-3">
       <div className="space-y-2">
         <h1 className="text-2xl font-medium">Error Metrics</h1>
-        <p className="text-slate-600">
+        <p className="text-foreground text-sm">
           Failures across agent, LLM, and integrated tools
         </p>
       </div>
@@ -41,24 +41,24 @@ const ErrorMetricsDashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
-            <div className="text-sm font-medium">Agent Errors</div>
+            <div className="text-sm">Agent Errors</div>
             <div className="text-4xl font-medium text-red">{agentErrors}</div>
-            <p className="text-sm text-slate-500">Failed agent responses</p>
+            <p className="text-sm ">Failed agent responses</p>
           </CardContent>
         </Card>
 
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
-            <div className="text-sm font-medium">LLM Errors</div>
+            <div className="text-sm">LLM Errors</div>
             <div className="text-4xl font-medium text-primary">{llmErrors}</div>
-            <p className="text-sm text-slate-500">LLM timeouts &amp; failures</p>
+            <p className="text-sm ">LLM timeouts &amp; failures</p>
           </CardContent>
         </Card>
 
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
-            <div className="text-sm font-medium">Tool Errors</div>
-            <div className="text-4xl font-medium text-badge-yellow">
+            <div className="text-sm">Tool Errors</div>
+            <div className="text-4xl font-medium text-yellow">
               {toolErrors}
             </div>
             <p className="text-sm">Tool invocation errors</p>
@@ -66,7 +66,7 @@ const ErrorMetricsDashboard = () => {
         </Card>
       </div>
 
-      <Card className="shadow-lg">
+      <Card className="">
         <CardHeader>
           <CardTitle className="text-2xl">Error Distribution Over Time</CardTitle>
         </CardHeader>
@@ -79,17 +79,17 @@ const ErrorMetricsDashboard = () => {
               {
                 dataKey: "agentErrors",
                 name: "Agent Errors",
-                color: "#ef4444",
+                color: "var(--red)",
               },
               {
                 dataKey: "llmErrors",
                 name: "LLM Errors",
-                color: "#f97316",
+                color: "var(--primary)",
               },
               {
                 dataKey: "toolErrors",
                 name: "Tool Errors",
-                color: "#eab308",
+                color: "var(--yellow)",
               },
             ]}
             height={400}

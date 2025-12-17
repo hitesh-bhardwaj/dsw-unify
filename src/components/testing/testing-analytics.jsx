@@ -120,7 +120,7 @@ const TestingAnalyticsComp = ({ cardData, analytics, tab, items = [] }) => {
 
         {/* Show performance history only if tests have been run */}
         {hasRunTests && (
-          <div className="rounded-3xl border border-border-color-0 p-6 space-y-6 bg-background">
+          <div className="rounded-3xl border border-border-color-0 p-6 space-y-6 bg-background dark:bg-card">
             {/* Header */}
             <div className="space-y-1">
               <h2 className="text-xl font-medium">Test Performance Over Time</h2>
@@ -134,7 +134,7 @@ const TestingAnalyticsComp = ({ cardData, analytics, tab, items = [] }) => {
               {items.map((item, index) => (
                 <div
                   key={item.id || index}
-                  className="flex items-center justify-between rounded-2xl border border-border-color-0 p-5 bg-background hover:bg-sidebar-accent/50 transition-colors duration-200"
+                  className="flex items-center justify-between rounded-2xl border border-border-color-0 p-5 bg-background hover:bg-sidebar-accent/50 transition-colors duration-200 dark:bg-card"
                 >
                   {/* Left - Test Info */}
                   <div className="space-y-1">

@@ -59,6 +59,7 @@
 :root {
   --font-inter: "Inter", sans-serif;
   --radius: 0.625rem;
+  color:rgb(144, 144, 144);
   --background: #fafafa;
   --foreground: #111111;
   --active-card: #1d1d1d;

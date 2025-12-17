@@ -51,7 +51,7 @@ const TrafficMetricsAgents = () => {
     <div className="w-full mx-auto space-y-5 py-3">
       <div className="space-y-3">
         <h1 className="text-2xl font-medium">Traffic &amp; Usage Metrics</h1>
-        <p className="text-sm text-gray-600">Volume of interactions with the agent</p>
+        <p className="text-sm text-foreground">Volume of interactions with the agent</p>
       </div>
 
       {/* KPI Cards */}
@@ -64,7 +64,7 @@ const TrafficMetricsAgents = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-gray-600">Number of agent invocations</p>
+            <p className="text-sm text-foreground">Number of agent invocations</p>
           </CardContent>
         </Card>
 
@@ -76,7 +76,7 @@ const TrafficMetricsAgents = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-foreground">
               Number of sessions/conversations started
             </p>
           </CardContent>
@@ -100,8 +100,8 @@ const TrafficMetricsAgents = () => {
             dataKey2="sessions"
             name1="Requests"
             name2="Sessions"
-            color1="#1130C7"
-            color2="#6BC631"
+            color1="var(--badge-blue)"
+            color2="var(--badge-green)"
             height={350}
             width="90%"
             showDots={false}
