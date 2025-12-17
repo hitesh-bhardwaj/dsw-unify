@@ -88,7 +88,7 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500, view }) {
               {/* Status */}
              <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all  group-hover:text-white group-hover:border-white",
+                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all  group-hover:text-white group-hover:border-white dark:bg-background dark:group-hover:bg-white/10",
                   status === "active"
                     ? "border-badge-green text-foreground"
                     : "border-badge-sea-green text-foreground px-4 opacity-[0.8]"

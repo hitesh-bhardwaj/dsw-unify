@@ -112,7 +112,7 @@ export function UseCaseCard({
             "feature-card-hover-container gap-2 hover:drop-shadow-xl  transition-all duration-300 group",
             isGrid &&
               " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
-            isList && "w-full rounded-xl  py-6 bg-white dark:bg-background"
+            isList && "w-full rounded-xl  py-6 bg-white dark:bg-card"
           )}
         >
           <CardHeader className="pb-2">
@@ -193,7 +193,7 @@ export function UseCaseCard({
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full border border-border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                    "rounded-full border border-border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
                   {tag}
@@ -204,7 +204,7 @@ export function UseCaseCard({
             <div className={` flex flex-col gap-4`}>
               <div
                 className={cn(
-                  "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2 justify-between w-full"
+                  "flex items-center rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-card bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2 justify-between w-full"
                 )}
               >
                 <div className="flex items-center gap-2 ">

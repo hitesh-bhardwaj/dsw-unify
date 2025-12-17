@@ -96,7 +96,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
               {!llm?.deploy ? (
                 <Badge
                   className={cn(
-                    "rounded-full px-3 py-1 text-xs font-medium transition-all duration-300 group-hover:text-white group-hover:border-white ",
+                    "rounded-full px-3 py-1 text-xs font-medium transition-all duration-300 group-hover:text-white group-hover:border-white  dark:bg-background dark:group-hover:bg-white/10",
                     status === "active"
                       ? "bg-white/10 text-foreground border border-badge-green"
                       : "bg-white/10 text-foreground px-4 border border-foreground"
@@ -105,7 +105,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
                   {status === "active" ? "Active" : "Draft"}
                 </Badge>
               ) : (
-                <Badge className="rounded-full px-3 py-1 text-xs font-medium text-foreground bg-white/10 border border-[#2563FB] group-hover:text-white group-hover:border-white transition-all duration-300">
+                <Badge className="rounded-full px-3 py-1 text-xs font-medium text-foreground bg-white/10 border border-[#2563FB] group-hover:text-white group-hover:border-white transition-all duration-300 dark:bg-background dark:group-hover:bg-white/10">
                   Deploying
                 </Badge>
               )}

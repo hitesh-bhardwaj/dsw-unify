@@ -33,7 +33,7 @@ export default function Details() {
     <>
       <div className="w-full  grid grid-cols-1 md:grid-cols-2 gap-8 py-6">
         {/* Feature List */}
-        <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4">
+        <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4 dark:bg-card">
           <h2 className="text-xl font-medium mb-4">Feature List</h2>
 
           <div className="space-y-2">

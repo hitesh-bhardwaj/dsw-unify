@@ -141,7 +141,6 @@ export default function SelfHosted() {
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
-      <ScaleDown>
         <div className="space-y-6">
 
           {/* SEARCH */}
@@ -188,7 +187,6 @@ export default function SelfHosted() {
             <EmptyCard>No self-hosted LLMs found.</EmptyCard>
           )}
         </div>
-      </ScaleDown>
 
       {/* RECENT ACTIVITY */}
       <div className="space-y-10 mt-20">

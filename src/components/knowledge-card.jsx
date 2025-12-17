@@ -100,7 +100,7 @@ export function KnowledgeCard({ agent, index, view, minSkeletonMs = 500 }) {
               {/* Status badge */}
               <Badge
                 className={cn(
-                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 transition-all duration-300 group-hover:text-white group-hover:border-white",
+                  "rounded-full px-3 py-1 text-xs font-medium bg-white/10 transition-all duration-300 group-hover:text-white group-hover:border-white dark:bg-background dark:group-hover:bg-white/10",
                   status === "active"
                     ? "text-foreground border border-badge-green"
                     : "text-foreground px-4 border border-badge-sea-green"
@@ -125,7 +125,7 @@ export function KnowledgeCard({ agent, index, view, minSkeletonMs = 500 }) {
             {/* Footer stats */}
             <div
               className={cn(
-                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 bg-white/10 dark:bg-background dark:group-hover:bg-white/10 duration-300 border-border-color-2 border group-hover:border-white/60 transition-all", isList && 'mt-2'
+                "flex items-center justify-between rounded-lg text-sm py-4 px-6 mt-15 bg-white/10 dark:bg-card dark:group-hover:bg-white/10 duration-300 border-border-color-2 border group-hover:border-white/60 transition-all", isList && 'mt-2'
               )}
             >
               <div className="flex flex-col items-start gap-1 font-medium">

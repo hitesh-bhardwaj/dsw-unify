@@ -141,7 +141,7 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
                 </div>
               </div>
 
-              <Card className="p-3 max-h-[250px] overflow-y-auto rounded-xl">
+              <Card className="p-3 max-h-[250px] overflow-y-auto rounded-xl dark:bg-background">
                 <div className="space-y-3">
                   {inputGuardrails.map((item, index) => (
                     <div key={index} className="flex items-start gap-3">
@@ -177,7 +177,7 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
                 </div>
               </div>
 
-              <Card className="p-3 max-h-[250px] overflow-y-auto rounded-xl">
+              <Card className="p-3 max-h-[250px] overflow-y-auto rounded-xl dark:bg-background">
                 <div className="space-y-3">
                   {outputGuardrails.map((item, index) => (
                     <div key={index} className="flex items-start gap-3">

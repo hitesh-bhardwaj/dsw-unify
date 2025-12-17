@@ -196,11 +196,11 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                     animateOnMount
                     playKey={"storage-strategy"}
                     className="w-full"
-                    trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                    trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden dark:bg-sidebar-accent"
                     barClassName="bg-[#2563FB] h-full absolute top-0 left-0 z-[5] rounded-full"
                   />
                 </div>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-foreground/80">
                   Maximum characters per chunk
                 </p>
               </div>
@@ -217,11 +217,11 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                     animateOnMount
                     playKey={"storage-strategy"}
                     className="w-full"
-                    trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                    trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden dark:bg-sidebar-accent"
                     barClassName="bg-[#2563FB] h-full absolute top-0 left-0 z-[5] rounded-full"
                   />
                 </div>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-foreground/80">
                   Overlapping characters between chunks
                 </p>
               </div>
@@ -289,7 +289,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                         animateOnMount
                         playKey={"storage-strategy"}
                         className="w-full"
-                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden dark:bg-sidebar-accent"
                         barClassName="bg-[#2563FB] h-full absolute top-0 left-0 z-[5] rounded-full"
                       />
                     </div>
@@ -341,7 +341,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                         animateOnMount
                         playKey={"storage-strategy"}
                         className="w-full"
-                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden dark:bg-sidebar-accent"
                         barClassName="bg-[#6BC631] h-full absolute top-0 left-0 z-[5] rounded-full"
                       />
                     </div>
@@ -361,7 +361,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                         animateOnMount
                         playKey={"storage-strategy"}
                         className="w-full"
-                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden dark:bg-sidebar-accent"
                         barClassName="bg-foreground h-full absolute top-0 left-0 z-[5] rounded-full"
                       />
                     </div>
@@ -381,7 +381,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
                         animateOnMount
                         playKey={"storage-strategy"}
                         className="w-full"
-                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+                        trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden dark:bg-sidebar-accent"
                         barClassName="bg-primary  h-full absolute top-0 left-0 z-[5] rounded-full"
                       />
                     </div>

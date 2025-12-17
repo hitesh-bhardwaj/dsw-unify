@@ -120,7 +120,7 @@ export function ToolsCard({ tools,index, view, minSkeletonMs = 500 }) {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                 )}
                 >
                   {tag}

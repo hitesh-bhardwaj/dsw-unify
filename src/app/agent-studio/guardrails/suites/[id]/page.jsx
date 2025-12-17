@@ -125,7 +125,7 @@ function titleFromSlug(raw) {
 // Simplified Guardrail Item Card (non-clickable)
 function GuardrailItemCard({ guardrail, index }) {
   return (
-    <Card className="p-6 space-y-4 border border-border-color-0 bg-white hover:border-border-color-2 transition-all duration-300">
+    <Card className="p-6 space-y-4 border border-border-color-0 bg-white hover:border-border-color-2 transition-all duration-300 dark:bg-card">
       <div
         className="flex items-center justify-center size-14 rounded-lg transition-all duration-300"
         style={{
@@ -146,13 +146,13 @@ function GuardrailItemCard({ guardrail, index }) {
       <div className="flex gap-2 pt-2">
         <Badge
           variant="secondary"
-          className="rounded-full border border-border-color-0 px-3 py-1 bg-white dark:bg-background text-xs font-light"
+          className="rounded-full border border-border-color-0 px-3 py-1 bg-white dark:bg-card text-xs font-light"
         >
           {guardrail.direction}
         </Badge>
         <Badge
           variant="secondary"
-          className="rounded-full border border-border-color-0 px-3 py-1 bg-white dark:bg-background text-xs font-light"
+          className="rounded-full border border-border-color-0 px-3 py-1 bg-white dark:bg-card text-xs font-light"
         >
           {guardrail.category}
         </Badge>
@@ -233,7 +233,7 @@ export default function GuardSuiteDetailPage() {
 
           {/* STATS CARDS */}
           <div className="w-full flex flex-col md:flex-row items-stretch justify-between gap-4">
-            <div className="flex flex-col gap-3 border border-border-color-0 bg-white rounded-3xl py-6 px-4 w-full">
+            <div className="flex flex-col gap-3 border border-border-color-0 bg-white dark:bg-card rounded-3xl py-6 px-4 w-full">
               <span className="text-sm text-foreground/80">
                 Input Guardrails
               </span>
@@ -245,20 +245,20 @@ export default function GuardSuiteDetailPage() {
               </span>
             </div>
 
-            <div className="flex flex-col gap-3 border border-border-color-0 bg-white rounded-3xl py-6 px-4 w-full">
+            <div className="flex flex-col gap-3 border border-border-color-0 bg-white dark:bg-card rounded-3xl py-6 px-4 w-full">
               <span className="text-sm text-foreground/80">Agents Using</span>
               <span className="text-3xl font-medium mt-1">
                 <CountUp value={guardSuite.agentsCount} startOnView />
               </span>
             </div>
 
-            <div className="flex flex-col gap-3 border border-border-color-0 bg-white rounded-3xl py-6 px-4 w-full">
+            <div className="flex flex-col gap-3 border border-border-color-0 bg-white dark:bg-card rounded-3xl py-6 px-4 w-full">
               <span className="text-sm text-foreground/80">Status</span>
               <div className="flex items-center gap-2 mt-1">
                 <span className="text-3xl font-medium">
                   {guardSuite.status === "active" ? "Active" : "Inactive"}
                 </span>
-                <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-white text-badge-green border border-badge-green">
+                <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-white text-badge-green border border-badge-green dark:bg-card">
                   {guardSuite.status === "active" ? "Active" : "Inactive"}
                 </Badge>
               </div>

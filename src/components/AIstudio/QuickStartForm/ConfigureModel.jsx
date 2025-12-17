@@ -6,11 +6,22 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { LeftArrow, SparklesIcon } from "@/components/Icons";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Main Component
-export default function ConfigureModel({ goNext, goBack, isLastStep, stepId, sharedState  }) {
+export default function ConfigureModel({
+  goNext,
+  goBack,
+  isLastStep,
+  stepId,
+  sharedState,
+}) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [modelingProcess, setModelingProcess] = useState("");
@@ -55,7 +66,9 @@ export default function ConfigureModel({ goNext, goBack, isLastStep, stepId, sha
 
     return (
       <div className="space-y-4 mt-6 p-6 border border-border-color-0 rounded-lg bg-background">
-        <h3 className="text-base font-medium text-foreground">Training Parameters</h3>
+        <h3 className="text-base font-medium text-foreground">
+          Training Parameters
+        </h3>
         {componentsMap[modelingProcess]}
       </div>
     );
@@ -66,30 +79,40 @@ export default function ConfigureModel({ goNext, goBack, isLastStep, stepId, sha
       {/* TITLE */}
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h2 className="text-lg font-medium text-foreground">Configure Models</h2>
+          <h2 className="text-lg font-medium text-foreground">
+            Configure Models
+          </h2>
           <p className="text-xs text-foreground/80">
             Configure your model training parameters
           </p>
         </div>
       </div>
 
-       <div className="flex items-start gap-3 w-full border border-border-color-0  mt-5 rounded-lg p-4 py-2 cursor-pointer transition-all hover:bg-sidebar-accent">
-              <div className="text-black h-10 w-10 rounded-xl bg-primary flex items-center justify-center">
-                <SparklesIcon className="h-5 w-5 !text-white"/>
-              </div>
-            <div className=" space-y-1.5 
-                      flex flex-col justify-between h-full ">
-                        <div className="text-sm font-medium">Auto-Generated Features</div>
-                        <p className="text-xs text-foreground/80" >All columns from 5 selected tables will be automatically converted to features</p>
-                        <div className=" my-2 flex items-center gap-2">
-                        {selectedTables.map((item, index) => (
-        <div key={index} className="px-2.5 py-1 bg-sidebar-accent border border-border-color-0 rounded-xl w-fit">
-          <p className="text-xs text-foreground/80">{item}</p>
+      <div className="flex items-start gap-3 w-full border border-border-color-0  mt-5 rounded-lg p-4 py-2 cursor-pointer transition-all hover:bg-sidebar-accent">
+        <div className="text-black h-10 w-10 rounded-xl bg-primary flex items-center justify-center">
+          <SparklesIcon className="h-5 w-5 !text-white" />
         </div>
-      ))}
-                 </div>
+        <div
+          className=" space-y-1.5 
+                      flex flex-col justify-between h-full "
+        >
+          <div className="text-sm font-medium">Auto-Generated Features</div>
+          <p className="text-xs text-foreground/80">
+            All columns from 5 selected tables will be automatically converted
+            to features
+          </p>
+          <div className=" my-2 flex items-center gap-2">
+            {selectedTables.map((item, index) => (
+              <div
+                key={index}
+                className="px-2.5 py-1 bg-sidebar-accent border border-border-color-0 rounded-xl w-fit dark:bg-transparent"
+              >
+                <p className="text-xs text-foreground/80">{item}</p>
               </div>
-              </div>
+            ))}
+          </div>
+        </div>
+      </div>
 
       {/* FORM */}
       <div className="space-y-4">
@@ -111,14 +134,21 @@ export default function ConfigureModel({ goNext, goBack, isLastStep, stepId, sha
           </div>
 
           <div className="space-y-2 w-1/2">
-            <label className="text-sm text-foreground">Modeling Process *</label>
+            <label className="text-sm text-foreground">
+              Modeling Process *
+            </label>
             <Select value={modelingProcess} onValueChange={setModelingProcess}>
-              <SelectTrigger className={`!h-11 cursor-pointer border-border-color-0 w-full rounded-lg ${
-                errors.modelingProcess ? "border-red-500" : ""
-              }`}>
-                <SelectValue placeholder="Select Process Type" className="text-sm" />
+              <SelectTrigger
+                className={`!h-11 cursor-pointer border-border-color-0 w-full rounded-lg ${
+                  errors.modelingProcess ? "border-red-500" : ""
+                }`}
+              >
+                <SelectValue
+                  placeholder="Select Process Type"
+                  className="text-sm"
+                />
               </SelectTrigger>
-              <SelectContent  className="border border-border-color-0">
+              <SelectContent className="border border-border-color-0">
                 <SelectItem className="cursor-pointer" value="classification">
                   Classification
                 </SelectItem>
@@ -140,7 +170,9 @@ export default function ConfigureModel({ goNext, goBack, isLastStep, stepId, sha
               </SelectContent>
             </Select>
             {errors.modelingProcess && (
-              <p className="text-xs text-red-500 mt-1">{errors.modelingProcess}</p>
+              <p className="text-xs text-red-500 mt-1">
+                {errors.modelingProcess}
+              </p>
             )}
           </div>
         </div>
@@ -203,13 +235,25 @@ const ClassificationRegressionParams = ({ type }) => {
           <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select target variable" />
           </SelectTrigger>
-          <SelectContent  className="border border-border-color-0">
-            <SelectItem className="!cursor-pointer" value="customer_id">customer_id (Customers)</SelectItem>
-            <SelectItem className="!cursor-pointer" value="order_amount">order_amount (Orders)</SelectItem>
-            <SelectItem className="!cursor-pointer" value="product_category">product_category (Products)</SelectItem>
-            <SelectItem className="!cursor-pointer" value="transaction_status">transaction_status (Transactions)</SelectItem>
-            <SelectItem className="!cursor-pointer" value="event_type">event_type (User Events)</SelectItem>
-            <SelectItem className="!cursor-pointer" value="diagnosis">diagnosis (Medical Records)</SelectItem>
+          <SelectContent className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="customer_id">
+              customer_id (Customers)
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="order_amount">
+              order_amount (Orders)
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="product_category">
+              product_category (Products)
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="transaction_status">
+              transaction_status (Transactions)
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="event_type">
+              event_type (User Events)
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="diagnosis">
+              diagnosis (Medical Records)
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -220,22 +264,39 @@ const ClassificationRegressionParams = ({ type }) => {
           <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select metric" />
           </SelectTrigger>
-          <SelectContent  className="border border-border-color-0">
+          <SelectContent className="border border-border-color-0">
             {type === "classification" ? (
               <>
-                <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
-                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
-                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
-                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
-                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
+                <SelectItem className="!cursor-pointer" value="accuracy">
+                  Accuracy
+                </SelectItem>
+                <SelectItem className="!cursor-pointer" value="precision">
+                  Precision
+                </SelectItem>
+                <SelectItem className="!cursor-pointer" value="recall">
+                  Recall
+                </SelectItem>
+                <SelectItem className="!cursor-pointer" value="f1">
+                  F1 Score
+                </SelectItem>
+                <SelectItem className="!cursor-pointer" value="auc">
+                  AUC-ROC
+                </SelectItem>
               </>
             ) : (
               <>
-                <SelectItem className="!cursor-pointer" value="mse">RMSE</SelectItem>
-                <SelectItem className="!cursor-pointer" value="rmse">MAE</SelectItem>
-                <SelectItem className="!cursor-pointer" value="r2">R²</SelectItem>
-                <SelectItem className="!cursor-pointer" value="mae">MAPE</SelectItem>
-                
+                <SelectItem className="!cursor-pointer" value="mse">
+                  RMSE
+                </SelectItem>
+                <SelectItem className="!cursor-pointer" value="rmse">
+                  MAE
+                </SelectItem>
+                <SelectItem className="!cursor-pointer" value="r2">
+                  R²
+                </SelectItem>
+                <SelectItem className="!cursor-pointer" value="mae">
+                  MAPE
+                </SelectItem>
               </>
             )}
           </SelectContent>
@@ -254,7 +315,9 @@ const ClassificationRegressionParams = ({ type }) => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm text-foreground">Cross-Validation Folds</label>
+        <label className="text-sm text-foreground">
+          Cross-Validation Folds
+        </label>
         <Input
           type="number"
           value={crossValidationFolds}
@@ -281,17 +344,27 @@ const RecommendationParams = () => {
           <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent  className="border border-border-color-0">
-            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
-                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
-                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
-                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
-                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
+          <SelectContent className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">
+              Accuracy
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="precision">
+              Precision
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="recall">
+              Recall
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="f1">
+              F1 Score
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="auc">
+              AUC-ROC
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-       <div className="space-y-2">
+      <div className="space-y-2">
         <label className="text-sm text-foreground">Train/Test Split (%)</label>
         <Input
           type="number"
@@ -303,7 +376,9 @@ const RecommendationParams = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm text-foreground">Cross-Validation Folds</label>
+        <label className="text-sm text-foreground">
+          Cross-Validation Folds
+        </label>
         <Input
           type="number"
           value={crossValidationFolds}
@@ -318,7 +393,7 @@ const RecommendationParams = () => {
 
 // Time Series Parameters Component
 const TimeSeriesParams = () => {
-   const [trainTestSplit, setTrainTestSplit] = useState("80");
+  const [trainTestSplit, setTrainTestSplit] = useState("80");
   const [crossValidationFolds, setCrossValidationFolds] = useState("5");
   const [userColumn, setUserColumn] = useState("");
 
@@ -330,17 +405,27 @@ const TimeSeriesParams = () => {
           <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent  className="border border-border-color-0">
-            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
-                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
-                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
-                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
-                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
+          <SelectContent className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">
+              Accuracy
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="precision">
+              Precision
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="recall">
+              Recall
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="f1">
+              F1 Score
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="auc">
+              AUC-ROC
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-       <div className="space-y-2">
+      <div className="space-y-2">
         <label className="text-sm text-foreground">Train/Test Split (%)</label>
         <Input
           type="number"
@@ -352,7 +437,9 @@ const TimeSeriesParams = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm text-foreground">Cross-Validation Folds</label>
+        <label className="text-sm text-foreground">
+          Cross-Validation Folds
+        </label>
         <Input
           type="number"
           value={crossValidationFolds}
@@ -367,7 +454,7 @@ const TimeSeriesParams = () => {
 
 // Clustering Parameters Component
 const ClusteringParams = () => {
-   const [trainTestSplit, setTrainTestSplit] = useState("80");
+  const [trainTestSplit, setTrainTestSplit] = useState("80");
   const [crossValidationFolds, setCrossValidationFolds] = useState("5");
   const [userColumn, setUserColumn] = useState("");
 
@@ -379,17 +466,27 @@ const ClusteringParams = () => {
           <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent  className="border border-border-color-0">
-            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
-                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
-                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
-                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
-                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
+          <SelectContent className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">
+              Accuracy
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="precision">
+              Precision
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="recall">
+              Recall
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="f1">
+              F1 Score
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="auc">
+              AUC-ROC
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-       <div className="space-y-2">
+      <div className="space-y-2">
         <label className="text-sm text-foreground">Train/Test Split (%)</label>
         <Input
           type="number"
@@ -401,7 +498,9 @@ const ClusteringParams = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm text-foreground">Cross-Validation Folds</label>
+        <label className="text-sm text-foreground">
+          Cross-Validation Folds
+        </label>
         <Input
           type="number"
           value={crossValidationFolds}
@@ -416,7 +515,7 @@ const ClusteringParams = () => {
 
 // Anomaly Detection Parameters Component
 const AnomalyDetectionParams = () => {
-   const [trainTestSplit, setTrainTestSplit] = useState("80");
+  const [trainTestSplit, setTrainTestSplit] = useState("80");
   const [crossValidationFolds, setCrossValidationFolds] = useState("5");
   const [userColumn, setUserColumn] = useState("");
 
@@ -428,17 +527,27 @@ const AnomalyDetectionParams = () => {
           <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent  className="border border-border-color-0">
-            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
-                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
-                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
-                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
-                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
+          <SelectContent className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">
+              Accuracy
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="precision">
+              Precision
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="recall">
+              Recall
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="f1">
+              F1 Score
+            </SelectItem>
+            <SelectItem className="!cursor-pointer" value="auc">
+              AUC-ROC
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-       <div className="space-y-2">
+      <div className="space-y-2">
         <label className="text-sm text-foreground">Train/Test Split (%)</label>
         <Input
           type="number"
@@ -450,7 +559,9 @@ const AnomalyDetectionParams = () => {
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm text-foreground">Cross-Validation Folds</label>
+        <label className="text-sm text-foreground">
+          Cross-Validation Folds
+        </label>
         <Input
           type="number"
           value={crossValidationFolds}

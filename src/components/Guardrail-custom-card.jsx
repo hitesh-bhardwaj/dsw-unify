@@ -176,7 +176,7 @@ export function GuardrailsCustomCard({
                 {isCustom && (
                   <Badge
                     variant="secondary"
-                    className="rounded-full border border-border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                    className="rounded-full border border-border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10 dark:bg-card"
                   >
                     Custom
                   </Badge>
@@ -240,7 +240,7 @@ export function GuardrailsCustomCard({
           </CardHeader>
 
           <CardContent>
-            <div className="border border-border-color-0 group-hover:border-white/30 h-full w-full rounded-lg flex px-5 py-2 min-h-20 items-center bg-white/10 dark:bg-background dark:group-hover:bg-white/10 transition-all duration-300">
+            <div className="border border-border-color-0 group-hover:border-white/30 h-full w-full rounded-lg flex px-5 py-2 min-h-20 items-center bg-white/10 dark:bg-card dark:group-hover:bg-white/10 transition-all duration-300">
               <div className="text-sm text-foreground font-medium group-hover:text-white transition-colors duration-300 w-1/2">
                 {directionLabel}
               </div>
@@ -251,7 +251,7 @@ export function GuardrailsCustomCard({
                     key={index}
                     variant="secondary"
                     className={cn(
-                      "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
+                      "rounded-full border border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/30 bg-white/10 dark:group-hover:bg-white/10"
                     )}
                   >
                     {tag.label}

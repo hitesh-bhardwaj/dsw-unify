@@ -6,7 +6,12 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { LeftArrow, SparklesIcon } from "@/components/Icons";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export default function SelectData({ goNext, goBack, sharedState, setSharedState }) {
+export default function SelectData({
+  goNext,
+  goBack,
+  sharedState,
+  setSharedState,
+}) {
   const tables = [
     { name: "Customers", columns: "12 column", rows: "1.2M rows" },
     { name: "Orders", columns: "12 column", rows: "1.2M rows" },
@@ -31,10 +36,9 @@ export default function SelectData({ goNext, goBack, sharedState, setSharedState
     const newSelectedTables = selectedTables.includes(tableName)
       ? selectedTables.filter((name) => name !== tableName)
       : [...selectedTables, tableName];
-    
+
     setSharedState({ ...sharedState, selectedTables: newSelectedTables });
   };
-
 
   return (
     <div className="space-y-2 pb-2 pr-2">
@@ -47,7 +51,7 @@ export default function SelectData({ goNext, goBack, sharedState, setSharedState
       <div className="grid grid-cols-3 gap-4 pt-5">
         {tables.map((item) => {
           const isSelected = selectedTables.includes(item.name);
-          
+
           return (
             <label
               key={item.name}
@@ -56,7 +60,7 @@ export default function SelectData({ goNext, goBack, sharedState, setSharedState
                 ${
                   isSelected
                     ? "border-sidebar-primary "
-                    : "border-border-color-0 bg-white dark:bg-sidebar-accent"
+                    : "border-border-color-0 bg-white dark:bg-background"
                 }`}
             >
               <div className="flex items-center gap-2">
@@ -66,9 +70,7 @@ export default function SelectData({ goNext, goBack, sharedState, setSharedState
                 />
                 <span
                   className={`text-sm font-medium ${
-                    isSelected
-                      ? "text-sidebar-primary"
-                      : "text-foreground"
+                    isSelected ? "text-sidebar-primary" : "text-foreground"
                   }`}
                 >
                   {item.name}
@@ -82,25 +84,32 @@ export default function SelectData({ goNext, goBack, sharedState, setSharedState
             </label>
           );
         })}
-        
       </div>
       <div className="flex items-start gap-3 w-full border border-border-color-0  mt-5 rounded-lg p-4 py-2 cursor-pointer transition-all hover:bg-sidebar-accent">
         <div className="text-black h-10 w-10 rounded-xl bg-primary flex items-center justify-center">
-          <SparklesIcon className="h-5 w-5 !text-white"/>
+          <SparklesIcon className="h-5 w-5 !text-white" />
         </div>
-      <div className=" space-y-1.5 
-                flex flex-col justify-between h-full ">
-                  <div className="text-sm font-medium">Auto-Generated Features</div>
-                  <p className="text-xs text-foreground/80" >All columns from 5 selected tables will be automatically converted to features</p>
-                  <div className=" my-2 flex items-center gap-2">
-                  {selectedTables.map((item, index) => (
-  <div key={index} className="px-2.5 py-1 bg-sidebar-accent border border-border-color-0 rounded-xl w-fit">
-    <p className="text-xs text-foreground/80">{item}</p>
-  </div>
-))}
-           </div>
+        <div
+          className=" space-y-1.5 
+                flex flex-col justify-between h-full "
+        >
+          <div className="text-sm font-medium">Auto-Generated Features</div>
+          <p className="text-xs text-foreground/80">
+            All columns from 5 selected tables will be automatically converted
+            to features
+          </p>
+          <div className=" my-2 flex items-center gap-2">
+            {selectedTables.map((item, index) => (
+              <div
+                key={index}
+                className="px-2.5 py-1 bg-sidebar-accent border border-border-color-0 rounded-xl w-fit dark:bg-transparent"
+              >
+                <p className="text-xs text-foreground/80">{item}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        </div>
+      </div>
 
       {/* Footer Buttons */}
       <div className="w-full flex justify-end gap-2 pt-6">

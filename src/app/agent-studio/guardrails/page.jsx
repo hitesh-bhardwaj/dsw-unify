@@ -53,13 +53,11 @@ const mockGuardSuites = [
       { name: "Toxic Language", severity: "High" },
       { name: "Offensive Check", severity: "High" },
     ],
-    agentsCount: '08',
+    agentsCount: "08",
     createdDate: "2024-01-20",
     tags: ["moderation", "content", "safety"],
   },
 ];
-
-
 
 // Default Guardrails data
 const defaultGuardrails = [
@@ -159,8 +157,6 @@ const INITIAL_CUSTOM_GUARDRAILS = [
   },
 ];
 
-
-
 export default function GuardrailsPage() {
   const [activeTab, setActiveTab] = useState("suites");
   const [guardrailsSubTab, setGuardrailsSubTab] = useState("default"); // default or custom
@@ -171,23 +167,20 @@ export default function GuardrailsPage() {
   const [sortOrder, setSortOrder] = useState("none");
   const [view, setView] = useState("grid");
   const [guardSuites, setGuardSuites] = useState(mockGuardSuites);
-const [customGuardrails, setCustomGuardrails] = useState(
-  INITIAL_CUSTOM_GUARDRAILS
-);
+  const [customGuardrails, setCustomGuardrails] = useState(
+    INITIAL_CUSTOM_GUARDRAILS
+  );
 
-const [copySourceGuardrail, setCopySourceGuardrail] = useState(null);
+  const [copySourceGuardrail, setCopySourceGuardrail] = useState(null);
 
-const handleCopyGuardrail = (guardrail) => {
-  setCopySourceGuardrail(guardrail);
-  setIsCustomModalOpen(true);
-};
-
+  const handleCopyGuardrail = (guardrail) => {
+    setCopySourceGuardrail(guardrail);
+    setIsCustomModalOpen(true);
+  };
 
   const handleDeleteCustomGuardrail = (id) => {
-  setCustomGuardrails((prev) => prev.filter((g) => g.id !== id));
-};
-
-
+    setCustomGuardrails((prev) => prev.filter((g) => g.id !== id));
+  };
 
   // Get available tags dynamically based on active tab
   const availableTags = useMemo(() => {
@@ -249,16 +242,16 @@ const handleCopyGuardrail = (guardrail) => {
   };
 
   const handleDeleteSuite = (suiteId) => {
-  setGuardSuites((prev) => prev.filter((s) => s.id !== suiteId));
-};
-
+    setGuardSuites((prev) => prev.filter((s) => s.id !== suiteId));
+  };
 
   const activeGuardrailList =
     guardrailsSubTab === "default" ? defaultGuardrails : customGuardrails;
 
   const renderGuardrailGrid = (list, variant) => {
     const filtered = filterGuardrailsList(list);
-    const CardComponent = variant === "custom" ? GuardrailsCustomCard : GuardrailsCard;
+    const CardComponent =
+      variant === "custom" ? GuardrailsCustomCard : GuardrailsCard;
 
     return (
       <AnimatePresence mode="wait">
@@ -283,11 +276,10 @@ const handleCopyGuardrail = (guardrail) => {
               }}
               view={view}
               index={index}
-                onCopy={handleCopyGuardrail}
-                onDelete={
-    variant === "custom" ? handleDeleteCustomGuardrail : undefined
-  }
-
+              onCopy={handleCopyGuardrail}
+              onDelete={
+                variant === "custom" ? handleDeleteCustomGuardrail : undefined
+              }
             />
           ))}
 
@@ -306,11 +298,10 @@ const handleCopyGuardrail = (guardrail) => {
       <ScaleDown>
         <div className="space-y-6 p-6">
           {/* Animated Tabs - At the very top */}
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="w-fit border border-border">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="">
+            <TabsList className="w-fit border border-border dark:bg-card">
               <TabsTrigger className="px-4 font-normal" value="suites">
                 Guard Suites
-                
               </TabsTrigger>
               <TabsTrigger className="px-4 font-normal" value="guardrails">
                 Guardrails
@@ -377,9 +368,7 @@ const handleCopyGuardrail = (guardrail) => {
             setView={setView}
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
-            cards={
-              activeTab === "suites" ? guardSuites : activeGuardrailList
-            }
+            cards={activeTab === "suites" ? guardSuites : activeGuardrailList}
           />
         </div>
 
@@ -405,8 +394,7 @@ const handleCopyGuardrail = (guardrail) => {
                     suite={suite}
                     view={view}
                     index={index}
-                      onDelete={handleDeleteSuite}
-
+                    onDelete={handleDeleteSuite}
                   />
                 ))}
 
@@ -446,8 +434,15 @@ const handleCopyGuardrail = (guardrail) => {
         </div>
       </ScaleDown>
 
-      <CreateGuardSuitesModal open={isModalOpen} onOpenChange={setIsModalOpen} />
-      <AddCustomGuardrailsModal open={isCustomModalOpen} onOpenChange={setIsCustomModalOpen} initialGuardrail={copySourceGuardrail} />
+      <CreateGuardSuitesModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
+      <AddCustomGuardrailsModal
+        open={isCustomModalOpen}
+        onOpenChange={setIsCustomModalOpen}
+        initialGuardrail={copySourceGuardrail}
+      />
     </div>
   );
 }

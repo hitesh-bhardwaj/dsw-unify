@@ -162,7 +162,7 @@ const page = () => {
               {versionsData.stats.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full"
+                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
                 >
                   <span className="text-sm text-foreground/80">
                     {item.title}
@@ -170,7 +170,7 @@ const page = () => {
                   {item.title === "Accuracy" ? (
                     <span className="text-badge-green text-xl flex items-center gap-1">
                       <LineGraph className="w-5 h-5" />
-                      <CountUp value={item.value} startOnView />
+                      <CountUp value={item.value} startOnView className={"font-medium"} />
                     </span>
                   ) : (
                     <span className="text-xl font-medium mt-2">

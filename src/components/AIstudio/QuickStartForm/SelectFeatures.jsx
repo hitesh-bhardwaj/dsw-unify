@@ -79,7 +79,7 @@ export default function ModelTraining({ onCloseModal }) {
           ease="easeInOut"
           animateOnMount
           className="w-full"
-          trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden"
+          trackClassName="w-full bg-gray-200 rounded-full h-2 relative overflow-hidden dark:bg-sidebar-accent"
           barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
         />
 

@@ -91,7 +91,7 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
               " h-full flex flex-col justify-between gap-0 py-5  ",
             // List view styles
             isList &&
-              "w-full rounded-xl   py-6 bg-white dark:bg-background"
+              "w-full rounded-xl   py-6 bg-white dark:bg-card"
           )}
       >
         <CardHeader className="pb-2">
@@ -185,7 +185,7 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10"
                 )}
               >
                 {tag}
@@ -200,7 +200,7 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
           {/* Versions + Features */}
           <div
             className={cn(
-              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-background bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2 w-full"
+              "flex items-center justify-between rounded-lg p-3 px-5 text-sm py-6 duration-300 dark:bg-card bg-white/10 dark:group-hover:bg-white/10 group-hover:border-white/60 border border-border-color-2 w-full"
             )}
           >
             <div className="flex items-center gap-2 ">

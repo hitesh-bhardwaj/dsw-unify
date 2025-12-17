@@ -124,7 +124,7 @@ const { id: routeId, modelId } = params;
             isGrid &&
               " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
             isList &&
-              "w-full rounded-xl  py-6 bg-white dark:bg-background"
+              "w-full rounded-xl  py-6 bg-white dark:bg-card"
           )}
         >
           <CardHeader className="pb-2">
@@ -226,7 +226,7 @@ const { id: routeId, modelId } = params;
                   key={index}
                   variant="secondary"
                   className={cn(
-                    "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-border-color-0 bg-white/10 dark:group-hover:bg-white/10"
+                    "rounded-full border border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-border-color-0 bg-white/10 dark:group-hover:bg-white/10"
                   )}
                 >
                   {tag}
@@ -241,7 +241,7 @@ const { id: routeId, modelId } = params;
             {/* Versions + Features */}
             <div
               className={cn(
-                "flex items-start justify-between gap-4 rounded-lg p-3 px-2 text-sm py-2 duration-300 dark:bg-background flex-col", isList && 'w-[25%]'
+                "flex items-start justify-between gap-4 rounded-lg p-3 px-2 text-sm py-2 duration-300 dark:bg-transparent flex-col", isList && 'w-[25%]'
               )}
             >
               <div className="flex items-center gap-6 ">
@@ -254,7 +254,7 @@ const { id: routeId, modelId } = params;
                 </div>
               </div>
               <div className="flex items-center gap-2 w-full">
-                <button onClick={handleDeployToggle} className={`text-xs cursor-pointer flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground  transition-all duration-300 bg-primary group-hover:bg-white`}>
+                <button onClick={handleDeployToggle} className={`text-xs cursor-pointer flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground  transition-all duration-300 bg-primary group-hover:bg-white dark:group-hover:text-black`}>
                     <RocketIcon className="w-4 h-4 " />
                     {deployStatus=="Deployed"?"Undeploy":"Deploy"}
                   

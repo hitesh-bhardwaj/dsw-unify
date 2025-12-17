@@ -102,7 +102,7 @@ export default function GuardrailDetailPage() {
               <div className="space-y-1">
                 <div className="flex items-center gap-3">
                   <h1 className="text-xl font-medium">{displayName}</h1>
-                  <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-transparent text-black border border-badge-green">
+                  <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-transparent text-foreground border border-badge-green">
                     {guardrail.status === "active" ? "Active" : "Inactive"}
                   </Badge>
                 </div>
@@ -115,14 +115,14 @@ export default function GuardrailDetailPage() {
 
           {/* STATS CARDS */}
           <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">
-            <Card className="p-6 space-y-3 border border-border-color-0 bg-white">
+            <Card className="p-6 space-y-3 border border-border-color-0 bg-white dark:bg-card">
               <span className="text-sm text-foreground/80">Check Type</span>
               <span className="text-2xl font-medium block">
                 {guardrail.checkType}
               </span>
             </Card>
 
-            <Card className="p-6 space-y-3 border border-border-color-0 bg-white">
+            <Card className="p-6 space-y-3 border border-border-color-0 bg-white dark:bg-card">
               <span className="text-sm text-foreground/80">
                 Total Checks (30d)
               </span>
@@ -131,7 +131,7 @@ export default function GuardrailDetailPage() {
               </span>
             </Card>
 
-            <Card className="p-6 space-y-3 border border-border-color-0 bg-white">
+            <Card className="p-6 space-y-3 border border-border-color-0 bg-white dark:bg-card">
               <span className="text-sm text-foreground/80">
                 Violations Detected
               </span>
@@ -140,7 +140,7 @@ export default function GuardrailDetailPage() {
               </span>
             </Card>
 
-            <Card className="p-6 space-y-3 border border-border-color-0 bg-white">
+            <Card className="p-6 space-y-3 border border-border-color-0 bg-white dark:bg-card">
               <span className="text-sm text-foreground/80">Pass Rate</span>
               <span className="text-2xl font-medium block text-badge-green">
                 <CountUp value={guardrail.passRate} startOnView />
@@ -263,14 +263,14 @@ export default function GuardrailDetailPage() {
                   <div className="flex items-center justify-center size-6 text-red border border-red rounded-full">
                     <X className="size-4 text-red" />
                   </div>
-                  <span className="text-sm font-medium text-black">
+                  <span className="text-sm font-medium text-foreground">
                     Violation Example
                   </span>
                 </div>
                 <p className="text-sm text-foreground">
                   "{guardrail.violationExample.text}"
                 </p>
-                <Badge className="border-red bg-white text-black">
+                <Badge className="border-red bg-white text-foreground dark:bg-card">
                   {guardrail.violationExample.status}
                 </Badge>
               </div>
@@ -281,14 +281,14 @@ export default function GuardrailDetailPage() {
                   <div className="flex items-center justify-center size-6 text-badge-green border border-badge-green rounded-full">
                     <Check className="size-4 text-badge-green" />
                   </div>
-                  <span className="text-sm font-medium text-black">
+                  <span className="text-sm font-medium text-foreground">
                     Safe Example
                   </span>
                 </div>
                 <p className="text-sm text-foreground">
                   "{guardrail.safeExample.text}"
                 </p>
-                <Badge className="border-badge-green bg-white text-black">
+                <Badge className="border-badge-green bg-white text-foreground dark:bg-card">
                   {guardrail.safeExample.status}
                 </Badge>
               </div>
@@ -312,7 +312,7 @@ export default function GuardrailDetailPage() {
                     {guardrail.truePositives}
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-sidebar-accent">
                   <div
                     className="bg-badge-green h-2 rounded-full"
                     style={{ width: "95%" }}
@@ -330,7 +330,7 @@ export default function GuardrailDetailPage() {
                     {String(guardrail.falsePositives).padStart(2, "0")}
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-sidebar-accent">
                   <div
                     className="bg-foreground h-2 rounded-full"
                     style={{ width: "5%" }}
@@ -348,7 +348,7 @@ export default function GuardrailDetailPage() {
                     {guardrail.accuracyRate}%
                   </span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-sidebar-accent">
                   <div
                     className="bg-primary h-2 rounded-full"
                     style={{ width: `${guardrail.accuracyRate}%` }}
@@ -379,7 +379,7 @@ export default function GuardrailDetailPage() {
                       </p>
                     </div>
                   </div>
-                  <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-white text-foreground border border-badge-green">
+                  <Badge className="rounded-full px-3 py-1 text-xs font-medium bg-white text-foreground border border-badge-green dark:bg-card">
                     Active
                   </Badge>
                 </div>

@@ -207,7 +207,7 @@ const handleConfirmDelete = () => {
                 key={index}
                 variant="secondary"
                 className={cn(
-                  "rounded-full border border-color-2 px-3 py-1 dark:bg-background text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10", tag === "+1 more" ? "border-primary" : "border-color-2"
+                  "rounded-full border border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-white/60 bg-white/10 dark:group-hover:bg-white/10", tag === "+1 more" ? "border-primary" : "border-color-2"
                 )}>
                   {tag}
                 </Badge>
@@ -230,7 +230,7 @@ const handleConfirmDelete = () => {
           {/* Preview */}
           <div
             className={cn(
-              "rounded-lg p-3 bg-sidebar-accent text-xs border-transparent group-hover:bg-transparent  dark:bg-background dark:group-hover:bg-white/10 text-gray-600 dark:text-white/80 group-hover:text-white/80 border group-hover:border-white/60 transition-all"
+              "rounded-lg p-3 bg-sidebar-accent text-xs border-transparent group-hover:bg-transparent  dark:bg-card dark:border-border-color-0 dark:group-hover:bg-white/10 text-gray-600 dark:text-white/80 group-hover:text-white/80 border group-hover:border-white/60 transition-all"
             )}
           >
             {preview}

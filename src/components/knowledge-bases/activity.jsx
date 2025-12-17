@@ -44,7 +44,6 @@ const Activity = () => {
   };
   return (
     <>
-      <ScaleDown>
         <Card className={"border-none bg-background  dark:bg-background"}>
           <CardHeader>
             <h2 className="text-xl font-medium">Recent Activity</h2>
@@ -86,7 +85,6 @@ const Activity = () => {
             </div>
           </CardContent>
         </Card>
-      </ScaleDown>
     </>
   );
 };

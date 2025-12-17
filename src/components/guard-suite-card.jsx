@@ -121,7 +121,7 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
                 {/* Status badge */}
                 <Badge
                   className={cn(
-                    "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all duration-300 group-hover:text-white group-hover:border-white",
+                    "rounded-full px-3 py-1 text-xs font-medium bg-white/10 border transition-all duration-300 group-hover:text-white group-hover:border-white dark:bg-background dark:group-hover:bg-white/10",
                     status === "active"
                       ? "border-badge-green text-foreground"
                       : "border-badge-sea-green text-foreground px-4 opacity-[0.8]"
@@ -147,7 +147,7 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
                   // }}
                 >
                   {/* <LinkIcon className="h-4 w-4" /> */}
-                  <Eye/>
+                  <Eye />
                 </Button>
                 <Button
                   variant="ghost"
@@ -257,34 +257,33 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
 
             {/* Footer */}
             <div
-  className={`flex items-center rounded-lg p-5 py-5 mt-8 text-sm bg-white/10 dark:bg-background dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${
-    view === "list" ? "justify-between" : "justify-center gap-17"
-  }`}
->
-  {/* Left */}
-  <div className="flex flex-col gap-1">
-    <p className="text-base font-medium group-hover:text-white">
-      {agentsCount}
-    </p>
-    <p className="text-foreground/70 group-hover:text-white/80">
-      Agents
-    </p>
-  </div>
+              className={`flex items-center rounded-lg p-5 py-5 mt-8 text-sm bg-white/10 dark:bg-card dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${
+                view === "list" ? "justify-between" : "justify-center gap-17"
+              }`}
+            >
+              {/* Left */}
+              <div className="flex flex-col gap-1">
+                <p className="text-base font-medium group-hover:text-white">
+                  {agentsCount}
+                </p>
+                <p className="text-foreground/70 group-hover:text-white/80">
+                  Agents
+                </p>
+              </div>
 
-  {/* Divider */}
-  <div className="w-[1px] h-10 bg-foreground/30 group-hover:bg-white/60" />
+              {/* Divider */}
+              <div className="w-[1px] h-10 bg-foreground/30 group-hover:bg-white/60" />
 
-  {/* Right */}
-  <div className="flex flex-col gap-1 text-left">
-    <p className="text-base font-medium group-hover:text-white">
-      {createdDate}
-    </p>
-    <p className="text-foreground/70 group-hover:text-white/80">
-      Created
-    </p>
-  </div>
-</div>
-
+              {/* Right */}
+              <div className="flex flex-col gap-1 text-left">
+                <p className="text-base font-medium group-hover:text-white">
+                  {createdDate}
+                </p>
+                <p className="text-foreground/70 group-hover:text-white/80">
+                  Created
+                </p>
+              </div>
+            </div>
           </CardContent>
         </Card>
       </Link>

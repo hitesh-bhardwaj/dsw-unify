@@ -107,7 +107,6 @@ export default function APIBasedCards() {
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
-      <ScaleDown>
         <div className="space-y-6">
 
           {/* SEARCH */}
@@ -154,7 +153,6 @@ export default function APIBasedCards() {
             <EmptyCard>No API-Based LLMs found.</EmptyCard>
           )}
         </div>
-      </ScaleDown>
 
       {/* RECENT ACTIVITY */}
       <div className="space-y-10 mt-20">

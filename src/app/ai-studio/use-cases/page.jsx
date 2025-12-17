@@ -195,7 +195,7 @@ let filteredFeatures = useCases.filter((feature) => {
               {stats.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full"
+                  className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
                 >
                   <span className="text-sm text-foreground/80">{item.title}</span>
                   <span className="text-4xl font-medium mt-1">
