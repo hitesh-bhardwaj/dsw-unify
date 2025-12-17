@@ -150,7 +150,7 @@ export function GuardrailsCard({
       >
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 !py-5 h-full flex justify-between"
+            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-white border border-border-color-0 hover:border-white/20 !py-5 h-full flex justify-between"
           )}
         >
           <CardHeader>

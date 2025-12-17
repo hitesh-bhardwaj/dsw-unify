@@ -90,7 +90,9 @@ export default function ImportModal({ open, onOpenChange }) {
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[45%] p-6 rounded-3xl max-h-[90%] overflow-hidden overflow-y-auto">
+      <DialogContent className="w-[45%] h-[90%] overflow-hidden overflow-y-auto  p-4  bg-background border border-border-color-0">
+        <div className="pr-2 overflow-hidden overflow-y-auto">
+         <div className="py-4 px-2 w-full space-y-5 ">
         <DialogHeader>
           <DialogTitle className="text-3xl font-medium">
             Import Model
@@ -217,6 +219,8 @@ export default function ImportModal({ open, onOpenChange }) {
             {!isLoading && <LeftArrow className='rotate-180'/>}
           </Button>
         </DialogFooter>
+        </div>
+        </div>
       </DialogContent>
     </Dialog>
   );
