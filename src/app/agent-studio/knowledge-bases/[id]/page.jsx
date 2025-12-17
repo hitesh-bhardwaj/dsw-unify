@@ -34,7 +34,6 @@ export default function KnowledgeBaseDetailPage({ params }) {
 
     const title = slugToTitle(id);
 
-
   // show the metrics skeleton only once per LLM id
   const [mounted, setMounted] = useState(false);
   const [showMetricsSkeleton, setShowMetricsSkeleton] = useState(true);
@@ -128,6 +127,19 @@ export default function KnowledgeBaseDetailPage({ params }) {
     }
   }, [id]);
 
+  const renderMetric = (value, fallback) => {
+  if (value === undefined || value === null) {
+    return fallback;
+  }
+
+  if (typeof value === "number") {
+    return <CountUp value={value} duration={1.2} startOnView once />;
+  }
+
+  return value;
+};
+
+
   if (!mounted) return null;
 
   return (
@@ -207,23 +219,26 @@ export default function KnowledgeBaseDetailPage({ params }) {
             <div className="w-full flex gap-4">
               <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm ">Documents</p>
-                <p className="text-3xl font-medium dark:text-foreground text-foreground">
-                  <CountUp value={knowledgeBase.documents} duration={1.2} startOnView once />
-                </p>
+                <p className="text-3xl font-medium">
+  {renderMetric(knowledgeBase.documents, "1,250")}
+</p>
+
                 
               </div>
               <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Storage</p>
-                <p className="text-3xl font-medium dark:text-foreground text-foreground">
-                  <CountUp value={knowledgeBase.storage} duration={1.2} startOnView once />
-                </p>
+                <p className="text-3xl font-medium">
+  {renderMetric(knowledgeBase.storage, "2.3 GB")}
+</p>
+
                 
               </div>
               <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Source</p>
-                <p className="text-3xl font-medium dark:text-foreground text-foreground">
-                  {knowledgeBase.source}
-                </p>
+                <p className="text-3xl font-medium">
+  {knowledgeBase.source ?? "Google Drive"}
+</p>
+
               </div>
             </div>
           )}

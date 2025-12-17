@@ -75,9 +75,9 @@ export default function KnowledgeBaseConfigPopover({
               <SelectTrigger className="w-60 border border-border-color-0 cursor-pointer">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="semantic-search">Semantic Search</SelectItem>
-                <SelectItem value="keyword-search">Keyword Search</SelectItem>
+              <SelectContent className="border border-border-color-0">
+                <SelectItem className="!cursor-pointer" value="semantic-search">Semantic Search</SelectItem>
+                <SelectItem className="!cursor-pointer" value="keyword-search">Keyword Search</SelectItem>
               </SelectContent>
             </Select>
 
@@ -137,10 +137,10 @@ export default function KnowledgeBaseConfigPopover({
                 <SelectTrigger className="mt-1 w-60 border border-border-color-0 cursor-pointer">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="small">Small (512 tokens)</SelectItem>
-                  <SelectItem value="medium">Medium (1024 tokens)</SelectItem>
-                  <SelectItem value="large">Large (2048 tokens)</SelectItem>
+                <SelectContent  className="border border-border-color-0">
+                  <SelectItem className="!cursor-pointer" value="small">Small (512 tokens)</SelectItem>
+                  <SelectItem className="!cursor-pointer" value="medium">Medium (1024 tokens)</SelectItem>
+                  <SelectItem className="!cursor-pointer" value="large">Large (2048 tokens)</SelectItem>
                 </SelectContent>
               </Select>
 

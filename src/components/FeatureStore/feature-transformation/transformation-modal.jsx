@@ -253,7 +253,7 @@ export default function TransformationModal({ open, onOpenChange }) {
                         onOpenChange={(open) => setIsCategoryOpen(open)}
                       >
                         <SelectTrigger
-                          className={`border placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
+                          className={`border cursor-pointer placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
                             isCategoryOpen ? "[&>svg]:rotate-180" : ""
                           } ${
                             errors.category
@@ -266,7 +266,7 @@ export default function TransformationModal({ open, onOpenChange }) {
                             className="placeholder:text-sm !cursor-pointer"
                           />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent  className="border border-border-color-0">
                           {CATEGORY_OPTIONS.map((c) => (
                             <SelectItem
                               key={c}
@@ -346,7 +346,7 @@ export default function TransformationModal({ open, onOpenChange }) {
                         onOpenChange={(open) => setIsLanguageOpen(open)}
                       >
                         <SelectTrigger
-                          className={`border border-foreground/20 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
+                          className={`border cursor-pointer border-foreground/20 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
                             isLanguageOpen ? "[&>svg]:rotate-180" : ""
                           }`}
                         >
@@ -355,7 +355,7 @@ export default function TransformationModal({ open, onOpenChange }) {
                             className="placeholder:text-sm !cursor-pointer"
                           />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent  className="border border-border-color-0">
                           {LANGUAGE_OPTIONS.map((c) => (
                             <SelectItem
                               key={c}

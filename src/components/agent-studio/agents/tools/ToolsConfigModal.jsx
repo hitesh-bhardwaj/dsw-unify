@@ -49,9 +49,9 @@ export default function ToolConfigModal({
               </SelectTrigger>
 
               <SelectContent className="border border-border-color-0">
-                <SelectItem value="Google">Google</SelectItem>
-                <SelectItem value="Bing">Bing</SelectItem>
-                <SelectItem value="DuckDuckGo">DuckDuckGo</SelectItem>
+                <SelectItem className="!cursor-pointer" value="Google">Google</SelectItem>
+                <SelectItem className="!cursor-pointer" value="Bing">Bing</SelectItem>
+                <SelectItem className="!cursor-pointer" value="DuckDuckGo">DuckDuckGo</SelectItem>
               </SelectContent>
             </Select>
           </div>

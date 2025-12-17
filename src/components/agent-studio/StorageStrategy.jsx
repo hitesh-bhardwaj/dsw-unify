@@ -103,14 +103,14 @@ const chunkOverlap = Math.round(
           className="w-full"
         >
           <SelectTrigger
-            className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+            className={`border cursor-pointer w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
               isOpenChunking ? "[&>svg]:rotate-180" : ""
             }`}
           >
             <SelectValue placeholder="Recursive Character Splitting" />
           </SelectTrigger>
 
-          <SelectContent>
+          <SelectContent  className="border border-border-color-0">
             <SelectItem value="recursive" className="!cursor-pointer text-xs">
               Recursive Character Splitting
             </SelectItem>
@@ -180,14 +180,14 @@ const chunkOverlap = Math.round(
             className="w-full"
           >
             <SelectTrigger
-              className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+              className={`border cursor-pointer w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                 isOpenEmbedding ? "[&>svg]:rotate-180" : ""
               }`}
             >
               <SelectValue placeholder="text-embedding-3-small (Fast, Cost-effective)" />
             </SelectTrigger>
 
-            <SelectContent>
+            <SelectContent  className="border border-border-color-0">
               <SelectItem value="text-embedding-3-small" className="!cursor-pointer text-xs">
                 text-embedding-3-small (Fast, Cost-effective)
               </SelectItem>
@@ -214,14 +214,14 @@ const chunkOverlap = Math.round(
             className="w-full"
           >
             <SelectTrigger
-              className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+              className={`border cursor-pointer w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                 isOpenDimensions ? "[&>svg]:rotate-180" : ""
               }`}
             >
               <SelectValue placeholder="1536 dimensions (Standard)" />
             </SelectTrigger>
 
-            <SelectContent>
+            <SelectContent  className="border border-border-color-0">
               <SelectItem value="512" className="!cursor-pointer text-xs">
                 512 dimensions (Compact)
               </SelectItem>

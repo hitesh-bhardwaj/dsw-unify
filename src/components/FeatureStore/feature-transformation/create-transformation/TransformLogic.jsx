@@ -81,7 +81,7 @@ const TransformLogic = ({ goNext, goBack, isLastStep, onCloseModal }) => {
               onOpenChange={(open) => setIsLanguageOpen(open)}
             >
               <SelectTrigger
-                className={`border border-border-color-0 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border cursor-pointer border-border-color-0 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isLanguageOpen ? "[&>svg]:rotate-180" : ""
                 } ${errors.language ? "border-red-500" : "border-border-color-0"}`}
               >
@@ -90,7 +90,7 @@ const TransformLogic = ({ goNext, goBack, isLastStep, onCloseModal }) => {
                   className="placeholder:text-sm !cursor-pointer"
                 />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent  className="border border-border-color-0">
                 {LANGUAGE_OPTIONS.map((c) => (
                   <SelectItem key={c} value={c} className="!cursor-pointer">
                     {c}

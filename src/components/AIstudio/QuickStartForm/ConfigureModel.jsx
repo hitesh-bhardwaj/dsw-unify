@@ -118,7 +118,7 @@ export default function ConfigureModel({ goNext, goBack, isLastStep, stepId, sha
               }`}>
                 <SelectValue placeholder="Select Process Type" className="text-sm" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent  className="border border-border-color-0">
                 <SelectItem className="cursor-pointer" value="classification">
                   Classification
                 </SelectItem>
@@ -200,16 +200,16 @@ const ClassificationRegressionParams = ({ type }) => {
       <div className="space-y-2 w-full">
         <label className="text-sm text-foreground">Target Variable *</label>
         <Select value={targetVariable} onValueChange={setTargetVariable}>
-          <SelectTrigger className="!h-10 border-border-color-0 w-full">
+          <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select target variable" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="customer_id">customer_id (Customers)</SelectItem>
-            <SelectItem value="order_amount">order_amount (Orders)</SelectItem>
-            <SelectItem value="product_category">product_category (Products)</SelectItem>
-            <SelectItem value="transaction_status">transaction_status (Transactions)</SelectItem>
-            <SelectItem value="event_type">event_type (User Events)</SelectItem>
-            <SelectItem value="diagnosis">diagnosis (Medical Records)</SelectItem>
+          <SelectContent  className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="customer_id">customer_id (Customers)</SelectItem>
+            <SelectItem className="!cursor-pointer" value="order_amount">order_amount (Orders)</SelectItem>
+            <SelectItem className="!cursor-pointer" value="product_category">product_category (Products)</SelectItem>
+            <SelectItem className="!cursor-pointer" value="transaction_status">transaction_status (Transactions)</SelectItem>
+            <SelectItem className="!cursor-pointer" value="event_type">event_type (User Events)</SelectItem>
+            <SelectItem className="!cursor-pointer" value="diagnosis">diagnosis (Medical Records)</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -217,24 +217,24 @@ const ClassificationRegressionParams = ({ type }) => {
       <div className="space-y-2  w-full">
         <label className="text-sm text-foreground">Evaluation Metric</label>
         <Select value={evaluationMetric} onValueChange={setEvaluationMetric}>
-          <SelectTrigger className="!h-10 border-border-color-0 w-full">
+          <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select metric" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent  className="border border-border-color-0">
             {type === "classification" ? (
               <>
-                <SelectItem value="accuracy">Accuracy</SelectItem>
-                <SelectItem value="precision">Precision</SelectItem>
-                <SelectItem value="recall">Recall</SelectItem>
-                <SelectItem value="f1">F1 Score</SelectItem>
-                <SelectItem value="auc">AUC-ROC</SelectItem>
+                <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
+                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
+                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
+                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
+                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
               </>
             ) : (
               <>
-                <SelectItem value="mse">RMSE</SelectItem>
-                <SelectItem value="rmse">MAE</SelectItem>
-                <SelectItem value="r2">R²</SelectItem>
-                <SelectItem value="mae">MAPE</SelectItem>
+                <SelectItem className="!cursor-pointer" value="mse">RMSE</SelectItem>
+                <SelectItem className="!cursor-pointer" value="rmse">MAE</SelectItem>
+                <SelectItem className="!cursor-pointer" value="r2">R²</SelectItem>
+                <SelectItem className="!cursor-pointer" value="mae">MAPE</SelectItem>
                 
               </>
             )}
@@ -278,15 +278,15 @@ const RecommendationParams = () => {
       <div className="space-y-2">
         <label className="text-sm text-foreground">Evaluation Metric</label>
         <Select value={userColumn} onValueChange={setUserColumn}>
-          <SelectTrigger className="!h-10 border-border-color-0 w-full">
+          <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="accuracy">Accuracy</SelectItem>
-                <SelectItem value="precision">Precision</SelectItem>
-                <SelectItem value="recall">Recall</SelectItem>
-                <SelectItem value="f1">F1 Score</SelectItem>
-                <SelectItem value="auc">AUC-ROC</SelectItem>
+          <SelectContent  className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
+                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
+                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
+                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
+                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -327,15 +327,15 @@ const TimeSeriesParams = () => {
       <div className="space-y-2">
         <label className="text-sm text-foreground">Evaluation Metric</label>
         <Select value={userColumn} onValueChange={setUserColumn}>
-          <SelectTrigger className="!h-10 border-border-color-0 w-full">
+          <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="accuracy">Accuracy</SelectItem>
-                <SelectItem value="precision">Precision</SelectItem>
-                <SelectItem value="recall">Recall</SelectItem>
-                <SelectItem value="f1">F1 Score</SelectItem>
-                <SelectItem value="auc">AUC-ROC</SelectItem>
+          <SelectContent  className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
+                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
+                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
+                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
+                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -376,15 +376,15 @@ const ClusteringParams = () => {
       <div className="space-y-2">
         <label className="text-sm text-foreground">Evaluation Metric</label>
         <Select value={userColumn} onValueChange={setUserColumn}>
-          <SelectTrigger className="!h-10 border-border-color-0 w-full">
+          <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="accuracy">Accuracy</SelectItem>
-                <SelectItem value="precision">Precision</SelectItem>
-                <SelectItem value="recall">Recall</SelectItem>
-                <SelectItem value="f1">F1 Score</SelectItem>
-                <SelectItem value="auc">AUC-ROC</SelectItem>
+          <SelectContent  className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
+                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
+                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
+                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
+                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -425,15 +425,15 @@ const AnomalyDetectionParams = () => {
       <div className="space-y-2">
         <label className="text-sm text-foreground">Evaluation Metric</label>
         <Select value={userColumn} onValueChange={setUserColumn}>
-          <SelectTrigger className="!h-10 border-border-color-0 w-full">
+          <SelectTrigger className="!h-10 cursor-pointer border-border-color-0 w-full">
             <SelectValue placeholder="Select Evaluation Metric" />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="accuracy">Accuracy</SelectItem>
-                <SelectItem value="precision">Precision</SelectItem>
-                <SelectItem value="recall">Recall</SelectItem>
-                <SelectItem value="f1">F1 Score</SelectItem>
-                <SelectItem value="auc">AUC-ROC</SelectItem>
+          <SelectContent  className="border border-border-color-0">
+            <SelectItem className="!cursor-pointer" value="accuracy">Accuracy</SelectItem>
+                <SelectItem className="!cursor-pointer" value="precision">Precision</SelectItem>
+                <SelectItem className="!cursor-pointer" value="recall">Recall</SelectItem>
+                <SelectItem className="!cursor-pointer" value="f1">F1 Score</SelectItem>
+                <SelectItem className="!cursor-pointer" value="auc">AUC-ROC</SelectItem>
           </SelectContent>
         </Select>
       </div>

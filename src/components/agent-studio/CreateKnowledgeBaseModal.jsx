@@ -154,14 +154,14 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               className="w-full"
             >
               <SelectTrigger
-                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border cursor-pointer w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isOpenFormat ? "[&>svg]:rotate-180" : ""
                 }`}
               >
                 <SelectValue placeholder="Auto-detect-format" />
               </SelectTrigger>
 
-              <SelectContent>
+              <SelectContent  className="border border-border-color-0">
                 <SelectItem value="auto" className="!cursor-pointer text-xs">
                   Auto-detect-format
                 </SelectItem>
@@ -203,14 +203,14 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               className="w-full"
             >
               <SelectTrigger
-                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border cursor-pointer w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isOpenCrawlSettings ? "[&>svg]:rotate-180" : ""
                 }`}
               >
                 <SelectValue placeholder="Single Page Only" />
               </SelectTrigger>
 
-              <SelectContent>
+              <SelectContent  className="border border-border-color-0">
                 <SelectItem value="auto" className="!cursor-pointer text-xs">
                  Single Page only
                 </SelectItem>
@@ -251,14 +251,14 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               className="w-full"
             >
               <SelectTrigger
-                className={`border w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border w-full cursor-pointer border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isOpenDatabaseType ? "[&>svg]:rotate-180" : ""
                 }`}
               >
                 <SelectValue placeholder=" Postgre SQL" />
               </SelectTrigger>
 
-              <SelectContent>
+              <SelectContent  className="border border-border-color-0">
                 <SelectItem value="postgresql" className="!cursor-pointer text-xs">
                  Postgre SQL
                 </SelectItem>

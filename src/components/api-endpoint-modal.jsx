@@ -55,7 +55,7 @@ function CopyWithTooltip({
           variant="outline"
           size="icon"
           onClick={handleClick}
-          className={`shrink-0 flex justify-center items-center cursor-pointer pr-0 py-5 px-5 min-w-8 bg-gray-100 rounded-lg border-foreground/20 ${className}`}
+          className={`shrink-0 flex justify-center items-center cursor-pointer pr-0 py-5 px-5 min-w-8 bg-gray-100 rounded-lg border-border-color-0 ${className}`}
           aria-label={ariaLabel || label}
         >
           <Copy className={iconClassName} />
@@ -334,7 +334,7 @@ const handleCopy = async (textToCopy) => {
                       <Input
                         value={agentId}
                         readOnly
-                        className="border border-foreground/20"
+                        className="border border-border-color-0"
                       />
                       <TooltipProvider>
                         <Tooltip>
@@ -377,7 +377,7 @@ const handleCopy = async (textToCopy) => {
                     <Input
                       value={apiKey}
                       readOnly
-                      className="border border-foreground/20"
+                      className="border border-border-color-0"
                     />
 
 
@@ -417,7 +417,7 @@ const handleCopy = async (textToCopy) => {
                     <Input
                       value={endpointUrl}
                       readOnly
-                      className="border border-foreground/20"
+                      className="border border-border-color-0"
                     />
 
 
@@ -450,10 +450,10 @@ const handleCopy = async (textToCopy) => {
                   <h3 className="text-xl font-medium">Code Examples</h3>
                   <Tabs tabs={tabs} value={activeTab} onValueChange={handleTabChange} />
 
-                  <div className="mt-4 border rounded-xl overflow-hidden w-full">
+                  <div className="mt-4 border border-border-color-0 rounded-xl overflow-hidden w-full">
                     <div className="relative">
                       <pre
-                        className={`rounded-lg bg-background p-4 text-sm text-foreground overflow-x-auto transition-opacity duration-300 ease-in ${isTransitioning ? 'opacity-0' : 'opacity-100'
+                        className={`rounded-lg text-xs bg-background p-4  text-foreground overflow-x-auto transition-opacity duration-300 ease-in ${isTransitioning ? 'opacity-0' : 'opacity-100'
                           }`}
                       >
                         <code>{codeExamples[displayedTab]}</code>

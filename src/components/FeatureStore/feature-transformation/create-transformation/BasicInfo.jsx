@@ -111,7 +111,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
               onOpenChange={(open) => setIsCategoryOpen(open)}
             >
               <SelectTrigger
-                className={`border placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
+                className={`border cursor-pointer placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
                   isCategoryOpen ? "[&>svg]:rotate-180" : ""
                 } ${errors.category ? "border-red-500" : "border-border-color-0"}`}
               >
@@ -120,7 +120,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
                   className="placeholder:text-sm !cursor-pointer"
                 />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent  className="border border-border-color-0">
                 {CATEGORY_OPTIONS.map((c) => (
                   <SelectItem key={c} value={c} className="!cursor-pointer">
                     {c}

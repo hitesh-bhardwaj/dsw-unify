@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
-import { SparklesIcon, PlusIcon } from "@/components/Icons";
-import { Badge } from "@/components/ui/badge";
+import {  PlusIcon } from "@/components/Icons";
 import Link from "next/link";
 import { RippleButton } from "@/components/ui/ripple-button";
 import {
@@ -68,13 +65,13 @@ const ModelGrid = () => {
         <div className="space-y-1">
           <label className="text-sm mb-2 block">Model Selection</label>
           <Select onValueChange={(val) => setUseCase(val)} className="py-2">
-            <SelectTrigger className="w-full py-5 dark:bg-card">
+            <SelectTrigger className="w-full py-5 cursor-pointer dark:bg-card border-border-color-0">
               <SelectValue
                 placeholder="Select a model"
                 className="text-foreground/80"
               />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="border border-border-color-0">
               {useCases.map((item) => (
                 <SelectItem
                   key={item.id}

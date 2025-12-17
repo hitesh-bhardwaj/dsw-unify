@@ -7,7 +7,6 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { ArrowDown, ArrowUp, Check } from "lucide-react";
-import KnowledgeBaseCreateModal from "./KnowledgeBase/CreateKnowledgePopup";
 import CreateGuardSuitesModal from "../guardrails/CreateGuardSuitesModal";
 
 /**
@@ -67,10 +66,10 @@ const useCases = [
          <div className="space-y-1">
             <label className="text-sm mb-2 block">Select Guard Suite</label>
               <Select onValueChange={(val) => setUseCase(val)} className="py-2">
-                <SelectTrigger className="w-full py-5 dark:bg-card ">
+                <SelectTrigger className="w-full py-5 cursor-pointer dark:bg-card border border-border-color-0">
                   <SelectValue placeholder="Select a model" className="text-foreground/80" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent  className="border border-border-color-0">
                   {useCases.map((item) => (
                     <SelectItem key={item.id} value={item.label} className="cursor-pointer">
                       {item.label}

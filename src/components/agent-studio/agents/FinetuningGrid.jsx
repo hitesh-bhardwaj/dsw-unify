@@ -50,16 +50,16 @@ const FinetuningGrid = () => {
                   <Select defaultValue="synthetic">
                     <SelectTrigger
                       id="dataset-source"
-                      className="w-full py-5 border border-border-color-0 dark:bg-card"
+                      className="w-full py-5 border border-border-color-0 dark:bg-card cursor-pointer"
                     >
                       <SelectValue placeholder="Select dataset source" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent  className="border border-border-color-0">
                       <SelectItem value="synthetic">
                         Generate Synthetic Data
                       </SelectItem>
-                      <SelectItem value="upload">Upload Custom Data</SelectItem>
-                      <SelectItem value="existing">
+                      <SelectItem className="!cursor-pointer" value="upload">Upload Custom Data</SelectItem>
+                      <SelectItem className="!cursor-pointer" value="existing">
                         Use Existing Dataset
                       </SelectItem>
                     </SelectContent>
@@ -70,14 +70,14 @@ const FinetuningGrid = () => {
                   <Select defaultValue="jsonl">
                     <SelectTrigger
                       id="data-format"
-                      className="w-full py-5 border border-border-color-0 dark:bg-card"
+                      className="w-full py-5 border border-border-color-0 cursor-pointer dark:bg-card"
                     >
                       <SelectValue placeholder="Select format" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="jsonl">JSONL</SelectItem>
-                      <SelectItem value="csv">CSV</SelectItem>
-                      <SelectItem value="json">JSON</SelectItem>
+                    <SelectContent  className="border border-border-color-0">
+                      <SelectItem className="!cursor-pointer" value="jsonl">JSONL</SelectItem>
+                      <SelectItem className="!cursor-pointer" value="csv">CSV</SelectItem>
+                      <SelectItem className="!cursor-pointer" value="json">JSON</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -109,11 +109,11 @@ const FinetuningGrid = () => {
                   <Select defaultValue="gpt-4o-mini">
                     <SelectTrigger
                       id="base-model"
-                      className="w-full py-5 border border-border-color-0 dark:bg-card"
+                      className="w-full cursor-pointer py-5 border border-border-color-0 dark:bg-card"
                     >
                       <SelectValue placeholder="Select base model" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent  className="border border-border-color-0">
                       <SelectItem value="gpt-4o-mini">GPT-4o Mini</SelectItem>
                       <SelectItem value="gpt-4">GPT-4</SelectItem>
                       <SelectItem value="gpt-3.5-turbo">
@@ -182,14 +182,14 @@ const FinetuningGrid = () => {
                   <Select defaultValue="20">
                     <SelectTrigger
                       id="validation-split"
-                      className="w-full py-5 border border-border-color-0 dark:bg-card"
+                      className="w-full cursor-pointer py-5 border border-border-color-0 dark:bg-card"
                     >
                       <SelectValue placeholder="Select split" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="10">10%</SelectItem>
-                      <SelectItem value="20">20%</SelectItem>
-                      <SelectItem value="30">30%</SelectItem>
+                    <SelectContent  className="border border-border-color-0">
+                      <SelectItem className="!cursor-pointer" value="10">10%</SelectItem>
+                      <SelectItem className="!cursor-pointer" value="20">20%</SelectItem>
+                      <SelectItem className="!cursor-pointer" value="30">30%</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

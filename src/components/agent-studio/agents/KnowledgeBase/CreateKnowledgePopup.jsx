@@ -17,10 +17,8 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-import { Textarea } from "@/components/ui/textarea"; 
-
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { UploadCloud } from "lucide-react";
 import { UploadIcon } from "@/components/Icons";
 
 export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
@@ -29,8 +27,28 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
   const [sourceType, setSourceType] = useState("Documents");
   const [files, setFiles] = useState([]);
 
+  const [errors, setErrors] = useState({
+    name: "",
+    desc: "",
+  });
+
   const handleFileChange = (e) => {
     setFiles([...e.target.files]);
+  };
+
+  const validate = () => {
+    const newErrors = {
+      name: name.trim() ? "" : "Knowledge base name is required",
+      desc: desc.trim() ? "" : "Description is required",
+    };
+
+    setErrors(newErrors);
+    return !newErrors.name && !newErrors.desc;
+  };
+
+  const handleSubmit = () => {
+    if (!validate()) return;
+    onOpenChange(false);
   };
 
   return (
@@ -48,25 +66,41 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
         <div className="space-y-5 pt-4">
           {/* Knowledge Base Name */}
           <div>
-            <label className="text-sm">Knowledge Base Name</label>
+            <label className="text-sm">
+              Knowledge Base Name 
+            </label>
             <Input
               placeholder="e.g., Company Documentation"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (errors.name) setErrors({ ...errors, name: "" });
+              }}
               className="mt-1"
             />
+            {errors.name && (
+              <p className="text-xs text-red-500 mt-1">{errors.name}</p>
+            )}
           </div>
 
           {/* Description */}
           <div>
-            <label className="text-sm">Description</label>
+            <label className="text-sm">
+              Description 
+            </label>
             <Textarea
               placeholder="Describe what this knowledge base contains..."
               value={desc}
-              onChange={(e) => setDesc(e.target.value)}
+              onChange={(e) => {
+                setDesc(e.target.value);
+                if (errors.desc) setErrors({ ...errors, desc: "" });
+              }}
               rows={3}
               className="mt-1"
             />
+            {errors.desc && (
+              <p className="text-xs text-red-500 mt-1">{errors.desc}</p>
+            )}
           </div>
 
           {/* Source Type */}
@@ -77,9 +111,15 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
                 <SelectValue placeholder="Select source type" />
               </SelectTrigger>
               <SelectContent className="border border-border-color-0 bg-background">
-                <SelectItem className="cursor-pointer" value="Documents">Documents</SelectItem>
-                <SelectItem className="cursor-pointer" value="Web URLs">Web URLs</SelectItem>
-                <SelectItem className="cursor-pointer" value="Custom">Custom</SelectItem>
+                <SelectItem className="cursor-pointer" value="Documents">
+                  Documents
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="Web URLs">
+                  Web URLs
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="Custom">
+                  Custom
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -89,33 +129,37 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
             <p className="text-sm pb-1 block">Upload Documents</p>
 
             <label
-  htmlFor="file-upload"
-  className="w-full h-40 border-2 border-dashed border-border-color-0 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-background"
->
-  <UploadIcon className="text-gray-500 h-4 w-4" />
-  <p className="text-sm opacity-70">Drag and drop files here, or click to browse</p>
+              htmlFor="file-upload"
+              className="w-full h-40 border-2 border-dashed border-border-color-0 rounded-xl flex flex-col items-center justify-center cursor-pointer bg-background"
+            >
+              <UploadIcon className="text-gray-500 h-4 w-4" />
+              <p className="text-sm opacity-70">
+                Drag and drop files here, or click to browse
+              </p>
 
-  <label htmlFor="file-upload">
-    <Button
-      type="button"
-      variant="outline"
-      className="mt-3 px-4 !h-9 border border-border-color-0 cursor-pointer"
-    >
-      Select Files
-    </Button>
-  </label>
+              <label htmlFor="file-upload">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="mt-3 px-4 !h-9 border border-border-color-0 cursor-pointer"
+                >
+                  Select Files
+                </Button>
+              </label>
 
-  <Input
-    id="file-upload"
-    type="file"
-    multiple
-    className="hidden"
-    onChange={handleFileChange}
-  />
-</label>
+              <Input
+                id="file-upload"
+                type="file"
+                multiple
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </label>
 
             {files.length > 0 && (
-              <p className="text-xs mt-2 opacity-70">{files.length} file(s) selected</p>
+              <p className="text-xs mt-2 opacity-70">
+                {files.length} file(s) selected
+              </p>
             )}
           </div>
 
@@ -131,7 +175,7 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
 
             <Button
               className="bg-primary text-white !h-10 px-6"
-              onClick={() => onOpenChange(false)}
+              onClick={handleSubmit}
             >
               Create & Add to Agent
             </Button>

@@ -24,6 +24,7 @@ import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
 import { ScaleDown } from "@/components/animations/Animations";
 import { ArrowRight } from "lucide-react";
 import * as agentsApi from "@/lib/api/agents";
+import TestAgentModal from "@/components/agent-studio/agents/test-agent-modal";
 
 export default function EditAgentPage({ params }) {
   const { id } = use(params);
@@ -32,6 +33,8 @@ export default function EditAgentPage({ params }) {
   const [apiModalOpen, setApiModalOpen] = useState(false);
   const [agentName, setAgentName] = useState("");
   const [description, setDescription] = useState("");
+    const [testModalOpen, setTestModalOpen] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState(null);
@@ -198,6 +201,7 @@ export default function EditAgentPage({ params }) {
               </RippleButton>
               <RippleButton>
                 <Button
+                  onClick={() => setTestModalOpen(true)}
                   variant="outline"
                   className="gap-2 text-foreground border border-primary"
                 >
@@ -303,6 +307,11 @@ export default function EditAgentPage({ params }) {
         onOpenChange={setApiModalOpen}
         agentId="my-ai-assistant"
       />
+      <TestAgentModal
+              open={testModalOpen}
+              onOpenChange={setTestModalOpen}
+              agentId={"Agent Builder"}
+            />
     </div>
   );
 }

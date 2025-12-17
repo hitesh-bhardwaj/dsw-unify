@@ -177,7 +177,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
+                    className={`cursor-pointer border w-full ${
                       errors.type ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenType ? "[&>svg]:rotate-180" : ""
@@ -186,7 +186,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                     <SelectValue placeholder="API" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent  className="border border-border-color-0">
                     <SelectItem value="api" className="!cursor-pointer text-xs">
                       API
                     </SelectItem>
@@ -212,7 +212,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
+                    className={`cursor-pointer border w-full ${
                       errors.category ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenCategory ? "[&>svg]:rotate-180" : ""
@@ -221,7 +221,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                     <SelectValue placeholder="Utility" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent  className="border border-border-color-0">
                     <SelectItem value="utility" className="!cursor-pointer text-xs">
                       Utility
                     </SelectItem>
@@ -269,7 +269,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
+                    className={`cursor-pointer border w-full ${
                       errors.httpMethod ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenMethod ? "[&>svg]:rotate-180" : ""
@@ -278,7 +278,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                     <SelectValue placeholder="GET" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent  className="border border-border-color-0">
                     <SelectItem value="get" className="!cursor-pointer text-xs">
                       GET
                     </SelectItem>
@@ -310,7 +310,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
+                    className={`cursor-pointer border w-full ${
                       errors.status ? "border-red-500" : "border-border-color-0"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenStatus ? "[&>svg]:rotate-180" : ""
@@ -319,7 +319,7 @@ export default function AddToolModal({ open, onOpenChange }) {
                     <SelectValue placeholder="Active" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent  className="border border-border-color-0">
                     <SelectItem value="active" className="!cursor-pointer text-xs">
                       Active
                     </SelectItem>

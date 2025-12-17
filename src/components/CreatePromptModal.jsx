@@ -89,7 +89,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={"w-[45%] left-1/2  top-1/2 h-[80%]"}>
+      <DialogContent className={"w-[45%] left-1/2 overflow-y-auto  top-1/2 h-[80%]"}>
         <div className="py-4 px-2  w-full space-y-5 overflow-hidden ">
           <DialogHeader>
             <DialogTitle className="text-2xl font-medium mb-6">

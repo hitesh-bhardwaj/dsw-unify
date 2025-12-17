@@ -127,7 +127,7 @@ export default function AddTestings({ open, onOpenChange }) {
                 className="w-full "
               >
                 <SelectTrigger
-                  className={`border w-full ${
+                  className={`border w-full cursor-pointer ${
                     errors.selectedAgent ? "border-red-500" : "border-border-color-0"
                   } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-11 cursor-pointer px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                     isOpenAgent ? "[&>svg]:rotate-180" : ""

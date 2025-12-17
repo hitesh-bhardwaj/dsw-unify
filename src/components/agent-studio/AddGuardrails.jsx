@@ -133,7 +133,7 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
+                    className={`border cursor-pointer w-full ${
                       errors.type ? "border-red-500" : "border-foreground/20"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenType ? "[&>svg]:rotate-180" : ""
@@ -142,7 +142,7 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
                     <SelectValue placeholder="Output" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent  className="border border-border-color-0">
                     <SelectItem value="output" className="!cursor-pointer text-xs">
                       Output
                     </SelectItem>
@@ -168,7 +168,7 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
                   className="w-full"
                 >
                   <SelectTrigger
-                    className={`border w-full ${
+                    className={`border cursor-pointer w-full ${
                       errors.severity ? "border-red-500" : "border-foreground/20"
                     } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
                       isOpenSeverity ? "[&>svg]:rotate-180" : ""
@@ -177,7 +177,7 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
                     <SelectValue placeholder="Medium" />
                   </SelectTrigger>
 
-                  <SelectContent>
+                  <SelectContent  className="border border-border-color-0">
                     <SelectItem value="low" className="!cursor-pointer text-xs">
                       Low
                     </SelectItem>
