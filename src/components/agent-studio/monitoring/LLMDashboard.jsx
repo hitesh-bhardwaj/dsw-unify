@@ -2,79 +2,45 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// ✅ use OUR reusable components + hook
 import {
   DoubleAreaChart,
-  SingleAreaChart,
   CustomLineChart,
-  useLiveSeries,
 } from "@/components/common/Graphs/graphs";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const LLMDashboard = () => {
-  // ===== Live series for Token Usage (inputTokens + outputTokens) =====
-  const tokenLive = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 20,
-    timeKey: "time",
-    makePoint: (now) => {
-      const inputTokens = clamp(Math.round(120 + Math.random() * 480), 100, 600);
-      const outputTokens = clamp(Math.round(80 + Math.random() * 220), 50, 300);
-      return {
-        time: now.getTime(),
-        inputTokens,
-        outputTokens,
-      };
-    },
-  });
-
-  // ===== Live series for Cost (line) =====
-  const costLive = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 20,
-    timeKey: "time",
-    makePoint: (now) => {
-      const cost = clamp(100 + Math.random() * 300, 100, 400);
-      return {
-        time: now.getTime(),
-        cost: +cost.toFixed(2),
-      };
-    },
-  });
-
-  // ===== KPI values (cards) derived from latest chart points =====
-  const latestTokens = tokenLive.data?.[tokenLive.data.length - 1];
-  const latestCost = costLive.data?.[costLive.data.length - 1];
-
+  // KPI values that update
   const [inferenceLatency, setInferenceLatency] = useState(1.2);
   const [inputTokensTotal, setInputTokensTotal] = useState(251_508);
   const [outputTokensTotal, setOutputTokensTotal] = useState(137_905);
   const [totalCost, setTotalCost] = useState(48.16);
 
+  // Update KPIs every 3s to match chart updates
   useEffect(() => {
-    // latency drifts smoothly
-    setInferenceLatency((prev) => {
-      const next = prev + (Math.random() * 0.2 - 0.1);
-      return clamp(next, 0.8, 2.0);
-    });
+    const id = setInterval(() => {
+      // latency drifts smoothly
+      setInferenceLatency((prev) => {
+        const next = prev + (Math.random() * 0.2 - 0.1);
+        return clamp(next, 0.8, 2.0);
+      });
 
-    // accumulate totals based on latest per-interval token usage
-    if (latestTokens) {
+      // accumulate totals based on simulated token usage
+      const inputTokens = clamp(Math.round(120 + Math.random() * 480), 100, 600);
+      const outputTokens = clamp(Math.round(80 + Math.random() * 220), 50, 300);
+      const cost = clamp(100 + Math.random() * 300, 100, 400);
+
       setInputTokensTotal((prev) =>
-        clamp(prev + latestTokens.inputTokens, 200_000, 350_000)
+        clamp(prev + inputTokens, 200_000, 350_000)
       );
       setOutputTokensTotal((prev) =>
-        clamp(prev + latestTokens.outputTokens, 100_000, 200_000)
+        clamp(prev + outputTokens, 100_000, 200_000)
       );
-    }
+      setTotalCost((prev) => clamp(prev + cost / 1000, 30, 70));
+    }, 3000);
 
-    // accumulate total cost from latest cost point (scaled small so it doesn't explode)
-    if (latestCost) {
-      setTotalCost((prev) => clamp(prev + latestCost.cost / 1000, 30, 70));
-    }
-  }, [latestTokens, latestCost]);
+    return () => clearInterval(id);
+  }, []);
 
   const costLines = useMemo(
     () => [{ dataKey: "cost", name: "Cost", color: "#10b981" }],
@@ -127,15 +93,14 @@ const LLMDashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Token Usage Over Time (use our DoubleAreaChart) */}
+        {/* Token Usage Over Time - Live */}
         <Card className="shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl">Token Usage Over Time</CardTitle>
           </CardHeader>
           <CardContent>
             <DoubleAreaChart
-              data={tokenLive.data}
-              xAxisTicks={tokenLive.ticks}
+              live={true}
               timeKey="time"
               dataKey1="inputTokens"
               dataKey2="outputTokens"
@@ -146,21 +111,29 @@ const LLMDashboard = () => {
               height={300}
               width="100%"
               showDots={false}
-              // stacked effect isn't in DoubleAreaChart; if you want stacked,
-              // use 2x SingleAreaChart with stacked=true, or tell me and I'll add "stackId" support.
+              makePoint={(now) => {
+                const inputTokens = clamp(Math.round(120 + Math.random() * 480), 100, 600);
+                const outputTokens = clamp(Math.round(80 + Math.random() * 220), 50, 300);
+                return {
+                  time: now.getTime(),
+                  inputTokens,
+                  outputTokens,
+                };
+              }}
+              maxPoints={20}
+              updateMs={3000}
             />
           </CardContent>
         </Card>
 
-        {/* LLM Cost Over Time (use our CustomLineChart) */}
+        {/* LLM Cost Over Time - Live */}
         <Card className="shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl">LLM Cost Over Time</CardTitle>
           </CardHeader>
           <CardContent>
             <CustomLineChart
-              data={costLive.data}
-              xAxisTicks={costLive.ticks}
+              live={true}
               timeKey="time"
               dotSize={0}
               lines={costLines}
@@ -169,6 +142,15 @@ const LLMDashboard = () => {
               yAxisFormatter={(v) => Number(v).toFixed(0)}
               tooltipFormatter={(v, name) => [`$${Number(v).toFixed(2)}`, name]}
               strokeWidth={3}
+              makePoint={(now) => {
+                const cost = clamp(100 + Math.random() * 300, 100, 400);
+                return {
+                  time: now.getTime(),
+                  cost: +cost.toFixed(2),
+                };
+              }}
+              maxPoints={20}
+              updateMs={3000}
             />
           </CardContent>
         </Card>

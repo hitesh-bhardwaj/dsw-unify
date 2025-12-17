@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomLineChart } from "@/components/common/Graphs/graphs";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const LatencyDashboardAgents = () => {
-  // Static KPI numbers (no updates)
-  const [endToEnd] = useState(1.85);
-  const [processing] = useState(0.78);
-  const [toolInvocation] = useState(0.42);
+  // Static KPI numbers
+  const endToEnd = 1.85;
+  const processing = 0.78;
+  const toolInvocation = 0.42;
 
   // Static chart data (generated once)
   const data = useMemo(() => {
@@ -22,7 +22,7 @@ const LatencyDashboardAgents = () => {
       const toolInvocationVal = clamp(0.2 + Math.random() * 0.4, 0.2, 0.6);
 
       return {
-        time: now - (19 - i) * 3000, // spaced like before, but doesn't update
+        time: now - (19 - i) * 3000,
         endToEnd: +endToEndVal.toFixed(2),
         processing: +processingVal.toFixed(2),
         toolInvocation: +toolInvocationVal.toFixed(2),

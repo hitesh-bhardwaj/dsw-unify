@@ -11,16 +11,12 @@ const MonitoringTab = () => {
     return (
         <>
             <div className="space-y-6">
-                <TrafficMetricsAgents/>
+                <TrafficMetricsAgents />
 
-   <GuardrailsDashboardAgents/>
-                
+                <GuardrailsDashboardAgents/>
                 <LatencyDashboardAgents />
                 <LLMDashboardAgents />
-
                 <ErrorMetricsDashboard />
-
-
                <SuccessMonitoringAgents/>
             </div>
         </>

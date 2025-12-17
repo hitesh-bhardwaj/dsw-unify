@@ -1,25 +1,23 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SingleAreaChart } from "@/components/common/Graphs/graphs";
 
 const SuccessMonitoringAgents = () => {
-  // Static KPI values (no auto-update)
-  const [successTotal] = useState(15084);
-  const [successRate] = useState(99.4);
+  // Static KPI values
+  const successTotal = 15084;
+  const successRate = 99.4;
 
-  // Static chart data (no time-based updates)
+  // Static chart data (generated once)
   const data = useMemo(() => {
     const now = Date.now();
-    // 20 points, 3s apart (just for x-axis spacing), but NOT updating
     return Array.from({ length: 20 }, (_, i) => ({
       time: now - (19 - i) * 3000,
       rate: +(98 + Math.random() * 1.5).toFixed(1),
     }));
   }, []);
 
-  // If your chart expects separate ticks:
   const ticks = useMemo(() => data.map((d) => d.time), [data]);
 
   return (

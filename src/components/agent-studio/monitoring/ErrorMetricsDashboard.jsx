@@ -2,16 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import LiveBarChart from "@/components/common/Graphs/graphs";
+import { CustomBarChart } from "@/components/common/Graphs/graphs";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const ErrorMetricsDashboard = () => {
+  // KPI values that update
   const [agentErrors, setAgentErrors] = useState(51);
   const [llmErrors, setLlmErrors] = useState(31);
   const [toolErrors, setToolErrors] = useState(29);
 
-  // Keep the KPI cards updating every 3s (same cadence as the chart)
+  // Update KPIs every 3s to match chart updates
   useEffect(() => {
     const id = setInterval(() => {
       setAgentErrors((prev) =>
@@ -71,45 +72,63 @@ const ErrorMetricsDashboard = () => {
         </CardHeader>
 
         <CardContent className="pt-4 flex items-center justify-center">
-          <LiveBarChart
-            height={400}
-            width="90%"
-            updateMs={3000}
-            maxPoints={5}
-            barSize={45}
-            barCategoryGap="20%"
-            barGap={4}
-            series={[
+          <CustomBarChart
+            live={true}
+            timeKey="timeLabel"
+            bars={[
               {
                 dataKey: "agentErrors",
                 name: "Agent Errors",
                 color: "#ef4444",
-                min: 50,
-                max: 350,
-                base: 200,
-                jitter: 120,
               },
               {
                 dataKey: "llmErrors",
                 name: "LLM Errors",
                 color: "#f97316",
-                min: 30,
-                max: 250,
-                base: 140,
-                jitter: 90,
               },
               {
                 dataKey: "toolErrors",
                 name: "Tool Errors",
                 color: "#eab308",
-                min: 30,
-                max: 250,
-                base: 120,
-                jitter: 85,
               },
             ]}
+            height={400}
+            width="90%"
+            barSize={45}
+            barCategoryGap="20%"
+            barGap={4}
             yAxisFormatter={(v) => Number(v).toFixed(0)}
             tooltipFormatter={(v, name) => [Number(v).toFixed(0), name]}
+            makePoint={(now) => {
+              const agentErrors = clamp(
+                Math.round(200 + (Math.random() * 2 - 1) * 120),
+                50,
+                350
+              );
+              const llmErrors = clamp(
+                Math.round(140 + (Math.random() * 2 - 1) * 90),
+                30,
+                250
+              );
+              const toolErrors = clamp(
+                Math.round(120 + (Math.random() * 2 - 1) * 85),
+                30,
+                250
+              );
+
+              return {
+                time: now.getTime(),
+                timeLabel: now.toLocaleTimeString([], {
+                  minute: "2-digit",
+                  second: "2-digit",
+                }),
+                agentErrors,
+                llmErrors,
+                toolErrors,
+              };
+            }}
+            maxPoints={5}
+            updateMs={3000}
           />
         </CardContent>
       </Card>

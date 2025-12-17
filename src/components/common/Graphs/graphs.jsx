@@ -8,6 +8,9 @@ import {
   LineChart,
   Bar,
   BarChart,
+  Pie,
+  PieChart,
+  Cell,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -30,7 +33,7 @@ export const formatTimeHHMMSS = (v) => {
 
 const defaultAnim = {
   isAnimationActive: true,
-  animationDuration: 650, // smooth, but shorter than updateMs
+  animationDuration: 650,
   animationEasing: "ease-out",
 };
 
@@ -45,8 +48,8 @@ export function useLiveSeries({
   maxPoints = 20,
   updateMs = 3000,
   timeKey = "time",
-  makePoint, // REQUIRED: (now: Date) => object of values
-  seed = [], // optional initial points (should contain numeric timeKey)
+  makePoint,
+  seed = [],
 }) {
   const [data, setData] = useState(() => {
     const seeded = Array.isArray(seed) ? seed.slice(-maxPoints) : [];
@@ -63,15 +66,14 @@ export function useLiveSeries({
     return initial;
   });
 
-  // keep latest makePoint without resetting interval every render
   const makePointRef = useRef(makePoint);
   useEffect(() => {
     makePointRef.current = makePoint;
   }, [makePoint]);
 
   useEffect(() => {
+    // Skip if makePoint is not provided (static mode)
     if (typeof makePointRef.current !== "function") {
-      console.error("useLiveSeries: makePoint is required");
       return;
     }
 
@@ -92,7 +94,6 @@ export function useLiveSeries({
     return () => clearInterval(id);
   }, [maxPoints, updateMs, timeKey]);
 
-  // ticks for XAxis (optional)
   const ticks = useMemo(() => data.map((d) => d?.[timeKey]).filter((v) => typeof v === "number"), [data, timeKey]);
 
   return { data, ticks };
@@ -102,7 +103,7 @@ export function useLiveSeries({
 
 // Double Area Chart Component
 export const DoubleAreaChart = ({
-  data,
+  data: staticData,
   dataKey1,
   dataKey2,
   timeKey = "time",
@@ -121,9 +122,23 @@ export const DoubleAreaChart = ({
   xAxisTicks,
   xAxisTickFormatter = formatTimeHHMMSS,
   margin = { top: 20, right: 24, left: 0, bottom: 0 },
-  // smooth animation controls
   animation = defaultAnim,
+  // Live mode props
+  live = false,
+  makePoint,
+  maxPoints = 20,
+  updateMs = 3000,
 }) => {
+  // Use live data if enabled
+  const liveData = useLiveSeries({
+    maxPoints,
+    updateMs,
+    timeKey,
+    makePoint: live ? makePoint : undefined,
+  });
+
+  const data = live ? liveData.data : staticData;
+
   const gradient1Id = useMemo(
     () => `gradient1-${dataKey1}-${Math.random().toString(36).slice(2)}`,
     [dataKey1]
@@ -133,7 +148,6 @@ export const DoubleAreaChart = ({
     [dataKey2]
   );
 
-  // Generate 6 evenly spaced ticks
   const generatedTicks = useMemo(() => {
     if (xAxisTicks) return xAxisTicks;
     if (!data?.length) return undefined;
@@ -224,7 +238,7 @@ export const DoubleAreaChart = ({
 
 // Single Area Chart Component
 export const SingleAreaChart = ({
-  data,
+  data: staticData,
   dataKey,
   timeKey = "time",
   name = "Series",
@@ -241,13 +255,27 @@ export const SingleAreaChart = ({
   xAxisTickFormatter = formatTimeHHMMSS,
   margin = { top: 20, right: 24, left: 0, bottom: 0 },
   animation = defaultAnim,
+  // Live mode props
+  live = false,
+  makePoint,
+  maxPoints = 20,
+  updateMs = 3000,
 }) => {
+  // Use live data if enabled
+  const liveData = useLiveSeries({
+    maxPoints,
+    updateMs,
+    timeKey,
+    makePoint: live ? makePoint : undefined,
+  });
+
+  const data = live ? liveData.data : staticData;
+
   const gradientId = useMemo(
     () => `gradient-${dataKey}-${Math.random().toString(36).slice(2)}`,
     [dataKey]
   );
 
-  // Generate 6 evenly spaced ticks
   const generatedTicks = useMemo(() => {
     if (xAxisTicks) return xAxisTicks;
     if (!data?.length) return undefined;
@@ -325,7 +353,7 @@ export const SingleAreaChart = ({
 
 // Line Chart Component
 export const CustomLineChart = ({
-  data,
+  data: staticData,
   lines = [{ dataKey: "value", name: "Value", color: "#3b82f6" }],
   timeKey = "time",
   height = 400,
@@ -343,8 +371,22 @@ export const CustomLineChart = ({
   xAxisTickFormatter = formatTimeHHMMSS,
   margin = { top: 20, right: 24, left: 0, bottom: 0 },
   animation = defaultAnim,
+  // Live mode props
+  live = false,
+  makePoint,
+  maxPoints = 20,
+  updateMs = 3000,
 }) => {
-  // Generate 6 evenly spaced ticks
+  // Use live data if enabled
+  const liveData = useLiveSeries({
+    maxPoints,
+    updateMs,
+    timeKey,
+    makePoint: live ? makePoint : undefined,
+  });
+
+  const data = live ? liveData.data : staticData;
+
   const generatedTicks = useMemo(() => {
     if (xAxisTicks) return xAxisTicks;
     if (!data?.length) return undefined;
@@ -419,31 +461,40 @@ export const CustomLineChart = ({
 
 // Bar Chart Component
 export const CustomBarChart = ({
-  data,
+  data: staticData,
   bars = [{ dataKey: "value", name: "Value", color: "#3b82f6" }],
-  timeKey = "timeLabel", // ✅ display label for bars
+  timeKey = "timeLabel",
   height = 350,
   width = "90%",
   showGrid = true,
   showLegend = true,
-  barSize, // optional
+  barSize,
   radius = [8, 8, 0, 0],
-
-  // ✅ spacing controls (these fix the "no gap" look)
-  barCategoryGap = "28%", // gap between time buckets
-  barGap = 6,             // gap between bars in same bucket
-
-  // ✅ tick controls for readability
+  barCategoryGap = "28%",
+  barGap = 6,
   maxXTicks = 6,
   xTickAngle = 0,
   xMinTickGap = 18,
-
   yAxisFormatter,
   tooltipFormatter,
   margin = { top: 20, right: 24, left: 0, bottom: 0 },
   animation = defaultAnim,
+  // Live mode props
+  live = false,
+  makePoint,
+  maxPoints = 20,
+  updateMs = 3000,
 }) => {
-  // pick fewer labels so time is readable
+  // Use live data if enabled
+  const liveData = useLiveSeries({
+    maxPoints,
+    updateMs,
+    timeKey: live ? "time" : timeKey,
+    makePoint: live ? makePoint : undefined,
+  });
+
+  const data = live ? liveData.data : staticData;
+
   const xTicks = useMemo(() => {
     if (!data?.length) return undefined;
     const n = data.length;
@@ -461,7 +512,6 @@ export const CustomBarChart = ({
   return (
     <ResponsiveContainer width={width} height={height}>
       <BarChart
-      
         data={data}
         margin={margin}
         barCategoryGap={barCategoryGap}
@@ -519,7 +569,7 @@ export const CustomBarChart = ({
             dataKey={bar.dataKey}
             fill={bar.color}
             name={bar.name}
-            barSize={barSize}   // leave undefined to auto-fit
+            barSize={barSize}
             radius={radius}
             {...animation}
           />
@@ -529,120 +579,102 @@ export const CustomBarChart = ({
   );
 };
 
-// small helper
-const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-
-/**
- * LiveBarChart
- * - One import, one component.
- * - Handles time labels, ticks, spacing, and live updates.
- *
- * Usage:
- * <LiveBarChart
- *   title="Traffic"
- *   series={[
- *     { dataKey: "requests", name: "Requests", color: "#3b82f6", min: 100, max: 600, base: 200, jitter: 120 },
- *     { dataKey: "sessions", name: "Sessions", color: "#22c55e", min: 40, max: 300, base: 90, jitter: 60 },
- *   ]}
- * />
- */
-
-
-export default function LiveBarChart({
-  // chart layout
+// Pie Chart Component
+export const CustomPieChart = ({
+  data,
+  nameKey = "name",
+  valueKey = "value",
+  colors = ["#3b82f6", "#22c55e", "#f59e0b"],
   height = 350,
   width = "90%",
-
-  // live behavior
-  updateMs = 3000,
-  maxPoints = 12,
-
-  // time label formatting
-  timeLabel = (now) =>
-    now.toLocaleTimeString([], { minute: "2-digit", second: "2-digit" }),
-
-  // series config
-  // each item: { dataKey, name, color, min, max, base, jitter }
-  series = [{ dataKey: "value", name: "Value", color: "#3b82f6", min: 0, max: 100, base: 50, jitter: 20 }],
-
-  // bar spacing
-  barCategoryGap = "35%",
-  barGap = 8,
-  barSize, // optional
-
-  // ticks readability
-  maxXTicks = 6,
-  xTickAngle = 0,
-
-  // formatting hooks
-  yAxisFormatter,
-  tooltipFormatter,
-
-  // pass-through UI
-  showGrid = true,
   showLegend = true,
-  radius = [6, 6, 0, 0],
+  innerRadius = 70,
+  outerRadius = 100,
+  paddingAngle = 5,
+  showLabels = true,
+  labelPosition = "outside",
+  labelFormatter = (entry) => `${entry.value}%`,
+  margin = { top: 20, right: 24, left: 24, bottom: 20 },
+  strokeWidth = 0,
+  startAngle = 90,
+  endAngle = -270,
+}) => {
+  const renderCustomLabel = ({
+    cx,
+    cy,
+    midAngle,
+    outerRadius,
+    percent,
+    value,
+  }) => {
+    const RADIAN = Math.PI / 180;
+    const radius = outerRadius + 30;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-  // if you want to override the generated point completely:
-  makePoint, // (now) => ({ ...values })
-}) {
-  // Generate data live
-  const live = useLiveSeries({
-    updateMs,
-    maxPoints,
-    timeKey: "time",
-    makePoint: (now) => {
-      // allow full override
-      if (typeof makePoint === "function") {
-        const p = makePoint(now) || {};
-        return {
-          ...p,
-          time: typeof p.time === "number" ? p.time : now.getTime(),
-          timeLabel: p.timeLabel ?? timeLabel(now),
-        };
-      }
-
-      // default generator from `series`
-      const point = {
-        time: now.getTime(),
-        timeLabel: timeLabel(now),
-      };
-
-      for (const s of series) {
-        const base = Number(s.base ?? 0);
-        const jitter = Number(s.jitter ?? 0);
-        const raw = base + (Math.random() * 2 - 1) * jitter;
-        point[s.dataKey] = clamp(Math.round(raw), s.min ?? -Infinity, s.max ?? Infinity);
-      }
-
-      return point;
-    },
-  });
-
-  // bars config for CustomBarChart
-  const bars = useMemo(
-    () => series.map((s) => ({ dataKey: s.dataKey, name: s.name, color: s.color })),
-    [series]
-  );
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="#334155"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+        style={{ fontSize: "16px", fontWeight: 600 }}
+      >
+        {`${value}%`}
+      </text>
+    );
+  };
 
   return (
-    <CustomBarChart
-      data={live.data}
-      timeKey="timeLabel" // ✅ categorical time label for bars
-      bars={bars}
-      height={height}
-      width={width}
-      barSize={barSize}
-      radius={radius}
-      showGrid={showGrid}
-      showLegend={showLegend}
-      yAxisFormatter={yAxisFormatter}
-      tooltipFormatter={tooltipFormatter}
-      // ✅ these props require the updated CustomBarChart I gave you earlier
-      barCategoryGap={barCategoryGap}
-      barGap={barGap}
-      maxXTicks={maxXTicks}
-      xTickAngle={xTickAngle}
-    />
+    <ResponsiveContainer width={width} height={height}>
+      <PieChart margin={margin}>
+        <Pie
+          data={data}
+          dataKey={valueKey}
+          nameKey={nameKey}
+          cx="50%"
+          cy="50%"
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          paddingAngle={paddingAngle}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          label={showLabels ? renderCustomLabel : false}
+          labelLine={false}
+          stroke="none"
+          strokeWidth={strokeWidth}
+        >
+          {data.map((entry, index) => (
+            <Cell 
+              key={`cell-${index}`} 
+              fill={colors[index % colors.length]}
+            />
+          ))}
+        </Pie>
+
+        <Tooltip
+          contentStyle={{
+            backgroundColor: "#fff",
+            border: "1px solid #e2e8f0",
+            borderRadius: "8px",
+            boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+          }}
+          formatter={(value) => `${value}%`}
+        />
+
+        {showLegend && (
+          <Legend
+            iconType="circle"
+            wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
+            formatter={(value) => (
+              <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">
+                {value}
+              </span>
+            )}
+          />
+        )}
+      </PieChart>
+    </ResponsiveContainer>
   );
-}
+};

@@ -2,10 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import LiveBarChart from "@/components/common/Graphs/graphs";
-
-// ✅ use single reusable component
-
+import { CustomBarChart } from "@/components/common/Graphs/graphs";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
@@ -85,36 +82,52 @@ const GuardrailsDashboard = () => {
           </CardHeader>
 
           <CardContent className="pt-4 flex items-center justify-center">
-            <LiveBarChart
-              height={400}
-              width="90%"
-              updateMs={3000}
-              maxPoints={8}
-              barCategoryGap="30%"
-              barGap={6}
-              barSize={45} 
-              series={[
+            <CustomBarChart
+              live={true}
+              timeKey="timeLabel"
+              bars={[
                 {
                   dataKey: "preInference",
                   name: "Pre-Inference",
                   color: "#f97316",
-                  min: 50,
-                  max: 400,
-                  base: 220,
-                  jitter: 120,
                 },
                 {
                   dataKey: "postInference",
                   name: "Post-Inference",
                   color: "#ef4444",
-                  min: 20,
-                  max: 180,
-                  base: 90,
-                  jitter: 60,
                 },
               ]}
+              height={400}
+              width="90%"
+              barCategoryGap="30%"
+              barGap={6}
+              barSize={45}
               yAxisFormatter={(v) => Number(v).toFixed(0)}
               tooltipFormatter={(v, name) => [Number(v).toFixed(0), name]}
+              makePoint={(now) => {
+                const preInference = clamp(
+                  Math.round(220 + (Math.random() * 2 - 1) * 120),
+                  50,
+                  400
+                );
+                const postInference = clamp(
+                  Math.round(90 + (Math.random() * 2 - 1) * 60),
+                  20,
+                  180
+                );
+
+                return {
+                  time: now.getTime(),
+                  timeLabel: now.toLocaleTimeString([], {
+                    minute: "2-digit",
+                    second: "2-digit",
+                  }),
+                  preInference,
+                  postInference,
+                };
+              }}
+              maxPoints={8}
+              updateMs={3000}
             />
           </CardContent>
         </Card>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
@@ -11,13 +11,13 @@ import {
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const LLMDashboardAgents = () => {
-  // ✅ Static KPI values (no time updates)
-  const [inferenceLatency] = useState(1.2);
-  const [inputTokensTotal] = useState(251_508);
-  const [outputTokensTotal] = useState(137_905);
-  const [totalCost] = useState(48.16);
+  // Static KPI values
+  const inferenceLatency = 1.2;
+  const inputTokensTotal = 251_508;
+  const outputTokensTotal = 137_905;
+  const totalCost = 48.16;
 
-  // ✅ Static token chart data (generated once)
+  // Static token chart data (generated once)
   const tokenData = useMemo(() => {
     const now = Date.now();
     return Array.from({ length: 20 }, (_, i) => {
@@ -32,7 +32,7 @@ const LLMDashboardAgents = () => {
     });
   }, []);
 
-  // ✅ Static cost chart data (generated once)
+  // Static cost chart data (generated once)
   const costData = useMemo(() => {
     const now = Date.now();
     return Array.from({ length: 20 }, (_, i) => {

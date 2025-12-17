@@ -2,47 +2,30 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// ✅ use OUR reusable component + live hook
-import { CustomLineChart, useLiveSeries } from "@/components/common/Graphs/graphs";
+import { CustomLineChart } from "@/components/common/Graphs/graphs";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const LatencyDashboard = () => {
-  // Live line series (rolling window). time is numeric timestamp (ms)
-  const live = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 20,
-    timeKey: "time",
-    makePoint: (now) => {
-      // generate reasonable latencies (seconds)
-      const endToEnd = clamp(1.2 + Math.random() * 1.3, 1.2, 2.5);
-      const processing = clamp(0.4 + Math.random() * 0.8, 0.4, 1.2);
-      const toolInvocation = clamp(0.2 + Math.random() * 0.4, 0.2, 0.6);
-
-      return {
-        time: now.getTime(),
-        endToEnd: +endToEnd.toFixed(2),
-        processing: +processing.toFixed(2),
-        toolInvocation: +toolInvocation.toFixed(2),
-      };
-    },
-  });
-
-  // KPI numbers driven from latest point (so cards match the chart)
-  const latest = live.data?.[live.data.length - 1];
-
+  // KPI numbers that update
   const [endToEnd, setEndToEnd] = useState(1.85);
   const [processing, setProcessing] = useState(0.78);
   const [toolInvocation, setToolInvocation] = useState(0.42);
 
+  // Update KPIs every 3s to match chart updates
   useEffect(() => {
-    if (!latest) return;
-    setEndToEnd(latest.endToEnd ?? endToEnd);
-    setProcessing(latest.processing ?? processing);
-    setToolInvocation(latest.toolInvocation ?? toolInvocation);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [latest]);
+    const id = setInterval(() => {
+      const newEndToEnd = clamp(1.2 + Math.random() * 1.3, 1.2, 2.5);
+      const newProcessing = clamp(0.4 + Math.random() * 0.8, 0.4, 1.2);
+      const newToolInvocation = clamp(0.2 + Math.random() * 0.4, 0.2, 0.6);
+
+      setEndToEnd(+newEndToEnd.toFixed(2));
+      setProcessing(+newProcessing.toFixed(2));
+      setToolInvocation(+newToolInvocation.toFixed(2));
+    }, 3000);
+
+    return () => clearInterval(id);
+  }, []);
 
   const lines = useMemo(
     () => [
@@ -98,8 +81,7 @@ const LatencyDashboard = () => {
 
           <CardContent className="pt-4 flex items-center justify-center">
             <CustomLineChart
-              data={live.data}
-              xAxisTicks={live.ticks}
+              live={true}
               timeKey="time"
               lines={lines}
               dotSize={0}
@@ -109,6 +91,20 @@ const LatencyDashboard = () => {
               yAxisTicks={[0, 0.6, 1.1, 1.6, 2.2]}
               yAxisFormatter={(v) => `${Number(v).toFixed(1)}s`}
               tooltipFormatter={(v, name) => [`${Number(v).toFixed(2)}s`, name]}
+              makePoint={(now) => {
+                const endToEnd = clamp(1.2 + Math.random() * 1.3, 1.2, 2.5);
+                const processing = clamp(0.4 + Math.random() * 0.8, 0.4, 1.2);
+                const toolInvocation = clamp(0.2 + Math.random() * 0.4, 0.2, 0.6);
+
+                return {
+                  time: now.getTime(),
+                  endToEnd: +endToEnd.toFixed(2),
+                  processing: +processing.toFixed(2),
+                  toolInvocation: +toolInvocation.toFixed(2),
+                };
+              }}
+              maxPoints={20}
+              updateMs={3000}
             />
           </CardContent>
         </Card>

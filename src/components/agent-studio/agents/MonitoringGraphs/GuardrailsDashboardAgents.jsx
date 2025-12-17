@@ -1,34 +1,33 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import LiveBarChart from "@/components/common/Graphs/graphs";
-
-// ✅ use single reusable component
-
-
-const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+import { CustomBarChart } from "@/components/common/Graphs/graphs";
 
 const GuardrailsDashboardAgents = () => {
-  const [preInference, setPreInference] = useState(156);
-  const [postInference, setPostInference] = useState(43);
-  const [avgLatency, setAvgLatency] = useState(0.112);
+  // Static KPI values
+  const preInference = 156;
+  const postInference = 43;
+  const avgLatency = 0.112;
 
-  // Update KPIs every 3s (same cadence as chart)
-  useEffect(() => {
-    const id = setInterval(() => {
-      setPreInference((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 40) - 20), 50, 300)
-      );
-      setPostInference((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 20) - 10), 20, 150)
-      );
-      setAvgLatency((prev) =>
-        clamp(prev + (Math.random() * 0.02 - 0.01), 0.08, 0.2)
-      );
-    }, 3000);
+  // Static chart data (generated once)
+  const data = useMemo(() => {
+    const base = Date.now();
+    
+    return Array.from({ length: 8 }, (_, i) => {
+      const t = new Date(base - (7 - i) * 3000);
+      const timeLabel = t.toLocaleTimeString([], { 
+        minute: "2-digit", 
+        second: "2-digit" 
+      });
 
-    return () => clearInterval(id);
+      return {
+        time: t.getTime(),
+        timeLabel,
+        preInference: Math.round(220 + (Math.random() * 2 - 1) * 120),
+        postInference: Math.round(90 + (Math.random() * 2 - 1) * 60),
+      };
+    });
   }, []);
 
   return (
@@ -85,34 +84,26 @@ const GuardrailsDashboardAgents = () => {
           </CardHeader>
 
           <CardContent className="pt-4 flex items-center justify-center">
-            <LiveBarChart
-              height={400}
-              width="90%"
-              updateMs={3000}
-              maxPoints={8}
-              barCategoryGap="30%"
-              barGap={6}
-              barSize={45} 
-              series={[
+            <CustomBarChart
+              data={data}
+              timeKey="timeLabel"
+              bars={[
                 {
                   dataKey: "preInference",
                   name: "Pre-Inference",
                   color: "#f97316",
-                  min: 50,
-                  max: 400,
-                  base: 220,
-                  jitter: 120,
                 },
                 {
                   dataKey: "postInference",
                   name: "Post-Inference",
                   color: "#ef4444",
-                  min: 20,
-                  max: 180,
-                  base: 90,
-                  jitter: 60,
                 },
               ]}
+              height={400}
+              width="90%"
+              barCategoryGap="30%"
+              barGap={6}
+              barSize={45}
               yAxisFormatter={(v) => Number(v).toFixed(0)}
               tooltipFormatter={(v, name) => [Number(v).toFixed(0), name]}
             />

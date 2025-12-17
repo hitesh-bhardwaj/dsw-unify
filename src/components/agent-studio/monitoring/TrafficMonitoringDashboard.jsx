@@ -2,60 +2,28 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-
-// ✅ our reusable graphs
-import {
-  DoubleAreaChart,
-  useLiveSeries,
-} from "@/components/common/Graphs/graphs";
+import { DoubleAreaChart } from "@/components/common/Graphs/graphs";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const TrafficMetricsDashboard = ({}) => {
-  // ===== Live traffic series =====
-  const live = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 8,
-    timeKey: "time",
-    makePoint: (now) => {
-      const hour = now.getHours();
-
-      const requests = clamp(
-        Math.round(100 + hour * 10 + Math.random() * 50),
-        80,
-        600
-      );
-
-      const sessions = clamp(
-        Math.round(50 + hour * 5 + Math.random() * 30),
-        40,
-        300
-      );
-
-      return {
-        time: now.getTime(),
-        requests,
-        sessions,
-      };
-    },
-  });
-
-  // ===== Totals =====
+const TrafficMetricsDashboard = () => {
+  // ===== Totals that update =====
   const [metrics, setMetrics] = useState({
     totalRequests: 12_847,
     totalSessions: 3_421,
   });
 
-  const latest = live.data?.[live.data.length - 1];
-
+  // Update totals every 3s
   useEffect(() => {
-    if (!latest) return;
+    const id = setInterval(() => {
+      setMetrics((prev) => ({
+        totalRequests: prev.totalRequests + Math.floor(Math.random() * 15 + 5),
+        totalSessions: prev.totalSessions + Math.floor(Math.random() * 3 + 1),
+      }));
+    }, 3000);
 
-    setMetrics((prev) => ({
-      totalRequests: prev.totalRequests + Math.floor(Math.random() * 15 + 5),
-      totalSessions: prev.totalSessions + Math.floor(Math.random() * 3 + 1),
-    }));
-  }, [latest]);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div className="w-full mx-auto space-y-5 py-3">
@@ -95,7 +63,7 @@ const TrafficMetricsDashboard = ({}) => {
         </Card>
       </div>
 
-      {/* Chart */}
+      {/* Live Chart */}
       <Card className="border border-border-color-0 shadow-sm">
         <CardHeader className="pb-2">
           <CardTitle className="font-medium text-xl text-gray-900">
@@ -105,9 +73,7 @@ const TrafficMetricsDashboard = ({}) => {
 
         <CardContent className="pt-4 flex items-center justify-center">
           <DoubleAreaChart
-            data={live.data}
-            xAxisTicks={live.ticks}
-            timeKey="time"
+            live={true}
             dataKey1="requests"
             dataKey2="sessions"
             name1="Requests"
@@ -117,6 +83,29 @@ const TrafficMetricsDashboard = ({}) => {
             height={350}
             width="90%"
             showDots={false}
+            makePoint={(now) => {
+              const hour = now.getHours();
+
+              const requests = clamp(
+                Math.round(100 + hour * 10 + Math.random() * 50),
+                80,
+                600
+              );
+
+              const sessions = clamp(
+                Math.round(50 + hour * 5 + Math.random() * 30),
+                40,
+                300
+              );
+
+              return {
+                time: now.getTime(),
+                requests,
+                sessions,
+              };
+            }}
+            maxPoints={8}
+            updateMs={3000}
           />
         </CardContent>
       </Card>

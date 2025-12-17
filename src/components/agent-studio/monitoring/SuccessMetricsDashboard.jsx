@@ -2,41 +2,29 @@
 
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// ✅ use OUR reusable component + hook
-import { SingleAreaChart, useLiveSeries } from "@/components/common/Graphs/graphs";
+import { SingleAreaChart } from "@/components/common/Graphs/graphs";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
 const SuccessMetricsDashboard = () => {
-  // Live chart series (rolling window). time is numeric timestamp (ms)
-  const live = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 20,
-    timeKey: "time",
-    makePoint: (now) => {
-      const rate = clamp(95 + Math.random() * 5, 95, 99.9);
-      return {
-        time: now.getTime(),
-        rate: +rate.toFixed(1),
-      };
-    },
-  });
-
-  const latest = live.data?.[live.data.length - 1];
-
+  // KPI values that update
   const [successTotal, setSuccessTotal] = useState(15084);
   const [successRate, setSuccessRate] = useState(99.4);
 
-  // KPIs update based on latest series (and a small drift for totals)
+  // Update KPIs every 3s to match chart updates
   useEffect(() => {
-    if (latest?.rate != null) setSuccessRate(latest.rate);
+    const id = setInterval(() => {
+      const rate = clamp(95 + Math.random() * 5, 95, 99.9);
+      setSuccessRate(+rate.toFixed(1));
 
-    setSuccessTotal((prev) => {
-      const delta = Math.floor(Math.random() * 200 - 100);
-      return clamp(prev + delta, 14000, 17000);
-    });
-  }, [latest]);
+      setSuccessTotal((prev) => {
+        const delta = Math.floor(Math.random() * 200 - 100);
+        return clamp(prev + delta, 14000, 17000);
+      });
+    }, 3000);
+
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div className="w-full py-3">
@@ -77,18 +65,25 @@ const SuccessMetricsDashboard = () => {
 
           <CardContent className="pt-4 flex items-center justify-center">
             <SingleAreaChart
-              data={live.data}
-              xAxisTicks={live.ticks}
+              live={true}
               timeKey="time"
               dataKey="rate"
               name="Success Rate"
               color="#22c55e"
-              
               height={400}
               width="90%"
               showDots={false}
-              yAxisDomain={[90, 100]}         
-              yAxisTicks={[90, 93, 96, 100]}  
+              yAxisDomain={[90, 100]}
+              yAxisTicks={[90, 93, 96, 100]}
+              makePoint={(now) => {
+                const rate = clamp(95 + Math.random() * 5, 95, 99.9);
+                return {
+                  time: now.getTime(),
+                  rate: +rate.toFixed(1),
+                };
+              }}
+              maxPoints={20}
+              updateMs={3000}
             />
           </CardContent>
         </Card>

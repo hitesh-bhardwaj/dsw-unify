@@ -1,149 +1,142 @@
-"use client";
+"use client"
+import { CustomBarChart, CustomLineChart, CustomPieChart, DoubleAreaChart } from "@/components/common/Graphs/graphs";
+import { useMemo } from "react";
 
-import React from "react";
-import {
-  CustomBarChart,
-  CustomLineChart,
-  DoubleAreaChart,
-  SingleAreaChart,
-  useLiveSeries,
-} from "@/components/common/Graphs/graphs";
+export default function GraphDemo() {
+  // Static data for demo
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+  const staticData = useMemo(() => {
+    const now = Date.now();
+    return Array.from({ length: 20 }, (_, i) => ({
+      time: now - (19 - i) * 3000,
+      value1: 30 + Math.random() * 40,
+      value2: 50 + Math.random() * 30,
+      timeLabel: new Date(now - (19 - i) * 3000).toLocaleTimeString([], { 
+        minute: "2-digit", 
+        second: "2-digit" 
+      }),
+    }));
+  }, []);
 
-const ChartComponentsDemo = () => {
-  // 1) Double Area (requests + sessions)
-  const liveArea2 = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 20,
-    timeKey: "time",
-    makePoint: (now) => ({
-      time: now,
-      requests: Math.round(200 + Math.random() * 400),
-      sessions: Math.round(80 + Math.random() * 220),
-    }),
-  });
-
-  // 2) Single Area (cost)
-  const liveArea1 = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 20,
-    timeKey: "time",
-    makePoint: (now) => ({
-      time: now,
-      cost: +(100 + Math.random() * 400).toFixed(2),
-    }),
-  });
-
-  // 3) Line Chart (requests + sessions + latency)
-  const liveLines = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 20,
-    timeKey: "time",
-    makePoint: (now) => ({
-      time: now,
-      requests: Math.round(200 + Math.random() * 400),
-      sessions: Math.round(80 + Math.random() * 220),
-      latency: +(0.8 + Math.random() * 2.2).toFixed(2),
-    }),
-  });
-
-  // 4) Bar Chart (requests + sessions)
-  const liveBars = useLiveSeries({
-    updateMs: 3000,
-    maxPoints: 12,
-    timeKey: "time",
-    makePoint: (now) => ({
-      time: now,
-      requests: Math.round(200 + Math.random() * 400),
-      sessions: Math.round(80 + Math.random() * 220),
-    }),
-  });
+  // Pie chart data
+  const pieData = [
+    { name: "Success", value: 81.2 },
+    { name: "Failed", value: 18.8 },
+  ];
 
   return (
-    <div className="p-8 space-y-12 bg-gray-50 min-h-screen">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Reusable Chart Components</h1>
-        <p className="text-gray-600">
-          Live charts updating every 3 seconds (rolling window)
-        </p>
-      </div>
+    <div style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
+      <h1 style={{ fontSize: "28px", fontWeight: 700, marginBottom: "32px", color: "#0f172a" }}>
+        Reusable Graph Components
+      </h1>
 
-      {/* Double Area Chart */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Double Area Chart</h2>
+      {/* Static Double Area Chart */}
+      <div style={{ marginBottom: "48px" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: 600, marginBottom: "16px", color: "#334155" }}>
+          Static Double Area Chart
+        </h2>
         <DoubleAreaChart
-          data={liveArea2.data}
-          xAxisTicks={liveArea2.ticks}
-          dataKey1="requests"
-          dataKey2="sessions"
-          name1="Requests"
-          name2="Sessions"
-          color1="#1130C7"
-          color2="#6BC631"
+          data={staticData}
+          dataKey1="value1"
+          dataKey2="value2"
+          name1="Series 1"
+          name2="Series 2"
+          color1="#3b82f6"
+          color2="#22c55e"
         />
       </div>
 
-      {/* Single Area Chart */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Single Area Chart</h2>
-        <SingleAreaChart
-          data={liveArea1.data}
-          xAxisTicks={liveArea1.ticks}
-          dataKey="cost"
-          name="Cost ($)"
-          color="#8b5cf6"
-          showDots={true}
+      {/* Live Double Area Chart */}
+      <div style={{ marginBottom: "48px" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: 600, marginBottom: "16px", color: "#334155" }}>
+          Live Double Area Chart
+        </h2>
+        <DoubleAreaChart
+          live={true}
+          dataKey1="value1"
+          dataKey2="value2"
+          name1="Live Series 1"
+          name2="Live Series 2"
+          makePoint={(now) => ({
+            time: now.getTime(),
+            value1: clamp(30 + Math.random() * 40, 0, 100),
+            value2: clamp(50 + Math.random() * 30, 0, 100),
+          })}
+          maxPoints={20}
+          updateMs={3000}
         />
       </div>
 
-      {/* Line Chart */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Multi-Line Chart</h2>
+      {/* Static Line Chart */}
+      <div style={{ marginBottom: "48px" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: 600, marginBottom: "16px", color: "#334155" }}>
+          Static Line Chart
+        </h2>
         <CustomLineChart
-          data={liveLines.data}
-          xAxisTicks={liveLines.ticks}
+          data={staticData}
           lines={[
-            { dataKey: "requests", name: "Requests", color: "#3b82f6" },
-            { dataKey: "sessions", name: "Sessions", color: "#22c55e" },
-            { dataKey: "latency", name: "Latency", color: "#f97316" },
+            { dataKey: "value1", name: "Metric 1", color: "#3b82f6" },
+            { dataKey: "value2", name: "Metric 2", color: "#22c55e" },
           ]}
-          yAxisFormatter={(value) => Number(value).toFixed(0)}
-          tooltipFormatter={(value) => [Number(value).toFixed(2), ""]}
         />
       </div>
 
-      {/* Bar Chart */}
-      <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-semibold mb-4">Bar Chart</h2>
+      {/* Live Bar Chart */}
+      <div style={{ marginBottom: "48px" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: 600, marginBottom: "16px", color: "#334155" }}>
+          Live Bar Chart
+        </h2>
         <CustomBarChart
-          data={liveBars.data}
-          xAxisTicks={liveBars.ticks}
+          live={true}
+          timeKey="timeLabel"
           bars={[
-            { dataKey: "requests", name: "Requests", color: "#3b82f6" },
-            { dataKey: "sessions", name: "Sessions", color: "#22c55e" },
+            { dataKey: "value1", name: "Requests", color: "#3b82f6" },
+            { dataKey: "value2", name: "Sessions", color: "#22c55e" },
           ]}
-          barSize={40}
+          makePoint={(now) => ({
+            time: now.getTime(),
+            timeLabel: now.toLocaleTimeString([], { minute: "2-digit", second: "2-digit" }),
+            value1: clamp(Math.round(200 + (Math.random() * 2 - 1) * 120), 100, 600),
+            value2: clamp(Math.round(90 + (Math.random() * 2 - 1) * 60), 40, 300),
+          })}
+          maxPoints={12}
+          updateMs={3000}
         />
       </div>
 
-      {/* Usage Example */}
-      <div className="bg-gray-800 text-white p-6 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">Usage Example</h2>
-        <pre className="text-sm overflow-x-auto whitespace-pre-wrap bg-gray-900 p-4 rounded">
-{`const live = useLiveSeries({
-  updateMs: 3000,
-  maxPoints: 20,
-  makePoint: (now) => ({ time: now, value: Math.random() * 100 })
-});
+      {/* Static Pie Chart */}
+      <div style={{ marginBottom: "48px" }}>
+        <h2 style={{ fontSize: "20px", fontWeight: 600, marginBottom: "16px", color: "#334155" }}>
+          Static Pie Chart (Donut Style)
+        </h2>
+        <CustomPieChart
+          data={pieData}
+          colors={["#22c55e", "#ef4444"]}
+          innerRadius={70}
+          outerRadius={100}
+          paddingAngle={5}
+        />
+      </div>
 
-<SingleAreaChart
-  data={live.data}
-  xAxisTicks={live.ticks}
-  dataKey="value"
-/>`}
-        </pre>
+      <div style={{ 
+        marginTop: "48px", 
+        padding: "20px", 
+        backgroundColor: "#f1f5f9", 
+        borderRadius: "12px",
+        fontSize: "14px",
+        color: "#475569"
+      }}>
+        <h3 style={{ fontSize: "16px", fontWeight: 600, marginBottom: "12px", color: "#334155" }}>
+          Usage Guide
+        </h3>
+        <p style={{ marginBottom: "8px" }}>
+          <strong>Static Mode:</strong> Pass your data via the <code>data</code> prop.
+        </p>
+        <p>
+          <strong>Live Mode:</strong> Set <code>live={"{true}"}</code> and provide a <code>makePoint</code> function 
+          that generates data points. The chart will automatically update every <code>updateMs</code> milliseconds.
+        </p>
       </div>
     </div>
   );
-};
-
-export default ChartComponentsDemo;
+}
