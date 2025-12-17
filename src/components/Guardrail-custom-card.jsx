@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Bounce } from "./animations/Animations";
 import { Copy } from "lucide-react";
 import { ConfirmDialog } from "./common/Confirm-Dialog";
-import { Editor, Eye } from "./Icons";
+import { Bin, Editor, Eye } from "./Icons";
 
 const skeletonShownMap = new Map();
 
@@ -28,12 +28,11 @@ function slugifyName(name) {
 /**
  * GuardrailsCard component
  */
-export function GuardrailsCard({
+export function GuardrailsCustomCard({
   guardrail,
   memories,
-  index,
   view,
-  onCopy,
+  index,
   onDelete,
   minSkeletonMs = 500,
 }) {
@@ -150,7 +149,7 @@ export function GuardrailsCard({
       >
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 !py-5 h-full flex justify-between"
+            "feature-card-hover-container overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-transparent !py-5 h-full flex justify-between"
           )}
         >
           <CardHeader>
@@ -193,16 +192,18 @@ export function GuardrailsCard({
                     "h-7 w-7 flex items-center justify_center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
                     "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                   )}
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   e.stopPropagation();
-                  //   // TODO: view action
-                  // }}
+                //   onClick={(e) => {
+                //     e.preventDefault();
+                //     e.stopPropagation();
+                //     // TODO: view action
+                //   }}
                 >
                   <Eye />
                 </Button>
 
-              
+                
+             
+                {isCustom && (
                 <Button
                   variant="ghost"
                   size="icon"
@@ -210,15 +211,11 @@ export function GuardrailsCard({
                     "h-7 w-7 flex items-center justify_center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
                     "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                   )}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    onCopy?.(guardrail);
-                  }}
+                  onClick={handleTrashClick}
                 >
-                  <Copy className="h-4 w-4" />
+                  <Bin className="h-4 w-4" />
                 </Button>
-              
+                )}
               </div>
             </div>
 
@@ -233,9 +230,13 @@ export function GuardrailsCard({
             </p>
 
             {/* Based on (for custom guardrails) */}
-          
+            {basedOn && (
+              <p className={ `text-xs text-muted-foreground mt-2 transition-colors duration-300 group-hover:text-white/60  ${view==='grid'? 'pb-6' : 'pb-0'}`}>
+                Based on: {basedOn}
+              </p>
+            )}
 
-            {!basedOn && <div className={`${view==='grid' ? 'pb-10': 'pb-0'}`} />}
+            {!basedOn && <div className="pb-10" />}
           </CardHeader>
 
           <CardContent>

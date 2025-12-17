@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GuardrailsIcon, PlusIcon } from "@/components/Icons";
 import { GuardrailsCard } from "@/components/guardrails-card";
+import { GuardrailsCustomCard } from "@/components/Guardrail-custom-card";
 import { GuardSuiteCard } from "@/components/guard-suite-card";
 import SearchBar from "@/components/search-bar";
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -119,7 +120,7 @@ const defaultGuardrails = [
 ];
 
 // Custom Guardrails data
-const customGuardrails = [
+const INITIAL_CUSTOM_GUARDRAILS = [
   {
     id: 7,
     name: "Strict Toxic Language Filter",
@@ -158,6 +159,8 @@ const customGuardrails = [
   },
 ];
 
+
+
 export default function GuardrailsPage() {
   const [activeTab, setActiveTab] = useState("suites");
   const [guardrailsSubTab, setGuardrailsSubTab] = useState("default"); // default or custom
@@ -168,6 +171,22 @@ export default function GuardrailsPage() {
   const [sortOrder, setSortOrder] = useState("none");
   const [view, setView] = useState("grid");
   const [guardSuites, setGuardSuites] = useState(mockGuardSuites);
+const [customGuardrails, setCustomGuardrails] = useState(
+  INITIAL_CUSTOM_GUARDRAILS
+);
+
+const [copySourceGuardrail, setCopySourceGuardrail] = useState(null);
+
+const handleCopyGuardrail = (guardrail) => {
+  setCopySourceGuardrail(guardrail);
+  setIsCustomModalOpen(true);
+};
+
+
+  const handleDeleteCustomGuardrail = (id) => {
+  setCustomGuardrails((prev) => prev.filter((g) => g.id !== id));
+};
+
 
 
   // Get available tags dynamically based on active tab
@@ -239,6 +258,7 @@ export default function GuardrailsPage() {
 
   const renderGuardrailGrid = (list, variant) => {
     const filtered = filterGuardrailsList(list);
+    const CardComponent = variant === "custom" ? GuardrailsCustomCard : GuardrailsCard;
 
     return (
       <AnimatePresence mode="wait">
@@ -255,7 +275,7 @@ export default function GuardrailsPage() {
           } ${variant === "custom" ? "rounded-2xl" : ""}`}
         >
           {filtered.map((guardrail, index) => (
-            <GuardrailsCard
+            <CardComponent
               key={`${variant}-${guardrail.id}`}
               guardrail={{
                 ...guardrail,
@@ -263,6 +283,11 @@ export default function GuardrailsPage() {
               }}
               view={view}
               index={index}
+                onCopy={handleCopyGuardrail}
+                onDelete={
+    variant === "custom" ? handleDeleteCustomGuardrail : undefined
+  }
+
             />
           ))}
 
@@ -422,7 +447,7 @@ export default function GuardrailsPage() {
       </ScaleDown>
 
       <CreateGuardSuitesModal open={isModalOpen} onOpenChange={setIsModalOpen} />
-      <AddCustomGuardrailsModal open={isCustomModalOpen} onOpenChange={setIsCustomModalOpen} />
+      <AddCustomGuardrailsModal open={isCustomModalOpen} onOpenChange={setIsCustomModalOpen} initialGuardrail={copySourceGuardrail} />
     </div>
   );
 }

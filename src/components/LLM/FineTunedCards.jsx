@@ -158,6 +158,7 @@ export default function FineTunedCards() {
             availableTags={availableTags}
             view={view}
             setView={setView}
+            isFilterHidden={true}
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
             cards={selfHosted}

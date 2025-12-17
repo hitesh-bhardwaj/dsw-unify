@@ -19,6 +19,7 @@ const FilterBar = ({
   selectedTags,
   onTagsChange,
   availableTags,
+ isFilterHidden=false,
   view,
   setView,
   sortOrder,
@@ -64,6 +65,8 @@ const filteredTags = useMemo(
       {/* Left Buttons */}
       <div className="flex items-center gap-3">
         {/* Filter by Tags */}
+
+         {isFilterHidden === false && (
        <Popover open={tagOpen} onOpenChange={setTagOpen}>
   <PopoverTrigger asChild>
     <button className="flex cursor-pointer items-center gap-2 border border-border-color-0 rounded-md px-4 py-2 text-xs">
@@ -166,7 +169,8 @@ const filteredTags = useMemo(
       )}
     </div>
   </PopoverContent>
-</Popover>
+        </Popover>
+         )}
 
 
 

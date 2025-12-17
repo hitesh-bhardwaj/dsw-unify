@@ -83,7 +83,7 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
       >
         <Card
           className={cn(
-            "feature-card-hover-container gap-2 hover:drop-shadow-md transition-all duration-300 group border-border-color-0 hover:border-white/20 !py-5 h-full cursor-pointer",
+            "feature-card-hover-container gap-2 hover:drop-shadow-xl transition-all duration-300 group border-border-color-0 hover:border-transparent !py-5 h-full cursor-pointer",
             isGrid &&
               "h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20",
             isList && "w-full rounded-xl py-6 bg-white dark:bg-background"
@@ -140,11 +140,11 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
                     "h-7 w-7 flex items-center justify-center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
                     "hover:bg-white/30 group-hover:text-white transition-all duration-300"
                   )}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // TODO: copy link
-                  }}
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   e.stopPropagation();
+                  //   // TODO: copy link
+                  // }}
                 >
                   {/* <LinkIcon className="h-4 w-4" /> */}
                   <Eye/>

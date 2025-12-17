@@ -36,6 +36,8 @@ const LLMGrid = ({
         onTagsChange={onTagsChange}
         availableTags={availableTags}
         view={view}
+        isFilterHidden={true}
+
         setView={setView}
         sortOrder={sortOrder}
         setSortOrder={setSortOrder}

@@ -122,6 +122,7 @@ export default function APIBasedCards() {
             selectedTags={selectedTags}
             onTagsChange={setSelectedTags}
             availableTags={availableTags}
+            isFilterHidden={true}
             view={view}
             setView={setView}
             sortOrder={sortOrder}

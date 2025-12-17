@@ -281,9 +281,20 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
 /**
  * Main Modal Component
  */
-export default function AddCustomGuardrailsModal({ open, onOpenChange }) {
+export default function AddCustomGuardrailsModal({ open, onOpenChange, initialGuardrail, }) {
   const [step, setStep] = useState(1);
   const [selectedGuardrail, setSelectedGuardrail] = useState(null);
+  useEffect(() => {
+  if (open && initialGuardrail) {
+    setSelectedGuardrail(initialGuardrail);
+    setStep(2);
+  }
+
+  if (!open) {
+    setStep(1);
+    setSelectedGuardrail(null);
+  }
+}, [open, initialGuardrail]);
 
   useEffect(() => {
     if (!open) {
