@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { ArrowRight } from "lucide-react";
 import { Badge } from "../ui/badge";
+import * as guardrailsApi from "@/lib/api/guardrails";
 
 // Base guardrails data
 const BASE_GUARDRAILS = [
@@ -116,7 +117,7 @@ function SelectBaseGuardrail({ onSelect }) {
 /**
  * Step 2: Configure Custom Guardrail
  */
-function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
+function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit, isLoading, apiError }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [sensitivityLevel, setSensitivityLevel] = useState("medium");
@@ -126,6 +127,8 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
   const [isOpenSensitivity, setIsOpenSensitivity] = useState(false);
 
   const handleSubmit = () => {
+    if (isLoading) return;
+
     const errs = {
       name: !name.trim() ? "Name is required" : "",
       threshold: !threshold.trim() ? "Threshold is required" : "",
@@ -252,6 +255,13 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
             className="border placeholder:text-xs !text-xs h-24 border-border-color-0 resize-none"
           />
         </div>
+
+        {/* API Error Message */}
+        {apiError && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-sm text-red-600">{apiError}</p>
+          </div>
+        )}
       </div>
 
       {/* Actions */}
@@ -268,8 +278,11 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
         </RippleButton>
 
         <RippleButton onClick={handleSubmit} className="rounded-full">
-          <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2 cursor-pointer !px-6 rounded-lg">
-            Create Custom Guardrails
+          <Button
+            disabled={isLoading}
+            className="bg-primary hover:bg-[#E64A19] text-white gap-2 cursor-pointer !px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Creating..." : "Create Custom Guardrails"}
             <ArrowRight />
           </Button>
         </RippleButton>
@@ -284,24 +297,21 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit }) {
 export default function AddCustomGuardrailsModal({ open, onOpenChange, initialGuardrail, }) {
   const [step, setStep] = useState(1);
   const [selectedGuardrail, setSelectedGuardrail] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
   useEffect(() => {
-  if (open && initialGuardrail) {
-    setSelectedGuardrail(initialGuardrail);
-    setStep(2);
-  }
+    if (open && initialGuardrail) {
+      setSelectedGuardrail(initialGuardrail);
+      setStep(2);
+    }
 
-  if (!open) {
-    setStep(1);
-    setSelectedGuardrail(null);
-  }
-}, [open, initialGuardrail]);
-
-  useEffect(() => {
     if (!open) {
       setStep(1);
       setSelectedGuardrail(null);
+      setIsLoading(false);
+      setApiError(null);
     }
-  }, [open]);
+  }, [open, initialGuardrail]);
 
   const handleSelectGuardrail = (guardrail) => {
     setSelectedGuardrail(guardrail);
@@ -311,11 +321,41 @@ export default function AddCustomGuardrailsModal({ open, onOpenChange, initialGu
   const handleBack = () => {
     setStep(1);
     setSelectedGuardrail(null);
+    setApiError(null);
   };
 
-  const handleSubmit = (data) => {
-    console.log("Submitted guardrail:", data);
-    onOpenChange(false); // only close on successful submit
+  const handleSubmit = async (data) => {
+    try {
+      setIsLoading(true);
+      setApiError(null);
+
+      // Map form data to API structure
+      const apiData = {
+        name: data.name.trim(),
+        description: data.description.trim() || data.baseGuardrail.description,
+        direction: data.baseGuardrail.type, // "Input", "Output", "Both"
+        category: data.baseGuardrail.category,
+        basedOn: data.baseGuardrail.name,
+        isCustom: true,
+        config: {
+          sensitivityLevel: data.sensitivityLevel,
+          threshold: parseFloat(data.threshold),
+          customRules: data.customRules,
+        },
+      };
+
+      await guardrailsApi.createCustomGuardrail(apiData);
+
+      // Reset and close on success
+      setStep(1);
+      setSelectedGuardrail(null);
+      onOpenChange(false);
+    } catch (err) {
+      setApiError(err.message || "Failed to create custom guardrail");
+      console.error("Error creating custom guardrail:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -344,6 +384,8 @@ export default function AddCustomGuardrailsModal({ open, onOpenChange, initialGu
                 baseGuardrail={selectedGuardrail}
                 onBack={handleBack}
                 onSubmit={handleSubmit}
+                isLoading={isLoading}
+                apiError={apiError}
               />
             )}
           </AnimatePresence>

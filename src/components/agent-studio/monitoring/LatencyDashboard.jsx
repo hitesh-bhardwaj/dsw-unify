@@ -3,29 +3,61 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomLineChart } from "@/components/common/Graphs/graphs";
+import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const LatencyDashboard = () => {
-  // KPI numbers that update
-  const [endToEnd, setEndToEnd] = useState(1.85);
-  const [processing, setProcessing] = useState(0.78);
-  const [toolInvocation, setToolInvocation] = useState(0.42);
+const LatencyDashboard = ({ agentId }) => {
+  const [metrics, setMetrics] = useState({
+    endToEnd: 0,
+    processing: 0,
+    toolInvocation: 0,
+    chartData: [],
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Update KPIs every 3s to match chart updates
   useEffect(() => {
-    const id = setInterval(() => {
-      const newEndToEnd = clamp(1.2 + Math.random() * 1.3, 1.2, 2.5);
-      const newProcessing = clamp(0.4 + Math.random() * 0.8, 0.4, 1.2);
-      const newToolInvocation = clamp(0.2 + Math.random() * 0.4, 0.2, 0.6);
+    if (!agentId) return;
 
-      setEndToEnd(+newEndToEnd.toFixed(2));
-      setProcessing(+newProcessing.toFixed(2));
-      setToolInvocation(+newToolInvocation.toFixed(2));
-    }, 3000);
+    async function fetchMetrics() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await monitoringApi.getLatencyMetrics(agentId);
+        setMetrics(data);
+      } catch (err) {
+        setError(err.message || "Failed to load latency metrics");
+        console.error("Error fetching latency metrics:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-    return () => clearInterval(id);
-  }, []);
+    fetchMetrics();
+  }, [agentId]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Latency Metrics</h1>
+          <p className="text-sm text-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Latency Metrics</h1>
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   const lines = useMemo(
     () => [
@@ -50,7 +82,7 @@ const LatencyDashboard = () => {
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
               <div className="text-sm">End-to-End Latency</div>
-              <div className="text-4xl font-semibold">{Number(endToEnd).toFixed(2)}s</div>
+              <div className="text-4xl font-semibold">{Number(metrics.endToEnd || 0).toFixed(2)}s</div>
               <p className="text-sm text-foreground">Total time from request to response</p>
             </CardContent>
           </Card>
@@ -58,7 +90,7 @@ const LatencyDashboard = () => {
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
               <div className="text-sm">Processing Latency</div>
-              <div className="text-4xl font-semibold">{Number(processing).toFixed(2)}s</div>
+              <div className="text-4xl font-semibold">{Number(metrics.processing || 0).toFixed(2)}s</div>
               <p className="text-sm text-foreground">Time in agent&apos;s internal logic</p>
             </CardContent>
           </Card>
@@ -67,7 +99,7 @@ const LatencyDashboard = () => {
             <CardContent className="!space-y-5">
               <div className="text-sm">Tool Invocation Latency</div>
               <div className="text-4xl font-semibold">
-                {Number(toolInvocation).toFixed(2)}s
+                {Number(metrics.toolInvocation || 0).toFixed(2)}s
               </div>
               <p className="text-sm text-foreground">Latency for tool invocations</p>
             </CardContent>

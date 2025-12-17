@@ -3,27 +3,61 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { DoubleAreaChart } from "@/components/common/Graphs/graphs";
+import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const TrafficMetricsDashboard = () => {
-  // ===== Totals that update =====
+const TrafficMetricsDashboard = ({ agentId }) => {
   const [metrics, setMetrics] = useState({
-    totalRequests: 12_847,
-    totalSessions: 3_421,
+    totalRequests: 0,
+    totalSessions: 0,
+    chartData: [],
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Update totals every 3s
+  // Fetch traffic metrics on mount and when agentId changes
   useEffect(() => {
-    const id = setInterval(() => {
-      setMetrics((prev) => ({
-        totalRequests: prev.totalRequests + Math.floor(Math.random() * 15 + 5),
-        totalSessions: prev.totalSessions + Math.floor(Math.random() * 3 + 1),
-      }));
-    }, 3000);
+    if (!agentId) return;
 
-    return () => clearInterval(id);
-  }, []);
+    async function fetchMetrics() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await monitoringApi.getTrafficMetrics(agentId);
+        setMetrics(data);
+      } catch (err) {
+        setError(err.message || "Failed to load traffic metrics");
+        console.error("Error fetching traffic metrics:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchMetrics();
+  }, [agentId]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full mx-auto space-y-5 py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Traffic & Usage Metrics</h1>
+          <p className="text-sm text-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full mx-auto space-y-5 py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Traffic & Usage Metrics</h1>
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full mx-auto space-y-5 py-3">

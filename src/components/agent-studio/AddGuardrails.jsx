@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LeftArrow } from "@/components/Icons";
+import * as guardrailsApi from "@/lib/api/guardrails";
 
 /**
  * Modal for adding new guardrails.
@@ -41,6 +42,8 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
   const [isOpenSeverity, setIsOpenSeverity] = useState(false);
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
     if (!open) {
@@ -49,6 +52,8 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
       setType("");
       setSeverity("");
       setErrors({});
+      setApiError(null);
+      setIsLoading(false);
     }
   }, [open]);
 
@@ -59,7 +64,7 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
   };
 
   /** =============== FORM VALIDATION =============== */
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const errs = {
       name: !name.trim() ? "Name is required" : "",
       description: !description.trim() ? "Description is required" : "",
@@ -70,7 +75,34 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
 
     if (Object.values(errs).some(Boolean)) return;
 
-    onOpenChange(false);
+    try {
+      setIsLoading(true);
+      setApiError(null);
+
+      // Map form values to API data structure
+      const data = {
+        name: name.trim(),
+        description: description.trim(),
+        direction: type.charAt(0).toUpperCase() + type.slice(1), // "input" -> "Input"
+        category: "Custom", // Default category for new guardrails
+        severity: severity.charAt(0).toUpperCase() + severity.slice(1), // "high" -> "High"
+      };
+
+      await guardrailsApi.createGuardrail(data);
+
+      // Reset form
+      setName("");
+      setDescription("");
+      setType("");
+      setSeverity("");
+      setErrors({});
+      onOpenChange(false);
+    } catch (err) {
+      setApiError(err.message || "Failed to create guardrail");
+      console.error("Error creating guardrail:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -121,6 +153,13 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
                 <p className="text-xs text-red-500">{errors.description}</p>
               )}
             </div>
+
+            {/* API Error Message */}
+            {apiError && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-600">{apiError}</p>
+              </div>
+            )}
 
             {/* Type and Severity */}
             <div className="grid grid-cols-2 gap-4">
@@ -213,9 +252,10 @@ export default function AddGuardrailsModal({ open, onOpenChange }) {
             <RippleButton>
               <Button
                 onClick={handleSubmit}
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                disabled={isLoading}
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Create Guardrails
+                {isLoading ? "Creating..." : "Create Guardrails"}
                 <LeftArrow className="ml-2 rotate-180 w-4" />
               </Button>
             </RippleButton>

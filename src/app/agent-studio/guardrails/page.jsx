@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GuardrailsIcon, PlusIcon } from "@/components/Icons";
@@ -17,6 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import AddCustomGuardrailsModal from "@/components/agent-studio/AddCustomGuardrails";
 import CreateGuardSuitesModal from "@/components/agent-studio/guardrails/CreateGuardSuitesModal";
+import * as guardrailsApi from "@/lib/api/guardrails";
 
 // Mock data for Guard Suites
 const mockGuardSuites = [
@@ -167,19 +168,50 @@ export default function GuardrailsPage() {
   const [sortOrder, setSortOrder] = useState("none");
   const [view, setView] = useState("grid");
   const [guardSuites, setGuardSuites] = useState(mockGuardSuites);
-  const [customGuardrails, setCustomGuardrails] = useState(
-    INITIAL_CUSTOM_GUARDRAILS
-  );
+  const [defaultGuardrailsState, setDefaultGuardrailsState] = useState(defaultGuardrails);
+  const [customGuardrails, setCustomGuardrails] = useState(INITIAL_CUSTOM_GUARDRAILS);
 
   const [copySourceGuardrail, setCopySourceGuardrail] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [suitesData, defaultData, customData] = await Promise.all([
+          guardrailsApi.getGuardSuites(),
+          guardrailsApi.getDefaultGuardrails(),
+          guardrailsApi.getCustomGuardrails(),
+        ]);
+
+        setGuardSuites(suitesData);
+        setDefaultGuardrailsState(defaultData);
+        setCustomGuardrails(customData);
+      } catch (err) {
+        setError(err.message || "Failed to load guardrails");
+        console.error("Error fetching guardrails:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleCopyGuardrail = (guardrail) => {
     setCopySourceGuardrail(guardrail);
     setIsCustomModalOpen(true);
   };
 
-  const handleDeleteCustomGuardrail = (id) => {
-    setCustomGuardrails((prev) => prev.filter((g) => g.id !== id));
+  const handleDeleteCustomGuardrail = async (id) => {
+    try {
+      await guardrailsApi.deleteGuardrail(id);
+      setCustomGuardrails((prev) => prev.filter((g) => g.id !== id));
+    } catch (err) {
+      console.error("Error deleting guardrail:", err);
+      setError(err.message || "Failed to delete guardrail");
+    }
   };
 
   // Get available tags dynamically based on active tab
@@ -241,12 +273,18 @@ export default function GuardrailsPage() {
     return filtered;
   };
 
-  const handleDeleteSuite = (suiteId) => {
-    setGuardSuites((prev) => prev.filter((s) => s.id !== suiteId));
+  const handleDeleteSuite = async (suiteId) => {
+    try {
+      await guardrailsApi.deleteGuardSuite(suiteId);
+      setGuardSuites((prev) => prev.filter((s) => s.id !== suiteId));
+    } catch (err) {
+      console.error("Error deleting guard suite:", err);
+      setError(err.message || "Failed to delete guard suite");
+    }
   };
 
   const activeGuardrailList =
-    guardrailsSubTab === "default" ? defaultGuardrails : customGuardrails;
+    guardrailsSubTab === "default" ? defaultGuardrailsState : customGuardrails;
 
   const renderGuardrailGrid = (list, variant) => {
     const filtered = filterGuardrailsList(list);
@@ -414,7 +452,7 @@ export default function GuardrailsPage() {
                     value: "default",
                     label: "Default Guardrails",
                     render: () =>
-                      renderGuardrailGrid(defaultGuardrails, "default"),
+                      renderGuardrailGrid(defaultGuardrailsState, "default"),
                   },
                   {
                     id: "custom",

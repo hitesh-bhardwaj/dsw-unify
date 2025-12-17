@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
@@ -11,6 +11,7 @@ import TestingSuitesGrid from "@/components/testing/testing-suites-grid";
 import TestingResultsGrid from "@/components/testing/testing-results-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import AddTestings from "@/components/agent-studio/AddTesting";
+import * as testingApi from "@/lib/api/testing";
 
 const initialTestSuites = [
   {
@@ -94,18 +95,60 @@ const analyticsCardData = [
 export default function TestingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [testSuitesState, setTestSuitesState] = useState(initialTestSuites);
+  const [analyticsData, setAnalyticsData] = useState(analyticsCardData);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // RUN TEST (2s running, permanent result)
-  const handleRunTest = (id) => {
-    setTestSuitesState((prev) =>
-      prev.map((suite) =>
-        suite.id === id
-          ? { ...suite, isRunning: true, hasRun: true }
-          : suite
-      )
-    );
+  // Fetch test suites and analytics on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        const [suitesData, analytics] = await Promise.all([
+          testingApi.getTestSuites(),
+          testingApi.getTestingAnalytics(),
+        ]);
+        setTestSuitesState(suitesData);
+        setAnalyticsData(analytics);
+      } catch (err) {
+        setError(err.message || "Failed to load testing data");
+        console.error("Error fetching testing data:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
-    setTimeout(() => {
+  // RUN TEST - calls API to execute test suite
+  const handleRunTest = async (id) => {
+    try {
+      // Set running state immediately
+      setTestSuitesState((prev) =>
+        prev.map((suite) =>
+          suite.id === id
+            ? { ...suite, isRunning: true, hasRun: true }
+            : suite
+        )
+      );
+
+      // Execute test suite via API
+      await testingApi.executeTestSuite(id);
+
+      // Simulate delay for UX (API might return immediately)
+      setTimeout(() => {
+        setTestSuitesState((prev) =>
+          prev.map((suite) =>
+            suite.id === id
+              ? { ...suite, isRunning: false }
+              : suite
+          )
+        );
+      }, 2000);
+    } catch (err) {
+      console.error("Error executing test suite:", err);
+      setError(err.message || "Failed to execute test suite");
+      // Reset running state on error
       setTestSuitesState((prev) =>
         prev.map((suite) =>
           suite.id === id
@@ -113,7 +156,7 @@ export default function TestingPage() {
             : suite
         )
       );
-    }, 2000);
+    }
   };
 
   // Derived results (SAME DATA)
@@ -122,8 +165,14 @@ export default function TestingPage() {
     [testSuitesState]
   );
 
-   const handleDeleteTest = (id) => {
-    setTestSuitesState((prev) => prev.filter((suite) => suite.id !== id));
+  const handleDeleteTest = async (id) => {
+    try {
+      await testingApi.deleteTestSuite(id);
+      setTestSuitesState((prev) => prev.filter((suite) => suite.id !== id));
+    } catch (err) {
+      console.error("Error deleting test suite:", err);
+      setError(err.message || "Failed to delete test suite");
+    }
   };
 
   const items = [
@@ -150,10 +199,27 @@ export default function TestingPage() {
       value: "analytics",
       label: "Analytics",
       render: () => (
-        <TestingAnalyticsComp cardData={analyticsCardData}  items={testResults} />
+        <TestingAnalyticsComp cardData={analyticsData}  items={testResults} />
       ),
     },
   ];
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col h-full w-full overflow-hidden">
+        <ScaleDown>
+          <div className="space-y-6 p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-medium text-foreground">Testing</h1>
+                <p className="mt-1 text-sm text-gray-600 dark:text-foreground">Loading...</p>
+              </div>
+            </div>
+          </div>
+        </ScaleDown>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
@@ -167,6 +233,9 @@ export default function TestingPage() {
               <p className="mt-1 text-sm text-gray-600 dark:text-foreground">
                 Validate agent performance with comprehensive test suites
               </p>
+              {error && (
+                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              )}
             </div>
 
             <RippleButton>

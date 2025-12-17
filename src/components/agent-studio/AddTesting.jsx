@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LeftArrow } from "@/components/Icons";
+import * as testingApi from "@/lib/api/testing";
 
 /**
  * Modal component for creating new test suites.
@@ -39,6 +40,8 @@ export default function AddTestings({ open, onOpenChange }) {
   const [isOpenAgent, setIsOpenAgent] = useState(false);
 
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState(null);
 
   useEffect(() => {
     if (!open) {
@@ -46,6 +49,8 @@ export default function AddTestings({ open, onOpenChange }) {
       setDescription("");
       setSelectedAgent("");
       setErrors({});
+      setIsLoading(false);
+      setApiError(null);
     }
   }, [open]);
 
@@ -56,7 +61,7 @@ export default function AddTestings({ open, onOpenChange }) {
   };
 
   /** =============== FORM VALIDATION =============== */
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const errs = {
       testSuiteName: !testSuiteName.trim() ? "Test Suite Name is required" : "",
       selectedAgent: !selectedAgent ? "Agent selection is required" : "",
@@ -65,7 +70,30 @@ export default function AddTestings({ open, onOpenChange }) {
 
     if (Object.values(errs).some(Boolean)) return;
 
-    onOpenChange(false);
+    try {
+      setIsLoading(true);
+      setApiError(null);
+
+      const data = {
+        name: testSuiteName.trim(),
+        description: description.trim(),
+        agent: selectedAgent,
+      };
+
+      await testingApi.createTestSuite(data);
+
+      // Reset form
+      setTestSuiteName("");
+      setDescription("");
+      setSelectedAgent("");
+      setErrors({});
+      onOpenChange(false);
+    } catch (err) {
+      setApiError(err.message || "Failed to create test suite");
+      console.error("Error creating test suite:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isFormValid = testSuiteName.trim() && selectedAgent;
@@ -116,6 +144,13 @@ export default function AddTestings({ open, onOpenChange }) {
                 className="border placeholder:text-xs h-32 placeholder:text-foreground/80 border-border-color-0"
               />
             </div>
+
+            {/* API Error Message */}
+            {apiError && (
+              <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-sm text-red-600">{apiError}</p>
+              </div>
+            )}
 
             {/* Select Agent */}
             <div className="flex flex-col gap-2 text-foreground/80 w-full">
@@ -176,9 +211,9 @@ export default function AddTestings({ open, onOpenChange }) {
               <Button
                 onClick={handleSubmit}
                 className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50 disabled:!cursor-not-allowed disabled:!pointer-events-none"
-                disabled={!isFormValid}
+                disabled={!isFormValid || isLoading}
               >
-                Create Test Suite
+                {isLoading ? "Creating..." : "Create Test Suite"}
                 <LeftArrow className="ml-2 rotate-180 w-4" />
               </Button>
             </RippleButton>

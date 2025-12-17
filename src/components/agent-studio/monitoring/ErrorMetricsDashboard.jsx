@@ -3,39 +3,61 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomBarChart } from "@/components/common/Graphs/graphs";
+import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const ErrorMetricsDashboard = () => {
-  // KPI values that update
-  const [agentErrors, setAgentErrors] = useState(51);
-  const [llmErrors, setLlmErrors] = useState(31);
-  const [toolErrors, setToolErrors] = useState(29);
+const ErrorMetricsDashboard = ({ agentId }) => {
+  const [metrics, setMetrics] = useState({
+    agentErrors: 0,
+    llmErrors: 0,
+    toolErrors: 0,
+    chartData: [],
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Update KPIs every 3s to match chart updates
   useEffect(() => {
-    const id = setInterval(() => {
-      setAgentErrors((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 10) - 5), 30, 80)
-      );
-      setLlmErrors((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 8) - 4), 20, 60)
-      );
-      setToolErrors((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 8) - 4), 15, 50)
-      );
-    }, 3000);
+    if (!agentId) return;
 
-    return () => clearInterval(id);
-  }, []);
+    async function fetchMetrics() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await monitoringApi.getErrorMetrics(agentId);
+        setMetrics(data);
+      } catch (err) {
+        setError(err.message || "Failed to load error metrics");
+        console.error("Error fetching error metrics:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-  const errorBarData = [
-  { timeLabel: "12:01", agentErrors: 220, llmErrors: 150, toolErrors: 120 },
-  { timeLabel: "12:04", agentErrors: 180, llmErrors: 130, toolErrors: 110 },
-  { timeLabel: "12:07", agentErrors: 260, llmErrors: 170, toolErrors: 140 },
-  { timeLabel: "12:10", agentErrors: 210, llmErrors: 160, toolErrors: 125 },
-  { timeLabel: "12:13", agentErrors: 240, llmErrors: 145, toolErrors: 135 },
-];
+    fetchMetrics();
+  }, [agentId]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Error Metrics</h1>
+          <p className="text-sm text-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Error Metrics</h1>
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 py-3">
@@ -50,7 +72,7 @@ const ErrorMetricsDashboard = () => {
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
             <div className="text-sm">Agent Errors</div>
-            <div className="text-4xl font-medium text-red">{agentErrors}</div>
+            <div className="text-4xl font-medium text-red">{metrics.agentErrors}</div>
             <p className="text-sm ">Failed agent responses</p>
           </CardContent>
         </Card>
@@ -58,7 +80,7 @@ const ErrorMetricsDashboard = () => {
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
             <div className="text-sm">LLM Errors</div>
-            <div className="text-4xl font-medium text-primary">{llmErrors}</div>
+            <div className="text-4xl font-medium text-primary">{metrics.llmErrors}</div>
             <p className="text-sm ">LLM timeouts &amp; failures</p>
           </CardContent>
         </Card>
@@ -67,7 +89,7 @@ const ErrorMetricsDashboard = () => {
           <CardContent className="!space-y-5">
             <div className="text-sm">Tool Errors</div>
             <div className="text-4xl font-medium text-yellow">
-              {toolErrors}
+              {metrics.toolErrors}
             </div>
             <p className="text-sm">Tool invocation errors</p>
           </CardContent>

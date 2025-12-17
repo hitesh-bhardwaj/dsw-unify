@@ -6,41 +6,61 @@ import {
   DoubleAreaChart,
   CustomLineChart,
 } from "@/components/common/Graphs/graphs";
+import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const LLMDashboard = () => {
-  // KPI values that update
-  const [inferenceLatency, setInferenceLatency] = useState(1.2);
-  const [inputTokensTotal, setInputTokensTotal] = useState(251_508);
-  const [outputTokensTotal, setOutputTokensTotal] = useState(137_905);
-  const [totalCost, setTotalCost] = useState(48.16);
+const LLMDashboard = ({ agentId }) => {
+  const [metrics, setMetrics] = useState({
+    avgTokensPerRequest: 0,
+    totalTokensUsed: 0,
+    avgResponseTime: 0,
+    chartData: [],
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Update KPIs every 3s to match chart updates
   useEffect(() => {
-    const id = setInterval(() => {
-      // latency drifts smoothly
-      setInferenceLatency((prev) => {
-        const next = prev + (Math.random() * 0.2 - 0.1);
-        return clamp(next, 0.8, 2.0);
-      });
+    if (!agentId) return;
 
-      // accumulate totals based on simulated token usage
-      const inputTokens = clamp(Math.round(120 + Math.random() * 480), 100, 600);
-      const outputTokens = clamp(Math.round(80 + Math.random() * 220), 50, 300);
-      const cost = clamp(100 + Math.random() * 300, 100, 400);
+    async function fetchMetrics() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await monitoringApi.getLLMMetrics(agentId);
+        setMetrics(data);
+      } catch (err) {
+        setError(err.message || "Failed to load LLM metrics");
+        console.error("Error fetching LLM metrics:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-      setInputTokensTotal((prev) =>
-        clamp(prev + inputTokens, 200_000, 350_000)
-      );
-      setOutputTokensTotal((prev) =>
-        clamp(prev + outputTokens, 100_000, 200_000)
-      );
-      setTotalCost((prev) => clamp(prev + cost / 1000, 30, 70));
-    }, 3000);
+    fetchMetrics();
+  }, [agentId]);
 
-    return () => clearInterval(id);
-  }, []);
+  if (isLoading) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">LLM Metrics</h1>
+          <p className="text-sm text-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">LLM Metrics</h1>
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   const costLines = useMemo(
     () => [{ dataKey: "cost", name: "Cost", color: "var(--badge-green)" }],
@@ -60,7 +80,7 @@ const LLMDashboard = () => {
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
             <div className="text-sm">LLM Inference Latency</div>
-            <div className="text-3xl font-semibold">{inferenceLatency.toFixed(2)}s</div>
+            <div className="text-3xl font-semibold">{(metrics.avgResponseTime || 0).toFixed(2)}s</div>
             <p className="text-sm">Average LLM response time</p>
           </CardContent>
         </Card>
@@ -68,7 +88,7 @@ const LLMDashboard = () => {
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
             <div className="text-sm">Input Tokens</div>
-            <div className="text-3xl font-semibold">{inputTokensTotal.toLocaleString()}</div>
+            <div className="text-3xl font-semibold">{(Math.floor(metrics.totalTokensUsed * 0.65) || 0).toLocaleString()}</div>
             <p className="text-sm text-foreground/80">Total prompt tokens sent</p>
           </CardContent>
         </Card>
@@ -76,7 +96,7 @@ const LLMDashboard = () => {
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
             <div className="text-sm">Output Tokens</div>
-            <div className="text-3xl font-semibold">{outputTokensTotal.toLocaleString()}</div>
+            <div className="text-3xl font-semibold">{(Math.floor(metrics.totalTokensUsed * 0.35) || 0).toLocaleString()}</div>
             <p className="text-sm text-foreground/80">Total completion tokens generated</p>
           </CardContent>
         </Card>
@@ -85,7 +105,7 @@ const LLMDashboard = () => {
           <CardContent className="!space-y-5">
             <div className="text-sm">Total Token Cost</div>
             <div className="text-3xl font-semibold text-slate-900 mb-2 dark:text-foreground">
-              ${totalCost.toFixed(2)}
+              ${((metrics.totalTokensUsed || 0) * 0.00015).toFixed(2)}
             </div>
             <p className="text-sm text-foreground/80">Total LLM usage cost (USD)</p>
           </CardContent>

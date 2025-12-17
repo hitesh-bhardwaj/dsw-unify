@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { GuardrailsIcon } from "@/components/Icons";
 import { Check, X } from "lucide-react";
 import CountUp from "@/components/animations/CountUp";
+import * as guardrailsApi from "@/lib/api/guardrails";
 
 // --- MOCK DATA: driven by slug so it matches list page routing ---
 const guardrailsList = [
@@ -79,17 +80,55 @@ export default function GuardrailDetailPage() {
   const params = useParams();
   const slugParam = params?.id; // dynamic route: /agent-studio/guardrails/[id]
 
+  const [guardrailData, setGuardrailData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch guardrail data on mount
+  useEffect(() => {
+    async function fetchGuardrail() {
+      if (!slugParam) return;
+
+      try {
+        setIsLoading(true);
+        const data = await guardrailsApi.getGuardrailById(slugParam);
+        setGuardrailData(data);
+      } catch (err) {
+        setError(err.message || "Failed to load guardrail");
+        console.error("Error fetching guardrail:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchGuardrail();
+  }, [slugParam]);
+
   const slug = useMemo(
     () => (Array.isArray(slugParam) ? slugParam[0] : slugParam) || "",
     [slugParam]
   );
 
-  // find matching guardrail by slug; fallback to first if not found
-  const guardrail =
-    guardrailsList.find((g) => g.slug === slug) ?? guardrailsList[0];
+  // Use fetched data or fallback to mock data
+  const guardrail = guardrailData || guardrailsList.find((g) => g.slug === slug) || guardrailsList[0];
 
-  // 💥 H1 text derived from route, not from data name (but falls back gracefully)
-  const displayName = titleFromSlug(slug || guardrail.slug);
+  // 💥 H1 text derived from fetched data name or route slug
+  const displayName = guardrail?.name || titleFromSlug(slug || guardrail?.slug);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-600 dark:text-foreground">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-red-600 dark:text-red-400">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">

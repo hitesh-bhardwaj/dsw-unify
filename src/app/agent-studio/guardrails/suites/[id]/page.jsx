@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -10,6 +10,7 @@ import { Bin, GuardrailsIcon, EditIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
 import CountUp from "@/components/animations/CountUp";
 import { Card } from "@/components/ui/card";
+import * as guardrailsApi from "@/lib/api/guardrails";
 
 // --------- MOCK DATA: now driven by slug ----------
 const guardSuitesList = [
@@ -165,18 +166,41 @@ export default function GuardSuiteDetailPage() {
   const params = useParams();
   const slugParam = params?.id;
 
+  const [suiteData, setSuiteData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   // normalize slug (handle catch-all / array)
   const slug = useMemo(
     () => (Array.isArray(slugParam) ? slugParam[0] : slugParam) || "",
     [slugParam]
   );
 
-  // find matching suite by slug; fallback to first
+  // Fetch guard suite data on mount
+  useEffect(() => {
+    async function fetchSuite() {
+      if (!slugParam) return;
+
+      try {
+        setIsLoading(true);
+        const data = await guardrailsApi.getGuardSuiteById(slugParam);
+        setSuiteData(data);
+      } catch (err) {
+        setError(err.message || "Failed to load guard suite");
+        console.error("Error fetching guard suite:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchSuite();
+  }, [slugParam]);
+
+  // Use fetched data or fallback to mock data
   const guardSuite =
-    guardSuitesList.find((suite) => suite.slug === slug) ?? guardSuitesList[0];
+    suiteData || (guardSuitesList.find((suite) => suite.slug === slug) ?? guardSuitesList[0]);
 
   // H1 name driven by slug (route), not just data
-  const displayName = titleFromSlug(slug || guardSuite.slug);
+  const displayName = guardSuite?.name || titleFromSlug(slug || guardSuite?.slug);
 
   // Combine all guardrails
   const allGuardrails = [
@@ -190,6 +214,22 @@ export default function GuardSuiteDetailPage() {
   );
 
   const inputCount = guardSuite.inputGuardrails?.length || 0;
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-gray-600 dark:text-foreground">Loading...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-red-600 dark:text-red-400">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full">

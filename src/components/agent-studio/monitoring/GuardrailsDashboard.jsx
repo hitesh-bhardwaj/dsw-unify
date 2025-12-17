@@ -3,30 +3,65 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomBarChart } from "@/components/common/Graphs/graphs";
+import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const GuardrailsDashboard = () => {
-  const [preInference, setPreInference] = useState(156);
-  const [postInference, setPostInference] = useState(43);
-  const [avgLatency, setAvgLatency] = useState(0.112);
+const GuardrailsDashboard = ({ agentId }) => {
+  const [metrics, setMetrics] = useState({
+    preInference: 0,
+    postInference: 0,
+    avgLatency: 0,
+    chartData: [],
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Update KPIs every 3s (same cadence as chart)
   useEffect(() => {
-    const id = setInterval(() => {
-      setPreInference((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 40) - 20), 50, 300)
-      );
-      setPostInference((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 20) - 10), 20, 150)
-      );
-      setAvgLatency((prev) =>
-        clamp(prev + (Math.random() * 0.02 - 0.01), 0.08, 0.2)
-      );
-    }, 3000);
+    if (!agentId) return;
 
-    return () => clearInterval(id);
-  }, []);
+    async function fetchMetrics() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await monitoringApi.getGuardrailMetrics(agentId);
+        setMetrics(data);
+      } catch (err) {
+        setError(err.message || "Failed to load guardrail metrics");
+        console.error("Error fetching guardrail metrics:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchMetrics();
+  }, [agentId]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-2xl font-medium mb-2">Guardrails & Safety Metrics</h1>
+            <p className="text-foreground text-sm">Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-2xl font-medium mb-2">Guardrails & Safety Metrics</h1>
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full py-3">
@@ -45,7 +80,7 @@ const GuardrailsDashboard = () => {
             <CardContent className="!space-y-5">
               <div className="text-sm">Pre-Inference Triggers</div>
               <div className="text-4xl font-bold text-primary">
-                {preInference}
+                {metrics.preInference}
               </div>
               <p className="text-sm text-foreground">
                 Requests blocked by pre-inference guardrails
@@ -56,7 +91,7 @@ const GuardrailsDashboard = () => {
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
               <div className="text-sm">Post-Inference Triggers</div>
-              <div className="text-4xl font-bold text-red">{postInference}</div>
+              <div className="text-4xl font-bold text-red">{metrics.postInference}</div>
               <p className="text-sm text-foreground">
                 Requests blocked by post-inference guardrails
               </p>
@@ -67,7 +102,7 @@ const GuardrailsDashboard = () => {
             <CardContent className="!space-y-5">
               <div className="text-sm">Avg Guardrail Latency</div>
               <div className="text-4xl font-bold text-[#111111] dark:text-foreground">
-                {avgLatency.toFixed(3)}s
+                {(metrics.avgLatency || 0).toFixed(3)}s
               </div>
               <p className="text-sm text-foreground">
                 Time spent in guardrail checks

@@ -3,28 +3,61 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SingleAreaChart } from "@/components/common/Graphs/graphs";
+import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 
-const SuccessMetricsDashboard = () => {
-  // KPI values that update
-  const [successTotal, setSuccessTotal] = useState(15084);
-  const [successRate, setSuccessRate] = useState(99.4);
+const SuccessMetricsDashboard = ({ agentId }) => {
+  const [metrics, setMetrics] = useState({
+    successRate: 0,
+    totalSuccessful: 0,
+    totalFailed: 0,
+    chartData: [],
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Update KPIs every 3s to match chart updates
   useEffect(() => {
-    const id = setInterval(() => {
-      const rate = clamp(95 + Math.random() * 5, 95, 99.9);
-      setSuccessRate(+rate.toFixed(1));
+    if (!agentId) return;
 
-      setSuccessTotal((prev) => {
-        const delta = Math.floor(Math.random() * 200 - 100);
-        return clamp(prev + delta, 14000, 17000);
-      });
-    }, 3000);
+    async function fetchMetrics() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const data = await monitoringApi.getSuccessMetrics(agentId);
+        setMetrics(data);
+      } catch (err) {
+        setError(err.message || "Failed to load success metrics");
+        console.error("Error fetching success metrics:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-    return () => clearInterval(id);
-  }, []);
+    fetchMetrics();
+  }, [agentId]);
+
+  if (isLoading) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Success Metrics</h1>
+          <p className="text-sm text-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full py-3">
+        <div className="space-y-3">
+          <h1 className="text-2xl font-medium">Success Metrics</h1>
+          <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full py-3">
@@ -41,7 +74,7 @@ const SuccessMetricsDashboard = () => {
             <CardContent className="!space-y-5">
               <div className="text-sm ">Agent Success Total</div>
               <div className="text-4xl font-semibold text-badge-green">
-                {successTotal.toLocaleString()}
+                {(metrics.totalSuccessful || 0).toLocaleString()}
               </div>
               <p className="text-sm">Count of successful agent responses</p>
             </CardContent>
@@ -51,7 +84,7 @@ const SuccessMetricsDashboard = () => {
             <CardContent className="!space-y-5">
               <div className="text-sm ">Success Rate</div>
               <div className="text-4xl font-semibold text-badge-green">
-                {Number(successRate).toFixed(1)}%
+                {Number(metrics.successRate || 0).toFixed(1)}%
               </div>
               <p className="text-sm">Percentage of successful responses</p>
             </CardContent>

@@ -14,11 +14,16 @@ import { RippleButton } from "@/components/ui/ripple-button";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowDown, ArrowRight, ArrowUp } from "lucide-react";
 import { useState } from "react";
+import * as guardrailsApi from "@/lib/api/guardrails";
 
 export default function CreateGuardSuitesModal({ open, onOpenChange }) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [nameError, setNameError] = useState("");
+  const [selectedInputGuardrails, setSelectedInputGuardrails] = useState([]);
+  const [selectedOutputGuardrails, setSelectedOutputGuardrails] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const inputGuardrails = [
     {
@@ -74,14 +79,54 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
     },
   ];
 
-  const handleCreate = () => {
+  const handleInputGuardrailToggle = (title) => {
+    setSelectedInputGuardrails((prev) =>
+      prev.includes(title)
+        ? prev.filter((t) => t !== title)
+        : [...prev, title]
+    );
+  };
+
+  const handleOutputGuardrailToggle = (title) => {
+    setSelectedOutputGuardrails((prev) =>
+      prev.includes(title)
+        ? prev.filter((t) => t !== title)
+        : [...prev, title]
+    );
+  };
+
+  const handleCreate = async () => {
     if (!name.trim()) {
       setNameError("Name is required");
       return;
     }
 
-    setNameError("");
-    onOpenChange(false);
+    try {
+      setIsLoading(true);
+      setError(null);
+      setNameError("");
+
+      const data = {
+        name: name.trim(),
+        description: desc.trim(),
+        inputGuardrails: selectedInputGuardrails.map((title) => ({ name: title })),
+        outputGuardrails: selectedOutputGuardrails.map((title) => ({ name: title })),
+      };
+
+      await guardrailsApi.createGuardSuite(data);
+
+      // Reset form
+      setName("");
+      setDesc("");
+      setSelectedInputGuardrails([]);
+      setSelectedOutputGuardrails([]);
+      onOpenChange(false);
+    } catch (err) {
+      setError(err.message || "Failed to create guard suite");
+      console.error("Error creating guard suite:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -127,6 +172,13 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
             />
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
+
          <div className="grid grid-cols-2 gap-4">
             {/* Left Column - Input Guardrails */}
             <div>
@@ -148,7 +200,10 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
                   {inputGuardrails.map((item, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Checkbox />
+                        <Checkbox
+                          checked={selectedInputGuardrails.includes(item.title)}
+                          onCheckedChange={() => handleInputGuardrailToggle(item.title)}
+                        />
                       </div>
                       <div className="flex flex-col">
                         <span className="text-sm font-medium">
@@ -184,7 +239,10 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
                   {outputGuardrails.map((item, index) => (
                     <div key={index} className="flex items-start gap-3">
                       <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Checkbox />
+                        <Checkbox
+                          checked={selectedOutputGuardrails.includes(item.title)}
+                          onCheckedChange={() => handleOutputGuardrailToggle(item.title)}
+                        />
                       </div>
                       <div className="flex flex-col">
                         <span className="text-sm font-medium">
@@ -216,9 +274,10 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
           <RippleButton className="rounded-full">
             <Button
               onClick={handleCreate}
-              className="bg-primary hover:bg-[#E64A19] text-white gap-2 cursor-pointer !px-6 rounded-lg"
+              disabled={isLoading}
+              className="bg-primary hover:bg-[#E64A19] text-white gap-2 cursor-pointer !px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Create Suite
+              {isLoading ? "Creating..." : "Create Suite"}
               <ArrowRight />
             </Button>
           </RippleButton>
