@@ -63,7 +63,12 @@ export default function CreateModal({ open, onOpenChange }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className={"w-[45%] left-1/2 top-1/2 h-[80%]"}>
-        <div className="py-4 px-2 w-full space-y-5 overflow-hidden">
+
+      <div className="pr-2 overflow-hidden overflow-y-auto">
+
+     
+      
+        <div className="py-4 px-2 w-full space-y-5 ">
           {/* Header */}
           <DialogHeader>
             <DialogTitle className="text-2xl font-medium mb-2">
@@ -77,7 +82,7 @@ export default function CreateModal({ open, onOpenChange }) {
           {/* Model Name */}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm text-foreground">
-              Model Name<span className="text-red-500">*</span>
+              Model Name
             </label>
             <Input
               value={modelName}
@@ -177,6 +182,7 @@ export default function CreateModal({ open, onOpenChange }) {
             </RippleButton>
           </div>
         </div>
+         </div>
       </DialogContent>
     </Dialog>
   );

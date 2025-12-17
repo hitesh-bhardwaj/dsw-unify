@@ -60,7 +60,9 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[45%] rounded-xl p-6 bg-background border border-border-color-0">
+      <DialogContent className="w-[45%] h-[80%] overflow-hidden overflow-y-auto  p-6 bg-background border border-border-color-0">
+        <div className="pr-2 overflow-hidden overflow-y-auto">
+         <div className="py-4 px-2 w-full space-y-5 ">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             Create Knowledge Base
@@ -188,7 +190,10 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
             </Button>
           </div>
         </div>
+        </div>
+          </div>
       </DialogContent>
+    
     </Dialog>
   );
 }

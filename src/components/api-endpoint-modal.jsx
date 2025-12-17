@@ -493,7 +493,7 @@ const handleCopy = async (textToCopy) => {
           <div
             ref={trackRef}
             onMouseDown={onTrackClick}
-            className="absolute w-1 rounded-full bg-black/15 h-[75%] right-[4%] top-[17%] scroll-track dark:bg-sidebar-accent"
+            className="absolute w-1 rounded-full bg-black/15 h-[75%] right-[2%] top-[17%] scroll-track dark:bg-sidebar-accent"
           >
             <div
               ref={thumbRef}

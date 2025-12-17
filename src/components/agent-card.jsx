@@ -66,7 +66,7 @@ export function AgentCard({ agent,index , view, minSkeletonMs = 500 }) {
     return (
       <Bounce>
         <div className="block h-full">
-          <Card className="overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-background border border-border-color-0 py-5">
+          <Card className="overflow-hidden  hover:shadow-xl transition-all duration-500 ease-out bg-white dark:bg-background border border-border-color-0 py-5">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex h-14 w-14 items-center justify-center rounded-lg relative bg-foreground/40 dark:bg-sidebar-accent">

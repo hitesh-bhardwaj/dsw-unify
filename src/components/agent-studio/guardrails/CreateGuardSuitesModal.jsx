@@ -85,8 +85,10 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[70%] max-h-[90vh] rounded-xl p-6 bg-background border border-border-color-0 flex flex-col">
+     <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="w-[75%] h-[80%] overflow-hidden overflow-y-auto  p-6 bg-background border border-border-color-0">
+        <div className="pr-2 overflow-hidden overflow-y-auto">
+         <div className="py-4 px-2 w-full space-y-5 ">
         <DialogHeader>
           <DialogTitle className="text-2xl font-medium">
             Create Guard Suite
@@ -220,6 +222,8 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
               <ArrowRight />
             </Button>
           </RippleButton>
+        </div>
+        </div>
         </div>
       </DialogContent>
     </Dialog>
