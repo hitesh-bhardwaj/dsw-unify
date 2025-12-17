@@ -90,7 +90,7 @@ export default function ImportModal({ open, onOpenChange }) {
   };
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[45%] p-6 rounded-3xl max-h-[90%]">
+      <DialogContent className="w-[45%] p-6 rounded-3xl max-h-[90%] overflow-hidden overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-3xl font-medium">
             Import Model

@@ -46,9 +46,21 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
+  const [tagsList, setTagsList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const handleAddTag = () => {
+    if (tags.trim()) {
+      setTagsList([...tagsList, tags.trim()]);
+      setTags("");
+    }
+  };
+
+  const handleRemoveTag = (indexToRemove) => {
+    setTagsList(tagsList.filter((_, index) => index !== indexToRemove));
+  };
 
   const handleCreate = async () => {
     if (!promptName.trim()) {
@@ -70,7 +82,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
         description: description,
         content: content,
         category: category || "General",
-        tags: tags ? tags.split(",").map(t => t.trim()) : [],
+        tags: tagsList,
         type: "system",
       };
 
@@ -89,8 +101,11 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={"w-[45%] left-1/2 overflow-y-auto  top-1/2 h-[80%]"}>
-        <div className="py-4 px-2  w-full space-y-5 overflow-hidden ">
+      <DialogContent className={"w-[45%] left-1/2 overflow-hidden  top-1/2 h-[80%]"}>
+      <div className="overflow-hidden overflow-y-auto"> 
+
+     
+        <div className="py-4 px-2  w-full space-y-5  pr-4 ">
           <DialogHeader>
             <DialogTitle className="text-2xl font-medium mb-6">
               Create New Prompt
@@ -165,17 +180,25 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
 
           <div className="flex w-full h-fit gap-2 items-end ">
             <div className="flex flex-col gap-2 w-[85%]">
-              <label className="text-sm text-foreground">Tags (comma-separated)</label>
+              <label className="text-sm text-foreground">Tags</label>
               <Input
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddTag();
+                  }
+                }}
                 className=" placeholder:text-foreground/40"
-                placeholder="e.g. customer-service, support"
+                placeholder="Add a tag"
               />
             </div>
             <div className="w-[15%] h-full">
             <RippleButton className={"w-full rounded-lg "} circColor={"dark:bg-foreground/40 bg-white  "}>
-            <div className="flex gap-2 w-full py-0 placeholder:text-foreground/40 h-10.5 rounded-lg bg-foreground text-background justify-start pl-2.5 items-center cursor-pointer dark:bg-transparent dark:text-foreground dark:border-primary dark:border mt-1">
+            <div 
+              onClick={handleAddTag}
+              className="flex gap-2 w-full py-0 placeholder:text-foreground/40 h-10.5 rounded-lg bg-foreground text-background justify-start pl-2.5 items-center cursor-pointer dark:bg-transparent dark:text-foreground dark:border-primary dark:border mt-1">
               <div className="w-3.5 h-auto">
                 <PlusIcon className="w-full h-full text-background dark:text-foreground" />
               </div>
@@ -185,6 +208,25 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             </RippleButton>
             </div>
           </div>
+
+          {tagsList.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {tagsList.map((tag, index) => (
+                <div
+                  key={index}
+                  className="flex bg-white items-center gap-2 px-2 py-0.5 border border-border-color-0 rounded-full text-sm"
+                >
+                  <span>{tag}</span>
+                  <button
+                    onClick={() => handleRemoveTag(index)}
+                    className="text-foreground/60 cursor-pointer hover:text-foreground"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="w-full flex justify-end gap-2">
             <RippleButton>
@@ -209,6 +251,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
             </RippleButton>
           </div>
         </div>
+         </div>
       </DialogContent>
     </Dialog>
   );

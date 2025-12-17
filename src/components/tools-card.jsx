@@ -57,7 +57,7 @@ export function ToolsCard({ tools,index, view, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/tools/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:border-transparent hover:drop-shadow-xl cursor-pointer transition-all duration-300 bg-background border border-border-color-0 !py-5 h-full gap-16", isList && 'gap-10'
+            "feature-card-hover-container overflow-hidden  group hover:border-transparent hover:drop-shadow-xl cursor-pointer transition-all duration-300 bg-white border border-border-color-0 !py-5 h-full gap-16", isList && 'gap-10'
           )}
         >
           <CardHeader>

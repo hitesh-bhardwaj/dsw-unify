@@ -243,7 +243,7 @@ export default function DeployModal({ open, onOpenChange }) {
           onOpenChange={setIsOpenModelSource}
         >
           <SelectTrigger
-            className={`!h-12 w-full border text-sm cursor-pointer ${
+            className={`!h-12 w-full border text-xs cursor-pointer ${
               isOpenModelSource ? "[&>svg]:rotate-180" : ""
             } ${errors.modelSource ? "border-red-500" : "border-border-color-0"}`}
           >
@@ -271,7 +271,7 @@ export default function DeployModal({ open, onOpenChange }) {
           value={modelPath}
           onChange={(e) => setModelPath(e.target.value)}
           placeholder="e.g., mistralai/Mistral-7B-Instruct-v0.2"
-          className={`h-12 text-sm ${
+          className={`h-12 text-xs ${
             errors.modelPath ? "border-red-500" : "border border-border-color-0"
           }`}
         />
@@ -287,7 +287,7 @@ export default function DeployModal({ open, onOpenChange }) {
           onOpenChange={setIsOpenDeploymentTarget}
         >
           <SelectTrigger
-            className={`!h-12 w-full border text-sm cursor-pointer ${
+            className={`!h-12 w-full border text-xs cursor-pointer ${
               isOpenDeploymentTarget ? "[&>svg]:rotate-180" : ""
             } ${errors.deploymentTarget ? "border-red-500" : "border-border-color-0"}`}
           >
@@ -312,7 +312,7 @@ export default function DeployModal({ open, onOpenChange }) {
           onOpenChange={setIsOpenGpuConfig}
         >
           <SelectTrigger
-            className={`!h-12 w-full border text-sm cursor-pointer ${
+            className={`!h-12 w-full border text-xs cursor-pointer ${
               isOpenGpuConfig ? "[&>svg]:rotate-180" : ""
             } ${errors.gpuConfig ? "border-red-500" : "border-border-color-0"}`}
           >
@@ -335,7 +335,7 @@ export default function DeployModal({ open, onOpenChange }) {
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value)}
           placeholder="e.g., Mistral 7B Production"
-          className={`h-12 text-sm ${
+          className={`h-12 text-xs ${
             errors.displayName ? "border-red-500" : "border border-border-color-0"
           }`}
         />
@@ -349,7 +349,7 @@ export default function DeployModal({ open, onOpenChange }) {
           value={selfHostedDescription}
           onChange={(e) => setSelfHostedDescription(e.target.value)}
           placeholder="Describe the use case for this model"
-          className="border border-border-color-0 text-sm placeholder:text-sm !h-11"
+          className="border border-border-color-0 text-sm placeholder:text-xs !h-11"
         />
       </div>
     </motion.div>

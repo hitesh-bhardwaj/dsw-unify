@@ -166,7 +166,7 @@ export default function AddTestings({ open, onOpenChange }) {
                 variant="outline"
                 className="border-foreground/40 text-foreground/80 px-6"
                 onClick={() => onOpenChange(false)}
-                disabled={!isFormValid}
+                // disabled={!isFormValid}
               >
                 Cancel
               </Button>

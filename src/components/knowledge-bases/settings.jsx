@@ -20,7 +20,7 @@ const Settings = () => {
   const [isOpenFormat, setIsOpenFormat] = useState(false);
   return (
     <>
-      <div className="space-y-4 border rounded-3xl p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
+      <div className="space-y-4 border rounded-3xl bg-white p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
         <h3 className="text-xl font-medium mb-2">Settings</h3>
         <div className="space-y-2 mt-4">
           <label className="text-sm text-[#111111] dark:text-foreground">
@@ -44,7 +44,7 @@ const Settings = () => {
             value={systemPrompt}
             onChange={(e) => setSystemPrompt(e.target.value)}
             placeholder="Internal company policies and procedures"
-            className="min-h-[120px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-background text-foreground placeholder:text-foreground/80 dark:!bg-card"
+            className="min-h-[120px] mt-2 resize-none border-border-color-0 !text-xs p-4 !bg-white text-foreground placeholder:text-foreground/80 dark:!bg-card"
           />
           
         </div>

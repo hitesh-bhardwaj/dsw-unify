@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { AiGenerator, Bin, EditIcon } from "@/components/Icons";
+import { AiGenerator, Bin, EditIcon  } from "@/components/Icons";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
@@ -23,6 +23,28 @@ export default function PromptDetailPage({ params }) {
   const [promptData, setPromptData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editablePrompt, setEditablePrompt] = useState(null);
+
+  useEffect(() => {
+    if (promptData) {
+      setEditablePrompt({
+        name: title ?? "Customer Support Assistant",
+        description:
+          promptData.description ??
+          "You are a helpful and empathetic customer service representative...",
+        category: promptData.category ?? "Customer Service",
+        tags: promptData.tags ?? [
+          "Customer-service",
+          "empathy",
+          "problem-solving",
+        ],
+        content:
+          promptData.content ??
+          "You are a helpful and empathetic customer service representative...",
+      });
+    }
+  }, [promptData]);
 
   // Fetch prompt data on mount
   useEffect(() => {
@@ -66,14 +88,26 @@ export default function PromptDetailPage({ params }) {
       value: "content",
       label: "Content",
       name: "Content",
-      render: () => <PromptContentGrid />,
+      render: () => (
+        <PromptContentGrid
+          value={editablePrompt?.content}
+          isEditing={isEditing}
+          onChange={(val) => setEditablePrompt((p) => ({ ...p, content: val }))}
+        />
+      ),
     },
     {
       id: "metadata",
       value: "metadata",
       label: "Metadata",
       name: "Metadata",
-      render: () => <PromptMetadataGrid />,
+      render: () => (
+        <PromptMetadataGrid
+          data={editablePrompt}
+          isEditing={isEditing}
+          onChange={setEditablePrompt}
+        />
+      ),
     },
     {
       id: "usage",
@@ -113,7 +147,9 @@ export default function PromptDetailPage({ params }) {
                   {isLoading ? "Loading..." : title}
                 </h1>
                 <p className="text-sm text-gray-600  dark:text-foreground">
-                  {isLoading ? "Loading description..." : description}
+                  {isLoading
+                    ? "Helpful and empathetic customer service responses"
+                    : description}
                 </p>
               </div>
             </div>
@@ -133,11 +169,15 @@ export default function PromptDetailPage({ params }) {
 
               <Link href={`#`}>
                 <RippleButton>
-                  <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
+                  <Button
+                    onClick={() => setIsEditing((prev) => !prev)}
+                    className="bg-primary hover:bg-[#E64A19] text-white gap-2"
+                  >
                     <div className="!w-4">
                       <EditIcon className={"text-white"} />
                     </div>
-                    Edit
+
+                    {isEditing ? "Save" : "Edit"}
                   </Button>
                 </RippleButton>
               </Link>
