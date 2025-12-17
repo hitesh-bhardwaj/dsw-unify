@@ -149,7 +149,7 @@ export function GuardrailsCustomCard({
       >
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-transparent !py-5 h-full flex justify-between"
+            "feature-card-hover-container overflow-hidden group hover:shadow-xl cursor-pointer transition-all duration-300 bg-white border border-border-color-0 hover:border-transparent !py-5 h-full flex justify-between"
           )}
         >
           <CardHeader>

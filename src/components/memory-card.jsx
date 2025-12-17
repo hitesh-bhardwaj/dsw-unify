@@ -60,7 +60,7 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500, view }) {
       <Link href={`/agent-studio/memories/${id}`} className="block h-full">
         <Card
           className={cn(
-            "feature-card-hover-container group overflow-hidden cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:drop-shadow-xl hover:border-transparent  py-5 h-full gap-2"
+            "feature-card-hover-container group overflow-hidden cursor-pointer transition-all duration-300 bg-white border border-border-color-0 hover:drop-shadow-xl hover:border-transparent  py-5 h-full gap-2"
           )}
         >
           <CardHeader>
@@ -124,7 +124,7 @@ export function MemoryCard({ memories, index, minSkeletonMs = 500, view }) {
             </div>
 
             {/* Stats */}
-            <div className={`flex items-center  rounded-lg p-4 py-6 text-sm bg-white/10 dark:bg-card dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${view==='list'? 'justify-between': 'justify-center gap-20'}`}>
+            <div className={`flex items-center  rounded-lg p-4 py-6 text-sm bg-white/10 dark:bg-card dark:group-hover:bg-white/10 border border-border-color-2 group-hover:border-white/60 transition-all ${view==='list'? 'justify-between': 'justify-between px-4'}`}>
               <div className="flex flex-col gap-1">
                 <p className="text-sm font-medium group-hover:text-white  ">
                   {entries}

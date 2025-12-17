@@ -62,7 +62,7 @@ export function LLMCard({ llm, index, minSkeletonMs = 500, view }) {
       <Link href={`/agent-studio/llms/${id}`} className="block  h-full">
         <Card
           className={cn(
-            "feature-card-hover-container overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-white/20 py-5",
+            "feature-card-hover-container  overflow-hidden group hover:shadow-md cursor-pointer transition-all duration-300 bg-white border border-border-color-0 hover:border-transparent py-5",
             isList && "!gap-0"
           )}
         >
