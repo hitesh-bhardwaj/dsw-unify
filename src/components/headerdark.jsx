@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+// import { Moon, Sun } from "lucide-react";
 import { ThemeToggler } from "@/components/animate-ui/primitives/effects/theme-toggler";
+import { Moon, Sun } from "./Icons";
 
 /**
  * A button component that toggles the application's theme between light and dark modes.

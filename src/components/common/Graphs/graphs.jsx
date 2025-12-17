@@ -194,8 +194,8 @@ export const DoubleAreaChart = ({
           cursor={{ strokeDasharray: "4 6", stroke: "#94a3b8", fill:"transparent" }}
           labelFormatter={xAxisTickFormatter}
           contentStyle={{
-            backgroundColor: "rgba(255,255,255,0.95)",
-            border: "1px solid #e2e8f0",
+            backgroundColor: "var(--background)",
+            border: "1px solid var(--border-color-0)",
             borderRadius: "10px",
             boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)",
           }}
@@ -320,8 +320,8 @@ export const SingleAreaChart = ({
          cursor={{ fill: "transparent" }}
           labelFormatter={xAxisTickFormatter}
           contentStyle={{
-            backgroundColor: "#fff",
-            border: "1px solid #e2e8f0",
+            backgroundColor: "var(--background)",
+            border: "1px solid var(--border-color-0)",
             borderRadius: "8px",
             boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
           }}
@@ -425,8 +425,8 @@ export const CustomLineChart = ({
          cursor={{ fill: "transparent" }}
           labelFormatter={xAxisTickFormatter}
           contentStyle={{
-            backgroundColor: "#fff",
-            border: "1px solid #e2e8f0",
+            backgroundColor: "var(--background)",
+            border: "1px solid var(--border-color-0)",
             borderRadius: "8px",
             boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
           }}
@@ -686,8 +686,8 @@ export const CustomBarChart = ({
         <Tooltip
           cursor={{ fill: "transparent" }}
           contentStyle={{
-            backgroundColor: "#fff",
-            border: "1px solid #e2e8f0",
+            backgroundColor: "var(--background)",
+            border: "1px solid var(--border-color-0)",
             borderRadius: "8px",
             boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
           }}
@@ -745,7 +745,7 @@ export const CustomPieChart = ({
   // ✅ add these
   cornerRadius = 50,              // rounded arc edges
   labelPlacement = "inside",      // "inside" | "outside"
-  labelTextColor = "#111111",
+  labelTextColor = "var(--foreground)", // label text color
 }) => {
   const renderInsideLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value }) => {
     const RADIAN = Math.PI / 180;

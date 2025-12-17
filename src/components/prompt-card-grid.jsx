@@ -41,7 +41,7 @@ const PromptCardGrid = () => {
           />
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-medium text-[#111111] dark:text-foreground">
+          <label className="text-sm font-medium text-foreground dark:text-foreground">
             Generate or Enhance Prompt
           </label>
           <div className="flex gap-2 mt-2">
@@ -58,7 +58,7 @@ const PromptCardGrid = () => {
               </Button>
             </RippleButton>
           </div>
-          <p className="text-xs text-[#111111] dark:text-foreground">
+          <p className="text-xs text-foreground dark:text-foreground">
             Use natural language to create a new prompt or enhance the existing
             one
           </p>

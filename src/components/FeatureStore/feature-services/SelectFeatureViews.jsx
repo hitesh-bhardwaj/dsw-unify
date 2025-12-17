@@ -220,7 +220,7 @@ const SelectFeatureViews = ({ goBack, isLastStep }) => {
               key={index}
               onClick={() => toggleService(card)}
               className={cn(
-                "h-full transition-all duration-300 group py-4  rounded-md",
+                "h-full transition-all duration-300 group py-4  rounded-md dark:bg-background",
                 "cursor-pointer hover:border-primary",
                 isServiceSelected(card) && "border-primary"
               )}
@@ -256,7 +256,7 @@ const SelectFeatureViews = ({ goBack, isLastStep }) => {
 
           <Card
             className={cn(
-              "h-full transition-all duration-300 group py-4 rounded-md"
+              "h-full transition-all duration-300 group py-4 rounded-md dark:bg-background"
             )}
           >
             <CardHeader className=" flex flex-col gap-4 items-start">

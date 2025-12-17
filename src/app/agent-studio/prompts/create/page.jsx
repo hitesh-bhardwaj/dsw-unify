@@ -133,7 +133,7 @@ export default function CreatePromptPage() {
             <CardContent>
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <label className="text-sm font-medium text-[#111111]">
+                  <label className="text-sm font-medium text-foreground">
                     Prompt Name
                   </label>
                   <Input
@@ -144,7 +144,7 @@ export default function CreatePromptPage() {
                   />
                 </div>
                 <div className="space-y-4">
-                  <label className="text-sm font-medium text-[#111111]">
+                  <label className="text-sm font-medium text-foreground">
                     Description
                   </label>
                   <Input
@@ -258,7 +258,7 @@ export default function CreatePromptPage() {
 
                     {/* Generate or Enhance Prompt */}
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-[#111111]">
+                      <label className="text-sm font-medium text-foreground">
                         Generate or Enhance Prompt
                       </label>
                       <div className="flex gap-2 mt-2">
@@ -273,7 +273,7 @@ export default function CreatePromptPage() {
                           Generate
                         </Button>
                       </div>
-                      <p className="text-xs text-[#111111]">
+                      <p className="text-xs text-foreground">
                         Use natural language to create a new prompt or enhance
                         the existing one
                       </p>

@@ -29,7 +29,7 @@ const InferenceGrid = () => {
          Send test requests to your deployed models
         </p>
         <div className="space-y-2">
-          <label className="text-xs text-[#111111] dark:text-foreground">
+          <label className="text-xs text-foreground dark:text-foreground">
             Model
           </label>
           <div className="flex gap-2 mt-2">
@@ -43,7 +43,7 @@ const InferenceGrid = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="text-xs text-[#111111] dark:text-foreground">
+          <label className="text-xs text-foreground dark:text-foreground">
            Temperature
           </label>
           <div className="flex gap-2 mt-2">
@@ -57,7 +57,7 @@ const InferenceGrid = () => {
         </div>
         
         <div className="space-y-2 mb-4">
-             <label className="text-xs text-[#111111] dark:text-foreground">
+             <label className="text-xs text-foreground dark:text-foreground">
           Message
           </label>
           <Textarea

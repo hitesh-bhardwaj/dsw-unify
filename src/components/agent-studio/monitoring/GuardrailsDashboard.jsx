@@ -101,7 +101,7 @@ const GuardrailsDashboard = ({ agentId }) => {
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-5">
               <div className="text-sm">Avg Guardrail Latency</div>
-              <div className="text-4xl font-bold text-[#111111] dark:text-foreground">
+              <div className="text-4xl font-bold text-foreground dark:text-foreground">
                 {(metrics.avgLatency || 0).toFixed(3)}s
               </div>
               <p className="text-sm text-foreground">

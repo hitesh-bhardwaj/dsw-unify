@@ -116,7 +116,7 @@ const ModelGrid = () => {
         </div>
 
         <div>
-          <label className="text-sm text-[#111111] dark:text-foreground">
+          <label className="text-sm text-foreground dark:text-foreground">
             Max Tokens
           </label>
           <Input readOnly placeholder="2048" className="h-11 mt-2" />

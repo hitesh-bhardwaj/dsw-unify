@@ -31,7 +31,7 @@ export default function Details() {
 
   return (
     <>
-      <div className="w-full  grid grid-cols-1 md:grid-cols-2 gap-8 py-6">
+      <div className="w-full  grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Feature List */}
         <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4 dark:bg-card">
           <h2 className="text-xl font-medium mb-4">Feature List</h2>
@@ -49,7 +49,7 @@ export default function Details() {
         </div>
 
         {/* Model Configuration */}
-        <div className="border border-border-color-0 rounded-2xl px-5 py-6 space-y-6">
+        <div className="border border-border-color-0 rounded-2xl px-5 py-6 space-y-6 dark:bg-card">
           <h2 className="text-xl font-medium ">Model Configuration</h2>
 
           <div>
@@ -87,7 +87,7 @@ export default function Details() {
           {metrics.map((m, i) => (
             <div
               key={i}
-              className="border border-border-color-0 flex flex-col gap-7  rounded-2xl px-4 py-4 !w-full bg-background"
+              className="border border-border-color-0 flex flex-col gap-7  rounded-2xl px-4 py-4 !w-full bg-background dark:bg-card"
             >
               <p className="text-sm text-foreground mb-2">{m.label}</p>
               <p className="text-2xl font-medium text-badge-green">

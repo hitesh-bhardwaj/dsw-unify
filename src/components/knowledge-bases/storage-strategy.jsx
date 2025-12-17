@@ -175,7 +175,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
               </CardHeader>
 
               <div className="space-y-1">
-                <p className="text-sm text-[#111111] dark:text-foreground font-medium">
+                <p className="text-sm text-foreground dark:text-foreground font-medium">
                   Chunking Strategy
                 </p>
                 <p className="text-xs">

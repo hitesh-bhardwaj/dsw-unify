@@ -214,7 +214,7 @@ export default function CreateAgentPage() {
               <CardContent>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <label className="text-sm font-medium text-[#111111] dark:text-foreground ">
+                    <label className="text-sm font-medium text-foreground dark:text-foreground ">
                       Agent Name
                     </label>
                     <Input
@@ -225,7 +225,7 @@ export default function CreateAgentPage() {
                     />
                   </div>
                   <div className="space-y-4">
-                    <label className="text-sm font-medium text-[#111111] dark:text-foreground">
+                    <label className="text-sm font-medium text-foreground dark:text-foreground">
                       Description
                     </label>
                     <Input

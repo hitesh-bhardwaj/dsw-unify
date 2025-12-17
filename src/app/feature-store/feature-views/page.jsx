@@ -25,7 +25,7 @@ const Features = [
     featureNo: "18",
     lastUpdated: "2 days Ago",
     tablesCount: "2",
-    createdAt: '2025-11-18',
+    createdAt: "2025-11-18",
     variant: "light",
   },
   {
@@ -38,7 +38,7 @@ const Features = [
     featureNo: "24",
     lastUpdated: "5 hours ago",
     tablesCount: "3",
-    createdAt: '2025-11-18',
+    createdAt: "2025-11-18",
 
     variant: "light",
   },
@@ -52,7 +52,7 @@ const Features = [
     featureNo: "16",
     tablesCount: "2",
     lastUpdated: "1 day ago",
-    createdAt: '2025-11-18',
+    createdAt: "2025-11-18",
 
     variant: "light",
   },
@@ -66,7 +66,7 @@ const Features = [
     featureNo: "14",
     tablesCount: "2",
     lastUpdated: "3 Days Ago",
-    createdAt: '2025-11-18',
+    createdAt: "2025-11-18",
 
     variant: "light",
   },
@@ -80,7 +80,7 @@ const Features = [
     featureNo: "20",
     tablesCount: "3",
     lastUpdated: "1 week ago",
-    createdAt: '2025-11-18',
+    createdAt: "2025-11-18",
     variant: "light",
   },
   {
@@ -93,7 +93,7 @@ const Features = [
     featureNo: "22",
     tablesCount: "4",
     lastUpdated: "4 days ago",
-    createdAt: '2025-11-18',
+    createdAt: "2025-11-18",
     variant: "light",
   },
   {
@@ -106,7 +106,7 @@ const Features = [
     featureNo: "12",
     tablesCount: "2",
     lastUpdated: "6 hours ago",
-    createdAt: '2025-11-18',
+    createdAt: "2025-11-18",
     variant: "light",
   },
 ];
@@ -117,9 +117,7 @@ const stats = [
   { title: "Total Tables", value: 18 },
 ];
 
-
 const page = () => {
-
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -133,9 +131,8 @@ const page = () => {
   const [error, setError] = useState(null);
 
   const handleDeleteView = (id) => {
-  setFeatureViews((prev) => prev.filter((v) => v.id !== id));
-};
-
+    setFeatureViews((prev) => prev.filter((v) => v.id !== id));
+  };
 
   // Fetch feature views and stats
   useEffect(() => {
@@ -151,7 +148,10 @@ const page = () => {
 
         setFeatureViews(viewsData);
         setStatsData([
-          { title: "Total Feature Views", value: statsResponse.totalFeatureViews },
+          {
+            title: "Total Feature Views",
+            value: statsResponse.totalFeatureViews,
+          },
           { title: "Total Features", value: statsResponse.totalFeatures },
           { title: "Total Tables", value: statsResponse.totalTables },
         ]);
@@ -175,7 +175,9 @@ const page = () => {
   }, [featureViews]);
 
   let filteredFeatures = featureViews.filter((feature) => {
-    const matchesSearch = feature.name.toLowerCase().includes(query.toLowerCase());
+    const matchesSearch = feature.name
+      .toLowerCase()
+      .includes(query.toLowerCase());
     const matchesTags =
       selectedTags.length === 0 ||
       selectedTags.some((tag) => feature.tags?.includes(tag));
@@ -194,7 +196,6 @@ const page = () => {
     );
   }
 
-
   return (
     <>
       <div className="flex flex-col h-full w-full overflow-hidden">
@@ -212,7 +213,10 @@ const page = () => {
 
               <Link href="#">
                 <RippleButton>
-                  <Button onClick={() => setIsModalOpen(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                  <Button
+                    onClick={() => setIsModalOpen(true)}
+                    className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                  >
                     <PlusIcon />
                     Create Feature View
                   </Button>
@@ -221,31 +225,29 @@ const page = () => {
             </div>
 
             <div className="w-full  flex items-center justify-between gap-4">
-              {isLoading ? (
-                Array.from({ length: 3 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
-                  >
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
-                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                  </div>
-                ))
-              ) : (
-                statsData.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
-                  >
-                    <span className="text-sm text-foreground/80">
-                      {item.title}
-                    </span>
-                    <span className="text-4xl font-medium mt-2">
-                      <CountUp value={item.value} startOnView/>
-                    </span>
-                  </div>
-                ))
-              )}
+              {isLoading
+                ? Array.from({ length: 3 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
+                    >
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                    </div>
+                  ))
+                : statsData.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                    >
+                      <span className="text-sm text-foreground/80">
+                        {item.title}
+                      </span>
+                      <span className="text-4xl font-medium mt-2">
+                        <CountUp value={item.value} startOnView />
+                      </span>
+                    </div>
+                  ))}
             </div>
             <div className="flex gap-2">
               <div className="relative flex-1">
@@ -270,71 +272,72 @@ const page = () => {
               />
             </div>
 
-          {/* Error State */}
-          {error && (
-            <div className="p-4 text-center text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
-              <p className="font-medium">Failed to load feature views</p>
-              <p className="text-sm mt-2">{error}</p>
-            </div>
-          )}
+            {/* Error State */}
+            {error && (
+              <div className="p-4 text-center text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                <p className="font-medium">Failed to load feature views</p>
+                <p className="text-sm mt-2">{error}</p>
+              </div>
+            )}
 
-          {/* Loading State */}
-          {isLoading && !error && (
-            <div className={`items-stretch ${
-              view === "grid"
-                ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                : "flex flex-col gap-5"
-            }`}>
-              {Array.from({ length: 6 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="border border-border-color-0 rounded-lg p-6 animate-pulse"
-                >
-                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Content */}
-          {!isLoading && !error && (
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={view}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`items-stretch ${view === "grid"
-                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "
+            {/* Loading State */}
+            {isLoading && !error && (
+              <div
+                className={`items-stretch ${
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
                     : "flex flex-col gap-5"
-                  }`}
+                }`}
               >
-                {filteredFeatures.map((feature, index) => (
-                  <ViewCard key={feature.id} view={view} feature={feature} index={index}  setEditModalOpen={setIsModalOpen}   onDelete={handleDeleteView}
- />
-                ))}
-                {filteredFeatures.length === 0 && (
-                  <div className="flex h-64 items-center justify-center text-gray-500">
-                    
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="border border-border-color-0 rounded-lg p-6 animate-pulse"
+                  >
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
                   </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          )}
+                ))}
+              </div>
+            )}
+
+            {/* Content */}
+            {!isLoading && !error && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`items-stretch ${
+                    view === "grid"
+                      ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 "
+                      : "flex flex-col gap-5"
+                  }`}
+                >
+                  {filteredFeatures.map((feature, index) => (
+                    <ViewCard
+                      key={feature.id}
+                      view={view}
+                      feature={feature}
+                      index={index}
+                      setEditModalOpen={setIsModalOpen}
+                      onDelete={handleDeleteView}
+                    />
+                  ))}
+                  {filteredFeatures.length === 0 && (
+                    <div className="flex h-64 items-center justify-center text-gray-500"></div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            )}
           </div>
         </ScaleDown>
-        
       </div>
 
-      <ViewsModal
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
-      />
-
-
+      <ViewsModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </>
   );
 };

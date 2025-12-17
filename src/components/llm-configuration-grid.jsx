@@ -175,7 +175,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
           </CardHeader>
 
           <div>
-            <label className="text-sm text-[#111111] dark:text-foreground">
+            <label className="text-sm text-foreground dark:text-foreground">
               API key
             </label>
             <Input readOnly placeholder="123456789" className="h-11 mt-2" />
@@ -199,7 +199,7 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
 
                 
           <div>
-            <label className="text-sm text-[#111111] dark:text-foreground">
+            <label className="text-sm text-foreground dark:text-foreground">
               Max Tokens
             </label>
             <Input readOnly placeholder="4096" className="h-11 mt-2" />

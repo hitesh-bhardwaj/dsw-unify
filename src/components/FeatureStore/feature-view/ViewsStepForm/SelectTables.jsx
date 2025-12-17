@@ -46,7 +46,7 @@ export default function SelectTables({ goNext, goBack }) {
                 ${
                   isSelected
                     ? "border-sidebar-primary "
-                    : "border-border-color-0 bg-white dark:bg-sidebar-accent"
+                    : "border-border-color-0 bg-white dark:bg-background"
                 }`}
             >
               <div className="flex items-center gap-2">

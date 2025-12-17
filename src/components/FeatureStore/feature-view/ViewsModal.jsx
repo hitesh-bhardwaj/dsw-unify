@@ -140,7 +140,7 @@ export default function ViewsModal({ open, onOpenChange, onSelect }) {
                       key={item.id}
                       onClick={() => handleSelect(item.id)}
                       className={cn(
-                        "feature-card-hover-container hover:text-white cursor-pointer p-8 group rounded-3xl border border-border-color-0 hover:bg-sidebar-accent duration-500 transition-all flex items-center justify-center flex-col text-center space-y-4"
+                        "feature-card-hover-container hover:text-white cursor-pointer p-8 group rounded-3xl border border-border-color-0 hover:bg-sidebar-accent duration-500 transition-all flex items-center justify-center flex-col text-center space-y-4 dark:bg-card"
                       )}
                     >
                       <div className="pb-2  group-hover:text-white duration-300 transition-all">

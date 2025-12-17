@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "./ui/separator";
 import { NavUser } from "./nav-user";
-import { FAQIcons, HomeIcon, NotificationsIcon } from "./Icons";
+import { BellIcon, FAQIcons, HomeIcon, NotificationsIcon } from "./Icons";
 import { ThemeTogglerBtn } from "./headerdark";
 import Breadcrumbs from "./common/Breadcrumbs";
 import { GlobalSearch } from "./global-search";
@@ -67,7 +67,7 @@ export function Header({ title = "Agents" }) {
           className="text-foreground hover:text-foreground !cursor-pointer hover:bg-sidebar-accent duration-300 p-2 rounded-md"
         >
           {/* <NotificationsIcon className="!h-5 !w-auto" /> */}
-          <Bell  className="!h-5 !w-auto"/>
+          <BellIcon  className="!h-5 !w-auto"/>
         </Button>
 
         {/* Help */}

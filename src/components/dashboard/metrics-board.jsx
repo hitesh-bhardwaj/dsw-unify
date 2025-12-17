@@ -170,7 +170,7 @@ export function MetricsBoard({ metricsData, view, setView, isLoading = false }) 
           <div className="space-x-1 flex items-center gap-1">
 
             <Link href={"#"} onClick={() => setIsModalOpen(true)} className="border border-border-color-0 rounded-md py-1.5 p-1.5 flex items-center gap-3 text-sm">
-              <div className="h-5 w-5 text-[#111111] dark:text-white">
+              <div className="h-5 w-5 text-foreground">
                 <Eye />
               </div>
               Manage Cards
@@ -219,17 +219,17 @@ export function MetricsBoard({ metricsData, view, setView, isLoading = false }) 
               {showLeft && (
                 <button
                   onClick={() => handleScrollClick("left")}
-                  className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black shadow-lg hover:bg-neutral-900 transition-colors flex items-center justify-center dark:bg-white"
+                  className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black shadow-lg hover:bg-neutral-900 transition-colors flex items-center justify-center dark:bg-sidebar-accent dark:border dark:border-border-color-0"
                 >
-                  <ChevronLeft className="w-6 h-6 text-white dark:text-black" />
+                  <ChevronLeft className="w-6 h-6 text-white -ml-0.5" />
                 </button>
               )}
               {showRight && (
                 <button
                   onClick={() => handleScrollClick("right")}
-                  className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black flex items-center justify-center dark:bg-white"
+                  className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black flex items-center justify-center dark:bg-sidebar-accent dark:border dark:border-border-color-0"
                 >
-                  <ChevronRight className="w-6 h-6 text-white dark:text-black" />
+                  <ChevronRight className="w-6 h-6 text-white ml-0.5" />
                 </button>
               )}
 

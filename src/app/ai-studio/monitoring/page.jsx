@@ -131,7 +131,7 @@ const page = () => {
 
           {/* Conditional Rendering Section */}
           {!allSelected ? (
-            <div className="flex justify-center items-center bg-sidebar-accent h-40 rounded-lg border border-border-color-0">
+            <div className="flex justify-center items-center bg-sidebar-accent h-40 rounded-lg border border-border-color-0 dark:bg-card">
               <p className="text-xs text-foreground/80">
                 Select a use case, model, and version to view monitoring data
               </p>

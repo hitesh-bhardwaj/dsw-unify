@@ -66,7 +66,7 @@ export function ManageCardsModal({ open, onOpenChange, metricsData, cardVisibili
             {/* All Cards Option */}
             <Card
               className={cn(
-                "h-full transition-all duration-300 group py-1 border-0 bg-background",
+                "h-full transition-all duration-300 group py-1 border-0 bg-background dark:bg-background",
                 "cursor-pointer"
               )}
             >
@@ -92,7 +92,7 @@ export function ManageCardsModal({ open, onOpenChange, metricsData, cardVisibili
               <Card
                 key={index}
                 className={cn(
-                  "h-full transition-all duration-300 group py-1 border-0 bg-background",
+                  "h-full transition-all duration-300 group py-1 border-0 bg-background dark:bg-background",
                   "cursor-pointer"
                 )}
               >

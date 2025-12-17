@@ -150,7 +150,7 @@ const PipelineNode = ({ title, subtitle, details, index }) => {
 >
                 <RelationalVectorDataIcon className="w-7 h-7"/>
               </div>
-              <span className="text-xs border px-3 py-1 rounded-full text-gray-700">
+              <span className="text-xs border px-3 py-1 rounded-full text-forground/60">
                 {subtitle}
               </span>
             </div>

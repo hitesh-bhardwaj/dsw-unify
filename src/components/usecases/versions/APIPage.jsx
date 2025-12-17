@@ -176,8 +176,8 @@ public class APIPredict {
       {/* ---------------------------------------------------------------------- */}
       {/* API DOCUMENTATION */}
       {/* ---------------------------------------------------------------------- */}
-      <div className="w-full gap-8 py-6">
-        <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4">
+      <div className="w-full gap-8">
+        <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4 dark:bg-card">
           <div className="space-y-1">
             <h2 className="text-xl font-medium">API Documentation</h2>
             <p className="text-sm text-foreground/80">
@@ -188,18 +188,18 @@ public class APIPredict {
 
           {/* Endpoint */}
           <div className="space-y-4">
-            <label className="text-lg font-medium text-[#111111]">
+            <label className="text-lg font-medium text-foreground">
               Endpoint URL
             </label>
             <Input
               placeholder={endpointUrl}
-              className="h-11 border-[#AAAAAA] mt-2"
+              className="h-11 border-border-color-0 mt-2"
             />
           </div>
 
           {/* Authentication */}
           <div className="space-y-1 pt-4">
-            <label className="text-lg font-medium text-[#111111]">
+            <label className="text-lg font-medium text-foreground">
               Authentication
             </label>
             <p className="text-sm text-foreground/80 pt-2">
@@ -207,13 +207,13 @@ public class APIPredict {
             </p>
             <Input
               placeholder="Authorization: Bearer YOUR_API_KEY"
-              className="h-11 border-[#AAAAAA] mt-2"
+              className="h-11 border-border-color-0 mt-2"
             />
           </div>
 
           {/* Request Format */}
           <div className="pt-6">
-            <label className="text-lg font-medium text-[#111111]">
+            <label className="text-lg font-medium text-foreground">
               Request Format
             </label>
 
@@ -224,7 +224,7 @@ public class APIPredict {
 
           {/* Response Format */}
           <div className="pt-6 space-y-3">
-            <label className="text-lg font-medium text-[#111111]">
+            <label className="text-lg font-medium text-foreground">
               Response Format
             </label>
 
@@ -245,7 +245,7 @@ public class APIPredict {
             <h3 className="text-lg font-medium">Rate Limits</h3>
 
             <div className="flex justify-between gap-4  mt-4 min-h-32">
-              <div className="border border-border-color-0 w-full rounded-xl  p-4 bg-background  text-left flex flex-col justify-between">
+              <div className="border border-border-color-0 w-full rounded-xl  p-4 bg-background  text-left flex flex-col justify-between dark:bg-card">
                 <p className="text-sm text-foreground/80">
                   Requests per minute
                 </p>
@@ -255,7 +255,7 @@ public class APIPredict {
                   </p>
               </div>
 
-              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
+              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left dark:bg-card">
                 <p className="text-sm text-foreground/80">Requests per day</p>
                 <p className="text-4xl font-medium mt-1">                      <CountUp value='1000' duration={1.2} startOnView once />
 
@@ -263,7 +263,7 @@ public class APIPredict {
                 </p>
               </div>
 
-              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left">
+              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left dark:bg-card">
                 <p className="text-sm text-foreground/80">Average latency</p>
                 <p className="text-4xl font-medium mt-1">                      <CountUp value='100' duration={1.2} startOnView once />
 
@@ -281,7 +281,7 @@ public class APIPredict {
               {errorCodes.map((err, index) => (
                 <div
                   key={index}
-                  className="border border-border-color-0 rounded-xl px-4 py-5 bg-background flex gap-4"
+                  className="border border-border-color-0 rounded-xl px-4 py-5 bg-background flex gap-4 dark:bg-card"
                 >
                   <p className="font-medium text-sm w-12">{err.code}</p>
 

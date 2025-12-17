@@ -23,7 +23,7 @@ const Settings = () => {
       <div className="space-y-4 border rounded-3xl bg-white p-6 border-border-color-0 h-full pb-8 dark:bg-card ">
         <h3 className="text-xl font-medium mb-2">Settings</h3>
         <div className="space-y-2 mt-4">
-          <label className="text-sm text-[#111111] dark:text-foreground">
+          <label className="text-sm text-foreground dark:text-foreground">
             Knowledge Base Name
           </label>
           <div className="flex gap-2 mt-2">
@@ -37,7 +37,7 @@ const Settings = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm text-[#111111] dark:text-foreground">
+          <label className="text-sm text-foreground dark:text-foreground">
           Description
           </label>
           <Textarea

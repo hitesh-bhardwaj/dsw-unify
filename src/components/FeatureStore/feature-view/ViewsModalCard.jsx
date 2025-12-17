@@ -172,7 +172,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-foreground focus-visible:ring-0",
-                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-foreground duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-white/30 group-hover:text-foreground duration-500 ease-out"
                   )}
                 >
                   <CopyButton />
@@ -183,7 +183,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
                    onClick={handleEditClick}
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1",
-                    "hover:bg-sidebar-accent dark:hover:bg-accent duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-white/30 duration-500 ease-out"
                   )}
                 >
                   <Editor />
@@ -193,7 +193,7 @@ export default function ViewsCardModal({ open, onOpenChange, feature, setEditMod
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-red-600",
-                    "hover:bg-sidebar-accent dark:hover:bg-accent group-hover:text-red-600 duration-500 ease-out"
+                    "hover:bg-sidebar-accent dark:hover:bg-white/30 group-hover:text-red-600 duration-500 ease-out"
                   )}
                 >
                   <Bin />

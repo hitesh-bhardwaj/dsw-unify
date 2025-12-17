@@ -93,7 +93,7 @@ export default function InferenceView() {
       <RadioGroup
         value={mode}
         onValueChange={setMode}
-        className="flex items-center justify-between gap-4"
+        className="flex items-center justify-between gap-4 dark:bg-card"
       >
         {/* Single */}
         <div
@@ -148,7 +148,7 @@ export default function InferenceView() {
               <ConfigureBatchInference />
             </div>
 
-            <div className="border rounded-xl p-6 flex flex-col items-start gap-15 justify-start">
+            <div className="border rounded-xl p-6 flex flex-col items-start gap-15 justify-start dark:bg-card">
               <h2 className="text-lg font-medium mb-6">
                 Batch Processing Status
               </h2>
@@ -178,11 +178,11 @@ export default function InferenceView() {
             </div>
 
             {/* ----- Right Section: Prediction Result ----- */}
-            <div className="border rounded-2xl p-6 flex flex-col gap-6">
+            <div className="border rounded-2xl p-6 flex flex-col gap-6 dark:bg-card">
               <h2 className="text-xl font-medium">Prediction Result</h2>
 
               {/* Prediction badge */}
-              <div className="bg-sidebar-accent border rounded-xl p-4 flex flex-col items-center">
+              <div className="bg-sidebar-accent border rounded-xl p-4 flex flex-col items-center dark:bg-card">
                 <span className="text-xs text-foreground/80 mb-2">
                   Prediction
                 </span>
@@ -244,13 +244,13 @@ export default function InferenceView() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="border rounded-xl p-6 flex flex-col gap-6"
+            className="border rounded-xl p-6 flex flex-col gap-6 dark:bg-card"
           >
             <CardDetails data={stats} />
 
             <div className="flex gap-6 ">
               {/* Prediction Distribution Card */}
-              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
+              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0 dark:bg-card">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <h2 className="text-xl font-medium ">
                     Prediction Distribution
@@ -494,7 +494,7 @@ function ConfigureSingleInference() {
   return (
     <div className="flex items-center justify-center">
       <div className="w-full">
-        <div className="border border-border-color-2 rounded-2xl p-8">
+        <div className="border border-border-color-2 rounded-2xl p-8 dark:bg-card">
           <h2 className="text-xl font-medium mb-6">Configure Inference</h2>
 
           {/* Radio Group Toggle */}
@@ -574,7 +574,7 @@ function ConfigureSingleInference() {
 
               {/* Run Inference Button */}
               <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base ">
                   Run Inference
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -590,7 +590,7 @@ function ConfigureSingleInference() {
 
               {/* Run Batch Inference Button */}
               <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
                   Run Inference
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -653,7 +653,7 @@ function ConfigureBatchInference() {
   return (
     <div className="flex items-center justify-center">
       <div className="w-full">
-        <div className="border border-border-color-2 rounded-2xl p-8">
+        <div className="border border-border-color-2 rounded-2xl p-8 dark:bg-card" >
           <h2 className="text-xl font-medium mb-6">Configure Inference</h2>
 
           {/* Radio Group Toggle */}
@@ -734,7 +734,7 @@ function ConfigureBatchInference() {
 
               {/* Run Inference Button */}
               <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
                   Run Batch Inference
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -796,7 +796,7 @@ function ConfigureBatchInference() {
 
               {/* Run Batch Inference Button */}
               <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
+                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base ">
                   Run Batch Inference
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>

@@ -12,7 +12,7 @@ export default function Explainability() {
   ];
 
   return (
-    <div className="border border-border-color-0 rounded-2xl space-y-8 py-6 pb-8 px-8">
+    <div className="border border-border-color-0 rounded-2xl space-y-8 py-6 pb-8 px-8 dark:bg-card">
 
         <h2 className="text-xl font-medium">Feature Importance</h2>
 
@@ -35,7 +35,7 @@ export default function Explainability() {
             animateOnMount
             playKey={item.value} 
             className="w-full"
-            trackClassName="w-full bg-gray-200 h-2 rounded-full relative overflow-hidden"
+            trackClassName="w-full bg-gray-200 h-2 rounded-full relative overflow-hidden dark:bg-sidebar-accent"
             barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
           />
         </div>
