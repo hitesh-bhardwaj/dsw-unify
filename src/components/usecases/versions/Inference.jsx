@@ -22,6 +22,7 @@ import { UploadFile } from "@/components/Icons";
 import CardDetails from "@/components/CardDetails";
 import CountUp from "@/components/animations/CountUp";
 import { ArrowRight } from "lucide-react";
+import { CustomBarChart, CustomPieChart } from "@/components/common/Graphs/graphs";
 export default function Inference() {
   const [mode, setMode] = useState("single");
 
@@ -41,50 +42,29 @@ export default function Inference() {
   ];
 
   const chartData = [
-    { name: "Mon", noFraud: 80, fraud: 20 },
-    { name: "Tue", noFraud: 65, fraud: 28 },
-    { name: "Wed", noFraud: 78, fraud: 34 },
-    { name: "Thu", noFraud: 72, fraud: 22 },
-    { name: "Fri", noFraud: 90, fraud: 30 },
+    { name: "Jan 8", noFraud: 200, fraud: 45 },
+    { name: "Jan 9", noFraud: 185, fraud: 52 },
+    { name: "Jan 10", noFraud: 190, fraud: 55 },
+    { name: "Jan 11", noFraud: 170, fraud: 38 },
+    { name: "Jan 12", noFraud: 202, fraud: 62 },
+    { name: "Jan 13", noFraud: 190, fraud: 42 },
+    { name: "Jan 14", noFraud: 210, fraud: 55 },
   ];
 
   const chartData2 = [
-    { range: "0.9–1.0", score: 50 },
-    { range: "0.8–0.9", score: 35 },
-    { range: "0.7–0.8", score: 25 },
-    { range: "0.6–0.7", score: 15 },
-    { range: "0.5–0.6", score: 7 },
+    { range: "90-100%", score: 80 },
+    { range: "80-90%", score: 50 },
+    { range: "70-80%", score: 35 },
+    { range: "60-70%", score: 20 },
+    { range: "<60%", score: 8 },
   ];
 
-  const chartConfig = {
-    desktop: {
-      label: "Value",
-      color: "hsl(var(--chart-1))",
-    },
-  };
-
-  const predictionData = [
-    { day: "Mon", desktop: 80 },
-    { day: "Tue", desktop: 65 },
-    { day: "Wed", desktop: 78 },
-    { day: "Thu", desktop: 72 },
-    { day: "Fri", desktop: 90 },
-  ];
-
-  const fraudData = [
-    { day: "Mon", desktop: 20 },
-    { day: "Tue", desktop: 28 },
-    { day: "Wed", desktop: 34 },
-    { day: "Thu", desktop: 22 },
-    { day: "Fri", desktop: 30 },
-  ];
-
-  const riskData = [
-    { day: "Mon", desktop: 75 },
-    { day: "Tue", desktop: 58 },
-    { day: "Wed", desktop: 70 },
-    { day: "Thu", desktop: 65 },
-    { day: "Fri", desktop: 85 },
+  const riskScoreData = [
+    { range: "0-20%", score: 480 },
+    { range: "20-40%", score: 390 },
+    { range: "40-60%", score: 260 },
+    { range: "60-80%", score: 155 },
+    { range: "80-100%", score: 55 },
   ];
 
   const COLORS = ["#6bc631", "#FF050A", "#22c55e"];
@@ -271,342 +251,251 @@ export default function Inference() {
         )}
 
         {/* INFERENCE INSIGHTS */}
-        {mode === "insights" && (
-          <motion.div
-            key="insights"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="rounded-xl p-6 flex flex-col gap-6"
-          >
-            <CardDetails data={stats} />
-
-            <div className="flex gap-6 ">
-              {/* Prediction Distribution Card */}
-              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
-                <div className="flex items-center justify-between px-6 pt-6 pb-4">
-                  <h2 className="text-xl font-medium ">
-                    Prediction Distribution
-                  </h2>
-                  <span className="text-xs  rounded-full border border-border-color-0 px-3 py-1">
-                    Last 7 days
-                  </span>
-                </div>
-                <div className="flex flex-col px-6 pb-6">
-                  {/* Donut Chart */}
-
-                  <div className="flex justify-center items-center">
-                    <div className="relative w-64 h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={pieData}
-                            dataKey="value"
-                            nameKey="name"
-                            innerRadius={100}
-                            outerRadius={115}
-                            startAngle={90}
-                            endAngle={-270}
-                            cornerRadius={50}
-                            paddingAngle={6}
-                            stroke="none"
-                            labelLine={false}
-                            label={({
-                              cx,
-                              cy,
-                              midAngle,
-                              innerRadius,
-                              outerRadius,
-                              percent,
-                            }) => {
-                              const RADIAN = Math.PI / 180;
-                              const radius =
-                                innerRadius +
-                                (outerRadius - innerRadius) * -1.5;
-                              const x =
-                                cx + radius * Math.cos(-midAngle * RADIAN);
-                              const y =
-                                cy + radius * Math.sin(-midAngle * RADIAN);
-
-                              return (
-                                <text
-                                  x={x}
-                                  y={y}
-                                  fill="#000"
-                                  textAnchor="middle"
-                                  dominantBaseline="central"
-                                  fontSize="12"
-                                  fontWeight="500"
-                                >
-                                  {(percent * 100).toFixed(1)}%
-                                </text>
-                              );
-                            }}
-                          >
-                            {pieData.map((entry, index) => (
-                              <Cell
-                                key={`cell-${index}`}
-                                fill={COLORS[index]}
-                              />
-                            ))}
-                          </Pie>
-                        </PieChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-
-                  {/* Legend */}
-                  <div className="flex flex-col gap-1 mt-8">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                      <span className="text-sm text-foreground/80">Fraud</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-badge-green"></div>
-                      <span className="text-sm text-foreground/80">
-                        No Fraud
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Recent Fraud Cases Card */}
-              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
-                <div className="flex items-center justify-between px-6 pt-6 pb-4">
-                  <h2 className="text-xl font-medium">Recent Fraud Cases</h2>
-                  <span className="text-xs px-3 py-1 rounded-full border border-border-color-0">
-                    8 flagged
-                  </span>
-                </div>
-                <div className="px-6 pb-6">
-                  {/* Table Header */}
-                  <div className="bg-sidebar-accent text-center px-4 py-3 rounded-t-lg border border-border-color-0">
-                    <span className="text-sm font-medium text-foreground/80">
-                      Customer IDs
-                    </span>
-                  </div>
-
-                  {/* Scrollable Table Rows */}
-                  <div className="border-l border-r border-b border-border-color-0 rounded-b-lg overflow-hidden">
-                    <div className="max-h-64 overflow-y-auto">
-                      {customerIds.map((id, index) => (
-                        <div
-                          key={id}
-                          className={`px-4 py-3 flex justify-center items-center ${
-                            index !== customerIds.length - 1
-                              ? "border-b border-border-color-0"
-                              : ""
-                          } hover:bg-sidebar-accent transition-colors`}
-                        >
-                          <span className="text-sm ">{id}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full flex justify-between gap-6 items-center">
-              <div className="border h-[26vw]  w-1/2 border-border-color-0 rounded-2xl p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-xl font-medium text-foreground">
-                    Prediction Trends
-                  </span>
-                  <button className="text-xs px-3 py-1 rounded-full border border-border-color-0 ">
-                    Daily
-                  </button>
-                </div>
-
-                <div className="w-full h-64  bg-sidebar-accent rounded-xl flex items-center justify-center">
-                  <ChartContainer
-                    config={chartConfig}
-                    className="h-full w-full px-6 pt-8"
-                  >
-                    <BarChart
-                      accessibilityLayer
-                      data={chartData}
-                      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                    >
-                      <ChartTooltip
-                        cursor={false}
-                        content={<ChartTooltipContent hideLabel />}
-                      />
-
-                      {/* No Fraud (green) */}
-                      <Bar
-                        dataKey="noFraud"
-                        fill="#7ED957"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-
-                      {/* Fraud (red) */}
-                      <Bar
-                        dataKey="fraud"
-                        fill="#FF1C1C"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-                    </BarChart>
-                  </ChartContainer>
-                </div>
-
-                {/* Legend */}
-                <div className="flex gap-4 mt-4 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                    Fraud
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-badge-green" />
-                    No Fraud
-                  </div>
-                </div>
-              </div>
-
-              {/* ---------------- Risk Score Distribution ---------------- */}
-              <div className="border w-1/2 h-[26vw] border-border-color-0 rounded-2xl p-6  shadow-sm">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-xl font-medium text-foreground">
-                    Risk Score Distribution
-                  </span>
-                  <button className="text-xs px-3 py-1 rounded-full border border-border-color-0 ">
-                    1,000 records
-                  </button>
-                </div>
-
-                <div className="w-full h-64  bg-sidebar-accent rounded-xl flex items-center justify-center">
-                  <ChartContainer
-                    config={chartConfig}
-                    className="h-full w-full px-6 pt-8"
-                  >
-                    <BarChart
-                      accessibilityLayer
-                      data={chartData}
-                      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                    >
-                      <ChartTooltip
-                        cursor={false}
-                        content={<ChartTooltipContent hideLabel />}
-                      />
-
-                      {/* No Fraud (green) */}
-                      <Bar
-                        dataKey="noFraud"
-                        fill="#2563FB"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-
-                      {/* Fraud (red) */}
-                      <Bar
-                        dataKey="fraud"
-                        fill="#A6C0FF"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-                    </BarChart>
-                  </ChartContainer>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full flex justify-between gap-6">
-              <div className="p-5 border w-1/2 h-[28vw] border-border-color-0 rounded-2xl space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-medium">
-                    Top Contributing Features
-                  </h2>
-                  <span className="text-xs px-3 border border-border-color-0 py-1 rounded-full ">
-                    Impact Score
-                  </span>
-                </div>
-
-                <div className="space-y-5">
-                  {featureData.map((item, index) => (
-                    <div key={index} className="space-y-1.5">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-foreground/80">{item.label}</span>
-                        <span className="text-foreground/80">
-                          {item.value}%
-                        </span>
-                      </div>
-
-                      <AnimatedProgressBar
-                        value={item.value}
-                        duration={1.2}
-                        ease="easeInOut"
-                        animateOnMount
-                        playKey={item.value}
-                        className="w-full"
-                        trackClassName="w-full bg-black/10 h-2 rounded-full relative overflow-hidden"
-                        barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Right Card */}
-              <div className="p-5 w-1/2 h-[28vw] border border-border-color-0 rounded-2xl space-y-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-medium">
-                    Confidence Score Distribution
-                  </h2>
-                  <span className="text-xs px-3 border border-border-color-0 py-1 rounded-full ">
-                    Model Reliability
-                  </span>
-                </div>
-
-                <ChartContainer
-                  config={chartConfig}
-                  className="h-75 w-full px-4  pt-8 bg-sidebar-accent rounded-xl"
-                >
-                  <BarChart
-                    accessibilityLayer
-                    data={chartData2}
-                    margin={{ top: 10, right: 0, bottom: 0, left: 0 }}
-                  >
-                    <ChartTooltip
-                      cursor={false}
-                      content={<ChartTooltipContent hideLabel />}
-                    />
-
-                    <Bar
-                      dataKey="score"
-                      fill="#f76809"
-                      radius={[6, 6, 0, 0]}
-                      barSize={55}
-                      animationBegin={0}
-                      animationDuration={600}
-                      animationEasing="ease-out"
-                      className="!rounded-b-0"
-                    />
-                  </BarChart>
-                </ChartContainer>
-              </div>
-            </div>
-          </motion.div>
-        )}
+       {mode === "insights" && (
+                 <motion.div
+                   key="insights"
+                   initial={{ opacity: 0 }}
+                   animate={{ opacity: 1 }}
+                   exit={{ opacity: 0 }}
+                   transition={{ duration: 0.25 }}
+                   className="border rounded-xl p-6 flex flex-col gap-6"
+                 >
+                   <CardDetails data={stats} />
+       
+                   <div className="flex gap-6 ">
+                     {/* Prediction Distribution Card */}
+                     <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
+                       <div className="flex items-center justify-between px-6 pt-6 pb-4">
+                         <h2 className="text-xl font-medium ">
+                           Prediction Distribution
+                         </h2>
+                         <span className="text-xs  rounded-full border border-border-color-0 px-3 py-1">
+                           Last 7 days
+                         </span>
+                       </div>
+                       <div className="flex flex-col px-6 pb-6">
+                         {/* Donut Chart */}
+       
+                         <div className="flex justify-center items-center">
+                           <div className="relative w-64 h-64">
+                             <CustomPieChart
+                               data={pieData} // values already in %
+                               nameKey="name"
+                               valueKey="value"
+                               width="100%"
+                               height="100%"
+                               innerRadius={100}
+                               outerRadius={115}
+                               paddingAngle={6}
+                               startAngle={90}
+                               endAngle={-270}
+                               cornerRadius={50}                 // ✅ rounded edges
+                               showLegend={false}
+                               showLabels
+                               labelPlacement="inside"           // ✅ percentage inside donut
+                               colors={["#7ED957", "#FF1C1C"]}
+                             />
+       
+                           </div>
+                         </div>
+       
+       
+                         {/* Legend */}
+                         <div className="flex justify-center items-center gap-3 mt-8">
+                           <div className="flex items-center gap-2">
+                             <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                             <span className="text-sm text-foreground/80">Fraud</span>
+                           </div>
+                           <div className="flex items-center gap-2">
+                             <div className="w-3 h-3 rounded-full bg-badge-green"></div>
+                             <span className="text-sm text-foreground/80">
+                               No Fraud
+                             </span>
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+       
+                     {/* Recent Fraud Cases Card */}
+                     <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
+                       <div className="flex items-center justify-between px-6 pt-6 pb-4">
+                         <h2 className="text-xl font-medium">Recent Fraud Cases</h2>
+                         <span className="text-xs px-3 py-1 rounded-full border border-border-color-0">
+                           8 flagged
+                         </span>
+                       </div>
+                       <div className="px-6 pb-6">
+                         {/* Table Header */}
+                         <div className="bg-sidebar-accent text-center px-4 py-3 rounded-t-lg border border-border-color-0">
+                           <span className="text-sm font-medium text-foreground/80">
+                             Customer IDs
+                           </span>
+                         </div>
+       
+                         {/* Scrollable Table Rows */}
+                         <div className="border-l border-r border-b border-border-color-0 rounded-b-lg overflow-hidden">
+                           <div className="max-h-64 overflow-y-auto">
+                             {customerIds.map((id, index) => (
+                               <div
+                                 key={id}
+                                 className={`px-4 py-3 flex justify-center items-center ${index !== customerIds.length - 1
+                                   ? "border-b border-border-color-0"
+                                   : ""
+                                   } hover:bg-sidebar-accent transition-colors`}
+                               >
+                                 <span className="text-sm ">{id}</span>
+                               </div>
+                             ))}
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+       
+                   <div className="w-full flex justify-between gap-6 items-center">
+                     <div className="border h-[28vw]  w-1/2 border-border-color-0 rounded-2xl p-6">
+                       <div className="flex justify-between items-center mb-4">
+                         <span className="text-xl font-medium text-foreground">
+                           Prediction Trends
+                         </span>
+                         <button className="text-xs px-3 py-1 rounded-full border border-border-color-0 ">
+                           Daily
+                         </button>
+                       </div>
+       
+                       <div className="w-full h-70  flex items-center justify-center">
+                         <div className="h-full w-full pt-8">
+                           <CustomBarChart
+                             data={chartData}
+                             timeKey="name"
+                             width="100%"
+                             height="100%"
+                             showGrid
+                             showLegend={false}
+                             showXAxis
+                             showYAxis
+                             barSize={20}
+                             radius={[4, 4, 0, 0]}
+                             bars={[
+                               { dataKey: "noFraud", name: "No Fraud", color: "#7ED957" },
+                               { dataKey: "fraud", name: "Fraud", color: "#FF1C1C" },
+                             ]}
+                           />
+                         </div>
+                       </div>
+       
+       
+                       {/* Legend */}
+                       <div className="flex items-center justify-center gap-4 mt-4 text-sm">
+                         <div className="flex items-center gap-2">
+                           <div className="w-3 h-3 rounded-full bg-red-500" />
+                           Fraud
+                         </div>
+                         <div className="flex items-center gap-2">
+                           <div className="w-3 h-3 rounded-full bg-badge-green" />
+                           No Fraud
+                         </div>
+                       </div>
+                     </div>
+       
+                     {/* ---------------- Risk Score Distribution ---------------- */}
+                     <div className="border w-1/2 h-[28vw] border-border-color-0 rounded-2xl p-6  shadow-sm">
+                       <div className="flex justify-between items-center mb-4">
+                         <span className="text-xl font-medium text-foreground">
+                           Risk Score Distribution
+                         </span>
+                         <button className="text-xs px-3 py-1 rounded-full border border-border-color-0 ">
+                           1,000 records
+                         </button>
+                       </div>
+       
+                       <div className="w-full h-70  flex items-center justify-center">
+                         <div className="h-full w-full">
+                           <CustomBarChart
+                             data={riskScoreData}
+                             timeKey="range"
+                             orientation="horizontal"                 // ✅ sideways bars
+                             width="100%"
+                             height="100%"
+                             showLegend={false}
+                             showGrid
+                             barSize={40}
+                             radius={[0, 12, 12, 0]}           // ✅ rounded right end like screenshot
+                             bars={[{ dataKey: "score", name: "Score", color: "#2563FB" }]}
+                           />
+                         </div>
+                       </div>
+       
+                     </div>
+                   </div>
+       
+                   <div className="w-full flex justify-between gap-6">
+                     <div className="p-5 border w-1/2 h-[25vw] border-border-color-0 rounded-2xl space-y-6">
+                       <div className="flex items-center justify-between">
+                         <h2 className="text-xl font-medium">
+                           Top Contributing Features
+                         </h2>
+                         <span className="text-xs px-3 border border-border-color-0 py-1 rounded-full ">
+                           Impact Score
+                         </span>
+                       </div>
+       
+                       <div className="space-y-4">
+                         {featureData.map((item, index) => (
+                           <div key={index} className="space-y-1.5">
+                             <div className="flex items-center justify-between text-xs font-medium">
+                               <span className="text-foreground/80">{item.label}</span>
+                               <span className="text-foreground/80">
+                                 {item.value}%
+                               </span>
+                             </div>
+       
+                             <AnimatedProgressBar
+                               value={item.value}
+                               duration={1.2}
+                               ease="easeInOut"
+                               animateOnMount
+                               playKey={item.value}
+                               className="w-full"
+                               trackClassName="w-full bg-sidebar-accent h-2 rounded-full relative overflow-hidden"
+                               barClassName="bg-badge-blue h-full absolute top-0 left-0 z-[5] rounded-full"
+                             />
+                           </div>
+                         ))}
+                       </div>
+                     </div>
+       
+                     {/* Right Card */}
+                     <div className="p-5 w-1/2 h-[25vw] border border-border-color-0 rounded-2xl space-y-6">
+                       <div className="flex items-center justify-between">
+                         <h2 className="text-xl font-medium">
+                           Confidence Score Distribution
+                         </h2>
+                         <span className="text-xs px-3 border border-border-color-0 py-1 rounded-full ">
+                           Model Reliability
+                         </span>
+                       </div>
+       
+                       <div className="h-64 w-full">
+                         <CustomBarChart
+                           data={chartData2}
+                           timeKey="range"
+                           width="100%"
+                           height="100%"
+                           showGrid
+                           showLegend={false}
+                           showXAxis
+                           showYAxis
+                           barSize={50}
+                           radius={[6, 6, 0, 0]}
+                           bars={[{ dataKey: "score", name: "Score", color: "#7ED957" }]}
+                         />
+                       </div>
+       
+                     </div>
+                   </div>
+                 </motion.div>
+               )}
       </AnimatePresence>
     </div>
   );
