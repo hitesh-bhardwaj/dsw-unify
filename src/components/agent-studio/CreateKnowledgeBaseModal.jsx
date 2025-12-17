@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import {
@@ -126,24 +126,61 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
     }
   };
 
+  const fileInputRef = useRef(null);
+  const [files, setFiles] = useState([]);
+
+// Add the click handler:
+const handleFileUpload = () => {
+  fileInputRef.current?.click();
+};
+
+const handleFileChange = (e) => {
+  const selectedFiles = e.target.files;
+  if (selectedFiles && selectedFiles.length > 0) {
+    setFiles([...selectedFiles]);
+    console.log('Selected files:', selectedFiles);
+  }
+};
+
   /** --- SOURCE TYPE Inner Tab Content --- */
   const sourceTypeContent = {
     documents: (
       <>
         <div className="mb-1">
-          <p className="text-sm">Upload Documents</p>
-        </div>
-        <div className="space-y-6 py-1">
-          {/* Upload Drop Box */}
-          <div className="border border-border-color-0 rounded-lg py-13 p-10 flex flex-col items-center justify-center text-center">
-            <TextFile className="w-5 h-5" />
-            <p className="text-sm font-semibold mt-4 text-foreground/80">
-              Drag and drop files here, or click to browse
-            </p>
-            <p className="text-xs text-foreground/60">
-              Supports PDF, DOCX, TXT, MD and more
-            </p>
-          </div>
+  <p className="text-sm">Upload Documents</p>
+</div>
+<div className="space-y-6 py-1">
+  {/* Upload Drop Box */}
+  <div 
+    onClick={handleFileUpload}
+    className="border border-border-color-0 rounded-lg py-13 p-10 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-accent/5 transition-colors"
+  >
+    <TextFile className="w-5 h-5" />
+    <p className="text-sm font-semibold mt-4 text-foreground/80">
+      Drag and drop files here, or click to browse
+    </p>
+    <p className="text-xs text-foreground/60">
+      Supports PDF, DOCX, TXT, MD and more
+    </p>
+  </div>
+
+  {/* Hidden file input */}
+  <input
+    ref={fileInputRef}
+    type="file"
+    multiple
+    className="hidden"
+    onChange={handleFileChange}
+    accept=".pdf,.docx,.txt,.md"
+  />
+
+  {/* Show selected files count */}
+  {files.length > 0 && (
+    <p className="text-xs text-foreground/60">
+      {files.length} file(s) selected
+    </p>
+  )}
+</div>
 
           <div className="flex flex-col gap-2 text-foreground/80 w-full">
             <label className="text-sm">Processing Options</label>
@@ -176,7 +213,7 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
               </SelectContent>
             </Select>
           </div>
-        </div>
+        
       </>
     ),
     website: (<>
