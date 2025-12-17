@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/chart";
 import { Bar, BarChart } from "recharts";
 import { cn } from "@/lib/utils";
+import { CustomBarChart } from "./common/Graphs/graphs";
 
 /**
  * Component to display a grid for LLM configuration and usage analytics.
@@ -22,16 +23,16 @@ import { cn } from "@/lib/utils";
  * @returns {React.JSX.Element} The rendered LLMConfigurationGrid component.
  */
 const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
-  const chartData = [
-    { month: "January", desktop: 156 },
-    { month: "February", desktop: 116 },
-    { month: "March", desktop: 130 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 190 },
-    { month: "June", desktop: 114 },
-    { month: "January", desktop: 146 },
-    { month: "February", desktop: 89 },
-  ];
+ const chartData = [
+  { month: "January", desktop: 156 },
+  { month: "February", desktop: 116 },
+  { month: "March", desktop: 130 },
+  { month: "April", desktop: 73 },
+  { month: "May", desktop: 190 },
+  { month: "June", desktop: 114 },
+  { month: "July", desktop: 146 },
+  { month: "August", desktop: 89 },
+];
 
   const chartConfig = {
     desktop: { label: "Desktop", color: "var(--badge-blue)" },
@@ -236,29 +237,37 @@ const LLMConfigurationGrid = ({ minSkeletonMs = 500 }) => {
           <div className="space-y-3">
             <p className="text-sm text-gray-600">Request Over Time</p>
 
-            <div className="w-full h-fit bg-sidebar-accent rounded-xl overflow-hidden">
-              <ChartContainer config={chartConfig} className="h-30 w-full px-6 pt-8">
-                <BarChart
-                  key={animationId}
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                >
-                  <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                  <Bar
-                    dataKey="desktop"
-                    fill="var(--color-desktop)"
-                    radius={[5, 5, 0, 0]}
-                    barSize={30}
-                    animationBegin={0}
-                    animationDuration={600}
-                    animationEasing="ease-out"
-                    animationId={animationId}
-                    className="!rounded-b-0"
-                  />
-                </BarChart>
-              </ChartContainer>
-            </div>
+          <div className="w-full h-fit bg-sidebar-accent rounded-xl overflow-hidden">
+  <div className="w-full px-4 pt-6 pb-2">
+    <CustomBarChart
+      data={chartData}
+      timeKey="month"
+      bars={[
+        {
+          dataKey: "desktop",
+          name: "Desktop",
+          color: "#3b82f6",
+        },
+      ]}
+      height={160}
+      width="100%"
+      barSize={40}
+      radius={[4, 4, 0, 0]}
+      showGrid={false}
+      showLegend={false}
+      showXAxis={false}
+      showYAxis={false}
+      margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
+      barCategoryGap="15%"
+      barGap={6}
+      animation={{
+        isAnimationActive: true,
+        animationDuration: 600,
+        animationEasing: "ease-out",
+      }}
+    />
+  </div>
+</div>
           </div>
 
           <div className="space-y-3">

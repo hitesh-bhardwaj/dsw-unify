@@ -468,6 +468,8 @@ export const CustomBarChart = ({
   width = "90%",
   showGrid = true,
   showLegend = true,
+  showXAxis = true,
+  showYAxis = true,
   barSize,
   radius = [8, 8, 0, 0],
   barCategoryGap = "28%",
@@ -493,7 +495,7 @@ export const CustomBarChart = ({
     makePoint: live ? makePoint : undefined,
   });
 
-  const data = live ? liveData.data : staticData;
+  const data = live ? liveData.data : (staticData || []);
 
   const xTicks = useMemo(() => {
     if (!data?.length) return undefined;
@@ -519,28 +521,31 @@ export const CustomBarChart = ({
       >
         {showGrid && <CartesianGrid strokeDasharray="5 5" stroke="#94a3b8" />}
 
-        <XAxis
-          dataKey={timeKey}
-          type="category"
-          scale="band"
-          ticks={xTicks}
-          interval="preserveStartEnd"
-          minTickGap={xMinTickGap}
-          angle={xTickAngle}
-          textAnchor={xTickAngle ? "end" : "middle"}
-          stroke="#64748b"
-          style={{ fontSize: "12px" }}
-          tickLine={false}
-          axisLine={false}
-        />
+        {showXAxis && (
+          <XAxis
+            dataKey={timeKey}
+            type="category"
+            ticks={xTicks}
+            interval={0}
+            minTickGap={xMinTickGap}
+            angle={xTickAngle}
+            textAnchor={xTickAngle ? "end" : "middle"}
+            stroke="#64748b"
+            style={{ fontSize: "12px" }}
+            tickLine={false}
+            axisLine={false}
+          />
+        )}
 
-        <YAxis
-          stroke="#64748b"
-          style={{ fontSize: "12px" }}
-          tickFormatter={yAxisFormatter}
-          tickLine={false}
-          axisLine={false}
-        />
+        {showYAxis && (
+          <YAxis
+            stroke="#64748b"
+            style={{ fontSize: "12px" }}
+            tickFormatter={yAxisFormatter}
+            tickLine={false}
+            axisLine={false}
+          />
+        )}
 
         <Tooltip
           cursor={{ fill: "transparent" }}
