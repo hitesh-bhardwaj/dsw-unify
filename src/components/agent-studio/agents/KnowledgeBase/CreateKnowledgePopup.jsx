@@ -32,10 +32,6 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
     desc: "",
   });
 
-  const handleFileChange = (e) => {
-    setFiles([...e.target.files]);
-  };
-
   const validate = () => {
     const newErrors = {
       name: name.trim() ? "" : "Knowledge base name is required",
@@ -49,6 +45,17 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
   const handleSubmit = () => {
     if (!validate()) return;
     onOpenChange(false);
+  };
+  const handleFileUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const files = e.target.files;
+    setFiles([...e.target.files]);
+    if (files && files.length > 0) {
+      console.log('Selected files:', files);
+    }
   };
 
   return (
@@ -125,7 +132,7 @@ export default function KnowledgeBaseCreateModal({ open, onOpenChange }) {
           </div>
 
           {/* Upload Documents */}
-          <div>
+          <div   onClick={handleFileUpload}>
             <p className="text-sm pb-1 block">Upload Documents</p>
 
             <label
