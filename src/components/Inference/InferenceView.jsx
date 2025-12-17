@@ -6,21 +6,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedProgressBar from "@/components/animations/ProgressBar";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { BarChart, Bar } from "recharts";
-
-import Link from "next/link";
-import { LeftArrow } from "@/components/Icons";
 import { UploadFile } from "@/components/Icons";
 import CardDetails from "@/components/CardDetails";
 import { ArrowRight, Upload } from 'lucide-react';
+import { CustomBarChart, CustomPieChart } from "../common/Graphs/graphs";
+
 
 
 export default function InferenceView() {
@@ -42,53 +33,30 @@ export default function InferenceView() {
   ];
 
   const chartData = [
-    { name: "Mon", noFraud: 80, fraud: 20 },
-    { name: "Tue", noFraud: 65, fraud: 28 },
-    { name: "Wed", noFraud: 78, fraud: 34 },
-    { name: "Thu", noFraud: 72, fraud: 22 },
-    { name: "Fri", noFraud: 90, fraud: 30 },
+    { name: "Jan 8", noFraud: 200, fraud: 45 },
+    { name: "Jan 9", noFraud: 185, fraud: 52 },
+    { name: "Jan 10", noFraud: 190, fraud: 55 },
+    { name: "Jan 11", noFraud: 170, fraud: 38 },
+    { name: "Jan 12", noFraud: 202, fraud: 62 },
+    { name: "Jan 13", noFraud: 190, fraud: 42 },
+    { name: "Jan 14", noFraud: 210, fraud: 55 },
   ];
 
   const chartData2 = [
-    { range: "0.9–1.0", score: 80 },
-    { range: "0.8–0.9", score: 50 },
-    { range: "0.7–0.8", score: 35 },
-    { range: "0.6–0.7", score: 20 },
-    { range: "0.5–0.6", score: 8 },
+    { range: "90-100%", score: 80 },
+    { range: "80-90%", score: 50 },
+    { range: "70-80%", score: 35 },
+    { range: "60-70%", score: 20 },
+    { range: "<60%", score: 8 },
   ];
 
-  const chartConfig = {
-    desktop: {
-      label: "Value",
-      color: "hsl(var(--chart-1))",
-    },
-  };
-
-  const predictionData = [
-    { day: "Mon", desktop: 80 },
-    { day: "Tue", desktop: 65 },
-    { day: "Wed", desktop: 78 },
-    { day: "Thu", desktop: 72 },
-    { day: "Fri", desktop: 90 },
+  const riskScoreData = [
+    { range: "0-20%", score: 480 },
+    { range: "20-40%", score: 390 },
+    { range: "40-60%", score: 260 },
+    { range: "60-80%", score: 155 },
+    { range: "80-100%", score: 55 },
   ];
-
-  const fraudData = [
-    { day: "Mon", desktop: 20 },
-    { day: "Tue", desktop: 28 },
-    { day: "Wed", desktop: 34 },
-    { day: "Thu", desktop: 22 },
-    { day: "Fri", desktop: 30 },
-  ];
-
-  const riskData = [
-    { day: "Mon", desktop: 75 },
-    { day: "Tue", desktop: 58 },
-    { day: "Wed", desktop: 70 },
-    { day: "Thu", desktop: 65 },
-    { day: "Fri", desktop: 85 },
-  ];
-
-  const COLORS = ["#6bc631", "#FF050A", "#22c55e"];
 
   // Values for Single Inference bars
   const confidence = 89.5;
@@ -164,9 +132,9 @@ export default function InferenceView() {
       <AnimatePresence mode="wait">
 
 
-       {/* BATCH INFERENCE */}
-           
- 
+        {/* BATCH INFERENCE */}
+
+
         {mode === "batch" && (
           <motion.div
             key="batch"
@@ -177,7 +145,7 @@ export default function InferenceView() {
             className="grid grid-cols-2 gap-6 w-full"
           >
             <div className="w-full">
-            <ConfigureBatchInference/>
+              <ConfigureBatchInference />
             </div>
 
             <div className="border rounded-xl p-6 flex flex-col items-start gap-15 justify-start">
@@ -195,7 +163,7 @@ export default function InferenceView() {
           </motion.div>
         )}
 
-       {/* SINGLE INFERENCE   */}
+        {/* SINGLE INFERENCE   */}
         {mode === "single" && (
           <motion.div
             key="single"
@@ -205,8 +173,8 @@ export default function InferenceView() {
             transition={{ duration: 0.25 }}
             className="grid grid-cols-2 gap-6 w-full"
           >
-          <div className="w-full">
-            <ConfigureSingleInference/>
+            <div className="w-full">
+              <ConfigureSingleInference />
             </div>
 
             {/* ----- Right Section: Prediction Result ----- */}
@@ -296,66 +264,30 @@ export default function InferenceView() {
 
                   <div className="flex justify-center items-center">
                     <div className="relative w-64 h-64">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <PieChart>
-                          <Pie
-                            data={pieData}
-                            dataKey="value"
-                            nameKey="name"
-                            innerRadius={100}
-                            outerRadius={115}
-                            startAngle={90}
-                            endAngle={-270}
-                            cornerRadius={50}
-                            paddingAngle={6}
-                            stroke="none"
-                            labelLine={false}
-                            label={({
-                              cx,
-                              cy,
-                              midAngle,
-                              innerRadius,
-                              outerRadius,
-                              percent,
-                            }) => {
-                              const RADIAN = Math.PI / 180;
-                              const radius =
-                                innerRadius +
-                                (outerRadius - innerRadius) * -1.5;
-                              const x =
-                                cx + radius * Math.cos(-midAngle * RADIAN);
-                              const y =
-                                cy + radius * Math.sin(-midAngle * RADIAN);
+                      <CustomPieChart
+                        data={pieData} // values already in %
+                        nameKey="name"
+                        valueKey="value"
+                        width="100%"
+                        height="100%"
+                        innerRadius={100}
+                        outerRadius={115}
+                        paddingAngle={6}
+                        startAngle={90}
+                        endAngle={-270}
+                        cornerRadius={50}                 // ✅ rounded edges
+                        showLegend={false}
+                        showLabels
+                        labelPlacement="inside"           // ✅ percentage inside donut
+                        colors={["#7ED957", "#FF1C1C"]}
+                      />
 
-                              return (
-                                <text
-                                  x={x}
-                                  y={y}
-                                  fill="#000"
-                                  textAnchor="middle"
-                                  dominantBaseline="central"
-                                  fontSize="12"
-                                  fontWeight="500"
-                                >
-                                  {(percent * 100).toFixed(1)}%
-                                </text>
-                              );
-                            }}
-                          >
-                            {pieData.map((entry, index) => (
-                              <Cell
-                                key={`cell-${index}`}
-                                fill={COLORS[index]}
-                              />
-                            ))}
-                          </Pie>
-                        </PieChart>
-                      </ResponsiveContainer>
                     </div>
                   </div>
 
+
                   {/* Legend */}
-                  <div className="flex flex-col gap-1 mt-8">
+                  <div className="flex justify-center items-center gap-3 mt-8">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full bg-red-500"></div>
                       <span className="text-sm text-foreground/80">Fraud</span>
@@ -392,11 +324,10 @@ export default function InferenceView() {
                       {customerIds.map((id, index) => (
                         <div
                           key={id}
-                          className={`px-4 py-3 flex justify-center items-center ${
-                            index !== customerIds.length - 1
-                              ? "border-b border-border-color-0"
-                              : ""
-                          } hover:bg-sidebar-accent transition-colors`}
+                          className={`px-4 py-3 flex justify-center items-center ${index !== customerIds.length - 1
+                            ? "border-b border-border-color-0"
+                            : ""
+                            } hover:bg-sidebar-accent transition-colors`}
                         >
                           <span className="text-sm ">{id}</span>
                         </div>
@@ -418,50 +349,30 @@ export default function InferenceView() {
                   </button>
                 </div>
 
-                <div className="w-full h-64  bg-sidebar-accent rounded-xl flex items-center justify-center">
-                  <ChartContainer
-                    config={chartConfig}
-                    className="h-full w-full px-6 pt-8"
-                  >
-                    <BarChart
-                      accessibilityLayer
+                <div className="w-full h-70  flex items-center justify-center">
+                  <div className="h-full w-full pt-8">
+                    <CustomBarChart
                       data={chartData}
-                      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                    >
-                      <ChartTooltip
-                        cursor={false}
-                        content={<ChartTooltipContent hideLabel />}
-                      />
-
-                      {/* No Fraud (green) */}
-                      <Bar
-                        dataKey="noFraud"
-                        fill="#7ED957"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-
-                      {/* Fraud (red) */}
-                      <Bar
-                        dataKey="fraud"
-                        fill="#FF1C1C"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-                    </BarChart>
-                  </ChartContainer>
+                      timeKey="name"
+                      width="100%"
+                      height="100%"
+                      showGrid
+                      showLegend={false}
+                      showXAxis
+                      showYAxis
+                      barSize={20}
+                      radius={[4, 4, 0, 0]}
+                      bars={[
+                        { dataKey: "noFraud", name: "No Fraud", color: "#7ED957" },
+                        { dataKey: "fraud", name: "Fraud", color: "#FF1C1C" },
+                      ]}
+                    />
+                  </div>
                 </div>
 
+
                 {/* Legend */}
-                <div className="flex gap-4 mt-4 text-sm">
+                <div className="flex items-center justify-center gap-4 mt-4 text-sm">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-red-500" />
                     Fraud
@@ -484,47 +395,23 @@ export default function InferenceView() {
                   </button>
                 </div>
 
-                <div className="w-full h-64  bg-sidebar-accent rounded-xl flex items-center justify-center">
-                  <ChartContainer
-                    config={chartConfig}
-                    className="h-full w-full px-6 pt-8"
-                  >
-                    <BarChart
-                      accessibilityLayer
-                      data={chartData}
-                      margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
-                    >
-                      <ChartTooltip
-                        cursor={false}
-                        content={<ChartTooltipContent hideLabel />}
-                      />
-
-                      {/* No Fraud (green) */}
-                      <Bar
-                        dataKey="noFraud"
-                        fill="#2563FB"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-
-                      {/* Fraud (red) */}
-                      <Bar
-                        dataKey="fraud"
-                        fill="#A6C0FF"
-                        radius={[5, 5, 0, 0]}
-                        barSize={28}
-                        animationBegin={0}
-                        animationDuration={600}
-                        animationEasing="ease-out"
-                        className="!rounded-b-0"
-                      />
-                    </BarChart>
-                  </ChartContainer>
+                <div className="w-full h-70  flex items-center justify-center">
+                  <div className="h-full w-full">
+                    <CustomBarChart
+                      data={riskScoreData}
+                      timeKey="range"
+                      orientation="horizontal"                 // ✅ sideways bars
+                      width="100%"
+                      height="100%"
+                      showLegend={false}
+                      showGrid
+                      barSize={40}
+                      radius={[0, 12, 12, 0]}           // ✅ rounded right end like screenshot
+                      bars={[{ dataKey: "score", name: "Score", color: "#2563FB" }]}
+                    />
+                  </div>
                 </div>
+
               </div>
             </div>
 
@@ -575,32 +462,22 @@ export default function InferenceView() {
                   </span>
                 </div>
 
-                <ChartContainer
-                  config={chartConfig}
-                  className="h-64 w-full px-4 py-5 pt-2"
-                >
-                  <BarChart
-                    accessibilityLayer
+                <div className="h-64 w-full">
+                  <CustomBarChart
                     data={chartData2}
-                    margin={{ top: 10, right: 0, bottom: 0, left: 0 }}
-                  >
-                    <ChartTooltip
-                      cursor={false}
-                      content={<ChartTooltipContent hideLabel />}
-                    />
+                    timeKey="range"
+                    width="100%"
+                    height="100%"
+                    showGrid
+                    showLegend={false}
+                    showXAxis
+                    showYAxis
+                    barSize={50}
+                    radius={[6, 6, 0, 0]}
+                    bars={[{ dataKey: "score", name: "Score", color: "#7ED957" }]}
+                  />
+                </div>
 
-                    <Bar
-                      dataKey="score"
-                      fill="#f76809"
-                      radius={[6, 6, 0, 0]}
-                      barSize={45}
-                      animationBegin={0}
-                      animationDuration={600}
-                      animationEasing="ease-out"
-                      className="!rounded-b-0"
-                    />
-                  </BarChart>
-                </ChartContainer>
               </div>
             </div>
           </motion.div>
@@ -649,7 +526,7 @@ function ConfigureSingleInference() {
               {/* Feature Values */}
               <div className="space-y-4 mb-6">
                 <h3 className="font-medium  mb-4">Feature Values</h3>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label className="text-sm  mb-1.5 block">Age</Label>
@@ -706,10 +583,10 @@ function ConfigureSingleInference() {
           ) : (
             <>
               <div>
-                    <Label className="text-sm  mb-1.5 block">Transaction ID</Label>
-                    <Input  className="rounded-lg" placeholder=" e.g. TXN-2025-001234" />
-                    <p className="text-foreground/80 text-xs py-1">Enter a transaction ID to retrieve and analyze</p>
-                  </div>
+                <Label className="text-sm  mb-1.5 block">Transaction ID</Label>
+                <Input className="rounded-lg" placeholder=" e.g. TXN-2025-001234" />
+                <p className="text-foreground/80 text-xs py-1">Enter a transaction ID to retrieve and analyze</p>
+              </div>
 
               {/* Run Batch Inference Button */}
               <div className="flex justify-end">
@@ -747,7 +624,7 @@ function ConfigureBatchInference() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       if (file.type === "text/csv" || file.name.endsWith('.csv')) {
@@ -806,11 +683,11 @@ function ConfigureBatchInference() {
           {mode === 'byData' ? (
             <>
               {/* Feature Values */}
-           <div className="mb-6">
+              <div className="mb-6">
                 <Label className="text-sm  mb-3 block">
                   Upload CSV File <span className="text-gray-500">(Transaction IDs)</span>
                 </Label>
-                
+
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -818,16 +695,15 @@ function ConfigureBatchInference() {
                   onChange={handleFileChange}
                   className="hidden"
                 />
-                
+
                 <div
                   onClick={handleUploadClick}
                   onDragEnter={handleDrag}
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
                   onDrop={handleDrop}
-                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${
-                    dragActive ? 'border-primary bg-primary/10' : 'border-border-color-2'
-                  }`}
+                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${dragActive ? 'border-primary bg-primary/10' : 'border-border-color-2'
+                    }`}
                 >
                   <div className="flex flex-col items-center">
                     <div className="w-10 h-10 flex items-center justify-center mb-4">
@@ -848,7 +724,7 @@ function ConfigureBatchInference() {
                           Click to upload or drag and drop
                         </p>
                         <p className="text-xs text-foreground/80">
-                         CSV files only (max 10MB)
+                          CSV files only (max 10MB)
                         </p>
                       </>
                     )}
@@ -871,7 +747,7 @@ function ConfigureBatchInference() {
                 <Label className="text-sm  mb-3 block">
                   Upload CSV File <span className="text-gray-500">(Transaction IDs)</span>
                 </Label>
-                
+
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -879,16 +755,15 @@ function ConfigureBatchInference() {
                   onChange={handleFileChange}
                   className="hidden"
                 />
-                
+
                 <div
                   onClick={handleUploadClick}
                   onDragEnter={handleDrag}
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
                   onDrop={handleDrop}
-                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${
-                    dragActive ? 'border-primary bg-primary/10' : 'border-border-color-2'
-                  }`}
+                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${dragActive ? 'border-primary bg-primary/10' : 'border-border-color-2'
+                    }`}
                 >
                   <div className="flex flex-col items-center">
                     <div className="w-10 h-10 flex items-center justify-center mb-4">
@@ -909,7 +784,7 @@ function ConfigureBatchInference() {
                           Click to upload or drag and drop
                         </p>
                         <p className="text-xs text-foreground/80">
-                         CSV files only (max 10MB)
+                          CSV files only (max 10MB)
                         </p>
                       </>
                     )}
@@ -917,7 +792,7 @@ function ConfigureBatchInference() {
                 </div>
               </div>
 
-              
+
 
               {/* Run Batch Inference Button */}
               <div className="flex justify-end">

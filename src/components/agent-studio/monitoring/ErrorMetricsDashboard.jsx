@@ -29,6 +29,14 @@ const ErrorMetricsDashboard = () => {
     return () => clearInterval(id);
   }, []);
 
+  const errorBarData = [
+  { timeLabel: "12:01", agentErrors: 220, llmErrors: 150, toolErrors: 120 },
+  { timeLabel: "12:04", agentErrors: 180, llmErrors: 130, toolErrors: 110 },
+  { timeLabel: "12:07", agentErrors: 260, llmErrors: 170, toolErrors: 140 },
+  { timeLabel: "12:10", agentErrors: 210, llmErrors: 160, toolErrors: 125 },
+  { timeLabel: "12:13", agentErrors: 240, llmErrors: 145, toolErrors: 135 },
+];
+
   return (
     <div className="space-y-6 py-3">
       <div className="space-y-2">
@@ -73,63 +81,21 @@ const ErrorMetricsDashboard = () => {
 
         <CardContent className="pt-4 flex items-center justify-center">
           <CustomBarChart
-            live={true}
-            timeKey="timeLabel"
-            bars={[
-              {
-                dataKey: "agentErrors",
-                name: "Agent Errors",
-                color: "var(--red)",
-              },
-              {
-                dataKey: "llmErrors",
-                name: "LLM Errors",
-                color: "var(--primary)",
-              },
-              {
-                dataKey: "toolErrors",
-                name: "Tool Errors",
-                color: "var(--yellow)",
-              },
-            ]}
-            height={400}
-            width="90%"
-            barSize={45}
-            barCategoryGap="20%"
-            barGap={4}
-            yAxisFormatter={(v) => Number(v).toFixed(0)}
-            tooltipFormatter={(v, name) => [Number(v).toFixed(0), name]}
-            makePoint={(now) => {
-              const agentErrors = clamp(
-                Math.round(200 + (Math.random() * 2 - 1) * 120),
-                50,
-                350
-              );
-              const llmErrors = clamp(
-                Math.round(140 + (Math.random() * 2 - 1) * 90),
-                30,
-                250
-              );
-              const toolErrors = clamp(
-                Math.round(120 + (Math.random() * 2 - 1) * 85),
-                30,
-                250
-              );
-
-              return {
-                time: now.getTime(),
-                timeLabel: now.toLocaleTimeString([], {
-                  minute: "2-digit",
-                  second: "2-digit",
-                }),
-                agentErrors,
-                llmErrors,
-                toolErrors,
-              };
-            }}
-            maxPoints={5}
-            updateMs={3000}
-          />
+  data={errorBarData}
+  timeKey="timeLabel"
+  bars={[
+    { dataKey: "agentErrors", name: "Agent Errors", color: "var(--red)" },
+    { dataKey: "llmErrors", name: "LLM Errors", color: "var(--primary)" },
+    { dataKey: "toolErrors", name: "Tool Errors", color: "var(--yellow)" },
+  ]}
+  height={400}
+  width="90%"
+  barSize={45}
+  barCategoryGap="20%"
+  barGap={4}
+  yAxisFormatter={(v) => Number(v).toFixed(0)}
+  tooltipFormatter={(v, name) => [Number(v).toFixed(0), name]}
+/>
         </CardContent>
       </Card>
     </div>

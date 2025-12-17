@@ -460,6 +460,130 @@ export const CustomLineChart = ({
 };
 
 // Bar Chart Component
+// export const CustomBarChart = ({
+//   data: staticData,
+//   bars = [{ dataKey: "value", name: "Value", color: "#3b82f6" }],
+//   timeKey = "timeLabel",
+//   height = 350,
+//   width = "90%",
+//   showGrid = true,
+//   showLegend = true,
+//   showXAxis = true,
+//   showYAxis = true,
+//   barSize,
+//   radius = [8, 8, 0, 0],
+//   barCategoryGap = "28%",
+//   barGap = 6,
+//   maxXTicks = 6,
+//   xTickAngle = 0,
+//   xMinTickGap = 18,
+//   yAxisFormatter,
+//   tooltipFormatter,
+//   margin = { top: 20, right: 24, left: 0, bottom: 0 },
+//   animation = defaultAnim,
+//   // Live mode props
+//   live = false,
+//   makePoint,
+//   maxPoints = 20,
+//   updateMs = 3000,
+// }) => {
+//   // Use live data if enabled
+//   const liveData = useLiveSeries({
+//     maxPoints,
+//     updateMs,
+//     timeKey: live ? "time" : timeKey,
+//     makePoint: live ? makePoint : undefined,
+//   });
+
+//   const data = live ? liveData.data : (staticData || []);
+
+//   const xTicks = useMemo(() => {
+//     if (!data?.length) return undefined;
+//     const n = data.length;
+//     if (n <= maxXTicks) return data.map((d) => d?.[timeKey]).filter(Boolean);
+
+//     const idx = Array.from({ length: maxXTicks }, (_, i) =>
+//       Math.round((i * (n - 1)) / (maxXTicks - 1))
+//     );
+
+//     return Array.from(new Set(idx))
+//       .map((i) => data[i]?.[timeKey])
+//       .filter(Boolean);
+//   }, [data, timeKey, maxXTicks]);
+
+//   return (
+//     <ResponsiveContainer width={width} height={height}>
+//       <BarChart
+//         data={data}
+//         margin={margin}
+//         barCategoryGap={barCategoryGap}
+//         barGap={barGap}
+//       >
+//         {showGrid && <CartesianGrid strokeDasharray="5 5" stroke="#94a3b8" />}
+
+//         {showXAxis && (
+//           <XAxis
+//             dataKey={timeKey}
+//             type="category"
+//             ticks={xTicks}
+//             interval={0}
+//             minTickGap={xMinTickGap}
+//             angle={xTickAngle}
+//             textAnchor={xTickAngle ? "end" : "middle"}
+//             stroke="#64748b"
+//             style={{ fontSize: "12px" }}
+//             tickLine={false}
+//             axisLine={false}
+//           />
+//         )}
+
+//         {showYAxis && (
+//           <YAxis
+//             stroke="#64748b"
+//             style={{ fontSize: "12px" }}
+//             tickFormatter={yAxisFormatter}
+//             tickLine={false}
+//             axisLine={false}
+//           />
+//         )}
+
+//         <Tooltip
+//           cursor={{ fill: "transparent" }}
+//           contentStyle={{
+//             backgroundColor: "#fff",
+//             border: "1px solid #e2e8f0",
+//             borderRadius: "8px",
+//             boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+//           }}
+//           formatter={tooltipFormatter}
+//         />
+
+//         {showLegend && (
+//           <Legend
+//             iconType="circle"
+//             wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
+//             formatter={(value) => (
+//               <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">{value}</span>
+//             )}
+//           />
+//         )}
+
+//         {bars.map((bar, index) => (
+//           <Bar
+//             key={`${bar.dataKey}-${index}`}
+//             dataKey={bar.dataKey}
+//             fill={bar.color}
+//             name={bar.name}
+//             barSize={barSize}
+//             radius={radius}
+//             {...animation}
+//           />
+//         ))}
+//       </BarChart>
+//     </ResponsiveContainer>
+//   );
+// };
+
 export const CustomBarChart = ({
   data: staticData,
   bars = [{ dataKey: "value", name: "Value", color: "#3b82f6" }],
@@ -486,8 +610,13 @@ export const CustomBarChart = ({
   makePoint,
   maxPoints = 20,
   updateMs = 3000,
+
+  // ✅ NEW: orientation (default = vertical bars)
+  orientation = "vertical", // "vertical" | "horizontal"
 }) => {
-  // Use live data if enabled
+  const isHorizontal = orientation === "horizontal";
+
+  // ✅ Use live data if enabled
   const liveData = useLiveSeries({
     maxPoints,
     updateMs,
@@ -499,6 +628,10 @@ export const CustomBarChart = ({
 
   const xTicks = useMemo(() => {
     if (!data?.length) return undefined;
+
+    // ✅ horizontal => category axis is Y, so don't compute X category ticks
+    if (isHorizontal) return undefined;
+
     const n = data.length;
     if (n <= maxXTicks) return data.map((d) => d?.[timeKey]).filter(Boolean);
 
@@ -509,7 +642,7 @@ export const CustomBarChart = ({
     return Array.from(new Set(idx))
       .map((i) => data[i]?.[timeKey])
       .filter(Boolean);
-  }, [data, timeKey, maxXTicks]);
+  }, [data, timeKey, maxXTicks, isHorizontal]);
 
   return (
     <ResponsiveContainer width={width} height={height}>
@@ -518,15 +651,16 @@ export const CustomBarChart = ({
         margin={margin}
         barCategoryGap={barCategoryGap}
         barGap={barGap}
+        layout={isHorizontal ? "vertical" : "horizontal"} // ✅ recharts uses "vertical" for horizontal bars
       >
         {showGrid && <CartesianGrid strokeDasharray="5 5" stroke="#94a3b8" />}
 
         {showXAxis && (
           <XAxis
-            dataKey={timeKey}
-            type="category"
-            ticks={xTicks}
-            interval={0}
+            dataKey={isHorizontal ? undefined : timeKey}
+            type={isHorizontal ? "number" : "category"}
+            ticks={isHorizontal ? undefined : xTicks}
+            interval={isHorizontal ? undefined : 0}
             minTickGap={xMinTickGap}
             angle={xTickAngle}
             textAnchor={xTickAngle ? "end" : "middle"}
@@ -539,9 +673,11 @@ export const CustomBarChart = ({
 
         {showYAxis && (
           <YAxis
+            dataKey={isHorizontal ? timeKey : undefined}
+            type={isHorizontal ? "category" : "number"}
             stroke="#64748b"
             style={{ fontSize: "12px" }}
-            tickFormatter={yAxisFormatter}
+            tickFormatter={isHorizontal ? undefined : yAxisFormatter}
             tickLine={false}
             axisLine={false}
           />
@@ -563,7 +699,9 @@ export const CustomBarChart = ({
             iconType="circle"
             wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
             formatter={(value) => (
-              <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">{value}</span>
+              <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">
+                {value}
+              </span>
             )}
           />
         )}
@@ -584,6 +722,8 @@ export const CustomBarChart = ({
   );
 };
 
+
+
 // Pie Chart Component
 export const CustomPieChart = ({
   data,
@@ -597,25 +737,41 @@ export const CustomPieChart = ({
   outerRadius = 100,
   paddingAngle = 5,
   showLabels = true,
-  labelPosition = "outside",
-  labelFormatter = (entry) => `${entry.value}%`,
   margin = { top: 20, right: 24, left: 24, bottom: 20 },
   strokeWidth = 0,
   startAngle = 90,
   endAngle = -270,
+
+  // ✅ add these
+  cornerRadius = 50,              // rounded arc edges
+  labelPlacement = "inside",      // "inside" | "outside"
+  labelTextColor = "#111111",
 }) => {
-  const renderCustomLabel = ({
-    cx,
-    cy,
-    midAngle,
-    outerRadius,
-    percent,
-    value,
-  }) => {
+  const renderInsideLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value }) => {
     const RADIAN = Math.PI / 180;
-    const radius = outerRadius + 30;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN);
-    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    const r = innerRadius + (outerRadius - innerRadius) * 0.5; // middle of ring
+    const x = cx + r * Math.cos(-midAngle * RADIAN) *0.7;
+    const y = cy + r * Math.sin(-midAngle * RADIAN) *0.7;
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill={labelTextColor}
+        textAnchor="middle"
+        dominantBaseline="central"
+        style={{ fontSize: 15, fontWeight:400 }}
+      >
+        {`${value}%`}
+      </text>
+    );
+  };
+
+  const renderOutsideLabel = ({ cx, cy, midAngle, outerRadius, value }) => {
+    const RADIAN = Math.PI / 180;
+    const r = outerRadius + 30;
+    const x = cx + r * Math.cos(-midAngle * RADIAN);
+    const y = cy + r * Math.sin(-midAngle * RADIAN);
 
     return (
       <text
@@ -624,12 +780,15 @@ export const CustomPieChart = ({
         fill="#334155"
         textAnchor={x > cx ? "start" : "end"}
         dominantBaseline="central"
-        style={{ fontSize: "16px", fontWeight: 600 }}
+        style={{ fontSize: 16, fontWeight: 600 }}
       >
         {`${value}%`}
       </text>
     );
   };
+
+  const labelRenderer =
+    !showLabels ? false : labelPlacement === "inside" ? renderInsideLabel : renderOutsideLabel;
 
   return (
     <ResponsiveContainer width={width} height={height}>
@@ -645,40 +804,16 @@ export const CustomPieChart = ({
           paddingAngle={paddingAngle}
           startAngle={startAngle}
           endAngle={endAngle}
-          label={showLabels ? renderCustomLabel : false}
+          label={labelRenderer}
           labelLine={false}
           stroke="none"
           strokeWidth={strokeWidth}
+          cornerRadius={cornerRadius}   // ✅ rounded edges
         >
-          {data.map((entry, index) => (
-            <Cell 
-              key={`cell-${index}`} 
-              fill={colors[index % colors.length]}
-            />
+          {data.map((_, index) => (
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>
-
-        <Tooltip
-          contentStyle={{
-            backgroundColor: "#fff",
-            border: "1px solid #e2e8f0",
-            borderRadius: "8px",
-            boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-          }}
-          formatter={(value) => `${value}%`}
-        />
-
-        {showLegend && (
-          <Legend
-            iconType="circle"
-            wrapperStyle={{ paddingTop: 14, color: "#334155", fontSize: 12 }}
-            formatter={(value) => (
-              <span style={{ color: "#334155", fontWeight: 400 }} className="dark:!text-foreground">
-                {value}
-              </span>
-            )}
-          />
-        )}
       </PieChart>
     </ResponsiveContainer>
   );
