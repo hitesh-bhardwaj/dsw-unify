@@ -95,20 +95,8 @@
  */
 
 /**
- * Analytics data
- * @typedef {Object} Analytics
- * @property {AnalyticValue} averageResponseTime - Average response time metric
- * @property {AnalyticValue} successRate - Success rate metric
- * @property {AnalyticValue} tokenUsage - Token usage metric
- * @property {AnalyticValue} errorRate - Error rate metric
- */
-
-/**
- * Individual analytic value
- * @typedef {Object} AnalyticValue
- * @property {string} value - Current value
- * @property {string} change - Change description
- * @property {boolean} positive - Whether change is positive
+ * Analytics data (array of analytics cards)
+ * @typedef {AnalyticCard[]} Analytics
  */
 
 /**

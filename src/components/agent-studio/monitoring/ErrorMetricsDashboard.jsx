@@ -59,6 +59,17 @@ const ErrorMetricsDashboard = ({ agentId }) => {
     );
   }
 
+  const barData = (metrics.chartData || []).map((d, idx) => ({
+    timeLabel: d.timeLabel || d.time || `T-${metrics.chartData.length - idx}`,
+    agentErrors: d.agentErrors ?? d.agent ?? 0,
+    llmErrors: d.llmErrors ?? d.llm ?? 0,
+    toolErrors: d.toolErrors ?? d.tool ?? 0,
+  }));
+
+  const baseAgents = metrics.agentErrors || 0;
+  const baseLlm = metrics.llmErrors || 0;
+  const baseTools = metrics.toolErrors || 0;
+
   return (
     <div className="space-y-6 py-3">
       <div className="space-y-2">
@@ -103,21 +114,35 @@ const ErrorMetricsDashboard = ({ agentId }) => {
 
         <CardContent className="pt-4 flex items-center justify-center">
           <CustomBarChart
-  data={errorBarData}
-  timeKey="timeLabel"
-  bars={[
-    { dataKey: "agentErrors", name: "Agent Errors", color: "var(--red)" },
-    { dataKey: "llmErrors", name: "LLM Errors", color: "var(--primary)" },
-    { dataKey: "toolErrors", name: "Tool Errors", color: "var(--yellow)" },
-  ]}
-  height={400}
-  width="90%"
-  barSize={45}
-  barCategoryGap="20%"
-  barGap={4}
-  yAxisFormatter={(v) => Number(v).toFixed(0)}
-  tooltipFormatter={(v, name) => [Number(v).toFixed(0), name]}
-/>
+            data={barData}
+            live={true}
+            timeKey="time"
+            makePoint={(now) => {
+              // jitter around current totals to keep animation near real values
+              const jitter = (base, spread = 6) =>
+                clamp(base + Math.round((Math.random() - 0.5) * spread), 0, base + spread * 2);
+              return {
+                time: now.getTime(),
+                agentErrors: jitter(baseAgents, 8),
+                llmErrors: jitter(baseLlm, 6),
+                toolErrors: jitter(baseTools, 5),
+              };
+            }}
+            updateMs={3200}
+            maxPoints={12}
+            bars={[
+              { dataKey: "agentErrors", name: "Agent Errors", color: "var(--red)" },
+              { dataKey: "llmErrors", name: "LLM Errors", color: "var(--primary)" },
+              { dataKey: "toolErrors", name: "Tool Errors", color: "var(--yellow)" },
+            ]}
+            height={400}
+            width="90%"
+            barSize={45}
+            barCategoryGap="20%"
+            barGap={4}
+            yAxisFormatter={(v) => Number(v).toFixed(0)}
+            tooltipFormatter={(v, name) => [Number(v).toFixed(0), name]}
+          />
         </CardContent>
       </Card>
     </div>

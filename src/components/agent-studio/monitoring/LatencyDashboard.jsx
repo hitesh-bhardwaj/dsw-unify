@@ -1,11 +1,16 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CustomLineChart } from "@/components/common/Graphs/graphs";
 import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+const LINES = [
+  { dataKey: "endToEnd", name: "End-to-End", color: "var(--badge-blue)" },
+  { dataKey: "processing", name: "Processing", color: "var(--badge-green)" },
+  { dataKey: "toolInvocation", name: "Tool Invocation", color: "var(--primary)" },
+];
 
 const LatencyDashboard = ({ agentId }) => {
   const [metrics, setMetrics] = useState({
@@ -59,15 +64,6 @@ const LatencyDashboard = ({ agentId }) => {
     );
   }
 
-  const lines = useMemo(
-    () => [
-      { dataKey: "endToEnd", name: "End-to-End", color: "var(--badge-blue)" },
-      { dataKey: "processing", name: "Processing", color: "var(--badge-green)" },
-      { dataKey: "toolInvocation", name: "Tool Invocation", color: "var(--primary)" },
-    ],
-    []
-  );
-
   return (
     <div className="w-full py-3">
       <div className="space-y-6">
@@ -115,7 +111,7 @@ const LatencyDashboard = ({ agentId }) => {
             <CustomLineChart
               live={true}
               timeKey="time"
-              lines={lines}
+              lines={LINES}
               dotSize={0}
               height={400}
               width="90%"

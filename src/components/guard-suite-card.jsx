@@ -109,7 +109,7 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
                   }}
                 >
                   <span className="w-full h-full flex justify-center items-center p-4">
-                    {icon}
+                    {typeof icon === "function" ? React.createElement(icon) : icon}
                   </span>
                   <span
                     className={cn(

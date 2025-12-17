@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   DoubleAreaChart,
@@ -9,6 +9,9 @@ import {
 import * as monitoringApi from "@/lib/api/monitoring";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+const COST_LINES = [
+  { dataKey: "cost", name: "Cost", color: "var(--badge-green)" },
+];
 
 const LLMDashboard = ({ agentId }) => {
   const [metrics, setMetrics] = useState({
@@ -61,11 +64,6 @@ const LLMDashboard = ({ agentId }) => {
       </div>
     );
   }
-
-  const costLines = useMemo(
-    () => [{ dataKey: "cost", name: "Cost", color: "var(--badge-green)" }],
-    []
-  );
 
   return (
     <div className="space-y-6 w-full py-3">
@@ -156,7 +154,7 @@ const LLMDashboard = ({ agentId }) => {
               live={true}
               timeKey="time"
               dotSize={0}
-              lines={costLines}
+              lines={COST_LINES}
               height={300}
               width="100%"
               yAxisFormatter={(v) => Number(v).toFixed(0)}

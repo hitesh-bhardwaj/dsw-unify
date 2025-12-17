@@ -66,28 +66,36 @@ const MOCK_TEST_SUITES = [
 /**
  * Mock analytics data
  */
-const MOCK_ANALYTICS = {
-  averageResponseTime: {
-    value: "1.2s",
-    change: "-0.3s from last week",
+const MOCK_ANALYTICS = [
+  {
+    id: "average-response-time",
+    heading: "Average Response Time",
+    progress: "1.2s",
+    remarks: "-0.3s from last week",
+    positive: false,
+  },
+  {
+    id: "success-rate",
+    heading: "Success Rate",
+    progress: "89%",
+    remarks: "+5% from last week",
     positive: true,
   },
-  successRate: {
-    value: "89%",
-    change: "+5% from last week",
+  {
+    id: "token-usage",
+    heading: "Token Usage",
+    progress: "1,250",
+    remarks: "+120 from last week",
     positive: true,
   },
-  tokenUsage: {
-    value: "1,250",
-    change: "+120 from last week",
-    positive: true,
+  {
+    id: "error-rate",
+    heading: "Error Rate",
+    progress: "2.1%",
+    remarks: "-1.2% from last week",
+    positive: false,
   },
-  errorRate: {
-    value: "2.1%",
-    change: "-1.2% from last week",
-    positive: true,
-  },
-};
+];
 
 /**
  * Mock test suite detail
