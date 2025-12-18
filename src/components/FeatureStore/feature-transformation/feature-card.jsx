@@ -105,7 +105,7 @@ export function FeatureCard({
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-          "cursor-pointer transition-all duration-300 feature-card-hover-container hover:border-transparent group hover:drop-shadow-xl",
+          "cursor-pointer bg-white transition-all duration-300 feature-card-hover-container hover:border-transparent group hover:drop-shadow-xl",
 
           isGrid &&
             " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",

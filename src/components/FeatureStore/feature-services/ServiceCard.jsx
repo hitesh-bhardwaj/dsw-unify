@@ -99,7 +99,7 @@ const isGrid = view === "grid";
         onClick={() => setIsModalOpen(true)}
         className={cn(
           "feature-card-hover-container gap-2 hover:drop-shadow-xl hover:border-transparent  transition-all duration-300 group",
-          isGrid && " h-full flex flex-col justify-between gap-0 py-5  ",
+          isGrid && " h-full flex flex-col bg-white justify-between gap-0 py-5  ",
         // List view styles
         isList && "w-full rounded-xl  py-6 bg-white dark:bg-card"
         )}

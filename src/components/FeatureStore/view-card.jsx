@@ -128,7 +128,7 @@ export function ViewCard({
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-          "feature-card-hover-container cursor-pointer hover:border-transparent gap-2  transition-all duration-300 group hover:drop-shadow-xl",
+          "feature-card-hover-container cursor-pointer bg-white hover:border-transparent gap-2  transition-all duration-300 group hover:drop-shadow-xl",
           isGrid && " h-full flex flex-col justify-between gap-0 py-5 ",
           // List view styles
           isList && "w-full rounded-xl py-6 bg-white dark:bg-card"

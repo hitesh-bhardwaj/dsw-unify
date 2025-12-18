@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { LeftArrow } from "@/components/Icons";
 import { Trash2, ChevronRight } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 
 export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
-  // AVAILABLE COLUMNS DATA
   const [availableTables] = useState([
     {
       name: "TRANSACTIONS",
@@ -25,7 +25,6 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
     },
   ]);
 
-  // SELECTED FEATURES STATE
   const [selectedFeatures, setSelectedFeatures] = useState([
     {
       id: 1,
@@ -41,7 +40,6 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
     },
   ]);
 
-  // SELECTED COLUMNS IN LEFT PANEL
   const [selectedColumns, setSelectedColumns] = useState([
     "transaction_id",
     "payment_method",
@@ -50,109 +48,113 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
   const toggleColumnSelection = (columnId) => {
     if (selectedColumns.includes(columnId)) {
       setSelectedColumns(selectedColumns.filter((id) => id !== columnId));
-      // Also remove from selected features
       setSelectedFeatures(
         selectedFeatures.filter((feature) => feature.column !== columnId)
       );
     } else {
       setSelectedColumns([...selectedColumns, columnId]);
-      // Add to selected features
-      const newFeature = {
-        id: selectedFeatures.length + 1,
-        table: "Transactions",
-        column: columnId,
-        featureName: `transactions_${columnId}`,
-      };
-      setSelectedFeatures([...selectedFeatures, newFeature]);
+      setSelectedFeatures([
+        ...selectedFeatures,
+        {
+          id: selectedFeatures.length + 1,
+          table: "Transactions",
+          column: columnId,
+          featureName: `transactions_${columnId}`,
+        },
+      ]);
     }
   };
 
   const removeFeature = (id) => {
     const feature = selectedFeatures.find((f) => f.id === id);
-    if (feature) {
-      setSelectedColumns(
-        selectedColumns.filter((col) => col !== feature.column)
-      );
-      setSelectedFeatures(selectedFeatures.filter((f) => f.id !== id));
-    }
+    if (!feature) return;
+
+    setSelectedColumns(
+      selectedColumns.filter((col) => col !== feature.column)
+    );
+    setSelectedFeatures(selectedFeatures.filter((f) => f.id !== id));
   };
 
-  const validate = () => {
-    return selectedFeatures.length > 0;
+  const updateFeatureName = (id, value) => {
+    setSelectedFeatures((prev) =>
+      prev.map((feature) =>
+        feature.id === id
+          ? { ...feature, featureName: value }
+          : feature
+      )
+    );
   };
 
   const handleNext = () => {
-    if (!validate()) return;
+    if (selectedFeatures.length === 0) return;
     goNext();
   };
 
   return (
-    <div className="space-y-2  pr-2">
-      {/* TITLE */}
+    <div className="space-y-2 pr-2">
       <h2 className="text-lg font-medium text-foreground">Select Features</h2>
       <p className="text-xs text-foreground/80">
         Choose columns and apply transformations
       </p>
 
-      {/* MAIN CONTENT - TWO COLUMNS */}
       <div className="grid grid-cols-2 gap-6 pt-4">
-        {/* LEFT COLUMN - AVAILABLE COLUMNS */}
+        {/* LEFT */}
         <div className="space-y-3">
           <h3 className="text-sm font-medium text-foreground">
             Available Columns
           </h3>
 
-          {availableTables.map((table,index) => (
+          {availableTables.map((table, index) => (
             <div
               key={index}
-              className="border border-border-color-0 rounded-lg p-4 "
+              className="border border-border-color-0 rounded-lg p-4"
             >
-              <h4 className="text-sm font-medium text-foreground mb-3">
-                {table.name}
-              </h4>
+              <h4 className="text-sm font-medium mb-3">{table.name}</h4>
 
-             <div className="space-y-2 max-h-[280px] overflow-y-auto">
-  {table.columns.map((column, index) => {
-    const isSelected = selectedColumns.includes(column.id);
+              <div className="space-y-2 max-h-[280px] overflow-y-auto">
+                {table.columns.map((column) => {
+                  const isSelected = selectedColumns.includes(column.id);
 
-    return (
-      <div
-        key={index}
-        className={`border rounded-lg border-border-color-0 p-3 cursor-pointer transition-all w-[95%]`}
-        onClick={() => toggleColumnSelection(column.id)}
-      >
-        <div className="flex items-center gap-3">
-          
-          {/* Shadcn Checkbox */}
-          <Checkbox
-            checked={isSelected}
-            onCheckedChange={() => toggleColumnSelection(column.id)}
-            className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
-            // Prevent card click triggering twice
-            onClick={(e) => e.stopPropagation()}
-          />
+                  return (
+                    <div
+                      key={column.id}
+                      className="border rounded-lg border-border-color-0 p-3 cursor-pointer w-[95%]"
+                      onClick={() => toggleColumnSelection(column.id)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          checked={isSelected}
+                          onCheckedChange={() =>
+                            toggleColumnSelection(column.id)
+                          }
+                          onClick={(e) => e.stopPropagation()}
+                          className="data-[state=checked]:bg-orange-500 data-[state=checked]:border-orange-500"
+                        />
 
-          {/* Column Info */}
-          <div className="flex-1">
-            <p
-              className={`text-sm font-medium ${
-                isSelected ? "text-orange-500" : "text-foreground"
-              }`}
-            >
-              {column.name}
-            </p>
-            <p className="text-xs text-foreground/60">{column.type}</p>
-          </div>
-        </div>
-      </div>
-    );
-  })}
-</div>
+                        <div className="flex-1">
+                          <p
+                            className={`text-sm font-medium ${
+                              isSelected
+                                ? "text-orange-500"
+                                : "text-foreground"
+                            }`}
+                          >
+                            {column.name}
+                          </p>
+                          <p className="text-xs text-foreground/60">
+                            {column.type}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* RIGHT COLUMN - SELECTED FEATURES */}
+        {/* RIGHT */}
         <div className="space-y-3">
           <h3 className="text-sm font-medium text-foreground">
             Selected Features ({selectedFeatures.length})
@@ -162,27 +164,28 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
             {selectedFeatures.map((feature) => (
               <div
                 key={feature.id}
-                className="border border-border-color-0 rounded-lg p-4 "
+                className="border border-border-color-0 rounded-lg p-4"
               >
-                {/* Breadcrumb */}
                 <div className="flex items-center gap-2 text-xs text-foreground/60 mb-3">
                   <span>{feature.table}</span>
                   <ChevronRight className="w-3 h-3" />
                   <span>{feature.column}</span>
                   <button
                     onClick={() => removeFeature(feature.id)}
-                    className="ml-auto text-red-500  transition-colors"
+                    className="ml-auto text-red-500 transition-colors"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
-                {/* Feature Name */}
-                <div className="bg-gray-50 rounded-md py-2 px-3 border border-border-color-0 dark:bg-background w-[85%]">
-                  <p className="text-sm text-foreground font-medium">
-                    {feature.featureName}
-                  </p>
-                </div>
+                {/*  EDITABLE FEATURE NAME */}
+                <Input
+                  value={feature.featureName}
+                  onChange={(e) =>
+                    updateFeatureName(feature.id, e.target.value)
+                  }
+                  className="w-[85%] text-sm font-medium border-border-color-0"
+                />
               </div>
             ))}
 
@@ -200,13 +203,12 @@ export default function SelectFeatures({ goNext, goBack, isLastStep, stepId }) {
         </div>
       </div>
 
-      {/* FOOTER BUTTONS */}
       <div className="w-full flex justify-end gap-2 pt-4">
         <RippleButton>
           <Button
             variant="outline"
-            className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
             onClick={goBack}
+            className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
           >
             Back
           </Button>
