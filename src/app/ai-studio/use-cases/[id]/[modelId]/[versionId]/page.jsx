@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -15,10 +15,37 @@ import Link from "next/link";
 import CountUp from "@/components/animations/CountUp";
 import APIPage from "@/components/usecases/versions/APIPage";
 import Lineage from "@/components/usecases/versions/Lineage";
+import { getVersionById, toggleDeployStatus } from "@/lib/api/ai-studio";
 
 const page = () => {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState("details");
+  const [versionData, setVersionData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const params = useParams();
+  const { id: routeId, modelId, versionId } = params;
+
+  // Fetch version data on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        const data = await getVersionById(routeId, modelId, versionId);
+        setVersionData(data);
+      } catch (err) {
+        setError(err.message || "Failed to load version");
+        console.error("Version error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [routeId, modelId, versionId]);
 
   const items = [
     {
@@ -65,32 +92,6 @@ const page = () => {
     },
   ];
 
-  const versionsData = {
-    id: id,
-    name: "Fraud Detector V3",
-    description:
-      "Latest version with improved ensemble methods and feature engineering",
-    status: "Deployed",
-    owner: "Shivam Thakkar",
-    lastModified: "2 Hours Ago",
-    usage: "1.2K Request",
-    stats: [
-      { title: "Owner", value: "Shivam Thakkar" },
-      { title: "Created", value: "January 16, 2025" },
-      { title: "Updated", value: "January 16, 2025" },
-
-      { title: "Accuracy", value: "96.3%" },
-    ],
-    metrics: {
-      totalRequests: "12,847",
-      avgResponse: "245ms",
-      successRate: "99.2%",
-      activeUsers: "156",
-    },
-  };
-  const params = useParams();
-  const { id: routeId, modelId, versionId } = params;
-
   function slugToTitle(slug) {
     if (!slug) return "";
 
@@ -103,15 +104,77 @@ const page = () => {
   const title = slugToTitle(modelId);
   const title2 = slugToTitle(versionId);
 
-  const [deployStatus, setDeployStatus] = useState(versionsData.status);
+  const [deployStatus, setDeployStatus] = useState(versionData?.status || "Undeployed");
+  const [isDeploying, setIsDeploying] = useState(false);
 
-  const handleDeployToggle = () => {
-    setDeployStatus((prev) =>
-      prev === "Deployed" ? "Undeployed" : "Deployed"
-    );
+  // Update deploy status when version data loads
+  useEffect(() => {
+    if (versionData?.status) {
+      setDeployStatus(versionData.status);
+    }
+  }, [versionData]);
+
+  const handleDeployToggle = async () => {
+    try {
+      setIsDeploying(true);
+      const action = deployStatus === "Deployed" ? "undeploy" : "deploy";
+
+      const result = await toggleDeployStatus(routeId, modelId, versionId, action);
+
+      setDeployStatus(result.status);
+    } catch (err) {
+      console.error("Deploy toggle error:", err);
+    } finally {
+      setIsDeploying(false);
+    }
   };
 
   
+
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="flex flex-col h-full">
+        <ScaleDown>
+          <div className="bg-background p-6 space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="flex gap-3">
+                <LeftArrowAnim link={`/ai-studio/use-cases/${routeId}/${modelId}`} />
+                <div className="space-y-1 w-full">
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-64 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-96 animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex items-center justify-between gap-4">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <div key={index} className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card animate-pulse">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScaleDown>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="flex flex-col h-full">
+        <ScaleDown>
+          <div className="bg-background p-6">
+            <div className="p-4 text-center text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="font-medium">Failed to load version details</p>
+              <p className="text-sm mt-2">{error}</p>
+            </div>
+          </div>
+        </ScaleDown>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -141,7 +204,7 @@ const page = () => {
                     </div>
                   </div>
                   <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
-                    {versionsData.description}
+                    {versionData?.description}
                   </p>
                 </div>
               </div>
@@ -150,10 +213,11 @@ const page = () => {
                   <RippleButton>
                     <Button
                       onClick={handleDeployToggle}
-                      className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
+                      disabled={isDeploying}
+                      className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50"
                     >
                       <RocketIcon className="text-white" />
-                      {deployStatus === "Deployed" ? "Undeploy" : "Deploy"}
+                      {isDeploying ? "Processing..." : deployStatus === "Deployed" ? "Undeploy" : "Deploy"}
                     </Button>
                   </RippleButton>
                 </Link>
@@ -161,7 +225,7 @@ const page = () => {
             </div>
 
             <div className="w-full  flex items-center justify-between gap-4">
-              {versionsData.stats.map((item, index) => (
+              {versionData?.stats.map((item, index) => (
                 <div
                   key={index}
                   className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"

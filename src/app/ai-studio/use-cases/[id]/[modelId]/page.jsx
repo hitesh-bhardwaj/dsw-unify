@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -15,55 +15,7 @@ import Link from "next/link";
 import CardDetails from "@/components/CardDetails";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
-
- const versions = [
-    {
-      id: 3,
-      name: "V1",
-      versionSlug: "version-1",
-      icon: VersionsIcon,
-      description: "Initial version with basic random forest classifier",
-      tags: ["fraud", "classification", "baseline"],
-      versions: 1,
-      features: 20,
-      status: "Deployed",
-      accuracy: "96.3%",
-      lastUpdated: "January 10, 2025",
-      createdAt: "2025-01-10",
-      variant: "light",
-    },
-    {
-      id: 2,
-      name: "V2",
-      versionSlug: "version-2",
-      icon: VersionsIcon,
-      description: "Previous production version with gradient boosting",
-      tags: ["fraud", "classification"],
-      versions: 2,
-      features: 25,
-      status: "Deployed",
-      accuracy: "96.3%",
-      lastUpdated: "January 10, 2025",
-      createdAt: "2025-01-10",
-      variant: "light",
-    },
-    {
-      id: 1,
-      name: "V3",
-      versionSlug: "version-3",
-      icon: VersionsIcon,
-      description:
-        "Latest version with improved ensemble methods and feature engineering",
-      tags: ["fraud", "classification", "ensemble"],
-      versions: 3,
-      features: 28,
-      status: "Deployed",
-      accuracy: "96.3%",
-      lastUpdated: "January 16, 2025",
-      createdAt: "2025-01-16",
-      variant: "light",
-    },
-  ];
+import { getVersionsByModelId, getVersionStats, deleteVersion } from "@/lib/api/ai-studio";
 
 const page = () => {
   const params = useParams();
@@ -73,11 +25,50 @@ const page = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
-  const [versionns, setVersionssData] = useState(versions);
-  
+  const [versionns, setVersionssData] = useState([]);
+  const [statsData, setStatsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // Fetch versions and stats on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError(null);
 
- 
+        // Parallel API calls
+        const [versionsData, stats] = await Promise.all([
+          getVersionsByModelId(routeId, modelId),
+          getVersionStats(routeId, modelId),
+        ]);
 
+        setVersionssData(versionsData);
+        setStatsData([
+          { title: "Owner", value: stats.owner, description: "Model owner" },
+          { title: "Total Versions", value: stats.totalVersions, description: "model versions" },
+          { title: "Undeploy", value: stats.undeploy, description: "Versions in production" },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load versions");
+        console.error("Versions error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [routeId, modelId]);
+
+  const handleDeleteVersion = async (versionId) => {
+    try {
+      await deleteVersion(routeId, modelId, versionId);
+      setVersionssData((prev) => prev.filter((v) => v.id !== versionId));
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
+
+  // Model metadata - in production this would come from API
   const versionsData = {
     id: routeId,
     name: "Fraud Detector",
@@ -88,11 +79,6 @@ const page = () => {
     owner: "Shivam Thakkar",
     lastModified: "2 Hours Ago",
     usage: "1.2K Request",
-    stats: [
-      { title: "Owner", value: "Shivam Thakkar", description: "Model owner" },
-      { title: "Total Versions", value: "3", description: "model versions" },
-      { title: "Undeploy", value: "3", description: "Versions in production" },
-    ],
   };
 
   // Convert slug to Title
@@ -139,9 +125,6 @@ const page = () => {
     );
   }
 
-  const handleDeleteVersion = (versionId) => {
-  setVersionssData((prev) => prev.filter((v) => v.id !== versionId));
-};
 
 
   return (
@@ -186,7 +169,22 @@ const page = () => {
             </Link>
           </div>
 
-          <CardDetails data={versionsData.stats} first={true}/>
+          {isLoading ? (
+            // Loading skeleton for stats
+            <div className="w-full flex items-center justify-between gap-4">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card animate-pulse"
+                >
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <CardDetails data={statsData} first={true} />
+          )}
 
           <div className="space-y-4">
             <h2 className="text-2xl font-medium">Versions</h2>
@@ -209,35 +207,66 @@ const page = () => {
               setView={setView}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
-              cards={versions}
+              cards={versionns}
             />
           </div>
 
-          {/* GRID / LIST VIEW */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={view}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className={
-                view === "grid"
-                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch"
-                  : "flex flex-col gap-5"
-              }
-            >
-              {filteredVersions.map((item, index) => (
-                <VersionUsecaseCard key={item.id} view={view} usecase={item} index={index} onDelete={handleDeleteVersion} />
-              ))}
+          {/* ERROR STATE */}
+          {error && !isLoading && (
+            <div className="p-4 text-center text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="font-medium">Failed to load versions</p>
+              <p className="text-sm mt-2">{error}</p>
+            </div>
+          )}
 
-              {filteredVersions.length === 0 && (
-                <div className="flex h-64 items-center justify-center text-gray-500">
-            
+          {/* LOADING STATE */}
+          {isLoading && !error && (
+            <div className={
+              view === "grid"
+                ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch"
+                : "flex flex-col gap-5"
+            }>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="border border-border-color-0 rounded-3xl p-6 animate-pulse dark:bg-card"
+                >
+                  <div className="h-14 w-14 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
                 </div>
-              )}
-            </motion.div>
-          </AnimatePresence>
+              ))}
+            </div>
+          )}
+
+          {/* GRID / LIST VIEW */}
+          {!isLoading && !error && (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={view}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch"
+                    : "flex flex-col gap-5"
+                }
+              >
+                {filteredVersions.map((item, index) => (
+                  <VersionUsecaseCard key={item.id} view={view} usecase={item} index={index} onDelete={handleDeleteVersion} />
+                ))}
+
+                {filteredVersions.length === 0 && (
+                  <div className="flex h-64 items-center justify-center text-gray-500">
+                    No versions found
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
       </ScaleDown>
     </div>

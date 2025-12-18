@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 
 import Inference from "@/components/Inference/InferenceView";
+
 const useCases = [
   { id: 1, label: "Marketing" },
   { id: 2, label: "Customer Support" },

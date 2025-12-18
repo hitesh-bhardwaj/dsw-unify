@@ -66,7 +66,7 @@ const page = () => {
                     className="text-foreground/80"
                   />
                 </SelectTrigger>
-                <SelectContent  className="border border-border-color-0">
+                <SelectContent className="border border-border-color-0">
                   {useCases.map((item) => (
                     <SelectItem
                       key={item.id}
@@ -90,7 +90,7 @@ const page = () => {
                     className="text-foreground/80"
                   />
                 </SelectTrigger>
-                <SelectContent  className="border border-border-color-0">
+                <SelectContent className="border border-border-color-0">
                   {models.map((item) => (
                     <SelectItem
                       key={item.id}
@@ -114,7 +114,7 @@ const page = () => {
                     className="text-foreground/80"
                   />
                 </SelectTrigger>
-                <SelectContent  className="border border-border-color-0">
+                <SelectContent className="border border-border-color-0">
                   {versions.map((item) => (
                     <SelectItem
                       key={item.id}

@@ -5,142 +5,72 @@ import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Tune } from "@/components/Icons";
 import { UseCaseCard } from "@/components/usecases/usecase-card";
 import UseCaseModal from "@/components/usecases/UsecaseModal";
 import CountUp from "@/components/animations/CountUp";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
-
-const Features = [
-  {
-    id: 1,
-    slug: "claims-fraud-detection",
-    name: "Claims Fraud Detection",
-    icon: UseCasesIcon,
-    description:
-      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
-    tags: ["claims", "fraud detection", "auto insurance"],
-    models: "4",
-    lastUpdated: "January 15, 2025",
-    peopleCount: "2",
-    createdAt: "2025-11-18",
-    variant: "light",
-  },
-  {
-    id: 2,
-    name: "Risk Assessment & Underwriting",
-    slug: "risk-assessment-underwriting",
-    icon: UseCasesIcon,
-    description:
-      "Automated risk scoring and premium calculation for policy underwriting decisions",
-    tags: ["claims", "history", "fraud"],
-    models: "3",
-    lastUpdated: "5 hours ago",
-    peopleCount: "2",
-    createdAt: "December 8, 2024",
-    variant: "light",
-  },
-  {
-    id: 3,
-    name: "Customer Churn Prediction",
-    slug: "customer-churn-prediction",
-    icon: UseCasesIcon,
-    description:
-      "Predict policyholder churn and identify retention opportunities across all lines of business",
-    tags: ["policy", "coverage", "premium"],
-    models: "2",
-    peopleCount: "1",
-    lastUpdated: "November 22, 2024",
-    createdAt: "2025-11-18",
-    variant: "light",
-  },
-  {
-    id: 4,
-    name: "Claims Processing Automation",
-    slug: "claims-processing-automation",
-    icon: UseCasesIcon,
-    description:
-      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
-    tags: ["auto", "vehicle", "risk"],
-    models: "4",
-    peopleCount: "3",
-    lastUpdated: "January 15, 2025",
-    createdAt: "2025-11-18",
-    variant: "light",
-  },
-  {
-    id: 5,
-    name: "Subrogation Recovery",
-    slug: "subrogation-recovery",
-    icon: UseCasesIcon,
-    description:
-      "Automated risk scoring and premium calculation for policy underwriting decisions",
-    tags: ["claims", "history", "fraud"],
-    models: "3",
-    peopleCount: "2",
-    lastUpdated: "December 8, 2024",
-    createdAt: "2025-11-18",
-    variant: "light",
-  },
-  {
-    id: 6,
-    name: "Premium Pricing Optimization",
-    slug: "premium-pricing-ptimization",
-    icon: UseCasesIcon,
-    description:
-      "Predict policyholder churn and identify retention opportunities across all lines of business",
-    tags: ["policy", "coverage", "premium"],
-    models: "2",
-    peopleCount: "1",
-    lastUpdated: "November 22, 2024",
-    createdAt: "2025-11-18",
-    variant: "light",
-  },
-  {
-    id: 7,
-    name: "Natural Catastrophe Modeling",
-    slug: "natural-catastrophe-modeling",
-    icon: UseCasesIcon,
-    description:
-      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
-    tags: ["claims", "fraud detection", "auto insurance"],
-    models: "4",
-    peopleCount: "3",
-    lastUpdated: "January 15, 2024",
-    createdAt: "2025-11-18",
-    variant: "light",
-  },
-];
-
-const stats = [
-  { title: "Total Use Cases", value: 7, description: "Active business use cases" },
-  { title: "Total Models", value: 23, description: "Across all use cases" },
-  { title: "Total Contributors", value: 13, description: "Unique contributors" },
-];
+import { getUseCases, getUseCaseStats, deleteUseCase } from "@/lib/api/ai-studio";
 
 const page = () => {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [useCases, setUseCases] = useState(Features);
+  const [useCases, setUseCases] = useState([]);
+  const [stats, setStats] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleDeleteUseCase = (id) => {
-  setUseCases((prev) => prev.filter((u) => u.id !== id));
-};
-
-
- 
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
 
+  // Fetch use cases and stats on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        // Parallel API calls
+        const [useCasesData, statsResponse] = await Promise.all([
+          getUseCases(),
+          getUseCaseStats(),
+        ]);
+
+        setUseCases(useCasesData);
+        setStats([
+          { title: "Total Use Cases", value: statsResponse.totalUseCases, description: "Active business use cases" },
+          { title: "Total Models", value: statsResponse.totalModels, description: "Across all use cases" },
+          { title: "Total Contributors", value: statsResponse.totalContributors, description: "Unique contributors" },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load use cases");
+        console.error("Use cases error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const handleDeleteUseCase = async (id) => {
+    try {
+      await deleteUseCase(id);
+      setUseCases((prev) => prev.filter((u) => u.id !== id));
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
+
   //  Get available tags dynamically
   const availableTags = useMemo(() => {
     const tags = new Set();
-    Features.forEach((f) => f.tags?.forEach((t) => tags.add(t)));
+    useCases.forEach((f) => f.tags?.forEach((t) => tags.add(t)));
     return Array.from(tags).sort();
-  }, []);
+  }, [useCases]);
 
   //  Search + Tag Filtering
 let filteredFeatures = useCases.filter((feature) => {
@@ -192,18 +122,32 @@ let filteredFeatures = useCases.filter((feature) => {
 
             {/* STATS */}
             <div className="w-full flex items-center justify-between gap-4">
-              {stats.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
-                >
-                  <span className="text-sm text-foreground/80">{item.title}</span>
-                  <span className="text-4xl font-medium mt-1">
-                    <CountUp value={item.value} startOnView />
-                  </span>
-                  <span className="text-xs font-normal">{item.description}</span>
-                </div>
-              ))}
+              {isLoading ? (
+                // Loading skeleton
+                Array.from({ length: 3 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card animate-pulse"
+                  >
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mt-1"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                  </div>
+                ))
+              ) : (
+                stats.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
+                  >
+                    <span className="text-sm text-foreground/80">{item.title}</span>
+                    <span className="text-4xl font-medium mt-1">
+                      <CountUp value={item.value} startOnView />
+                    </span>
+                    <span className="text-xs font-normal">{item.description}</span>
+                  </div>
+                ))
+              )}
             </div>
 
             {/* SEARCH */}
@@ -226,35 +170,65 @@ let filteredFeatures = useCases.filter((feature) => {
               setView={setView}
               sortOrder={sortOrder}
               setSortOrder={setSortOrder}
-              cards={Features}
+              cards={useCases}
             />
 
-            {/* USE CASE CARDS (GRID / LIST) */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={view}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`items-stretch ${
-                  view === "grid"
-                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                    : "flex flex-col gap-5"
-                }`}
-              >
-                {filteredFeatures.map((feature, index) => (
-                  <UseCaseCard key={feature.id} feature={feature} view={view} index={index}  onDelete={handleDeleteUseCase}
- />
-                ))}
+            {/* ERROR STATE */}
+            {error && !isLoading && (
+              <div className="p-4 text-center text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="font-medium">Failed to load use cases</p>
+                <p className="text-sm mt-2">{error}</p>
+              </div>
+            )}
 
-                {filteredFeatures.length === 0 && (
-                  <div className="flex h-64 items-center justify-center text-gray-500">
-                  
+            {/* LOADING STATE */}
+            {isLoading && !error && (
+              <div className={`items-stretch ${
+                view === "grid"
+                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  : "flex flex-col gap-5"
+              }`}>
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="border border-border-color-0 rounded-3xl p-6 animate-pulse dark:bg-card"
+                  >
+                    <div className="h-14 w-14 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
                   </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+                ))}
+              </div>
+            )}
+
+            {/* USE CASE CARDS (GRID / LIST) */}
+            {!isLoading && !error && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`items-stretch ${
+                    view === "grid"
+                      ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                      : "flex flex-col gap-5"
+                  }`}
+                >
+                  {filteredFeatures.map((feature, index) => (
+                    <UseCaseCard key={feature.id} feature={feature} view={view} index={index} onDelete={handleDeleteUseCase} />
+                  ))}
+
+                  {filteredFeatures.length === 0 && (
+                    <div className="flex h-64 items-center justify-center text-gray-500">
+                      No use cases found
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            )}
           </div>
         </ScaleDown>
       </div>

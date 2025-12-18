@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -11,82 +11,116 @@ import { UploadFile } from "@/components/Icons";
 import CardDetails from "@/components/CardDetails";
 import { ArrowRight, Upload } from 'lucide-react';
 import { CustomBarChart, CustomPieChart } from "../common/Graphs/graphs";
+import { getInferenceInsights, runSingleInferenceById, runSingleInferenceByData, runBatchInferenceByIds, runBatchInferenceByData } from "@/lib/api/ai-studio";
 
 
 
-export default function InferenceView() {
+export default function InferenceView({ useCaseId, modelId, versionId }) {
   const [mode, setMode] = useState("single");
 
-  const customerIds = [4038, 5386, 8031, 7214, 6285, 8299, 2500];
+  // State for insights data
+  const [stats, setStats] = useState([]);
+  const [pieData, setPieData] = useState([]);
+  const [featureData, setFeatureData] = useState([]);
+  const [chartData, setChartData] = useState([]);
+  const [chartData2, setChartData2] = useState([]);
+  const [riskScoreData, setRiskScoreData] = useState([]);
+  const [customerIds, setCustomerIds] = useState([]);
+  const [isLoadingInsights, setIsLoadingInsights] = useState(false);
 
-  const pieData = [
-    { name: "Fraud", value: 80 },
-    { name: "No Fraud", value: 20 },
-  ];
-
-  const featureData = [
-    { label: "Transaction Frequency", value: 92 },
-    { label: "Claim History", value: 85 },
-    { label: "Credit Score", value: 78 },
-    { label: "Account Balance", value: 65 },
-    { label: "Policy Duration", value: 52 },
-  ];
-
-  const chartData = [
-    { name: "Jan 8", noFraud: 200, fraud: 45 },
-    { name: "Jan 9", noFraud: 185, fraud: 52 },
-    { name: "Jan 10", noFraud: 190, fraud: 55 },
-    { name: "Jan 11", noFraud: 170, fraud: 38 },
-    { name: "Jan 12", noFraud: 202, fraud: 62 },
-    { name: "Jan 13", noFraud: 190, fraud: 42 },
-    { name: "Jan 14", noFraud: 210, fraud: 55 },
-  ];
-
-  const chartData2 = [
-    { range: "90-100%", score: 80 },
-    { range: "80-90%", score: 50 },
-    { range: "70-80%", score: 35 },
-    { range: "60-70%", score: 20 },
-    { range: "<60%", score: 8 },
-  ];
-
-  const riskScoreData = [
-    { range: "0-20%", score: 480 },
-    { range: "20-40%", score: 390 },
-    { range: "40-60%", score: 260 },
-    { range: "60-80%", score: 155 },
-    { range: "80-100%", score: 55 },
-  ];
+  // State for single inference result
+  const [inferenceResult, setInferenceResult] = useState(null);
+  const [isRunningInference, setIsRunningInference] = useState(false);
 
   // Values for Single Inference bars
-  const confidence = 89.5;
-  const riskScore = 23.4;
+  const confidence = inferenceResult?.confidence || 89.5;
+  const riskScore = inferenceResult?.riskScore || 23.4;
 
   // trigger animation
   const [playKey, setPlayKey] = useState(0);
 
-  const stats = [
-    {
-      title: "Total Inferences",
-      value: "1,000",
-      description: "+12.5% from last week",
-    },
-    {
-      title: "Fraud Detection Rate",
-      value: "18.8%",
-      description: "188 cases flagged",
-    },
-    {
-      title: "Avg Confidence",
-      value: "94.2%",
-      description: "High reliability",
-    },
-    {
-      title: "Avg Response Time",
-      value: "0.08s",
-      description: "Within SLA",
-    },
-  ];
+  // Fetch inference insights when in insights mode
+  useEffect(() => {
+    async function fetchInsights() {
+      if (mode !== "insights") return;
+
+      try {
+        setIsLoadingInsights(true);
+
+        // Use default mock data for standalone pages (when no real IDs provided)
+        const MOCK_INSIGHTS = {
+          stats: [
+            { title: "Total Inferences", value: "1,000", description: "+12.5% from last week" },
+            { title: "Fraud Detection Rate", value: "18.8%", description: "188 cases flagged" },
+            { title: "Avg Confidence", value: "94.2%", description: "High reliability" },
+            { title: "Avg Response Time", value: "0.08s", description: "Within SLA" },
+          ],
+          pieData: [
+            { name: "Fraud", value: 80 },
+            { name: "No Fraud", value: 20 },
+          ],
+          featureData: [
+            { label: "Transaction Frequency", value: 92 },
+            { label: "Claim History", value: 85 },
+            { label: "Credit Score", value: 78 },
+            { label: "Account Balance", value: 65 },
+            { label: "Policy Duration", value: 52 },
+          ],
+          predictionTrends: [
+            { name: "Jan 8", noFraud: 200, fraud: 45 },
+            { name: "Jan 9", noFraud: 185, fraud: 52 },
+            { name: "Jan 10", noFraud: 190, fraud: 55 },
+            { name: "Jan 11", noFraud: 170, fraud: 38 },
+            { name: "Jan 12", noFraud: 202, fraud: 62 },
+            { name: "Jan 13", noFraud: 190, fraud: 42 },
+            { name: "Jan 14", noFraud: 210, fraud: 55 },
+          ],
+          confidenceDistribution: [
+            { range: "90-100%", score: 80 },
+            { range: "80-90%", score: 50 },
+            { range: "70-80%", score: 35 },
+            { range: "60-70%", score: 20 },
+            { range: "<60%", score: 8 },
+          ],
+          riskScoreDistribution: [
+            { range: "0-20%", score: 480 },
+            { range: "20-40%", score: 390 },
+            { range: "40-60%", score: 260 },
+            { range: "60-80%", score: 155 },
+            { range: "80-100%", score: 55 },
+          ],
+          recentFraudCases: [4038, 5386, 8031, 7214, 6285, 8299, 2500],
+        };
+
+        // If we have actual numeric IDs, fetch from API, otherwise use mock data
+        if (useCaseId && modelId && versionId && !isNaN(Number(useCaseId))) {
+          const data = await getInferenceInsights(useCaseId, modelId, versionId);
+          setStats(data.stats || MOCK_INSIGHTS.stats);
+          setPieData(data.pieData || MOCK_INSIGHTS.pieData);
+          setFeatureData(data.featureData || MOCK_INSIGHTS.featureData);
+          setChartData(data.predictionTrends || MOCK_INSIGHTS.predictionTrends);
+          setChartData2(data.confidenceDistribution || MOCK_INSIGHTS.confidenceDistribution);
+          setRiskScoreData(data.riskScoreDistribution || MOCK_INSIGHTS.riskScoreDistribution);
+          setCustomerIds(data.recentFraudCases || MOCK_INSIGHTS.recentFraudCases);
+        } else {
+          // Use mock data for standalone pages
+          setStats(MOCK_INSIGHTS.stats);
+          setPieData(MOCK_INSIGHTS.pieData);
+          setFeatureData(MOCK_INSIGHTS.featureData);
+          setChartData(MOCK_INSIGHTS.predictionTrends);
+          setChartData2(MOCK_INSIGHTS.confidenceDistribution);
+          setRiskScoreData(MOCK_INSIGHTS.riskScoreDistribution);
+          setCustomerIds(MOCK_INSIGHTS.recentFraudCases);
+        }
+      } catch (err) {
+        console.error("Inference insights fetch error:", err);
+      } finally {
+        setIsLoadingInsights(false);
+      }
+    }
+
+    fetchInsights();
+  }, [useCaseId, modelId, versionId, mode]);
 
   return (
     <div className="w-full flex flex-col gap-6">

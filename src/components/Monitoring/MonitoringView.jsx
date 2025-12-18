@@ -1,58 +1,122 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useParams } from "next/navigation";
 import { Bar, BarChart } from "recharts";
 import CountUp from "../animations/CountUp";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { CustomBarChart, CustomLineChart } from "../common/Graphs/graphs";
 import { Badge } from "../ui/badge";
+import { subscribeToAIStudioMonitoring, getMonitoringOverview } from "@/lib/api/ai-studio";
 
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-const MonitoringView = () => {
-  const [driftedFeatures, setdriftedFeatures] = useState(156);
-  const [postInference, setPostInference] = useState(43);
-  const [avgLatency, setAvgLatency] = useState(0.112);
 
-  // Update KPIs every 3s (same cadence as chart)
+const MonitoringView = ({ useCaseId: propUseCaseId, modelId: propModelId, versionId: propVersionId }) => {
+  const params = useParams();
+  const { id: paramUseCaseId, modelId: paramModelId, versionId: paramVersionId } = params || {};
+
+  // Use props if provided, otherwise fall back to route params
+  const useCaseId = propUseCaseId || paramUseCaseId;
+  const modelId = propModelId || paramModelId;
+  const versionId = propVersionId || paramVersionId;
+
+  const [driftedFeatures, setdriftedFeatures] = useState(0);
+  const [totalFeatures, setTotalFeatures] = useState(0);
+  const [avgLatency, setAvgLatency] = useState(0);
+
+  const [requestRate, setRequestRate] = useState(0);
+  const [successRate, setSuccessRate] = useState(0);
+  const [error4xx, setError4xx] = useState(0);
+  const [error5xx, setError5xx] = useState(0);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch initial monitoring data
   useEffect(() => {
-    const id = setInterval(() => {
-      setdriftedFeatures((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 40) - 20), 50, 300)
-      );
-      setPostInference((prev) =>
-        clamp(prev + (Math.floor(Math.random() * 20) - 10), 20, 150)
-      );
-      setAvgLatency((prev) =>
-        clamp(prev + (Math.random() * 0.02 - 0.01), 0.08, 0.2)
-      );
-    }, 3000);
+    async function fetchMonitoringData() {
+      try {
+        setIsLoading(true);
 
-    return () => clearInterval(id);
-  }, []);
+        // Default mock data for standalone pages
+        const MOCK_DATA = {
+          drift: { totalFeatures: 21, driftedFeatures: 156 },
+          api: { requestRate: 1.85, successRate: 0.78, error4xx: 0.42, error5xx: 0.42 }
+        };
 
-  const [endToEnd, setEndToEnd] = useState(1.85);
-    const [processing, setProcessing] = useState(0.78);
-    const [toolInvocation, setToolInvocation] = useState(0.42);
-  
-    // Update KPIs every 3s to match chart updates
-    useEffect(() => {
-      const id = setInterval(() => {
-        const newEndToEnd = clamp(1.2 + Math.random() * 1.3, 1.2, 2.5);
-        const newProcessing = clamp(0.4 + Math.random() * 0.8, 0.4, 1.2);
-        const newToolInvocation = clamp(0.2 + Math.random() * 0.4, 0.2, 0.6);
-  
-        setEndToEnd(+newEndToEnd.toFixed(2));
-        setProcessing(+newProcessing.toFixed(2));
-        setToolInvocation(+newToolInvocation.toFixed(2));
-      }, 3000);
-  
-      return () => clearInterval(id);
-    }, []);
-  
-    const lines = useMemo(
-      () => [
-        { dataKey: "endToEnd", name: "End-to-End", color: "var(--red)" },
-      ],
-      []
+        // If we have actual numeric IDs, fetch from API, otherwise use mock data
+        if (useCaseId && modelId && versionId && !isNaN(Number(useCaseId))) {
+          const data = await getMonitoringOverview(useCaseId, modelId, versionId);
+
+          // Set drift metrics
+          if (data.drift) {
+            setTotalFeatures(data.drift.totalFeatures || MOCK_DATA.drift.totalFeatures);
+            setdriftedFeatures(data.drift.driftedFeatures || MOCK_DATA.drift.driftedFeatures);
+          }
+
+          // Set API metrics
+          if (data.api) {
+            setRequestRate(data.api.requestRate || MOCK_DATA.api.requestRate);
+            setSuccessRate(data.api.successRate || MOCK_DATA.api.successRate);
+            setError4xx(data.api.error4xx || MOCK_DATA.api.error4xx);
+            setError5xx(data.api.error5xx || MOCK_DATA.api.error5xx);
+          }
+        } else {
+          // Use mock data for standalone pages
+          setTotalFeatures(MOCK_DATA.drift.totalFeatures);
+          setdriftedFeatures(MOCK_DATA.drift.driftedFeatures);
+          setRequestRate(MOCK_DATA.api.requestRate);
+          setSuccessRate(MOCK_DATA.api.successRate);
+          setError4xx(MOCK_DATA.api.error4xx);
+          setError5xx(MOCK_DATA.api.error5xx);
+        }
+      } catch (err) {
+        console.error("Monitoring data fetch error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchMonitoringData();
+  }, [useCaseId, modelId, versionId]);
+
+  // Subscribe to real-time monitoring updates (only for nested pages with numeric IDs)
+  useEffect(() => {
+    if (!useCaseId || !modelId || !versionId) return;
+
+    // Only subscribe if we have actual numeric IDs
+    if (isNaN(Number(useCaseId))) return;
+
+    const unsubscribe = subscribeToAIStudioMonitoring(
+      useCaseId,
+      modelId,
+      versionId,
+      (update) => {
+        // Update drift metrics
+        if (update.drift) {
+          setdriftedFeatures((prev) =>
+            update.drift.driftedFeatures || prev
+          );
+        }
+
+        // Update API metrics
+        if (update.api) {
+          if (update.api.requestRate) {
+            setRequestRate(parseFloat(update.api.requestRate));
+          }
+          if (update.api.latency) {
+            setAvgLatency(parseFloat(update.api.latency));
+          }
+        }
+      }
     );
+
+    return () => unsubscribe();
+  }, [useCaseId, modelId, versionId]);
+
+  const lines = useMemo(
+    () => [
+      { dataKey: "endToEnd", name: "End-to-End", color: "var(--red)" },
+    ],
+    []
+  );
 
   return (
     <div className="w-full space-y-5">
@@ -70,7 +134,11 @@ const MonitoringView = () => {
               <CardContent className="!space-y-10">
                 <div className="text-sm ">No. of features</div>
                 <div className="text-4xl font-bold text-badge-green">
-                  21
+                  {isLoading ? (
+                    <div className="h-10 w-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                  ) : (
+                    totalFeatures
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -78,8 +146,13 @@ const MonitoringView = () => {
             <Card className="!pb-0 !py-7">
               <CardContent className="!space-y-10">
                 <div className="text-sm ">No. of drifted features</div>
-                <div className="text-4xl font-bold text-red">{driftedFeatures}</div>
-
+                <div className="text-4xl font-bold text-red">
+                  {isLoading ? (
+                    <div className="h-10 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                  ) : (
+                    driftedFeatures
+                  )}
+                </div>
               </CardContent>
             </Card>
 
@@ -157,14 +230,26 @@ const MonitoringView = () => {
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-7">
               <div className="text-sm">Request Rate</div>
-              <div className="text-2xl font-semibold">{Number(endToEnd).toFixed(2)} ops/s</div>
+              <div className="text-2xl font-semibold">
+                {isLoading ? (
+                  <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                ) : (
+                  `${Number(requestRate).toFixed(2)} ops/s`
+                )}
+              </div>
             </CardContent>
           </Card>
 
           <Card className="!pb-0 !py-7">
             <CardContent className="!space-y-7">
               <div className="text-sm">Success</div>
-              <div className="text-2xl font-semibold">{Number(processing).toFixed(2)} %</div>
+              <div className="text-2xl font-semibold">
+                {isLoading ? (
+                  <div className="h-8 w-20 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                ) : (
+                  `${Number(successRate).toFixed(2)} %`
+                )}
+              </div>
             </CardContent>
           </Card>
 
@@ -172,7 +257,11 @@ const MonitoringView = () => {
             <CardContent className="!space-y-7">
               <div className="text-sm">Error 4xxx</div>
               <div className="text-2xl font-semibold">
-                {Number(toolInvocation).toFixed(2)} ops/s
+                {isLoading ? (
+                  <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                ) : (
+                  `${Number(error4xx).toFixed(2)} ops/s`
+                )}
               </div>
             </CardContent>
           </Card>
@@ -180,7 +269,11 @@ const MonitoringView = () => {
             <CardContent className="!space-y-7">
               <div className="text-sm">Error 5xxx</div>
               <div className="text-2xl font-semibold">
-                {Number(toolInvocation).toFixed(2)} ops/s
+                {isLoading ? (
+                  <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                ) : (
+                  `${Number(error5xx).toFixed(2)} ops/s`
+                )}
               </div>
             </CardContent>
           </Card>

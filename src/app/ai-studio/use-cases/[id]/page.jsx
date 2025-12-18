@@ -1,5 +1,5 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -17,85 +17,63 @@ import CreateModel from "@/components/usecases/model/CreateModelPopup";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
-
-  const modelsData = [
-    {
-      id: 1,
-      ModelSlug: "fraud-detector",
-      name: "Fraud Detector",
-      icon: DataEngineeringIcon,
-      description:
-        "Advanced fraud detection using ensemble methods and anomaly detection",
-      tags: ["fraud", "classification", "ensemble"],
-      versions: 3,
-      features: 28,
-      status: "Deployed",
-      lastUpdated: "January 16, 2025",
-      createdAt: "2025-01-16",
-      variant: "light",
-    },
-    {
-      id: 2,
-      name: "Claims Anomaly Detector",
-      icon: DataEngineeringIcon,
-      description:
-        "Unsupervised anomaly detection for suspicious claim patterns",
-      ModelSlug: "claims-anomaly-detector",
-      tags: ["anomaly detection", "unsupervised"],
-      versions: 2,
-      features: 24,
-      status: "Undeployed",
-      lastUpdated: "January 12, 2025",
-      createdAt: "2025-01-12",
-      variant: "light",
-    },
-    {
-      id: 3,
-      name: "Fraud Risk Scorer",
-      ModelSlug: "fraud-risk-scorer",
-      icon: DataEngineeringIcon,
-      description: "Risk scoring model for fraud probability assessment",
-      tags: ["anomaly detection", "unsupervised"],
-      versions: 4,
-      features: 35,
-      status: "Deployed",
-      lastUpdated: "January 8, 2025",
-      createdAt: "2025-01-08",
-      variant: "light",
-    },
-    {
-      id: 4,
-      name: "Pattern Recognition Model",
-      icon: DataEngineeringIcon,
-      ModelSlug: "pattern-recognition-model",
-      description: "Pattern recognition for identifying fraud indicators",
-      tags: ["pattern recognition", "deep learning"],
-      versions: 2,
-      features: 32,
-      status: "Deployed",
-      lastUpdated: "January 5, 2025",
-      createdAt: "2025-01-05",
-      variant: "light",
-    },
-  ];
+import { getModelsByUseCaseId, getModelStats, deleteModel } from "@/lib/api/ai-studio";
 
 const page = () => {
   const { id } = useParams();
 
   const [query, setQuery] = useState("");
-
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [models, setModels] = useState(modelsData);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [models, setModels] = useState([]);
+  const [statsData, setStatsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-const handleDeleteModel = (modelId) => {
-  setModels((prev) => prev.filter((m) => m.id !== modelId));
-};
+  // Fetch models and stats on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        // Parallel API calls
+        const [modelsData, stats] = await Promise.all([
+          getModelsByUseCaseId(id),
+          getModelStats(id),
+        ]);
+
+        setModels(modelsData);
+        setStatsData([
+          { title: "Owner", value: stats.owner, description: "Use case owner" },
+          { title: "Total Models", value: stats.totalModels, description: "ML models in usecase" },
+          { title: "Deployed", value: stats.deployed, description: "Models in production" },
+        ]);
+      } catch (err) {
+        setError(err.message || "Failed to load models");
+        console.error("Models error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, [id]);
+
+  const handleDeleteModel = async (modelId) => {
+    try {
+      await deleteModel(id, modelId);
+      setModels((prev) => prev.filter((m) => m.id !== modelId));
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
 
   
 
+  // Use case metadata - in production this would come from API
   const usecase = {
     id: id,
     name: "Claims Fraud Detection",
@@ -106,11 +84,6 @@ const handleDeleteModel = (modelId) => {
     owner: "Shivam Thakkar",
     lastModified: "2 Hours Ago",
     usage: "1.2K Request",
-    stats: [
-      { title: "Owner", value: "Shivam Thakkar", description: "Use case owner" },
-      { title: "Total Models", value: "04", description: "ML models in usecase" },
-      { title: "Deployed", value: "03", description: "Models in production" },
-    ],
   };
 
 
@@ -200,22 +173,36 @@ const handleDeleteModel = (modelId) => {
             </div>
 
             <div className="w-full flex items-center justify-between gap-4">
-              {usecase.stats.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
-                >
-                  <span className="text-sm text-foreground/80">
-                    {item.title}
-                  </span>
-                  <span className="text-2xl font-medium mt-1">
-                    {index==0 ? `${item.value}` : <CountUp value={item.value} startOnView /> }
-                  </span>
-                  <span className="text-sm font-normal">
-                    {item.description}
-                  </span>
-                </div>
-              ))}
+              {isLoading ? (
+                // Loading skeleton
+                Array.from({ length: 3 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card animate-pulse"
+                  >
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                    <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-2/3 mt-1"></div>
+                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                  </div>
+                ))
+              ) : (
+                statsData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
+                  >
+                    <span className="text-sm text-foreground/80">
+                      {item.title}
+                    </span>
+                    <span className="text-2xl font-medium mt-1">
+                      {index === 0 ? `${item.value}` : <CountUp value={item.value} startOnView />}
+                    </span>
+                    <span className="text-sm font-normal">
+                      {item.description}
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
 
             <div className="space-y-4">
@@ -242,31 +229,62 @@ const handleDeleteModel = (modelId) => {
               />
             </div>
 
-            {/* MODEL GRID / LIST */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={view}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`items-stretch ${
-                  view === "grid"
-                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                    : "flex flex-col gap-5"
-                }`}
-              >
-                {filteredModels.map((item, index) => (
-                  <UsecaseInternalCard key={item.id} view={view} index={index} usecase={item} slug={id} onDelete={handleDeleteModel} />
-                ))}
+            {/* ERROR STATE */}
+            {error && !isLoading && (
+              <div className="p-4 text-center text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="font-medium">Failed to load models</p>
+                <p className="text-sm mt-2">{error}</p>
+              </div>
+            )}
 
-                {filteredModels.length === 0 && (
-                  <div className="flex h-64 items-center justify-center text-gray-500">
-                  
+            {/* LOADING STATE */}
+            {isLoading && !error && (
+              <div className={`items-stretch ${
+                view === "grid"
+                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                  : "flex flex-col gap-5"
+              }`}>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="border border-border-color-0 rounded-3xl p-6 animate-pulse dark:bg-card"
+                  >
+                    <div className="h-14 w-14 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
                   </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+                ))}
+              </div>
+            )}
+
+            {/* MODEL GRID / LIST */}
+            {!isLoading && !error && (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`items-stretch ${
+                    view === "grid"
+                      ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                      : "flex flex-col gap-5"
+                  }`}
+                >
+                  {filteredModels.map((item, index) => (
+                    <UsecaseInternalCard key={item.id} view={view} index={index} usecase={item} slug={id} onDelete={handleDeleteModel} />
+                  ))}
+
+                  {filteredModels.length === 0 && (
+                    <div className="flex h-64 items-center justify-center text-gray-500">
+                      No models found
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            )}
           </div>
         </ScaleDown>
       </div>
