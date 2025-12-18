@@ -92,7 +92,7 @@ const pipelineData = {
 
 export default function Lineage() {
   return (
-    <div className="border border-border-color-0 rounded-2xl space-y-8 py-6 pb-8 px-8">
+    <div className="border border-border-color-0 bg-white dark:bg-background rounded-2xl space-y-8 py-6 pb-8 px-8">
       <div className="space-y-3">
         <h2 className="text-xl font-medium">Data Lineage</h2>
         <p className="text-sm text-foreground/80">

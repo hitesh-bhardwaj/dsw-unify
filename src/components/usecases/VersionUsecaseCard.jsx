@@ -19,6 +19,8 @@ import {
   LineGraph,
   RocketIcon,
 } from "../Icons";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+
 
 const skeletonShownMap = new Map();
 
@@ -49,6 +51,7 @@ export default function VersionUsecaseCard({
   usecase,
   view,
   index,
+  onDelete,
   minSkeletonMs = 500,
 }) {
   const {
@@ -72,6 +75,20 @@ export default function VersionUsecaseCard({
   const [isModalOpen, setIsModalOpen] = useState(false);
     const params = useParams();
 const { id: routeId, modelId } = params;
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+const handleConfirmDelete = () => {
+  if (onDelete && id != null) {
+    onDelete(id);
+  }
+};
+
 
 
 
@@ -116,6 +133,20 @@ const { id: routeId, modelId } = params;
 
   return (
     <div className=" w-full h-full">
+      <ConfirmDialog
+  open={isDeleteOpen}
+  onOpenChange={setIsDeleteOpen}
+  title="Delete version?"
+  description={
+    name
+      ? `This action cannot be undone. This will permanently remove "${name}".`
+      : "This action cannot be undone. This will permanently remove this version."
+  }
+  confirmLabel="Delete"
+  destructive
+  onConfirm={handleConfirmDelete}
+/>
+
 <Link href={`/ai-studio/use-cases/${routeId}/${modelId}/${versionSlug}`}>
         <Card
           onClick={() => setIsModalOpen(true)}
@@ -192,6 +223,7 @@ const { id: routeId, modelId } = params;
 
                 <Button
                   variant="ghost"
+                  onClick={handleTrashClick}
                   size="icon"
                   className={cn(
                     "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",

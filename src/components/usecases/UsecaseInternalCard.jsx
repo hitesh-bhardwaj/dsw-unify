@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Bin, Editor, Eye, SynthWave, Calendar, FileTimeout, People, FeaturesIcon, VersionsIcon } from "../Icons";
-import CopyButton from "../animate-ui/components/buttons/CopyButton";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 
 const skeletonShownMap = new Map();
 
@@ -33,7 +33,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered UsecaseInternalCard component.
  */
-export default function UsecaseInternalCard({ usecase, slug,view,index, minSkeletonMs = 500 }) {
+export default function UsecaseInternalCard({ usecase, slug,view,index, minSkeletonMs = 500, onDelete }) {
   const {
     id,
     name,
@@ -51,6 +51,19 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
 
   const isDark = variant === "dark";
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const handleTrashClick = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setIsDeleteOpen(true);
+};
+
+const handleConfirmDelete = () => {
+  if (onDelete && id != null) {
+    onDelete(id);
+  }
+};
+
 
   // keep skeleton visible for minSkeletonMs
   const [showSkeleton, setShowSkeleton] = useState(() => {
@@ -81,12 +94,26 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
   if (showSkeleton) return <UsecaseInternalCardSkeleton />;
 
   return (
-    <div className=" w-full h-full">
+    <div className=" w-full h-full ">
+      <ConfirmDialog
+  open={isDeleteOpen}
+  onOpenChange={setIsDeleteOpen}
+  title="Delete model?"
+  description={
+    name
+      ? `This action cannot be undone. This will permanently remove "${name}" from this use case.`
+      : "This action cannot be undone. This will permanently remove this model."
+  }
+  confirmLabel="Delete"
+  destructive
+  onConfirm={handleConfirmDelete}
+/>
+
     <Link href={`/ai-studio/use-cases/${slug}/${ModelSlug}/`}>
       <Card
         onClick={() => setIsModalOpen(true)}
         className={cn(
-            "feature-card-hover-container gap-2  transition-all hover:bg-transparent hover:drop-shadow-xl duration-300 group",
+            "feature-card-hover-container hover:border-transparent gap-2 bg-white  transition-all hover:bg-transparent hover:drop-shadow-xl duration-300 group",
             isGrid &&
               " h-full flex flex-col justify-between gap-0 py-5  ",
             // List view styles
@@ -152,6 +179,7 @@ export default function UsecaseInternalCard({ usecase, slug,view,index, minSkele
               <Button
                 variant="ghost"
                 size="icon"
+                 onClick={handleTrashClick}
                 className={cn(
                   "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
                   "hover:bg-white/30 group-hover:text-white transition-all duration-300"

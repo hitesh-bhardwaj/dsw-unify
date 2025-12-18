@@ -253,7 +253,7 @@ function ToolsContent() {
           {/* EMPTY STATE */}
           {filteredTools.length === 0 && (
             <div className="flex h-64 items-center justify-center text-border-color-0 border border-border-color-0 rounded-xl mt-6">
-              No tools found matching "{query}"
+         
             </div>
           )}
         </div>

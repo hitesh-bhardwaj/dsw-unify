@@ -188,7 +188,7 @@ export default function LLMsPage() {
           />
         ) : (
           <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground border border-border-color-0 rounded-xl">
-            No LLMs found matching "{query}"
+       
           </div>
         ),
     },

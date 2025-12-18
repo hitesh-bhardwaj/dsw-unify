@@ -32,8 +32,7 @@ const FALLBACK_KNOWLEDGE_BASES = [
     size: "2.3 GB",
     documentsCount: "1250",
     variant: "light",
-        lastSynced:'Last synced 2 hour ago'
-
+    lastSynced: "Last synced 2 hour ago",
   },
   {
     id: "product-knowledge-base",
@@ -44,7 +43,7 @@ const FALLBACK_KNOWLEDGE_BASES = [
     size: "890 MB",
     documentsCount: "450",
     variant: "light",
-    lastSynced:'Last synced 2 hour ago'
+    lastSynced: "Last synced 2 hour ago",
   },
 ];
 
@@ -53,7 +52,9 @@ export default function KnowledgePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [view, setView] = useState("grid");
 
-  const [knowledgeBases, setKnowledgeBases] = useState(FALLBACK_KNOWLEDGE_BASES);
+  const [knowledgeBases, setKnowledgeBases] = useState(
+    FALLBACK_KNOWLEDGE_BASES
+  );
   const [stats, setStats] = useState(FALLBACK_STATS);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -72,7 +73,10 @@ export default function KnowledgePage() {
 
         // Transform stats object to array format
         setStats([
-          { title: "Total Knowledge Bases", value: statsData.totalKnowledgeBases },
+          {
+            title: "Total Knowledge Bases",
+            value: statsData.totalKnowledgeBases,
+          },
           { title: "Synced", value: statsData.synced },
           { title: "Total Documents", value: statsData.totalDocuments },
         ]);
@@ -89,9 +93,7 @@ export default function KnowledgePage() {
   const filteredKb = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return knowledgeBases;
-    return knowledgeBases.filter((kb) =>
-      kb.name.toLowerCase().includes(q)
-    );
+    return knowledgeBases.filter((kb) => kb.name.toLowerCase().includes(q));
   }, [query, knowledgeBases]);
 
   return (
@@ -124,19 +126,20 @@ export default function KnowledgePage() {
             </div>
 
             <div className="w-full flex items-center justify-between gap-4">
-                                      {stats.map((item, index) => (
-                                        <div
-                                          key={index}
-                                          className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
-                                        >
-                                          <span className="text-sm text-foreground/80">{item.title}</span>
-                                          <span className="text-4xl font-medium mt-1">
-                                            <CountUp value={item.value} startOnView />
-                                          </span>
-                                         
-                                        </div>
-                                      ))}
-                                    </div>
+              {stats.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
+                >
+                  <span className="text-sm text-foreground/80">
+                    {item.title}
+                  </span>
+                  <span className="text-4xl font-medium mt-1">
+                    <CountUp value={item.value} startOnView />
+                  </span>
+                </div>
+              ))}
+            </div>
 
             {/* Search */}
             <SearchBar
@@ -170,7 +173,7 @@ export default function KnowledgePage() {
 
                 {filteredKb.length === 0 && (
                   <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground">
-                    No Knowledge base found matching "{query}"
+                  
                   </div>
                 )}
               </motion.div>

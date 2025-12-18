@@ -16,16 +16,7 @@ import CardDetails from "@/components/CardDetails";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
 
-const page = () => {
-  const params = useParams();
-  const { id: routeId, modelId } = params;
-
-  const [query, setQuery] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [view, setView] = useState("grid");
-  const [sortOrder, setSortOrder] = useState("none");
-
-  const versions = [
+ const versions = [
     {
       id: 3,
       name: "V1",
@@ -74,6 +65,19 @@ const page = () => {
     },
   ];
 
+const page = () => {
+  const params = useParams();
+  const { id: routeId, modelId } = params;
+
+  const [query, setQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+  const [versionns, setVersionssData] = useState(versions);
+  
+
+ 
+
   const versionsData = {
     id: routeId,
     name: "Fraud Detector",
@@ -103,14 +107,14 @@ const page = () => {
   //  FILTER: Collect unique tags
   const availableTags = useMemo(() => {
     const s = new Set();
-    versions.forEach((v) => v.tags?.forEach((t) => s.add(t)));
+    versionns.forEach((v) => v.tags?.forEach((t) => s.add(t)));
     return Array.from(s).sort();
   }, []);
 
   // -----------------------------------------
   //  SEARCH + TAG FILTERING
   // -----------------------------------------
-  let filteredVersions = versions.filter((v) => {
+  let filteredVersions = versionns.filter((v) => {
     const matchesSearch =
       v.name.toLowerCase().includes(query.toLowerCase()) ||
       v.description.toLowerCase().includes(query.toLowerCase());
@@ -134,6 +138,11 @@ const page = () => {
       b.name.localeCompare(a.name)
     );
   }
+
+  const handleDeleteVersion = (versionId) => {
+  setVersionssData((prev) => prev.filter((v) => v.id !== versionId));
+};
+
 
   return (
     <div className="flex flex-col h-full">
@@ -219,12 +228,12 @@ const page = () => {
               }
             >
               {filteredVersions.map((item, index) => (
-                <VersionUsecaseCard key={item.id} view={view} usecase={item} index={index} />
+                <VersionUsecaseCard key={item.id} view={view} usecase={item} index={index} onDelete={handleDeleteVersion} />
               ))}
 
               {filteredVersions.length === 0 && (
                 <div className="flex h-64 items-center justify-center text-gray-500">
-                  No Versions found matching "{query}"
+            
                 </div>
               )}
             </motion.div>

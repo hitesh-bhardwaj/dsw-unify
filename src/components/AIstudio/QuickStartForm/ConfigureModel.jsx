@@ -18,9 +18,8 @@ import {
 export default function ConfigureModel({
   goNext,
   goBack,
-  isLastStep,
-  stepId,
   sharedState,
+  setSharedState
 }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -47,9 +46,16 @@ export default function ConfigureModel({
   };
 
   const handleNext = () => {
-    if (!validate()) return;
-    goNext();
-  };
+  if (!validate()) return;
+
+  setSharedState((prev) => ({
+    ...prev,
+    modelName: name,
+  }));
+
+  goNext();
+};
+
 
   // Render the appropriate parameters component
   const renderParametersComponent = () => {

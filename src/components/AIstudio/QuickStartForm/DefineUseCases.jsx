@@ -7,7 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { LeftArrow } from "@/components/Icons";
 
-export default function DefineUseCases({ goNext, goBack, isLastStep, stepId }) {
+export default function DefineUseCases({ goNext, goBack, sharedState,
+  setSharedState }) {
   // FORM STATE
   const [name, setName] = useState("");
   const [ownerName, setOwnerName] = useState("");
@@ -33,9 +34,16 @@ export default function DefineUseCases({ goNext, goBack, isLastStep, stepId }) {
   };
 
   const handleNext = () => {
-    if (!validate()) return;
-    goNext(); // move to next step
-  };
+  if (!validate()) return;
+
+  setSharedState((prev) => ({
+    ...prev,
+    useCaseName: name,
+  }));
+
+  goNext();
+};
+
 
   return (
     <div className="space-y-2 pb-6 pr-2">
@@ -50,7 +58,7 @@ export default function DefineUseCases({ goNext, goBack, isLastStep, stepId }) {
         {/* Name */}
         <div className="space-y-0">
           <label className="text-sm">
-          Use Case Name *
+          Use Case Name 
           </label>
 
           <Input

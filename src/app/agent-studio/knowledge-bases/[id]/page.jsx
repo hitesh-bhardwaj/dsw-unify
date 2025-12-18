@@ -8,8 +8,6 @@ import CountUp from "@/components/animations/CountUp";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
-import EmptyCard from "@/components/common/EmptyCard";
-import LLMConfigurationGrid from "@/components/llm-configuration-grid";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScaleDown } from "@/components/animations/Animations";
 import Documents from "@/components/knowledge-bases/documents";
@@ -24,15 +22,15 @@ export default function KnowledgeBaseDetailPage({ params }) {
   const { id } = use(params);
 
   function slugToTitle(slug) {
-  if (!slug) return "";
-  
-  return slug
-    .split("-")                
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))  
-    .join(" ");                
-}
+    if (!slug) return "";
 
-    const title = slugToTitle(id);
+    return slug
+      .split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+
+  const title = slugToTitle(id);
 
   // show the metrics skeleton only once per LLM id
   const [mounted, setMounted] = useState(false);
@@ -66,34 +64,28 @@ export default function KnowledgeBaseDetailPage({ params }) {
       value: "documents",
       label: "Documents",
       name: "Documents",
-      render: () => <Documents/>
+      render: () => <Documents />,
     },
     {
       id: "storage-strategy",
       value: "storage-strategy",
       label: "Storage Strategy",
       name: "Storage Strategy",
-      render: () => (
-        <StorageStrategy/>
-      ),
+      render: () => <StorageStrategy />,
     },
     {
       id: "activity",
       value: "activity",
       label: "Activity",
       name: "Activity",
-      render: () => (
-        <Activity/>
-      ),
+      render: () => <Activity />,
     },
     {
       id: "settings",
       value: "settings",
       label: "Settings",
       name: "Settings",
-      render: () => (
-        <Settings />
-      ),
+      render: () => <Settings />,
     },
   ];
 
@@ -105,7 +97,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
     status: "active",
     documents: "1,250",
     storage: "2.3 GB",
-    source:"Google Drive"
+    source: "Google Drive",
   };
 
   const [knowledgeBase, setKnowledgeBase] = useState(FALLBACK_KB);
@@ -128,15 +120,16 @@ export default function KnowledgeBaseDetailPage({ params }) {
   }, [id]);
 
   const renderMetric = (value, fallback) => {
-  if (value === undefined || value === null) {
-    return fallback;
-  }
+  const finalValue = value ?? fallback;
 
-  if (typeof value === "number") {
-    return <CountUp value={value} duration={1.2} startOnView once />;
-  }
-
-  return value;
+  return (
+    <CountUp
+      value={finalValue}
+      duration={1.2}
+      startOnView
+      once
+    />
+  );
 };
 
 
@@ -164,7 +157,6 @@ export default function KnowledgeBaseDetailPage({ params }) {
               </div>
             </div>
             <div className="flex items-center gap-3">
-               
               <RippleButton>
                 <Link href={"#"}>
                   <Button
@@ -172,20 +164,20 @@ export default function KnowledgeBaseDetailPage({ params }) {
                     className="gap-2 text-foreground border border-primary"
                   >
                     <div className="!w-4">
-                      <ConfigureIcon/>
+                      <ConfigureIcon />
                     </div>
                     Settings
                   </Button>
                 </Link>
               </RippleButton>
-               <RippleButton>
+              <RippleButton>
                 <Link href={"#"}>
                   <Button
                     variant="outline"
                     className="gap-2 text-foreground border border-primary"
                   >
                     <div className="!w-4 text-red">
-                     <Bin/>
+                      <Bin />
                     </div>
                     Delete
                   </Button>
@@ -194,7 +186,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
               <RippleButton>
                 <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                   <div className="w-5">
-                    <RefreshCcw/>
+                    <RefreshCcw />
                   </div>
                   Sync Now
                 </Button>
@@ -220,25 +212,20 @@ export default function KnowledgeBaseDetailPage({ params }) {
               <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm ">Documents</p>
                 <p className="text-3xl font-medium">
-  {renderMetric(knowledgeBase.documents, "1,250")}
-</p>
-
-                
+                  {renderMetric(knowledgeBase.documents, "1,250")}
+                </p>
               </div>
               <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Storage</p>
                 <p className="text-3xl font-medium">
-  {renderMetric(knowledgeBase.storage, "2.3 GB")}
-</p>
-
-                
+                  {renderMetric(knowledgeBase.storage, "2.3 GB")}
+                </p>
               </div>
               <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm">Source</p>
                 <p className="text-3xl font-medium">
-  {knowledgeBase.source ?? "Google Drive"}
-</p>
-
+                  {knowledgeBase.source ?? "Google Drive"}
+                </p>
               </div>
             </div>
           )}

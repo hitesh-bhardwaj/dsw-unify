@@ -323,7 +323,7 @@ export default function GuardrailsPage() {
 
           {filtered.length === 0 && (
             <div className="flex h-64 items-center justify-center text-gray-500">
-              No guardrails found matching "{query}"
+            
             </div>
           )}
         </motion.div>
@@ -438,7 +438,7 @@ export default function GuardrailsPage() {
 
                 {filteredSuites.length === 0 && (
                   <div className="flex h-64 items-center justify-center text-gray-500">
-                    No guard suites found matching "{query}"
+                
                   </div>
                 )}
               </motion.div>

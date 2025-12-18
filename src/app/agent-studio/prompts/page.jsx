@@ -421,7 +421,7 @@ function PromptsContent() {
 
                     {filteredTemplates.length === 0 && (
                       <div className="flex h-64 items-center justify-center text-gray-500">
-                        No templates found matching "{query}"
+                 
                       </div>
                     )}
                   </motion.div>

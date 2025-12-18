@@ -521,12 +521,13 @@ export default function Inference() {
   );
 }
 
-function ConfigureSingleInference() {
+ function ConfigureSingleInference() {
   const [mode, setMode] = useState("byData");
+
   return (
     <div className="flex items-center justify-center">
       <div className="w-full">
-        <div className="border border-border-color-2 rounded-2xl p-8 dark:bg-card">
+        <div className="border border-border-color-0 rounded-2xl p-8 dark:bg-card">
           <h2 className="text-xl font-medium mb-6">Configure Inference</h2>
 
           {/* Radio Group Toggle */}
@@ -534,13 +535,9 @@ function ConfigureSingleInference() {
             <div className="grid grid-cols-2 gap-4">
               <label
                 htmlFor="byId"
-                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+                className="flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-0"
               >
-                <RadioGroupItem
-                  value="byId"
-                  id="byId"
-                  className="text-primary"
-                />
+                <RadioGroupItem value="byId" id="byId" className="text-primary" />
                 <span
                   className={`text-sm ${
                     mode === "byId" ? "text-orange-600" : ""
@@ -549,9 +546,10 @@ function ConfigureSingleInference() {
                   By ID
                 </span>
               </label>
+
               <label
                 htmlFor="byData"
-                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+                className="flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-0"
               >
                 <RadioGroupItem
                   value="byData"
@@ -569,131 +567,146 @@ function ConfigureSingleInference() {
             </div>
           </RadioGroup>
 
-          {mode === "byData" ? (
-            <>
-              {/* Feature Values */}
-              <div className="space-y-4 mb-6">
-                <h3 className="font-medium  mb-4">Feature Values</h3>
+          {/* Animated Content */}
+          <AnimatePresence mode="wait">
+            {mode === "byData" && (
+              <motion.div
+                key="byData"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                {/* Feature Values */}
+                <div className="space-y-4 mb-6">
+                  <h3 className="font-medium mb-4">Feature Values</h3>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">Age</Label>
-                    <Input
-                      type="number"
-                      defaultValue="35"
-                      className="rounded-lg"
-                    />
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-sm mb-1.5 block">Age</Label>
+                      <Input type="number" defaultValue="35" className="rounded-lg" />
+                    </div>
+                    <div>
+                      <Label className="text-sm mb-1.5 block">Income ($)</Label>
+                      <Input
+                        type="number"
+                        defaultValue="75000"
+                        className="rounded-lg"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">Income ($)</Label>
-                    <Input
-                      type="number"
-                      defaultValue="75000"
-                      className="rounded-lg"
-                    />
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-sm mb-1.5 block">
+                        Credit Score
+                      </Label>
+                      <Input
+                        type="number"
+                        defaultValue="720"
+                        className="rounded-lg"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-sm mb-1.5 block">
+                        Account Balance ($)
+                      </Label>
+                      <Input
+                        type="number"
+                        defaultValue="15000"
+                        className="rounded-lg"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-sm mb-1.5 block">
+                        Transaction Freq.
+                      </Label>
+                      <Input
+                        type="number"
+                        defaultValue="12"
+                        className="rounded-lg"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-sm mb-1.5 block">
+                        Claim History
+                      </Label>
+                      <Input
+                        type="number"
+                        defaultValue="02"
+                        className="rounded-lg"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label className="text-sm mb-1.5 block">
+                        Policy Duration (mo)
+                      </Label>
+                      <Input
+                        type="number"
+                        defaultValue="36"
+                        className="rounded-lg"
+                      />
+                    </div>
+                    <div>
+                      <Label className="text-sm mb-1.5 block">
+                        Coverage Amount ($)
+                      </Label>
+                      <Input
+                        type="number"
+                        defaultValue="250000"
+                        className="rounded-lg"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">
-                      Credit Score
-                    </Label>
-                    <Input
-                      type="number"
-                      defaultValue="720"
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">
-                      Account Balance ($)
-                    </Label>
-                    <Input
-                      type="number"
-                      defaultValue="15000"
-                      className="rounded-lg"
-                    />
-                  </div>
+                {/* Run Inference Button */}
+                <div className="flex justify-end">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                    Run Inference
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+
+            {mode === "byId" && (
+              <motion.div
+                key="byId"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                <div>
+                  <Label className="text-sm mb-1.5 block">
+                    Transaction ID
+                  </Label>
+                  <Input
+                    className="rounded-lg"
+                    placeholder=" e.g. TXN-2025-001234"
+                  />
+                  <p className="text-foreground/80 text-xs py-1">
+                    Enter a transaction ID to retrieve and analyze
+                  </p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">
-                      Transaction Freq.
-                    </Label>
-                    <Input
-                      type="number"
-                      defaultValue="12"
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">
-                      Claim History
-                    </Label>
-                    <Input
-                      type="number"
-                      defaultValue="02"
-                      className="rounded-lg"
-                    />
-                  </div>
+                {/* Run Inference Button */}
+                <div className="flex justify-end mt-6">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                    Run Inference
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
                 </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">
-                      Policy Duration (mo)
-                    </Label>
-                    <Input
-                      type="number"
-                      defaultValue="36"
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-sm  mb-1.5 block">
-                      Coverage Amount ($)
-                    </Label>
-                    <Input
-                      type="number"
-                      defaultValue="250000"
-                      className="rounded-lg"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Run Inference Button */}
-              <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
-                  Run Inference
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div>
-                <Label className="text-sm  mb-1.5 block">Transaction ID</Label>
-                <Input
-                  className="rounded-lg"
-                  placeholder=" e.g. TXN-2025-001234"
-                />
-                <p className="text-foreground/80 text-xs py-1">
-                  Enter a transaction ID to retrieve and analyze
-                </p>
-              </div>
-
-              {/* Run Batch Inference Button */}
-              <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
-                  Run Inference
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </>
-          )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>
@@ -749,7 +762,7 @@ function ConfigureBatchInference() {
   return (
     <div className="flex items-center justify-center">
       <div className="w-full">
-        <div className="border border-border-color-2 rounded-2xl p-8 dark:bg-card">
+        <div className="border border-border-color-0 rounded-2xl p-8 dark:bg-card">
           <h2 className="text-xl font-medium mb-6">Configure Inference</h2>
 
           {/* Radio Group Toggle */}
@@ -757,13 +770,9 @@ function ConfigureBatchInference() {
             <div className="grid grid-cols-2 gap-4">
               <label
                 htmlFor="byId"
-                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+                className="flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-0"
               >
-                <RadioGroupItem
-                  value="byId"
-                  id="byId"
-                  className="text-primary"
-                />
+                <RadioGroupItem value="byId" id="byId" className="text-primary" />
                 <span
                   className={`text-sm ${
                     mode === "byId" ? "text-orange-600" : ""
@@ -772,9 +781,10 @@ function ConfigureBatchInference() {
                   By ID
                 </span>
               </label>
+
               <label
                 htmlFor="byData"
-                className={`flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-2`}
+                className="flex items-center space-x-3 p-4 py-3 border rounded-xl cursor-pointer transition-all border-border-color-0"
               >
                 <RadioGroupItem
                   value="byData"
@@ -792,131 +802,150 @@ function ConfigureBatchInference() {
             </div>
           </RadioGroup>
 
-          {mode === "byData" ? (
-            <>
-              {/* Feature Values */}
-              <div className="mb-6">
-                <Label className="text-sm  mb-3 block">
-                  Upload CSV File{" "}
-                  <span className="text-gray-500">(Transaction IDs)</span>
-                </Label>
+          {/* Animated Content */}
+          <AnimatePresence mode="wait">
+            {mode === "byData" && (
+              <motion.div
+                key="byData"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                <div className="mb-6">
+                  <Label className="text-sm mb-3 block">
+                    Upload CSV File{" "}
+                    <span className="text-gray-500">(Transaction IDs)</span>
+                  </Label>
 
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".csv"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
 
-                <div
-                  onClick={handleUploadClick}
-                  onDragEnter={handleDrag}
-                  onDragLeave={handleDrag}
-                  onDragOver={handleDrag}
-                  onDrop={handleDrop}
-                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${
-                    dragActive
-                      ? "border-primary bg-primary/10"
-                      : "border-border-color-2"
-                  }`}
-                >
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 flex items-center justify-center mb-4">
-                      <UploadFile className="h-8 w-8 text-gray-400" />
+                  <div
+                    onClick={handleUploadClick}
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleDrop}
+                    className={`border-2 rounded-2xl p-12 text-center transition-colors cursor-pointer ${
+                      dragActive
+                        ? ""
+                        : "border-border-color-0"
+                    }`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="w-10 h-10 flex items-center justify-center mb-4">
+                        <UploadFile className="h-8 w-8 text-gray-400" />
+                      </div>
+
+                      {selectedFile ? (
+                        <>
+                          <p className="font-medium mb-1">
+                            {selectedFile.name}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {(selectedFile.size / 1024).toFixed(2)} KB
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-sm font-medium mb-1">
+                            Click to upload or drag and drop
+                          </p>
+                          <p className="text-xs text-foreground/80">
+                            CSV files only (max 10MB)
+                          </p>
+                        </>
+                      )}
                     </div>
-                    {selectedFile ? (
-                      <>
-                        <p className=" font-medium mb-1">{selectedFile.name}</p>
-                        <p className="text-sm text-gray-500">
-                          {(selectedFile.size / 1024).toFixed(2)} KB
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="text-sm font-medium mb-1">
-                          Click to upload or drag and drop
-                        </p>
-                        <p className="text-xs text-foreground/80">
-                          CSV files only (max 10MB)
-                        </p>
-                      </>
-                    )}
                   </div>
                 </div>
-              </div>
 
-              {/* Run Inference Button */}
-              <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
-                  Run Batch Inference
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </>
-          ) : (
-            <>
-              {/* Upload CSV File */}
-              <div className="mb-6">
-                <Label className="text-sm  mb-3 block">
-                  Upload CSV File{" "}
-                  <span className="text-gray-500">(Transaction IDs)</span>
-                </Label>
+                <div className="flex justify-end">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                    Run Batch Inference
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+              </motion.div>
+            )}
 
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".csv"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
+            {mode === "byId" && (
+              <motion.div
+                key="byId"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+              >
+                <div className="mb-6">
+                  <Label className="text-sm mb-3 block">
+                    Upload CSV File{" "}
+                    <span className="text-gray-500">(Transaction IDs)</span>
+                  </Label>
 
-                <div
-                  onClick={handleUploadClick}
-                  onDragEnter={handleDrag}
-                  onDragLeave={handleDrag}
-                  onDragOver={handleDrag}
-                  onDrop={handleDrop}
-                  className={`border-2   rounded-2xl p-12 text-center transition-colors cursor-pointer ${
-                    dragActive
-                      ? "border-primary bg-primary/10"
-                      : "border-border-color-2"
-                  }`}
-                >
-                  <div className="flex flex-col items-center">
-                    <div className="w-10 h-10 flex items-center justify-center mb-4">
-                      <UploadFile className="h-8 w-8 text-gray-400" />
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+
+                  <div
+                    onClick={handleUploadClick}
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleDrop}
+                    className={`border-2 rounded-2xl p-12 text-center transition-colors cursor-pointer ${
+                      dragActive
+                        ? "border-primary bg-primary/10"
+                        : "border-border-color-0"
+                    }`}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="w-10 h-10 flex items-center justify-center mb-4">
+                        <UploadFile className="h-8 w-8 text-gray-400" />
+                      </div>
+
+                      {selectedFile ? (
+                        <>
+                          <p className="font-medium mb-1">
+                            {selectedFile.name}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {(selectedFile.size / 1024).toFixed(2)} KB
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="text-sm font-medium mb-1">
+                            Click to upload or drag and drop
+                          </p>
+                          <p className="text-xs text-foreground/80">
+                            CSV files only (max 10MB)
+                          </p>
+                        </>
+                      )}
                     </div>
-                    {selectedFile ? (
-                      <>
-                        <p className=" font-medium mb-1">{selectedFile.name}</p>
-                        <p className="text-sm text-gray-500">
-                          {(selectedFile.size / 1024).toFixed(2)} KB
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="text-sm font-medium mb-1">
-                          Click to upload or drag and drop
-                        </p>
-                        <p className="text-xs text-foreground/80">
-                          CSV files only (max 10MB)
-                        </p>
-                      </>
-                    )}
                   </div>
                 </div>
-              </div>
 
-              {/* Run Batch Inference Button */}
-              <div className="flex justify-end">
-                <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base shadow-lg shadow-primary/30">
-                  Run Batch Inference
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </>
-          )}
+                <div className="flex justify-end">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                    Run Batch Inference
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>

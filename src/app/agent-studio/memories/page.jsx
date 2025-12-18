@@ -261,7 +261,7 @@ function MemoriesContent() {
           {/* EMPTY STATE */}
           {filteredMemories.length === 0 && (
             <div className="flex h-64 items-center justify-center text-border-color-0 border border-border-color-0 rounded-xl mt-6">
-              No memories found matching "{query}"
+
             </div>
           )}
         </div>

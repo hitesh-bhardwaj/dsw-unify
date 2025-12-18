@@ -59,7 +59,7 @@ const page = () => {
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Use Case</label>
               <Select onValueChange={(val) => setUseCase(val)} className="py-2">
-                <SelectTrigger className="w-full py-5 cursor-pointer">
+                <SelectTrigger className="w-full py-5 border border-border-color-0 cursor-pointer">
                   <SelectValue placeholder="Choose a use case" className="text-foreground/80" />
                 </SelectTrigger>
                 <SelectContent className="border border-border-color-0">
@@ -76,7 +76,7 @@ const page = () => {
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Model</label>
               <Select onValueChange={(val) => setModel(val)}>
-                <SelectTrigger className="w-full py-5 cursor-pointer">
+                <SelectTrigger className="w-full border border-border-color-0 py-5 cursor-pointer">
                   <SelectValue placeholder="Choose a model" className="text-foreground/80" />
                 </SelectTrigger>
                 <SelectContent className="border border-border-color-0">
@@ -93,7 +93,7 @@ const page = () => {
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Version</label>
               <Select onValueChange={(val) => setVersion(val)}>
-                <SelectTrigger className="w-full py-5 cursor-pointer">
+                <SelectTrigger className="w-full border border-border-color-0 py-5 cursor-pointer">
                   <SelectValue placeholder="Choose a version" className="text-foreground/80" />
                 </SelectTrigger>
                 <SelectContent className="border border-border-color-0">

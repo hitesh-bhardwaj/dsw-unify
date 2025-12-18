@@ -109,9 +109,9 @@ export function UseCaseCard({
         <Card
           onClick={() => setIsModalOpen(true)}
           className={cn(
-            "feature-card-hover-container gap-2 hover:drop-shadow-xl  transition-all duration-300 group",
+            "feature-card-hover-container gap-2 hover:drop-shadow-xl bg-white  transition-all duration-300 group",
             isGrid &&
-              " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
+              " h-full flex flex-col justify-between gap-0 py-5 hover:border-transparent ",
             isList && "w-full rounded-xl  py-6 bg-white dark:bg-card"
           )}
         >

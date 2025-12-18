@@ -42,15 +42,21 @@ const page = () => {
      const [query, setQuery] = useState("");
        const [isModalOpen, setIsModalOpen] = useState(false);
        const [sharedState, setSharedState] = useState({
-    selectedTables: ["Customers"]
+    selectedTables: ["Customers"],
+    useCaseName: "",
+    modelName: ""
   });
+
 
    const manualSteps = [
     {
       id: "define-use-case",
       label: "Define Use Case",
       required: true,
-      element: <DefineUseCases/>,
+      element: <DefineUseCases
+          sharedState={sharedState}
+          setSharedState={setSharedState}
+        />,
     },
     {
       id: "select-data",
@@ -65,7 +71,10 @@ const page = () => {
     {
       id: "model-training",
       label: "Model Training",
-      element: <ModelTraining />,
+      element:  <ModelTraining
+          useCaseName={sharedState.useCaseName}
+          modelName={sharedState.modelName}
+        />,
     }
   ];
 
@@ -133,7 +142,7 @@ const page = () => {
       <StepFormModal
         title="Quick Start"
         open={isModalOpen}
-              onOpenChange={setIsModalOpen}
+          onOpenChange={setIsModalOpen}
         steps={manualSteps}
       />
     </>

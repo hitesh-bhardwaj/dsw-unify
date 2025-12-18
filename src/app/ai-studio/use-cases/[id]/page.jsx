@@ -13,35 +13,10 @@ import { Badge } from "@/components/ui/badge";
 import { PlusIcon } from "@/components/Icons";
 import Link from "next/link";
 import CountUp from "@/components/animations/CountUp";
+import CreateModel from "@/components/usecases/model/CreateModelPopup";
 
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
-
-const page = () => {
-  const { id } = useParams();
-
-  const [query, setQuery] = useState("");
-
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [view, setView] = useState("grid");
-  const [sortOrder, setSortOrder] = useState("none");
-
-  const usecase = {
-    id: id,
-    name: "Claims Fraud Detection",
-    description:
-      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
-    status: "active",
-    tags: ["claims", "fraud detection", "auto insurance"],
-    owner: "Shivam Thakkar",
-    lastModified: "2 Hours Ago",
-    usage: "1.2K Request",
-    stats: [
-      { title: "Owner", value: "Shivam Thakkar", description: "Use case owner" },
-      { title: "Total Models", value: "04", description: "ML models in usecase" },
-      { title: "Deployed", value: "03", description: "Models in production" },
-    ],
-  };
 
   const modelsData = [
     {
@@ -104,6 +79,42 @@ const page = () => {
     },
   ];
 
+const page = () => {
+  const { id } = useParams();
+
+  const [query, setQuery] = useState("");
+
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [models, setModels] = useState(modelsData);
+
+const handleDeleteModel = (modelId) => {
+  setModels((prev) => prev.filter((m) => m.id !== modelId));
+};
+
+  
+
+  const usecase = {
+    id: id,
+    name: "Claims Fraud Detection",
+    description:
+      "Identify fraudulent insurance claims using ML pattern recognition and anomaly detection",
+    status: "active",
+    tags: ["claims", "fraud detection", "auto insurance"],
+    owner: "Shivam Thakkar",
+    lastModified: "2 Hours Ago",
+    usage: "1.2K Request",
+    stats: [
+      { title: "Owner", value: "Shivam Thakkar", description: "Use case owner" },
+      { title: "Total Models", value: "04", description: "ML models in usecase" },
+      { title: "Deployed", value: "03", description: "Models in production" },
+    ],
+  };
+
+
+
   //  Convert slug to title
   function slugToTitle(slug) {
     if (!slug) return "";
@@ -117,12 +128,12 @@ const page = () => {
   //  Collect unique tags from models for filtering
   const availableTags = useMemo(() => {
     const setTags = new Set();
-    modelsData.forEach((m) => m.tags?.forEach((t) => setTags.add(t)));
+    models.forEach((m) => m.tags?.forEach((t) => setTags.add(t)));
     return Array.from(setTags).sort();
   }, []);
 
   //  FILTER: search + tags
-  let filteredModels = modelsData.filter((model) => {
+  let filteredModels = models.filter((model) => {
     const matchesSearch = model.name.toLowerCase().includes(query.toLowerCase());
 
     const matchesTags =
@@ -179,7 +190,7 @@ const page = () => {
               <div className="flex items-center gap-3">
                 <Link href={`#`}>
                   <RippleButton>
-                    <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
+                    <Button onClick={() => setIsModalOpen(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                       <PlusIcon />
                       Create Model
                     </Button>
@@ -227,7 +238,7 @@ const page = () => {
                 setView={setView}
                 sortOrder={sortOrder}
                 setSortOrder={setSortOrder}
-                cards={modelsData}
+                cards={models}
               />
             </div>
 
@@ -246,12 +257,12 @@ const page = () => {
                 }`}
               >
                 {filteredModels.map((item, index) => (
-                  <UsecaseInternalCard key={item.id} view={view} index={index} usecase={item} slug={id} />
+                  <UsecaseInternalCard key={item.id} view={view} index={index} usecase={item} slug={id} onDelete={handleDeleteModel} />
                 ))}
 
                 {filteredModels.length === 0 && (
                   <div className="flex h-64 items-center justify-center text-gray-500">
-                    No Models found matching "{query}"
+                  
                   </div>
                 )}
               </motion.div>
@@ -259,6 +270,7 @@ const page = () => {
           </div>
         </ScaleDown>
       </div>
+       <CreateModel open={isModalOpen} onOpenChange={setIsModalOpen} />
     </>
   );
 };
