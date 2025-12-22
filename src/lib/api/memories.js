@@ -62,9 +62,9 @@ const MOCK_MEMORIES = [
  * Mock memory statistics
  */
 const MOCK_STATS = {
-  totalMemories: "03",
-  activeMemories: "03",
-  totalEntries: "4480",
+  agentsMemories: "06",
+  organizationMemories: "04",
+  totalMemories: "10",
 };
 
 /**
