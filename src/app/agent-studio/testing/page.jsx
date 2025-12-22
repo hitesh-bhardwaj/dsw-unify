@@ -12,6 +12,7 @@ import TestingResultsGrid from "@/components/testing/testing-results-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import AddTestings from "@/components/agent-studio/AddTesting";
 import * as testingApi from "@/lib/api/testing";
+import CardDetails from "@/components/CardDetails";
 
 const initialTestSuites = [
   {
@@ -62,9 +63,9 @@ const initialTestSuites = [
 ];
 
 const initialStats = [
-  { title: "Total Test Suites", value: "02" },
-  { title: "Success Rate", value: "92%" },
-  { title: "Test Runs Today", value: "00" },
+  { title: "Total Test Suites", value: "02" , description:"Active test suites"},
+  { title: "Success Rate", value: "92%", description:"Average across all suites" },
+  { title: "Test Runs Today", value: "00", description:"Completed test executions" },
 ];
 
 export default function TestingPage() {
@@ -87,9 +88,9 @@ export default function TestingPage() {
 
         // Update stats with fetched data
         setStatsData([
-          { title: "Total Test Suites", value: stats.totalTestSuites },
-          { title: "Success Rate", value: stats.successRate },
-          { title: "Test Runs Today", value: stats.testRunsToday },
+          { title: "Total Test Suites", value: stats.totalTestSuites ,description:"Active test suites" },
+          { title: "Success Rate", value: stats.successRate ,description:"Average across all suites"},
+          { title: "Test Runs Today", value: stats.testRunsToday, description:"Completed test executions" },
         ]);
       } catch (err) {
         setError(err.message || "Failed to load testing data");
@@ -199,6 +200,14 @@ export default function TestingPage() {
       label: "Test Results",
       render: () => <TestingResultsGrid items={testResults}   />,
     },
+    // {
+    //   id: "analytics",
+    //   value: "analytics",
+    //   label: "Analytics",
+    //   render: () => (
+    //     <TestingAnalyticsComp cardData={analyticsData}  items={testResults} />
+    //   ),
+    // },
   ];
 
   if (isLoading) {
@@ -234,7 +243,6 @@ export default function TestingPage() {
                 <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
               )}
             </div>
-
             <RippleButton>
               <Link href="#" onClick={() => setIsModalOpen(true)}>
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 cursor-pointer rounded-full !px-6 !py-6">
@@ -261,13 +269,16 @@ export default function TestingPage() {
               : statsData.map((item, index) => (
                   <div
                     key={index}
-                    className="flex flex-col bg-white gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                    className="flex flex-col bg-white gap-4 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
                   >
-                    <span className="text-sm text-foreground/80">
+                    <span className="text-sm font-medium text-foreground/80">
                       {item.title}
                     </span>
                     <span className="text-4xl font-medium mt-2">
                       <CountUp value={item.value} startOnView />
+                    </span>
+                    <span className="text-xs text-foreground/80">
+                      {item.description}
                     </span>
                   </div>
                 ))}

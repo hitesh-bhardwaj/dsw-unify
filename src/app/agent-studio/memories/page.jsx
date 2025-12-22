@@ -1,20 +1,14 @@
 "use client";
 
 import { useMemo, useState, useEffect, Suspense } from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { MemoriesIcon, PlusIcon } from "@/components/Icons";
-import { MemoryCard } from "@/components/memory-card";
-import SearchBar from "@/components/search-bar";
-import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
-import AddMemoriesModal from "@/components/agent-studio/AddMemoriesModal";
-import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "@/components/animations/CountUp";
 import { useSearchParams } from "next/navigation";
-
-import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import * as memoriesApi from "@/lib/api/memories";
+import AnimatedTabsSection from "@/components/common/TabsPane";
+import OrganizationMemoryGrid from "@/components/agent-studio/memories/OrganizationMemoryGrid";
+import AgentsMemoryGrid from "@/components/agent-studio/memories/AgentsMemoryGrid";
 
 const FALLBACK_MEMORIES = [
   {
@@ -53,14 +47,100 @@ const FALLBACK_MEMORIES = [
 ];
 
 const FALLBACK_STATS = [
-  { title: "Total Memories", value: "03" },
-  { title: "Active Memories", value: "03" },
-  { title: "Total Entries", value: "4480" },
+  { title: "Agent Memories", value: "06" },
+  { title: "Organization Memories", value: "04" },
+  { title: "Total Memories", value: "10" },
 ];
+const organizationMemories=[
+    {
+      id: "california-insurance-regulations",
+      content: "California requires 30-day notice for non-renewal. Form SR-22 required for high-risk drivers. Proposition 103 rate filing requirements apply to all policy changes.",
+      icon: <MemoriesIcon />,
+      modified:"1 week ago",
+    },
+    {
+      id: "hipaa-compliance-guidelines",
+      content: "All PHI must be encrypted at rest and in transit. Access logs required for minimum 6 years. Breach notification required within 60 days. Annual security risk assessment mandatory.",
+      icon: <MemoriesIcon />,
+      modified:"3 days ago",
+    },{
+      id: "auto-insurance-risk-factors",
+      content: "Credit score weight: 30%. Driving record: 40%. Vehicle type: 20%. Location: 10%. Minimum liability: $25K/$50K. High-risk surcharge applies for 2+ accidents in 3 years.",
+      icon: <MemoriesIcon />,
+      modified:"2 days ago",
+    },{
+      id: "claims-approval-limits",
+      content: "Claims Adjuster: up to $5K. Senior Adjuster: up to $25K. Claims Manager: up to $100K. Director approval required for $100K+. Total loss requires manager approval regardless of amount.",
+      icon: <MemoriesIcon />,
+      modified:"5 days ago",
+    },
+
+  ]
+  const agentsMemories=[
+    {
+      id: "user-preferences",
+      content: "Customer prefers email communication and has requested no phone calls after 6 PM EST. Previously filed 2 claims in the last 3 years.",
+      icon: <MemoriesIcon />,
+      modified:"2 hours ago",
+      type:"auto-claims-processing-agent"
+    },
+    {
+      id: "2019-honda-accord",
+      content: "2019 Honda Accord - Front bumper damage. Customer reported accident on I-95. Photos received. Estimated repair cost: $2,400. Preferred body shop: Joe's Auto Body.",
+      icon: <MemoriesIcon />,
+      modified:"5 hours ago",
+      type:"auto-claims-processing-agent"
+    },
+    {
+      id: "property-claims-history",
+      content: "Property has flood zone designation. Previous water damage claim in 2021. Foundation inspection completed. Updated valuation: $450,000.",
+      icon: <MemoriesIcon />,
+      modified:"1 day ago",
+      type:"property-claims-agent"
+    },{
+      id: "CPT-99213-guidelines",
+      content: "CPT Code 99213: Established patient office visit. Requires 2 of 3 key components: Expanded problem-focused history, Expanded problem-focused exam, Low complexity MDM. Typical time: 15 minutes.",
+      icon: <MemoriesIcon />,
+      modified:"3 hours ago",
+      type:"health-claims-adjudication-agent"
+    },
+    {
+      id: "customer-interaction-notes",
+      content: "Customer has called 3 times regarding policy renewal. Prefers detailed email explanations. Successfully resolved billing issue on 12/15. High satisfaction rating.",
+      icon: <MemoriesIcon />,
+      modified:"30 minutes ago",
+      type:"customer-support-agent"
+    },
+    {
+      id: "fraud-indicator-FP-204",
+      content: "Alert: Claimant has filed 4 similar incidents in 18 months. Pattern matches known fraud indicator FP-204. Requires manual review and investigation.",
+      icon: <MemoriesIcon />,
+      modified:"4 hours ago",
+      type:"fraud-detection-agent"
+    },
+
+  ]
+const items = [
+    {
+      id: "organization-memory",
+      value: "organization-memory",
+      label: "Organization Memory",
+      render: () => (
+        <OrganizationMemoryGrid memories={organizationMemories}/>
+      ),
+    },
+    {
+      id: "agent-memory",
+      value: "agent-memory",
+      label: "Agent Memory",
+      render: () =>  <AgentsMemoryGrid memories={agentsMemories}/>
+        },
+  ];
+
+  
 
 function MemoriesContent() {
   const [query, setQuery] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [memoriesState, setMemoriesState] = useState(FALLBACK_MEMORIES);
   const [stats, setStats] = useState(FALLBACK_STATS);
   const [isLoading, setIsLoading] = useState(true);
@@ -81,9 +161,9 @@ function MemoriesContent() {
 
         // Transform stats object to array format
         setStats([
+          { title: "Agents Memories", value: statsData.agentsMemories },
+          { title: "Organization Memories", value: statsData.organizationMemories },
           { title: "Total Memories", value: statsData.totalMemories },
-          { title: "Active Memories", value: statsData.activeMemories },
-          { title: "Total Entries", value: statsData.totalEntries },
         ]);
       } catch (err) {
         setError(err.message || "Failed to load memories");
@@ -168,7 +248,7 @@ function MemoriesContent() {
   }
 
   return (
-    <div className="flex flex-col h-full pb-10 w-full overflow-hidden ">
+    <div className="flex flex-col h-full pb-10 w-full ">
       <ScaleDown>
         <div className="space-y-6 p-6">
           {/* HEADER */}
@@ -181,18 +261,6 @@ function MemoriesContent() {
                 Manage agent memory systems
               </p>
             </div>
-
-            <RippleButton>
-              <Link href="#">
-                <Button
-                  onClick={() => setIsModalOpen(true)}
-                  className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 duration-300 cursor-pointer"
-                >
-                  <PlusIcon />
-                  Create Memory
-                </Button>
-              </Link>
-            </RippleButton>
           </div>
 
           {/* STATS */}
@@ -213,14 +281,9 @@ function MemoriesContent() {
           </div>
 
           {/* SEARCH */}
-          <SearchBar
-            placeholder="Search Memories..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-
+            <AnimatedTabsSection items={items} defaultValue="organization-memory" />
           {/* FILTER BAR */}
-          <FilterBar
+          {/* <FilterBar
             selectedTags={selectedTags}
             onTagsChange={setSelectedTags}
             availableTags={availableTags}
@@ -229,45 +292,11 @@ function MemoriesContent() {
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
             cards={memoriesState}
-          />
-        </div>
-
-        {/* GRID / LIST */}
-        <div className="flex-1 px-6">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={view}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className={
-                view === "grid"
-                  ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                  : "flex flex-col gap-5"
-              }
-            >
-              {filteredMemories.map((memory, index) => (
-                <MemoryCard
-                  key={memory.id}
-                  memories={memory}
-                  index={index}
-                  view={view}
-                />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* EMPTY STATE */}
-          {filteredMemories.length === 0 && (
-            <div className="flex h-64 items-center justify-center text-border-color-0 border border-border-color-0 rounded-xl mt-6">
-
-            </div>
-          )}
+          /> */}
         </div>
       </ScaleDown>
 
-      <AddMemoriesModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+     
     </div>
   );
 }

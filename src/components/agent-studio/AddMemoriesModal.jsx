@@ -1,281 +1,77 @@
-"use client";
+import { useState, React, useEffect } from "react";
+import { Button } from "../ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+import { RippleButton } from "../ui/ripple-button";
+import { Textarea } from "../ui/textarea";
+import { LeftArrow } from "../Icons";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { RippleButton } from "@/components/ui/ripple-button";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from "@/components/ui/select";
-import { LeftArrow } from "@/components/Icons";
-import * as memoriesApi from "@/lib/api/memories";
-
-/**
- * Modal component for creating new memories.
- *
- * @param {Object} props - The component props.
- * @param {boolean} props.open - Whether the modal is open.
- * @param {function} props.onOpenChange - Callback when the modal open state changes.
- * @returns {React.JSX.Element} The rendered AddMemoriesModal component.
- */
-export default function AddMemoriesModal({ open, onOpenChange }) {
-  const [memoryName, setMemoryName] = useState("");
-  const [description, setDescription] = useState("");
-  const [type, setType] = useState("");
-  const [scope, setScope] = useState("");
-  const [status, setStatus] = useState("");
-
-  const [isOpenType, setIsOpenType] = useState(false);
-  const [isOpenScope, setIsOpenScope] = useState(false);
-  const [isOpenStatus, setIsOpenStatus] = useState(false);
-
+export const AddMemoriesModal = ({ open, onOpenChange, memory, onSave }) => {
+  const [description, setDescription] = useState('');
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [apiError, setApiError] = useState(null);
 
-  useEffect(() => {
-    if (!open) {
-      setMemoryName("");
-      setDescription("");
-      setType("");
-      setScope("");
-      setStatus("");
+ useEffect(() => {
+    if (open) {
+      setDescription(memory?.content || '');
       setErrors({});
     }
-  }, [open]);
+  }, [open, memory]);
 
-  const slide = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
-  };
-
-  /** =============== FORM VALIDATION & SUBMIT =============== */
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const errs = {
-      memoryName: !memoryName.trim() ? "Memory Name is required" : "",
-      description: !description.trim() ? "Description is required" : "",
-      type: !type ? "Type is required" : "",
-      scope: !scope ? "Scope is required" : "",
-      status: !status ? "Status is required" : "",
+      description: !description.trim() ? 'Description is required' : '',
     };
     setErrors(errs);
 
     if (Object.values(errs).some(Boolean)) return;
 
-    try {
-      setIsLoading(true);
-      setApiError(null);
+    onSave({
+      ...memory,
+      content: description,
+      modified: new Date().toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      })
+    });
 
-      const memoryData = {
-        name: memoryName,
-        description: description,
-        type: type,
-        scope: scope,
-        status: status,
-        entries: 0,
-      };
-
-      await memoriesApi.createMemory(memoryData);
-
-      // Close modal on success
-      onOpenChange(false);
-
-      // Refresh the page to show the new memory
-      window.location.reload();
-    } catch (err) {
-      setApiError(err.message || "Failed to create memory");
-      console.error("Error creating memory:", err);
-    } finally {
-      setIsLoading(false);
-    }
+    onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[60%] h-[80%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 pt-8">
+      <DialogContent className="w-[60%] h-[55%] flex flex-col left-1/2 -translate-x-1/2 top-1/2 pt-8">
         <DialogHeader className="justify-center pb-4">
           <DialogTitle className="text-2xl font-medium">
-            Create New Memory
+            {memory ? 'Edit Memory' : 'Add New Memory'}
           </DialogTitle>
           <p className="text-xs text-foreground/80">
-            Create a new memory system for your agents
+            {memory ? 'Update your organization memory' : 'Add a new organization-wide memory'}
           </p>
         </DialogHeader>
 
         <div className="w-full h-full overflow-y-auto pr-2 flex flex-col justify-between">
-          <motion.div
-            className="flex flex-col space-y-6"
-            variants={slide}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            {/* Memory Name */}
+          <div className="flex flex-col space-y-6">
             <div className="flex flex-col gap-3">
-              <label className="text-sm text-foreground">Memory Name</label>
-              <Input
-                value={memoryName}
-                placeholder="e.g. User Preferences"
-                onChange={(e) => setMemoryName(e.target.value)}
-                className={`border placeholder:text-xs placeholder:text-foreground/80 ${
-                  errors.memoryName ? "border-red-500" : "border-border-color-0"
-                }`}
-              />
-              {errors.memoryName && (
-                <p className="text-xs text-red-500">{errors.memoryName}</p>
-              )}
-            </div>
-
-            {/* Description */}
-            <div className="flex flex-col gap-3">
-              <label className="text-sm text-foreground">Description</label>
+              <label className="text-sm text-foreground">Memory Content</label>
               <Textarea
                 value={description}
-                placeholder="Describe what this memory stores..."
+                placeholder="Enter the Memory Content..."
                 onChange={(e) => setDescription(e.target.value)}
-                className={`border placeholder:text-xs h-32 placeholder:text-foreground/80 ${
-                  errors.description ? "border-red-500" : "border-border-color-0"
-                }`}
+                className={`border placeholder:text-xs h-32 placeholder:text-foreground/80 ${errors.description ? 'border-red-500' : 'border-border-color-0'
+                  }`}
               />
               {errors.description && (
                 <p className="text-xs text-red-500">{errors.description}</p>
               )}
             </div>
+          </div>
 
-            {/* Type, Scope and Status */}
-            <div className="grid grid-cols-3 gap-4">
-              <div className="flex flex-col gap-2 text-foreground/80 w-full">
-                <label className="text-sm">Type</label>
-                <Select
-                  value={type}
-                  onValueChange={setType}
-                  onOpenChange={(open) => setIsOpenType(open)}
-                  className="w-full"
-                >
-                  <SelectTrigger
-                    className={`border w-full cursor-pointer ${
-                      errors.type ? "border-red-500" : "border-border-color-0"
-                    } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
-                      isOpenType ? "[&>svg]:rotate-180" : ""
-                    }`}
-                  >
-                    <SelectValue placeholder="Session" />
-                  </SelectTrigger>
-
-                  <SelectContent className="border border-border-color-0">
-                    <SelectItem value="session" className="!cursor-pointer text-xs">
-                      Session
-                    </SelectItem>
-                    <SelectItem value="persistent" className="!cursor-pointer text-xs">
-                      Persistent
-                    </SelectItem>
-                    <SelectItem value="temporary" className="!cursor-pointer text-xs">
-                      Temporary
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.type && (
-                  <p className="text-xs text-red-500">{errors.type}</p>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-2 text-foreground/80 w-full">
-                <label className="text-sm">Scope</label>
-                <Select
-                  value={scope}
-                  onValueChange={setScope}
-                  onOpenChange={(open) => setIsOpenScope(open)}
-                  className="w-full"
-                >
-                  <SelectTrigger
-                    className={`border w-full cursor-pointer ${
-                      errors.scope ? "border-red-500" : "border-border-color-0"
-                    } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
-                      isOpenScope ? "[&>svg]:rotate-180" : ""
-                    }`}
-                  >
-                    <SelectValue placeholder="User" />
-                  </SelectTrigger>
-
-                  <SelectContent className="border border-border-color-0">
-                    <SelectItem value="user" className="!cursor-pointer text-xs">
-                      User
-                    </SelectItem>
-                    <SelectItem value="global" className="!cursor-pointer text-xs">
-                      Global
-                    </SelectItem>
-                    <SelectItem value="agent" className="!cursor-pointer text-xs">
-                      Agent
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.scope && (
-                  <p className="text-xs text-red-500">{errors.scope}</p>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-2 text-foreground/80 w-full">
-                <label className="text-sm">Status</label>
-                <Select
-                  value={status}
-                  onValueChange={setStatus}
-                  onOpenChange={(open) => setIsOpenStatus(open)}
-                  className="w-full"
-                >
-                  <SelectTrigger
-                    className={`border w-full cursor-pointer ${
-                      errors.status ? "border-red-500" : "border-border-color-0"
-                    } placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
-                      isOpenStatus ? "[&>svg]:rotate-180" : ""
-                    }`}
-                  >
-                    <SelectValue placeholder="Active" />
-                  </SelectTrigger>
-
-                  <SelectContent className="border border-border-color-0">
-                    <SelectItem value="active" className="!cursor-pointer text-xs">
-                      Active
-                    </SelectItem>
-                    <SelectItem value="inactive" className="!cursor-pointer text-xs">
-                      Inactive
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.status && (
-                  <p className="text-xs text-red-500">{errors.status}</p>
-                )}
-              </div>
-            </div>
-          </motion.div>
-
-          {apiError && (
-            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
-              {apiError}
-            </div>
-          )}
-
-          <div className="py-6 my-2  flex justify-end gap-3">
+          <div className="py-6 my-2 flex justify-end gap-3">
             <RippleButton>
               <Button
                 variant="outline"
-                className="border-foreground/40  text-foreground/80 px-6"
+                className="border-foreground/40 text-foreground/80 px-6"
                 onClick={() => onOpenChange(false)}
-                disabled={isLoading}
               >
                 Cancel
               </Button>
@@ -284,11 +80,10 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
             <RippleButton>
               <Button
                 onClick={handleSubmit}
-                disabled={isLoading}
-                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300 disabled:opacity-50"
+                className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
               >
-                {isLoading ? "Creating..." : "Create Memory"}
-                {!isLoading && <LeftArrow className="ml-2 rotate-180 w-4" />}
+                {memory ? 'Update Memory' : 'Add Memory'}
+                <LeftArrow className="ml-2 rotate-180 w-4" />
               </Button>
             </RippleButton>
           </div>
@@ -296,4 +91,4 @@ export default function AddMemoriesModal({ open, onOpenChange }) {
       </DialogContent>
     </Dialog>
   );
-}
+};
