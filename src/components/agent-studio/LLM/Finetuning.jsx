@@ -147,12 +147,7 @@ const handleDeleteConfig = (id) => {
                   value: "configure",
                   label: "Configure",
                   render: () => (
-                    <div
-                      className="
-                  border border-border-color-0 rounded-xl
-                  max-h-[600px] overflow-y-auto
-                "
-                    >
+                    <div className="border border-border-color-0 rounded-xl">
                       {/* Scrollable content */}
                       <div className="p-6 space-y-10">
                         {/* Model & Tokenizer */}
