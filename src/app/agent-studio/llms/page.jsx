@@ -8,7 +8,6 @@ import {
   DownloadIcon,
   LLMsIcon,
   PlusIcon,
-  SynthWave,
 } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import APIBasedCards from "@/components/LLM/APIBasedCards";
@@ -22,7 +21,10 @@ import SelfHosted from "@/components/LLM/SelfHosted";
 import ImportModal from "@/components/LLM/ImportModal";
 import DeployModal from "@/components/LLM/DeployModal";
 import FineTunedCards from "@/components/LLM/FineTunedCards";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/motion-tabs";
 import * as llmsApi from "@/lib/api/llms";
+import LLMFineTuning from "@/components/agent-studio/LLM/Finetuning";
+import CardDetails from "@/components/CardDetails";
 
 const FALLBACK_LLMS = [
   {
@@ -96,7 +98,24 @@ const FALLBACK_RECENT = [
   },
 ];
 
+const cardData = [
+  {
+    title: "Total Models",
+    value: 4,
+  },
+  {
+    title: "Active Models",
+    value: 3,
+  },
+  {
+    title: "Total Requests",
+    value: 2090,
+  },
+];
+
+
 export default function LLMsPage() {
+  const [topTab, setTopTab] = useState("hosted"); 
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   const [openImportModal, setOpenImportModal] = useState(false);
@@ -107,7 +126,6 @@ export default function LLMsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch LLMs and activity from API
   useEffect(() => {
     async function fetchData() {
       try {
@@ -129,22 +147,18 @@ export default function LLMsPage() {
     fetchData();
   }, []);
 
-  // filter states
   const [selectedTags, setSelectedTags] = useState([]);
   const [view, setView] = useState("grid");
   const [sortOrder, setSortOrder] = useState("none");
 
-  // Collect unique tags
   const availableTags = useMemo(() => {
     const all = new Set();
     llms.forEach((llm) => llm.tags.forEach((t) => all.add(t)));
     return Array.from(all).sort();
   }, [llms]);
 
-  // Apply search + tag filter
   let filteredLLMs = useMemo(() => {
     const q = query.trim().toLowerCase();
-
     return llms.filter((llm) => {
       const matchesSearch =
         llm.name.toLowerCase().includes(q) ||
@@ -159,22 +173,23 @@ export default function LLMsPage() {
     });
   }, [query, selectedTags, llms]);
 
-  // Sorting
   if (sortOrder === "asc") {
-    filteredLLMs = filteredLLMs.sort((a, b) => a.name.localeCompare(b.name));
+    filteredLLMs = filteredLLMs.sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
   } else if (sortOrder === "desc") {
-    filteredLLMs = filteredLLMs.sort((a, b) => b.name.localeCompare(a.name));
+    filteredLLMs = filteredLLMs.sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
   }
 
-  const ctx = { filteredLLMs, query };
-
-  const items = [
+  const llmTabs = [
     {
-      id: "tab-all",
+      id: "all",
       value: "all",
-      label: "All",
-      name: "All",
-      render: ({ filteredLLMs, query }) =>
+      label: "All Models",
+      name: "All Models",
+      render: ({ filteredLLMs }) =>
         filteredLLMs.length > 0 ? (
           <LLMGrid
             items={filteredLLMs}
@@ -187,9 +202,7 @@ export default function LLMsPage() {
             setView={setView}
           />
         ) : (
-          <div className="flex h-64 items-center justify-center text-gray-500 dark:text-foreground border border-border-color-0 rounded-xl">
-       
-          </div>
+          <EmptyCard />
         ),
     },
     {
@@ -234,16 +247,14 @@ export default function LLMsPage() {
 
   return (
     <div className="flex flex-col h-full w-full overflow-hidden">
-      <ScaleDown>
-        <div className="space-y-6 p-6">
-          {/* HEADER */}
-          <div className="flex items-center justify-between">
-            <div className="space-y-2">
+      {/* TOP TABS  */}
+        <div className="flex items-center justify-between p-6">
+            
+          <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
             </div>
-
-            <div className="gap-2 flex">
-              <RippleButton>
+             <div className="gap-2 flex">
+              {/* <RippleButton>
                 <Link href={"/agent-studio/llms/llm-finetuning"}>
                   <Button
                     variant="outline"
@@ -254,10 +265,10 @@ export default function LLMsPage() {
                     </div>
                     LLM Finetuning
                   </Button>
-                </Link>
-              </RippleButton>
+                  </Link>
+                </RippleButton> */}
 
-              <RippleButton>
+               {/* <RippleButton>
                 <Button
                   variant="outline"
                   onClick={() => setOpenImportModal(true)}
@@ -268,9 +279,9 @@ export default function LLMsPage() {
                   </div>
                   Import Model
                 </Button>
-              </RippleButton>
+              </RippleButton> */}
 
-              <RippleButton>
+                <RippleButton>
                 <Link href="#">
                   <Button onClick={() => setOpenDeployModal(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">
                     <PlusIcon />
@@ -278,30 +289,52 @@ export default function LLMsPage() {
                   </Button>
                 </Link>
               </RippleButton>
+              </div>
+              
             </div>
-          </div>
+      <div className="px-6 space-y-6">
+        
+            <CardDetails data={cardData} textSize='text-4xl' />
+      </div>
+     
+      <div className="px-6 pt-6 pb-0">
+        <Tabs value={topTab} onValueChange={setTopTab}>
+          <TabsList className="w-fit border border-border dark:bg-card">
+            <TabsTrigger value="hosted" className="px-4 font-normal">
+              Hosted LLMs
+            </TabsTrigger>
+            <TabsTrigger value="finetuning" className="px-4 font-normal">
+              Finetuning
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
 
-          {/* SEARCH */}
-          <SearchBar
-            placeholder="Search LLMs..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+      {/*  CONTENT SWITCH */}
+      {topTab === "hosted" ? (
+        <ScaleDown>
+          <div className="space-y-6 p-6">
+            {/* HEADER */}
+          
 
-          {/* TABS */}
-          <AnimatedTabsSection
-            items={items}
-            ctx={ctx}
-            onValueChange={setActiveTab}
-            defaultValue="all"
-          />
+            <SearchBar
+              placeholder="Search LLMs..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
 
-          {/* RECENT ACTIVITY */}
-          {activeTab === "all" && (
-            <div className="space-y-10 mt-20">
-              <h2 className="text-2xl font-medium">Recent Activity</h2>
+            <AnimatedTabsSection
+              items={llmTabs}
+              ctx={{ filteredLLMs, query }}
+              onValueChange={setActiveTab}
+              defaultValue="all"
+            />
 
-              <div className="w-full space-y-4">
+            {activeTab === "all" && (
+              <div className="space-y-10 mt-20">
+                <h2 className="text-2xl font-medium">Recent Activity</h2>
+
+                 <div className="w-full space-y-4">
                 {recentActivity.map((recent, id) => (
                   <div
                     key={id}
@@ -342,14 +375,16 @@ export default function LLMsPage() {
             </div>
           )}
         </div>
-      </ScaleDown>
-      <ImportModal
-  open={openImportModal}
-  onOpenChange={setOpenImportModal}
-/>
-          <DeployModal open={openDeployModal} onOpenChange={setOpenDeployModal} />
+ 
+        </ScaleDown>
+      ) : (
+      
+         <LLMFineTuning />
+      
+      )}
 
-
+      <ImportModal open={openImportModal} onOpenChange={setOpenImportModal} />
+      <DeployModal open={openDeployModal} onOpenChange={setOpenDeployModal} />
     </div>
   );
 }

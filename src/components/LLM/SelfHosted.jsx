@@ -144,11 +144,11 @@ export default function SelfHosted() {
         <div className="space-y-6">
 
           {/* SEARCH */}
-          <SearchBar
+          {/* <SearchBar
             placeholder="Search Self Hosted LLMs..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-          />
+          /> */}
 
           {/* FILTER BAR */}
           <FilterBar
