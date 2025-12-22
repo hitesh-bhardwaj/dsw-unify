@@ -50,7 +50,7 @@ export default function ConfigList() {
           <div className="flex items-center justify-between">
             {/* Left Content */}
             <div className="space-y-2">
-              <h3 className="text-lg font-medium text-black">{config.name}</h3>
+              <h3 className="text-lg font-medium text-foreground">{config.name}</h3>
 
               <p className="text-sm text-muted-foreground">
                 {config.description}

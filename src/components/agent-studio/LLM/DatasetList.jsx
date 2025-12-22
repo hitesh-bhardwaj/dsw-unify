@@ -59,7 +59,7 @@ export default function DatasetList() {
           <div className="flex items-center justify-between">
             {/* Left Content */}
             <div className="space-y-3">
-              <h3 className="text-xl font-medium text-black">
+              <h3 className="text-xl font-medium text-foreground">
                 {dataset.name}
               </h3>
 
@@ -79,7 +79,7 @@ export default function DatasetList() {
               <div className="flex items-center gap-10">
                 <Badge
                   variant="secondary"
-                  className="rounded-full border border-border-color-0 bg-white px-4 py-1 text-xs font-medium"
+                  className="rounded-full border border-border-color-0 bg-white dark:bg-background px-4 py-1 text-xs font-medium"
                 >
                   {dataset.format}
                 </Badge>
