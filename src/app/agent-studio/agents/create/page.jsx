@@ -120,15 +120,15 @@ export default function CreateAgentPage() {
         <GuardrailsGrid/>
       ),
     },
-    {
-      id: "finetuning",
-      value: "finetuning",
-      label: "Finetuning",
-      name: "Finetuning",
-      render: () => (
-        <FinetuningGrid/>
-      ),
-    },
+    // {
+    //   id: "finetuning",
+    //   value: "finetuning",
+    //   label: "Finetuning",
+    //   name: "Finetuning",
+    //   render: () => (
+    //     <FinetuningGrid/>
+    //   ),
+    // },
     {
       id: "tags",
       value: "tags",

@@ -378,7 +378,7 @@ export default function CreateCustomToolModal({ open, onOpenChange, tool = null 
               <Button
                 variant="outline"
                 onClick={handleAddParameter}
-                className="w-full border-border-color-0 gap-2 hover:bg-sidebar-primary hover:text-white transition-colors"
+                className="w-fit border-border-color-0 gap-2 hover:bg-sidebar-primary hover:text-white transition-colors"
               >
                 <Plus className="h-4 w-4" />
                 Add Parameter

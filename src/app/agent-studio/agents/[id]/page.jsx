@@ -171,7 +171,7 @@ const page = () => {
               </div>
             </div>
 
-            <Link href="#">
+            <Link href="/agent-studio/agents/create">
               <RippleButton>
                 <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 !cursor-pointer rounded-full !px-6 !py-6 duration-300">
                   <PlusIcon />

@@ -24,8 +24,9 @@ import {
 } from "@/components/ui/select";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import EmptyCard from "@/components/common/EmptyCard";
-import { LeftArrow, TextFile } from "@/components/Icons";
+import { LeftArrow, PlusIcon, TextFile } from "@/components/Icons";
 import * as knowledgeBasesApi from "@/lib/api/knowledge-bases";
+import CrawlStrategy from "../CrawlStrategy";
 
 /**
  * Modal component for creating a new knowledge base.
@@ -56,9 +57,10 @@ export default function KnowledgeBaseModal({ open, onOpenChange }) {
   const [databaseType, setdatabaseType] = useState("");
   const [isOpenDatabaseType, setIsOpenDatabaseType] = useState(false);
   const [connectionString, setConnectionString] = useState("");
-  const [tableNames, setTableNames] = useState([]);
+  const [tableNames, setTableNames] = useState("");
+  const [databaseSources, setDatabaseSources] = useState([]);
 
-
+  const [websiteURLs, setWebsiteURLs] = useState([]);
 
   useEffect(() => {
     if (!open) {
@@ -142,6 +144,40 @@ const handleFileChange = (e) => {
   }
 };
 
+  const handleAddWebsiteURL = () => {
+    if (websiteURL.trim()) {
+      setWebsiteURLs([...websiteURLs, websiteURL]);
+      setwebsiteURL("");
+    }
+  };
+
+  const handleRemoveWebsiteURL = (index) => {
+    setWebsiteURLs(websiteURLs.filter((_, i) => i !== index));
+  };
+
+  const isDatabaseFormValid = databaseType.trim() && connectionString.trim() && tableNames.trim();
+
+  const handleAddDatabaseSource = () => {
+    if (databaseType.trim() && connectionString.trim() && tableNames.trim()) {
+      setDatabaseSources([
+        ...databaseSources,
+        {
+          id: Date.now(),
+          databaseType,
+          connectionString,
+          tableNames,
+        },
+      ]);
+      setdatabaseType("");
+      setConnectionString("");
+      setTableNames("");
+    }
+  };
+
+  const handleRemoveDatabaseSource = (id) => {
+    setDatabaseSources(databaseSources.filter((source) => source.id !== id));
+  };
+
   /** --- SOURCE TYPE Inner Tab Content --- */
   const sourceTypeContent = {
     documents: (
@@ -182,7 +218,7 @@ const handleFileChange = (e) => {
   )}
 </div>
 
-          <div className="flex flex-col gap-2 text-foreground/80 w-full">
+          {/* <div className="flex flex-col gap-2 text-foreground/80 w-full">
             <label className="text-sm">Processing Options</label>
             <Select
               value={format}
@@ -212,69 +248,52 @@ const handleFileChange = (e) => {
                 </SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
         
       </>
     ),
     website: (<>
     <div className="space-y-5">
-<div className="flex flex-col gap-3">
-            <label className="text-sm text-foreground">
-              Website URL
-            </label>
-            <Input
-              value={websiteURL}
-              placeholder="e.g. htttps://example.com"
-              onChange={(e) => setwebsiteURL(e.target.value)}
-              className={`border placeholder:text-xs placeholder:text-foreground/80`}
-            />
-            
-          </div>
+      <div className="flex gap-3 items-end">
+        <div className="flex flex-col gap-3 flex-1">
+          <label className="text-sm text-foreground">
+            Website URL
+          </label>
+          <Input
+            value={websiteURL}
+            placeholder="e.g. https://example.com"
+            onChange={(e) => setwebsiteURL(e.target.value)}
+            className={`border placeholder:text-xs placeholder:text-foreground/80`}
+          />
+        </div>
+        <Button 
+          onClick={handleAddWebsiteURL}
+          disabled={!websiteURL.trim()}
+          className="rounded-xl !w-12 flex items-center justify-center !h-12"
+        >
+          <PlusIcon className="w-3 h-3"/>
+        </Button>
+      </div>
 
-          <div className="flex flex-col gap-2 text-foreground/80 w-full">
-            <label className="text-sm">Crawl Settings</label>
-            <Select
-              value={crawlSettings}
-              onValueChange={setcrawlSettings}
-              onOpenChange={(open) => setIsOpenCrawlSettings(open)}
-              className="w-full"
-            >
-              <SelectTrigger
-                className={`border cursor-pointer w-full border-border-color-0 placeholder:text-foreground/60 placeholder:text-xs rounded-md !h-10 px-3 text-xs outline-none [&>svg]:transition-transform [&>svg]:duration-200 ${
-                  isOpenCrawlSettings ? "[&>svg]:rotate-180" : ""
-                }`}
+      {/* Display added URLs */}
+      {websiteURLs.length > 0 && (
+        <div className="space-y-2">
+          {websiteURLs.map((url, index) => (
+            <div key={index} className="flex items-center justify-between gap-3 p-3 bg-accent/5 border border-border-color-0 rounded-lg">
+              <span className="text-sm text-foreground truncate">{url}</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => handleRemoveWebsiteURL(index)}
+                className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 h-6 w-6 p-0"
               >
-                <SelectValue placeholder="Single Page Only" />
-              </SelectTrigger>
-
-              <SelectContent  className="border border-border-color-0">
-                <SelectItem value="auto" className="!cursor-pointer text-xs">
-                 Single Page only
-                </SelectItem>
-
-                <SelectItem value="text" className="!cursor-pointer text-xs">
-                 Entire Domain
-                </SelectItem>
-
-                <SelectItem value="ocr" className="!cursor-pointer text-xs">
-                  Include subdomains
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="flex flex-col gap-3">
-            <label className="text-sm text-foreground">
-             Maximum pages
-            </label>
-            <Input
-              value={maximumPages}
-              type="number"
-              placeholder="100"
-              onChange={(e) => setmaximumPages(e.target.value)}
-              className={`border placeholder:text-xs placeholder:text-foreground/80 `}
-            />
-          </div>
-          </div>
+                ✕
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
     </>),
     database: (<>
     <div className="space-y-5">
@@ -325,15 +344,59 @@ const handleFileChange = (e) => {
             />
           </div>
           <div className="flex flex-col gap-3">
-            <label className="text-sm text-foreground">Tables to Index</label>
+            <label className="text-sm text-foreground">Query/Collection</label>
             <Textarea
               value={tableNames}
-              placeholder="Enter table names (comma-separated)"
+              placeholder="SELECT * FROM table WHERE..."
               onChange={(e) => setTableNames(e.target.value)}
               className={`border placeholder:text-xs h-20 placeholder:text-foreground/80 `}
             />
           </div>
-          </div>
+           <RippleButton>
+                <Button 
+                  onClick={handleAddDatabaseSource}
+                  disabled={!isDatabaseFormValid}
+                  className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <PlusIcon />
+                  Add Database Source
+                </Button>
+              </RippleButton>
+
+          {/* Display added database sources */}
+          {databaseSources.length > 0 && (
+            <div className="space-y-3 mt-6">
+              <h4 className="text-sm font-medium text-foreground">Added Database Sources</h4>
+              {databaseSources.map((source) => (
+                <div key={source.id} className="p-4 bg-accent/5 border border-border-color-0 rounded-lg space-y-2">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold px-2 py-1 bg-sidebar-accent text-foreground rounded">
+                          {source.databaseType}
+                        </span>
+                      </div>
+                      <p className="text-xs text-foreground/70">
+                        <span className="font-semibold">Connection:</span> {source.connectionString}
+                      </p>
+                      <p className="text-xs text-foreground/70">
+                        <span className="font-semibold">Query:</span> {source.tableNames.substring(0, 50)}...
+                      </p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleRemoveDatabaseSource(source.id)}
+                      className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 h-6 w-6 p-0 flex-shrink-0"
+                    >
+                      ✕
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+    </div>
     </>),
   };
 
@@ -419,6 +482,14 @@ const handleFileChange = (e) => {
             />
           </div>
         </motion.div>
+      ),
+    },
+    {
+      id: "tab-crawl-strategy",
+      value: "crawl",
+      label: "Crawl Strategy",
+      render: () => (
+        <CrawlStrategy />
       ),
     },
 

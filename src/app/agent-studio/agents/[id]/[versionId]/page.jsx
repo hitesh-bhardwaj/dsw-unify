@@ -234,7 +234,7 @@ export default function AgentDetailPage({ params }) {
                 </Button>
               </RippleButton>
 
-              <Link href={`/agent-studio/agents/${id}/${versionId}/edit`}>
+              <Link href={`/agent-studio/agents/${id}/edit`}>
                 <RippleButton>
                   <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
                     <div className="!w-4">
