@@ -239,7 +239,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
               {tagsList.map((tag, index) => (
                 <div
                   key={index}
-                  className="flex bg-white items-center gap-2 px-2 py-0.5 border border-border-color-0 rounded-full text-sm"
+                  className="flex bg-white dark:bg-background items-center gap-2 px-2 py-0.5 border border-border-color-0 rounded-full text-sm"
                 >
                   <span>{tag}</span>
                   <button

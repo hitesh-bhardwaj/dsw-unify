@@ -161,7 +161,7 @@ export function AgentCard({ agent,index , view, minSkeletonMs = 500 }) {
             </div>
 
             {/* Agent name */}
-            <h3 className="mt-7 mb-2 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
+            <h3 className="mt-7 mb-2 line-clamp-2 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
               {name}
             </h3>
 

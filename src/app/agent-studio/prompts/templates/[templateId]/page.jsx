@@ -9,11 +9,14 @@ import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { PlusIcon } from "@/components/Icons";
 import { PromptsIcon, SparklesIcon } from "@/components/Icons";
+import { useRouter } from "next/navigation";
 
 export default function CreatePromptFromTemplate() {
   const [enhancePrompt, setEnhancePrompt] = useState("");
   const [tags, setTags] = useState("");
   const [tagsList, setTagsList] = useState([]);
+  const router = useRouter();
+
 
   const handleAddTag = () => {
     if (tags.trim()) {
@@ -36,7 +39,7 @@ export default function CreatePromptFromTemplate() {
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="outline">Cancel</Button>
+          <Button onClick={() => router.push("/agent-studio/prompts")} variant="outline">Cancel</Button>
           <RippleButton>
             <Button
               className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6"
@@ -49,7 +52,7 @@ export default function CreatePromptFromTemplate() {
       </div>
 
       {/* Template Info Banner */}
-      <div className="flex items-start gap-3 border border-orange-200 bg-orange-50 rounded-xl p-4">
+      <div className="flex items-start gap-3 border border-orange-200 bg-orange-50 dark:bg-background dark:border-white rounded-xl p-4">
         <div className="text-orange-500 text-lg">ⓘ</div>
         <div className="space-y-1">
           <p className="text-sm font-medium text-foreground">

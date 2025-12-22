@@ -69,15 +69,15 @@ export default function AgentDetailPage({ params }) {
         <MonitoringTab agentId={id} />
       ),
     },
-    {
-      id: "performance",
-      value: "performance",
-      label: "Performance",
-      name: "Performance",
-      render: () => (
-        <PerformanceTab/>
-      ),
-    },
+    // {
+    //   id: "performance",
+    //   value: "performance",
+    //   label: "Performance",
+    //   name: "Performance",
+    //   render: () => (
+    //     <PerformanceTab/>
+    //   ),
+    // },
     {
       id: "api",
       value: "api",
@@ -196,7 +196,7 @@ export default function AgentDetailPage({ params }) {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <RippleButton>
+              {/* <RippleButton>
                 <Button
                   variant="outline"
                   // onClick={() => setApiModalOpen(true)}
@@ -207,8 +207,8 @@ export default function AgentDetailPage({ params }) {
                   </div>
                   API
                 </Button>
-              </RippleButton>
-              <RippleButton>
+              </RippleButton> */}
+              {/* <RippleButton>
                 <Button
                 
                   variant="outline"
@@ -220,7 +220,7 @@ export default function AgentDetailPage({ params }) {
                   </div>
                   Test
                 </Button>
-              </RippleButton>
+              </RippleButton> */}
               <RippleButton>
                 <Button
                   variant="outline"
