@@ -25,7 +25,7 @@ import DatasetList from "./DatasetList";
 import TrainingList from "./JobList";
 
 
-export default function Finetuning() {
+export default function Finetuning({ isEmbedded = false }) {
   const [baseModel, setBaseModel] = useState("");
   const [dataset, setDataset] = useState("");
   const [description, setDescription] = useState("");
@@ -149,12 +149,12 @@ const handleDeleteConfig = (id) => {
                   render: () => (
                     <div
                       className="
-                  border border-border-color-0 rounded-xl 
-                  h-150 overflow-hidden
+                  border border-border-color-0 rounded-xl
+                  max-h-[600px] overflow-y-auto
                 "
                     >
                       {/* Scrollable content */}
-                      <div className="h-full overflow-y-auto p-6 space-y-10">
+                      <div className="p-6 space-y-10">
                         {/* Model & Tokenizer */}
                         <div className="space-y-6">
                           <h3 className="text-lg font-medium">
@@ -713,7 +713,7 @@ const handleDeleteConfig = (id) => {
   ];
 
   return (
-    <div className="w-full p-6">
+    <div className={`w-full ${isEmbedded ? '' : 'p-6'}`}>
       <AnimatedTabsSection
         items={items}
         defaultValue="start"

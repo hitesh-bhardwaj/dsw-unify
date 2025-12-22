@@ -18,7 +18,6 @@ import { ScaleDown } from "@/components/animations/Animations";
 import ModelGrid from "@/components/agent-studio/agents/ModelGrid";
 import ToolsList from "@/components/agent-studio/agents/tools/ToolsList";
 import GuardrailsGrid from "@/components/agent-studio/agents/GuardrailsGrid";
-import FinetuningGrid from "@/components/agent-studio/agents/FinetuningGrid";
 import KnowledgeBaseList from "@/components/agent-studio/agents/KnowledgeBase/KnowledgeList";
 import MemoriesList from "@/components/agent-studio/agents/MemoryList";
 import TagsGrid from "@/components/agent-studio/agents/TagsGrid";
@@ -118,15 +117,6 @@ export default function CreateAgentPage() {
       name: "Guardrails",
       render: () => (
         <GuardrailsGrid/>
-      ),
-    },
-    {
-      id: "finetuning",
-      value: "finetuning",
-      label: "Finetuning",
-      name: "Finetuning",
-      render: () => (
-        <FinetuningGrid/>
       ),
     },
     {
