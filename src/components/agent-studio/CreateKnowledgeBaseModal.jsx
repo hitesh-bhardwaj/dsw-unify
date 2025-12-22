@@ -269,7 +269,7 @@ const handleFileChange = (e) => {
         <Button 
           onClick={handleAddWebsiteURL}
           disabled={!websiteURL.trim()}
-          className="rounded-xl !w-12 flex items-center justify-center !h-12"
+          className="rounded-xl !w-12 flex items-center justify-center !h-12 dark:text-white"
         >
           <PlusIcon className="w-3 h-3"/>
         </Button>
