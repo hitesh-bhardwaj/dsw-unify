@@ -265,7 +265,7 @@ function ConfigureGuardrail({ baseGuardrail, onBack, onSubmit, isLoading, apiErr
       </div>
 
       {/* Actions */}
-      <div className="pt-6 mt-4 flex justify-end gap-3 w-fit">
+      <div className="pt-6 mt-4 flex justify-end items-end gap-3 w-full">
         {/* ⬅️ Now this goes one step back instead of closing */}
         <RippleButton>
           <Button

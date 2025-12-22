@@ -83,13 +83,13 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
       >
         <Card
           className={cn(
-            "feature-card-hover-container gap-2 hover:drop-shadow-xl transition-all duration-300 group border-border-color-0 hover:border-transparent !py-5 h-full cursor-pointer",
+            "feature-card-hover-container gap-2 hover:drop-shadow-xl transition-all duration-300 group border-border-color-0 hover:border-transparent !py-5 h-full cursor-pointer ",
             isGrid &&
-              "h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20",
-            isList && "w-full rounded-xl py-6 bg-white dark:bg-background"
+              "h-full flex flex-col gap-0 py-5 hover:border-white/20",
+            isList && "w-full rounded-xl py-6 bg-white dark:bg-background   "
           )}
         >
-          <CardHeader className="pb-2">
+          <CardHeader className="pb-2 h-[40%]">
             <div className="flex items-center justify-between mb-4">
               {/* Icon with rotating colors */}
               <div
@@ -190,25 +190,36 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
             </p>
           </CardHeader>
 
-          <CardContent className="w-full mx-auto pt-4 space-y-4 rounded-xl duration-300">
+          <CardContent className="w-full h-full  mx-auto pt-4 space-y-4 rounded-xl duration-300 flex flex-col justify-evenly">
             {/* Input Guardrails */}
             {inputGuardrails.length > 0 && (
               <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="size-5 rounded-full flex items-center justify-center border border-badge-blue transition-colors group-hover:border-white/90 duration-300">
-                    <ArrowDown className="size-3.5 text-badge-blue group-hover:text-white/90 duration-300 transition-colors" />
+                {/* Header row */}
+                <div className="flex gap-2 items-start">
+                  {/* icon column */}
+                  <div className="flex-shrink-0">
+                    <div className="size-5 rounded-full flex items-center justify-center border border-badge-blue transition-colors group-hover:border-white/90 duration-300">
+                      <ArrowDown className="size-3.5 text-badge-blue group-hover:text-white/90 duration-300 transition-colors" />
+                    </div>
                   </div>
-                  <p className="text-sm font-medium text-foreground transition-colors group-hover:text-white/90 group-hover:border-white/90 duration-300">
+
+                  {/* text column */}
+                  <p className="text-sm font-medium text-foreground transition-colors group-hover:text-white/90 duration-300">
                     Input Guardrails
                   </p>
                 </div>
+
+                {/* List */}
                 <div className="space-y-2">
                   {inputGuardrails.map((guardrail, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <div className="size-5 flex items-center justify-center rounded-full border border-badge-green transition-colors group-hover:border-white/90 duration-300">
-                        <Check className="size-3.5 text-badge-green group-hover:text-white/90 duration-300 transition-colors" />
+                    <div key={idx} className="flex gap-2 items-center">
+                      <div className="flex-shrink-0">
+                        <div className="size-5 flex items-center justify-center rounded-full border border-badge-green transition-colors group-hover:border-white/90 duration-300">
+                          <Check className="size-3.5 text-badge-green group-hover:text-white/90 duration-300 transition-colors" />
+                        </div>
                       </div>
-                      <span className="text-sm text-foreground transition-colors group-hover:text-white/90">
+
+                      <span className="text-sm text-foreground transition-colors group-hover:text-white/90 leading-5">
                         {guardrail.name}
                         {guardrail.severity && (
                           <span className="ml-2 text-xs text-muted-foreground transition-colors group-hover:text-white/50">
@@ -222,26 +233,30 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
               </div>
             )}
 
-            <Separator />
+            {/* <Separator /> */}
+
+           
+
+            
 
             {/* Output Guardrails */}
             {outputGuardrails.length > 0 && (
               <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <div className="size-5 rounded-full flex items-center justify-center border border-badge-green transition-colors group-hover:border-white/90 duration-300">
+                <div className="flex items-start gap-2">
+                  <div className="size-5 rounded-full flex items-center justify-center border border-badge-green transition-colors group-hover:border-white/90 duration-300 flex-shrink-0 mt-0">
                     <ArrowUp className="size-3.5 text-badge-green group-hover:text-white/90 duration-300 transition-colors" />
                   </div>
-                  <p className="text-sm  font-medium text-foreground transition-colors group-hover:text-white/90 group-hover:border-white/90 duration-300">
+                  <p className="text-sm font-medium text-foreground transition-colors group-hover:text-white/90 group-hover:border-white/90 duration-300 mt-0">
                     Output Guardrails
                   </p>
                 </div>
                 <div className="space-y-2">
                   {outputGuardrails.map((guardrail, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <div className="size-5 flex items-center justify-center rounded-full border border-badge-green transition-colors group-hover:border-white/90 duration-300">
+                    <div key={idx} className="flex items-start gap-2">
+                      <div className="size-5 flex items-center justify-center rounded-full border border-badge-green transition-colors group-hover:border-white/90 duration-300 flex-shrink-0 mt-0">
                         <Check className="size-3.5 text-badge-green group-hover:text-white/90 duration-300 transition-colors" />
                       </div>
-                      <span className="text-sm text-foreground transition-colors group-hover:text-white/90 duration-300">
+                      <span className="text-sm text-foreground transition-colors group-hover:text-white/90 duration-300 mt-0">
                         {guardrail.name}
                         {guardrail.severity && (
                           <span className="ml-2 text-sm text-muted-foreground transition-colors group-hover:text-white/50">
@@ -284,6 +299,7 @@ export function GuardSuiteCard({ suite, view, index, onDelete }) {
                 </p>
               </div>
             </div>
+          
           </CardContent>
         </Card>
       </Link>

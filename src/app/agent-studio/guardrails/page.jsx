@@ -18,6 +18,10 @@ import AnimatedTabsSection from "@/components/common/TabsPane";
 import AddCustomGuardrailsModal from "@/components/agent-studio/AddCustomGuardrails";
 import CreateGuardSuitesModal from "@/components/agent-studio/guardrails/CreateGuardSuitesModal";
 import * as guardrailsApi from "@/lib/api/guardrails";
+import CardDetails from "@/components/CardDetails";
+import CountUp from "@/components/animations/CountUp";
+import { InfoIcon } from "lucide-react";
+import { Card } from "@/components/ui/card";
 
 // Mock data for Guard Suites
 const mockGuardSuites = [
@@ -50,6 +54,67 @@ const mockGuardSuites = [
       { name: "Toxic Language", severity: "High" },
       { name: "Words/Expression Check" },
     ],
+    outputGuardrails: [
+      { name: "Toxic Language", severity: "High" },
+      { name: "Offensive Check", severity: "High" },
+    ],
+    agentsCount: "08",
+    createdDate: "2024-01-20",
+    tags: ["moderation", "content", "safety"],
+  },
+];
+const mockInputGuardSuites = [
+  {
+    id: 1,
+    name: "Production Safety Suite",
+    description: "Comprehensive safety checks for production agents",
+    status: "active",
+    icon: <GuardrailsIcon />,
+    inputGuardrails: [
+      { name: "Jailbreak & Unsafe Prompt", severity: "High" },
+      { name: "Toxic Language", severity: "Medium" },
+      { name: "Sensitive Information", severity: "High" },
+    ],
+    agentsCount: 12,
+    createdDate: "2024-01-15",
+    tags: ["production", "safety", "compliance"],
+  },
+  {
+    id: 2,
+    name: "Content Moderation Suite",
+    description: "Focused on toxic and offensive content detection",
+    status: "active",
+    icon: <GuardrailsIcon />,
+    inputGuardrails: [
+      { name: "Toxic Language", severity: "High" },
+      { name: "Words/Expression Check" },
+    ],
+    agentsCount: "08",
+    createdDate: "2024-01-20",
+    tags: ["moderation", "content", "safety"],
+  },
+];
+const mockOutputGuardSuites = [
+  {
+    id: 1,
+    name: "Production Safety Suite",
+    description: "Comprehensive safety checks for production agents",
+    status: "active",
+    icon: <GuardrailsIcon />,
+    outputGuardrails: [
+      { name: "Hallucination/Correctness" },
+      { name: "Offensive Check", severity: "Medium" },
+    ],
+    agentsCount: 12,
+    createdDate: "2024-01-15",
+    tags: ["production", "safety", "compliance"],
+  },
+  {
+    id: 2,
+    name: "Content Moderation Suite",
+    description: "Focused on toxic and offensive content detection",
+    status: "active",
+    icon: <GuardrailsIcon />,
     outputGuardrails: [
       { name: "Toxic Language", severity: "High" },
       { name: "Offensive Check", severity: "High" },
@@ -158,9 +223,28 @@ const INITIAL_CUSTOM_GUARDRAILS = [
   },
 ];
 
+ const stats = [
+    {
+      title: "Total Guard Suites",
+      value: "2",
+      description:"2 active"
+    },
+    {
+      title: "Available Guardrails",
+      value: "14",
+      description:"3 custom"
+    },
+    {
+      title: "Protected Agents",
+      value: "14",
+      description:"Across all suites"
+    }
+  ];
+
 export default function GuardrailsPage() {
   const [activeTab, setActiveTab] = useState("suites");
   const [guardrailsSubTab, setGuardrailsSubTab] = useState("default"); // default or custom
+  const [suitesSubTab, setSuitesSubTab] = useState("input"); // input or output
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
@@ -273,6 +357,34 @@ export default function GuardrailsPage() {
     return filtered;
   };
 
+  const filterSuitesByDirection = (suites, direction) => {
+    let filtered = suites.filter((suite) => {
+      const matchSearch =
+        suite.name.toLowerCase().includes(query.toLowerCase()) ||
+        suite.description.toLowerCase().includes(query.toLowerCase());
+      const matchTags =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => suite.tags?.includes(tag));
+
+      let matchDirection = true;
+      if (direction === "input") {
+        matchDirection = suite.inputGuardrails && suite.inputGuardrails.length > 0;
+      } else if (direction === "output") {
+        matchDirection = suite.outputGuardrails && suite.outputGuardrails.length > 0;
+      }
+
+      return matchSearch && matchTags && matchDirection;
+    });
+
+    if (sortOrder === "asc") {
+      filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOrder === "desc") {
+      filtered = [...filtered].sort((a, b) => b.name.localeCompare(a.name));
+    }
+
+    return filtered;
+  };
+
   const handleDeleteSuite = async (suiteId) => {
     try {
       await guardrailsApi.deleteGuardSuite(suiteId);
@@ -293,6 +405,17 @@ export default function GuardrailsPage() {
 
     return (
       <AnimatePresence mode="wait">
+        {/* <Card className="border-badge-blue my-3 p-6 rounded-lg">
+            <div className="flex gap-4">
+              <InfoIcon className="" color={"var(--badge-blue)"}/>
+              <div className="flex flex-col gap-1">
+                <p className="text-md text-foreground">
+                  Pre-configured Guardrails
+                </p>
+                <p className="text-xs text-foreground/80">These guardrails are pre-loaded and cannot be modified. Create custom versions to adjust configurations.</p>
+              </div>
+            </div>
+          </Card> */}
         <motion.div
           key={`${view}-${variant}`}
           initial={{ opacity: 0 }}
@@ -305,6 +428,7 @@ export default function GuardrailsPage() {
               : "flex flex-col gap-5"
           } ${variant === "custom" ? "rounded-2xl" : ""}`}
         >
+          
           {filtered.map((guardrail, index) => (
             <CardComponent
               key={`${variant}-${guardrail.id}`}
@@ -335,30 +459,17 @@ export default function GuardrailsPage() {
     <div className="flex flex-col h-full w-full overflow-hidden">
       <ScaleDown>
         <div className="space-y-6 p-6">
-          {/* Animated Tabs - At the very top */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="">
-            <TabsList className="w-fit border border-border dark:bg-card">
-              <TabsTrigger className="px-4 font-normal" value="suites">
-                Guard Suites
-              </TabsTrigger>
-              <TabsTrigger className="px-4 font-normal" value="guardrails">
-                Guardrails
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-
           {/* Title and CTA */}
           <div className="flex items-center justify-between">
             <div className="space-y-2">
               <h1 className="text-3xl font-medium text-foreground">
-                {activeTab === "suites" ? "Guard Suites" : "Guardrails"}
+               Guardrails
               </h1>
               <p className="mt-1 text-sm text-gray-600 dark:text-foreground">
-                {activeTab === "suites"
-                  ? "Manage collections of guardrails for your agents"
-                  : "Manage safety and compliance guardrails"}
+                Protect your agents with automated safety checks and compliance rules
               </p>
             </div>
+
             {activeTab === "suites" ? (
               <RippleButton>
                 <Link href="#">
@@ -379,72 +490,152 @@ export default function GuardrailsPage() {
                     className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300"
                   >
                     <PlusIcon />
-                    Create Guardrail
+                    Create Custom Guardrail
                   </Button>
                 </Link>
               </RippleButton>
             )}
           </div>
+          <div className="w-full flex items-center justify-between gap-4">
+                {stats.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-3 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
+                  >
+                    <span className="text-sm text-foreground/80">{item.title}</span>
+                      <>
+                        <span className="text-3xl font-medium mt-1">
+                           <CountUp value={item.value} startOnView />
+                    </span>
+                        <span className="text-xs font-normal">{item.description}</span>
+                      </>
+                  </div>
+                ))}
+              </div>
 
-          {/* Search Bar */}
-          <SearchBar
-            placeholder={
-              activeTab === "suites"
-                ? "Search guard suites..."
-                : "Search Guardrails..."
-            }
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+          
 
-          {/* Filter Bar */}
-          <FilterBar
-            selectedTags={selectedTags}
-            onTagsChange={setSelectedTags}
-            availableTags={availableTags}
-            view={view}
-            setView={setView}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-            cards={activeTab === "suites" ? guardSuites : activeGuardrailList}
-          />
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="">
+            <TabsList className="w-fit border border-border dark:bg-card">
+              <TabsTrigger className="px-4 font-normal" value="suites">
+                Guard Suites
+              </TabsTrigger>
+              <TabsTrigger className="px-4 font-normal" value="guardrails">
+                Guardrails
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
 
         {/* Content Area */}
         <div className="flex-1 overflow-auto p-6 pt-0">
           {activeTab === "suites" ? (
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={view}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`items-stretch ${
-                  view === "grid"
-                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-                    : "flex flex-col gap-5"
-                }`}
-              >
-                {filteredSuites.map((suite, index) => (
-                  <GuardSuiteCard
-                    key={suite.id}
-                    suite={suite}
-                    view={view}
-                    index={index}
-                    onDelete={handleDeleteSuite}
-                  />
-                ))}
+            <div className="space-y-6">
+              {/* Search Bar for Guard Suites */}
+              <SearchBar
+                placeholder="Search guard suites..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
 
-                {filteredSuites.length === 0 && (
-                  <div className="flex h-64 items-center justify-center text-gray-500">
-                
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+              <AnimatedTabsSection
+                items={[
+                  {
+                    id: "input",
+                    value: "input",
+                    label: "Input Guard Suites",
+                    render: () => {
+                      const filteredSuites = filterSuitesByDirection(mockInputGuardSuites, "input");
+                      return (
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={view}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className={`items-stretch ${
+                              view === "grid"
+                                ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                                : "flex flex-col gap-5"
+                            }`}
+                          >
+                            {filteredSuites.map((suite, index) => (
+                              <GuardSuiteCard
+                                key={suite.id}
+                                suite={suite}
+                                view={view}
+                                index={index}
+                                onDelete={handleDeleteSuite}
+                              />
+                            ))}
+
+                            {filteredSuites.length === 0 && (
+                              <div className="flex h-64 items-center justify-center text-gray-500">
+                                No input guard suites found
+                              </div>
+                            )}
+                          </motion.div>
+                        </AnimatePresence>
+                      );
+                    },
+                  },
+                  {
+                    id: "output",
+                    value: "output",
+                    label: "Output Guard Suites",
+                    render: () => {
+                      const filteredSuites = filterSuitesByDirection(mockOutputGuardSuites, "output");
+                      return (
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={view}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className={`items-stretch ${
+                              view === "grid"
+                                ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                                : "flex flex-col gap-5"
+                            }`}
+                          >
+                            {filteredSuites.map((suite, index) => (
+                              <GuardSuiteCard
+                                key={suite.id}
+                                suite={suite}
+                                view={view}
+                                index={index}
+                                onDelete={handleDeleteSuite}
+                              />
+                            ))}
+
+                            {filteredSuites.length === 0 && (
+                              <div className="flex h-64 items-center justify-center text-gray-500">
+                                No output guard suites found
+                              </div>
+                            )}
+                          </motion.div>
+                        </AnimatePresence>
+                      );
+                    },
+                  },
+                ]}
+                value={suitesSubTab}
+                onValueChange={setSuitesSubTab}
+                className="w-full"
+                contentClassName="relative mt-3"
+              />
+            </div>
           ) : (
             <div className="space-y-6">
+              {/* Search Bar for Guardrails */}
+              <SearchBar
+                placeholder="Search Guardrails..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+
               <AnimatedTabsSection
                 items={[
                   {
