@@ -1,38 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { LeftArrow } from "@/components/Icons";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 const TransformLogic = ({ goNext, goBack, isLastStep, onCloseModal }) => {
-  const [language, setLanguage] = useState("");
   const [code, setCode] = useState("");
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [errors, setErrors] = useState({
-    language: "",
     code: "",
   });
 
-  const LANGUAGE_OPTIONS = ["C++", "JAVA", "JavaScript"];
+  // Language is always Python
+  const language = "Python";
 
   // Check if all required fields are filled
-  const isFormValid = language && code.trim();
+  const isFormValid = code.trim();
 
   const validate = () => {
-    const newErrors = { language: "", code: "" };
+    const newErrors = { code: "" };
     let valid = true;
 
-    if (!language) {
-      newErrors.language = "Language is required.";
-      valid = false;
-    }
     if (!code.trim()) {
       newErrors.code = "Code is required.";
       valid = false;
@@ -48,7 +35,7 @@ const TransformLogic = ({ goNext, goBack, isLastStep, onCloseModal }) => {
     if (isLastStep) {
       // Final step – here you can call an API or close modal from parent
       console.log("Final transformation payload:", { language, code });
-      
+
       // Close the modal after successful validation
       if (typeof onCloseModal === "function") {
         onCloseModal();
@@ -69,44 +56,10 @@ const TransformLogic = ({ goNext, goBack, isLastStep, onCloseModal }) => {
         </div>
 
         <div className="space-y-6 py-8">
-          {/* LANGUAGE */}
-          <div className="flex flex-col gap-2 w-full">
-            <label className="text-sm text-foreground">Language*</label>
-            <Select
-              value={language}
-              onValueChange={(val) => {
-                setLanguage(val);
-                setErrors((prev) => ({ ...prev, language: "" }));
-              }}
-              onOpenChange={(open) => setIsLanguageOpen(open)}
-            >
-              <SelectTrigger
-                className={`border cursor-pointer border-border-color-0 placeholder:text-foreground/40 !h-10.5 w-full [&>svg]:transition-transform [&>svg]:duration-200 ${
-                  isLanguageOpen ? "[&>svg]:rotate-180" : ""
-                } ${errors.language ? "border-red-500" : "border-border-color-0"}`}
-              >
-                <SelectValue
-                  placeholder="Python"
-                  className="placeholder:text-sm !cursor-pointer"
-                />
-              </SelectTrigger>
-              <SelectContent  className="border border-border-color-0">
-                {LANGUAGE_OPTIONS.map((c) => (
-                  <SelectItem key={c} value={c} className="!cursor-pointer">
-                    {c}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.language && (
-              <p className="text-xs text-red-500">{errors.language}</p>
-            )}
-          </div>
-
           {/* CODE */}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm text-foreground">
-              Transformation Code*
+              Transformation Code *
             </label>
             <div className="flex gap-2">
               <Textarea

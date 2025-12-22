@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusIcon } from "@/components/Icons";
-import TestingAnalyticsComp from "@/components/testing/testing-analytics";
+import CountUp from "@/components/animations/CountUp";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import TestingSuitesGrid from "@/components/testing/testing-suites-grid";
@@ -61,55 +61,36 @@ const initialTestSuites = [
   },
 ];
 
-const analyticsCardData = [
-  {
-    id: "average-response-time",
-    heading: "Average Response Time",
-    progress: "1.2s",
-    remarks: "-0.3s from last week",
-    positive: false,
-  },
-  {
-    id: "success-rate",
-    heading: "Success Rate",
-    progress: "89%",
-    remarks: "+5% from last week",
-    positive: true,
-  },
-  {
-    id: "token-usage",
-    heading: "Token Usage",
-    progress: "1,250",
-    remarks: "+120 from last week",
-    positive: true,
-  },
-  {
-    id: "error-rate",
-    heading: "Error Rate",
-    progress: "2.1%",
-    remarks: "-1.2% from last week",
-    positive: false,
-  },
+const initialStats = [
+  { title: "Total Test Suites", value: "02" },
+  { title: "Success Rate", value: "92%" },
+  { title: "Test Runs Today", value: "00" },
 ];
 
 export default function TestingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [testSuitesState, setTestSuitesState] = useState(initialTestSuites);
-  const [analyticsData, setAnalyticsData] = useState(analyticsCardData);
+  const [statsData, setStatsData] = useState(initialStats);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch test suites and analytics on mount
+  // Fetch test suites and stats on mount
   useEffect(() => {
     async function fetchData() {
       try {
         setIsLoading(true);
-        const [suitesData, analytics] = await Promise.all([
+        const [suitesData, stats] = await Promise.all([
           testingApi.getTestSuites(),
-          testingApi.getTestingAnalytics(),
+          testingApi.getTestingStats(),
         ]);
         setTestSuitesState(suitesData);
-        setAnalyticsData(analytics);
+
+        // Update stats with fetched data
+        setStatsData([
+          { title: "Total Test Suites", value: stats.totalTestSuites },
+          { title: "Success Rate", value: stats.successRate },
+          { title: "Test Runs Today", value: stats.testRunsToday },
+        ]);
       } catch (err) {
         setError(err.message || "Failed to load testing data");
         console.error("Error fetching testing data:", err);
@@ -165,6 +146,30 @@ export default function TestingPage() {
     [testSuitesState]
   );
 
+  // Update "Test Runs Today" stat when test results change
+  useEffect(() => {
+    const testRunsToday = testResults.length.toString().padStart(2, "0");
+    setStatsData((prev) =>
+      prev.map((stat) =>
+        stat.title === "Test Runs Today"
+          ? { ...stat, value: testRunsToday }
+          : stat
+      )
+    );
+  }, [testResults]);
+
+  // Update "Total Test Suites" stat when test suites change
+  useEffect(() => {
+    const totalSuites = testSuitesState.length.toString().padStart(2, "0");
+    setStatsData((prev) =>
+      prev.map((stat) =>
+        stat.title === "Total Test Suites"
+          ? { ...stat, value: totalSuites }
+          : stat
+      )
+    );
+  }, [testSuitesState]);
+
   const handleDeleteTest = async (id) => {
     try {
       await testingApi.deleteTestSuite(id);
@@ -193,14 +198,6 @@ export default function TestingPage() {
       value: "test-results",
       label: "Test Results",
       render: () => <TestingResultsGrid items={testResults}   />,
-    },
-    {
-      id: "analytics",
-      value: "analytics",
-      label: "Analytics",
-      render: () => (
-        <TestingAnalyticsComp cardData={analyticsData}  items={testResults} />
-      ),
     },
   ];
 
@@ -246,6 +243,34 @@ export default function TestingPage() {
                 </Button>
               </Link>
             </RippleButton>
+          </div>
+
+          {/* Metrics Cards */}
+          <div className="w-full flex items-center justify-between gap-4">
+            {isLoading
+              ? // Loading skeleton
+                Array.from({ length: 3 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
+                  >
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                    <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                  </div>
+                ))
+              : statsData.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col bg-white gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                  >
+                    <span className="text-sm text-foreground/80">
+                      {item.title}
+                    </span>
+                    <span className="text-4xl font-medium mt-2">
+                      <CountUp value={item.value} startOnView />
+                    </span>
+                  </div>
+                ))}
           </div>
 
           <AnimatedTabsSection items={items} defaultValue="test-suites" />

@@ -16,6 +16,7 @@ import SelectTables from "./ViewsStepForm/SelectTables";
 import FeatureCreation from "./ViewsStepForm/FeatureCreation";
 import DefineJoins from "./ViewsStepForm/DefineJoins";
 import SelectFeatures from "./ViewsStepForm/SelectFeatures";
+import ApplyTransformation from "./ViewsStepForm/ApplyTransformation";
 
 /**
  * Modal component for creating a feature view, offering automated and manual creation options.
@@ -75,12 +76,17 @@ export default function ViewsModal({ open, onOpenChange, onSelect }) {
       label: "Select Features",
       element: <SelectFeatures />,
     },
+    {
+      id: "apply-transformation",
+      label: "Apply Transformation",
+      element: <ApplyTransformation />,
+    },
      {
       id: "preview",
       label: "Preview",
       element: <FeatureCreation />,
     },
-    
+
   ];
 
   const options = [

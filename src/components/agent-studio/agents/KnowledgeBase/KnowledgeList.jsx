@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import SwitchPopover from "../SwitchPopover";
-import KnowledgeBaseConfigPopover from "./KnowledgeConfigPopover"; 
-import KnowledgeBaseCreateModal from "./CreateKnowledgePopup";
+import KnowledgeBaseConfigPopover from "./KnowledgeConfigPopover";
+import KnowledgeBaseModal from "@/components/agent-studio/CreateKnowledgeBaseModal";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "@/components/Icons";
@@ -57,24 +57,22 @@ export default function KnowledgeBaseList() {
     <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-background dark:bg-card">
       <div className="flex justify-between items-start">
         <div>
-          <h2 className="text-xl font-medium ">Tools Selection</h2>
+          <h2 className="text-xl font-medium ">Knowledge Base Selection</h2>
           <p className="text-sm text-muted-foreground mb-6">
-            Select tools and configure them for your agent
+            Select knowledge bases and configure them for your agent
           </p>
         </div>
         <div>
-          <Link href="/agent-studio/agents/create">
-            <RippleButton>
-              <Button
-                onClick={() => setOpenCreateModal(true)}
-                variant="outline"
-                className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10"
-              >
-                <PlusIcon className="text-primary" />
-                Create Knowledge Base
-              </Button>
-            </RippleButton>
-          </Link>
+          <RippleButton>
+            <Button
+              onClick={() => setOpenCreateModal(true)}
+              variant="outline"
+              className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
+            >
+              <PlusIcon className="text-primary" />
+              Create Knowledge Base
+            </Button>
+          </RippleButton>
         </div>
       </div>
 
@@ -83,15 +81,15 @@ export default function KnowledgeBaseList() {
           <SwitchPopover
                       key={item.id}
                       tool={item}
-                      onOpenConfig={openConfig}   
+                      onOpenConfig={openConfig}
                     />
         ))}
       </div>
 
-      <KnowledgeBaseCreateModal
-  open={openCreateModal}
-  onOpenChange={setOpenCreateModal}
-/>
+      <KnowledgeBaseModal
+        open={openCreateModal}
+        onOpenChange={setOpenCreateModal}
+      />
 
 
       {/* CONFIG MODAL */}

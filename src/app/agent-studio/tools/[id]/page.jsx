@@ -14,6 +14,7 @@ import ToolsUsage from "@/components/agent-studio/tools/ToolsUsage";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+import CreateCustomToolModal from "@/components/agent-studio/CreateCustomToolModal";
 import * as toolsApi from "@/lib/api/tools";
 
 const FALLBACK_TOOL = {
@@ -55,6 +56,7 @@ export default function Page() {
 
   const [toolsData, setToolsData] = useState(FALLBACK_TOOL);
   const [error, setError] = useState(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   // Fetch tool data from API
   useEffect(() => {
@@ -71,6 +73,9 @@ export default function Page() {
       fetchToolData();
     }
   }, [id]);
+
+  // Check if this is a custom tool
+  const isCustomTool = toolsData?.isCustom === true;
 
   function slugToTitle(slug) {
   if (!slug) return "";
@@ -114,19 +119,23 @@ const handleConfirmDelete = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <RippleButton>
-                <Button
-                  variant="outline"
-                  onClick={handleTrashClick}
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4 text-red-500">
-                    <Bin />
-                  </div>
-                  Delete
-                </Button>
-              </RippleButton>
+              {/* Delete button - only for custom tools */}
+              {isCustomTool && (
+                <RippleButton>
+                  <Button
+                    variant="outline"
+                    onClick={handleTrashClick}
+                    className="gap-2 text-foreground border border-primary"
+                  >
+                    <div className="!w-4 text-red-500">
+                      <Bin />
+                    </div>
+                    Delete
+                  </Button>
+                </RippleButton>
+              )}
 
+              {/* Test button - for all tools */}
               <RippleButton>
                 <Button
                   variant="outline"
@@ -139,16 +148,20 @@ const handleConfirmDelete = () => {
                 </Button>
               </RippleButton>
 
-              <Link href="#">
+              {/* Edit button - only for custom tools */}
+              {isCustomTool && (
                 <RippleButton>
-                  <Button className="bg-primary hover:bg-[#E64A19] text-white gap-4">
+                  <Button
+                    className="bg-primary hover:bg-[#E64A19] text-white gap-4"
+                    onClick={() => setIsEditModalOpen(true)}
+                  >
                     <div className="!w-4">
                       <EditIcon className="text-white" />
                     </div>
                     Edit
                   </Button>
                 </RippleButton>
-              </Link>
+              )}
             </div>
           </div>
         </div>
@@ -158,16 +171,26 @@ const handleConfirmDelete = () => {
           defaultValue="overview"
         />
       </ScaleDown>
-      <ConfirmDialog
-  open={isDeleteOpen}
-  onOpenChange={setIsDeleteOpen}
-  title="Delete Tool?"
-  description="This action cannot be undone. The tool will be permanently deleted."
-  confirmText="Delete"
-  variant="destructive"
-  onConfirm={handleConfirmDelete}
-/>
 
+      {/* Delete Confirmation Dialog */}
+      <ConfirmDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete Tool?"
+        description="This action cannot be undone. The tool will be permanently deleted."
+        confirmText="Delete"
+        variant="destructive"
+        onConfirm={handleConfirmDelete}
+      />
+
+      {/* Edit Custom Tool Modal */}
+      {isCustomTool && (
+        <CreateCustomToolModal
+          open={isEditModalOpen}
+          onOpenChange={setIsEditModalOpen}
+          tool={toolsData}
+        />
+      )}
     </div>
   );
 }

@@ -85,7 +85,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
     return (
       <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
         {/* Left card skeleton */}
-        <Card className="overflow-hidden bg-background border border-border-color-0 h-full py-7 w-full">
+        <Card className="overflow-visible bg-background border border-border-color-0 py-7 w-full">
           <div className="space-y-4 px-5">
             <CardHeader className="px-0">
               <Skeleton className="h-6 w-44" />
@@ -121,7 +121,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
         </Card>
 
         {/* Right card skeleton */}
-        <Card className="overflow-hidden bg-background border border-border-color-0 h-full pt-7 pb-3 w-full">
+        <Card className="overflow-visible bg-background border border-border-color-0 pt-7 pb-3 w-full">
           <div className="space-y-4 px-5">
             <CardHeader className="px-0">
               <Skeleton className="h-6 w-40" />
@@ -164,7 +164,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
         <div className="w-full h-fit grid grid-cols-2 gap-x-6 items-stretch">
           <Card
             className={cn(
-              "overflow-hidden cursor-pointer transition-all bg-white duration-500 ease-out  border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full py-7 w-full "
+              "overflow-visible cursor-pointer transition-all bg-white duration-500 ease-out  border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black py-7 w-full "
             )}
           >
             <div className="space-y-6 px-5 pb-10">
@@ -245,13 +245,13 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
 
           <Card
             className={cn(
-              "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-white border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
+              "overflow-visible cursor-pointer transition-all duration-500 ease-out bg-white border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black pt-7 pb-2 w-full"
             )}
           >
             <div className="space-y-4 px-5">
               <CardHeader className="px-0">
                 <h3 className=" text-xl font-medium text-foreground group-hover:text-white transition-all duration-500 ease-out ">
-                  Usage Analytics
+                  Embedding Configuration
                 </h3>
               </CardHeader>
 
@@ -317,7 +317,7 @@ const StorageStrategy = ({ minSkeletonMs = 500 }) => {
         <div>
           <Card
             className={cn(
-              "overflow-hidden cursor-pointer transition-all duration-500 ease-out bg-white border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black h-full pt-7 pb-2 w-full"
+              "overflow-visible cursor-pointer transition-all duration-500 ease-out bg-white border border-border-color-0 group-hover:bg-active-card group-hover:text-white group-hover:border-black pt-7 pb-2 w-full"
             )}
           >
             <div className="space-y-4 px-5">

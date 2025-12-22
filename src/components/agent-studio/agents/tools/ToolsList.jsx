@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import SwitchPopover from "../SwitchPopover";
-import ToolCreateModal from "./ToolsCreateModal";
+import CreateCustomToolModal from "@/components/agent-studio/CreateCustomToolModal";
 import ToolConfigModal from "./ToolsConfigModal";
 
 import { RippleButton } from "@/components/ui/ripple-button";
@@ -62,18 +61,16 @@ export default function ToolsList() {
         </div>
 
         <div>
-          <Link href="/agent-studio/agents/create">
-            <RippleButton>
-              <Button
-                onClick={() => setOpenCreateModal(true)}
-                variant="outline"
-                className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
-              >
-                <PlusIcon className="text-primary" />
-                Create Tools
-              </Button>
-            </RippleButton>
-          </Link>
+          <RippleButton>
+            <Button
+              onClick={() => setOpenCreateModal(true)}
+              variant="outline"
+              className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
+            >
+              <PlusIcon className="text-primary" />
+              Add Custom Tool
+            </Button>
+          </RippleButton>
         </div>
       </div>
 
@@ -84,10 +81,11 @@ export default function ToolsList() {
         ))}
       </div>
 
-      {/* CREATE TOOL MODAL */}
-      <ToolCreateModal
+      {/* CREATE CUSTOM TOOL MODAL */}
+      <CreateCustomToolModal
         open={openCreateModal}
         onOpenChange={setOpenCreateModal}
+        tool={null}
       />
 
       <ToolConfigModal

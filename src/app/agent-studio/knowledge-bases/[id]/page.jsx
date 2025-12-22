@@ -136,10 +136,10 @@ export default function KnowledgeBaseDetailPage({ params }) {
   if (!mounted) return null;
 
   return (
-    <div className="flex flex-col h-full w-full overflow-hidden">
+    <div className="flex flex-col h-full w-full">
       {/* Header */}
       <ScaleDown>
-        <div className="bg-background p-6 space-y-6 h-full">
+        <div className="bg-background p-6 space-y-6">
           <div className="flex items-center justify-between mb-10">
             <div className="flex gap-3">
               <LeftArrowAnim link={"/agent-studio/knowledge-bases"} />

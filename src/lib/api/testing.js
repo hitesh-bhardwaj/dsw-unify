@@ -352,6 +352,29 @@ export async function getTestingAnalytics(params = {}) {
 }
 
 /**
+ * Get testing statistics for metrics cards
+ *
+ * TODO: Backend team - Replace with actual API call:
+ * GET /api/testing/stats
+ * Response: { totalTestSuites: string, successRate: string, testRunsToday: string }
+ *
+ * @returns {Promise<Object>}
+ */
+export async function getTestingStats() {
+  const totalSuites = MOCK_TEST_SUITES.length.toString().padStart(2, "0");
+  const successRate = "92%";
+  const testRunsToday = "00";
+
+  const stats = {
+    totalTestSuites: totalSuites,
+    successRate: successRate,
+    testRunsToday: testRunsToday,
+  };
+
+  return apiCall("/testing/stats", { method: "GET" }, stats);
+}
+
+/**
  * Get performance history for test suites
  *
  * TODO: Backend team - Replace with actual API call:
