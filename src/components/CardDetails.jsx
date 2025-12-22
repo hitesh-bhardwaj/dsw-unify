@@ -27,7 +27,7 @@ export default function CardDetails({ data = [], first, textSize }) {
               <span className="text-sm font-normal">{item.description}</span>
             </>
           ) : (
-            <span className={`${textSize ? textSize : "text-xl"} font-medium mt-2`}>{item.value}</span>
+            <span className={`${textSize ? textSize : "text-xl"} font-medium mt-2`}>{<CountUp value={item.value} startOnView />}</span>
           )}
         </div>
       ))}

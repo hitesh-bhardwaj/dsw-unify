@@ -84,6 +84,7 @@ const FALLBACK_TEMPLATES = [
     id: 1,
     name: "Customer Service Template",
     description: "Standard template for customer service agents",
+        slug:'customer-service-template',
     icon: <TemplatesIcon />,
     tags: ["Customer Service", "Empathy", "+1 more"],
     uses: "45",
@@ -93,6 +94,7 @@ const FALLBACK_TEMPLATES = [
   {
     id: 2,
     name: "Technical Q&A Template",
+        slug:'technical-ques-and-ans-template',
     description: "Template for technical question answering",
     icon: <TemplatesIcon />,
     tags: ["Technical", "Empathy", "+1 more"],
@@ -262,7 +264,7 @@ function PromptsContent() {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                <RippleButton>
+                {/* <RippleButton>
                   <Button
                     variant="outline"
                     className="gap-2 border-primary text-foreground hover:bg-gray-50"
@@ -272,7 +274,7 @@ function PromptsContent() {
                     </div>
                     Generate Prompt
                   </Button>
-                </RippleButton>
+                </RippleButton> */}
 
                 <RippleButton>
                   <Button

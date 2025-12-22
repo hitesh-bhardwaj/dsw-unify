@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Editor, Eye, SynthWave } from "./Icons";
 import CopyButton from "./animate-ui/components/buttons/CopyButton";
+import Link from "next/link";
 
 /**
  * Component to display a card for a template.
@@ -23,6 +24,7 @@ export function TemplateCard({ template, index, view }) {
   const {
     name,
     description,
+    slug,
     tags = [],
     variable,
     uses,
@@ -35,8 +37,14 @@ export function TemplateCard({ template, index, view }) {
    const isGrid = view === "grid";
   const isList = view === "list";
 
+  const stopLinkNavigation = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
+
   return (
-    // <Link href={"/"} className="block group">
+    <Link href={`/agent-studio/prompts/templates/${slug}/`} className="block ">
     <div className="group h-full">
       <Card
         className={cn(
@@ -70,6 +78,7 @@ export function TemplateCard({ template, index, view }) {
             <div className="flex items-center gap-1">
               <Button
                 variant="ghost"
+                onClick={stopLinkNavigation}
                 size="icon"
                 className={cn(
                   "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
@@ -79,6 +88,7 @@ export function TemplateCard({ template, index, view }) {
               </Button>
               <Button
                 variant="ghost"
+                onClick={stopLinkNavigation}
                 size="icon"
                 className={cn(
                   "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
@@ -88,6 +98,7 @@ export function TemplateCard({ template, index, view }) {
               </Button>
               <Button
                 variant="ghost"
+                onClick={stopLinkNavigation}
                 size="icon"
                 className={cn(
                   "h-7 w-7 opacity-0 group-hover:opacity-100 flex items-center justify-center px-1 py-1 text-white hover:bg-white/30 group-hover:text-white transition-colors duration-300"
@@ -141,6 +152,6 @@ export function TemplateCard({ template, index, view }) {
         </CardContent>
       </Card>
     </div>
-    // </Link>
+     </Link>
   );
 }

@@ -1,203 +1,297 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { AiGenerator, Bin, EditIcon  } from "@/components/Icons";
+import React, { useState, useMemo, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
-import AnimatedTabsSection from "@/components/common/TabsPane";
-import EmptyCard from "@/components/common/EmptyCard";
-import { ScaleDown } from "@/components/animations/Animations";
-import PromptContentGrid from "@/components/prompt-content-grid";
-import PromptMetadataGrid from "@/components/prompt-metadata-grid";
-import PromptUsageGrid from "@/components/prompt-usage-grid";
-import { useRouter } from "next/navigation";
-import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
-import { useState, useEffect, use } from "react";
-import * as promptsApi from "@/lib/api/prompts";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import SearchBar from "@/components/search-bar";
+import { Badge } from "@/components/ui/badge";
+import { PlusIcon } from "@/components/Icons";
+import Link from "next/link";
+import CardDetails from "@/components/CardDetails";
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import { motion, AnimatePresence } from "framer-motion";
+import VersionAgentCard from "@/components/agent-studio/agents/VersionAgentCard";
+import PromptsVersionCard from "@/components/agent-studio/prompts/PromptsVersionCard";
+import CreatePromptModal from "@/components/CreatePromptModal";
 
-export default function PromptDetailPage({ params }) {
-  const { id } = use(params);
-  const router = useRouter();
 
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [promptData, setPromptData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+const page = () => {
+  const params = useParams();
+  const { id } = params;
+
+  const [query, setQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+  const [versions, setVersionsData] = useState([]);
+  const [statsData, setStatsData] = useState([]);
+   const [isLoading, setIsLoading] = useState(false);
+    const [createPrompt, setCreatePrompt] = useState(false);
+
   const [error, setError] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
-  const [editablePrompt, setEditablePrompt] = useState(null);
 
+  // Mock data for agent versions
   useEffect(() => {
-    if (promptData) {
-      setEditablePrompt({
-        name: title ?? "Customer Support Assistant",
-        description:
-          promptData.description ??
-          "You are a helpful and empathetic customer service representative...",
-        category: promptData.category ?? "Customer Service",
-        tags: promptData.tags ?? [
-          "Customer-service",
-          "empathy",
-          "problem-solving",
-        ],
-        content:
-          promptData.content ??
-          "You are a helpful and empathetic customer service representative...",
-      });
-    }
-  }, [promptData]);
+    // In production, fetch from API
+    const mockVersions = [
+  {
+    id: 2,
+    name: "v2",
+    versionSlug: "version-2",
+    description: "Improved structure and added code examples support",
+    status: "Deployed",
+    tags: ["technical-writing", "documentation", "clarity"],
+    totalUses: 890,
+    createdAt: "2025-01-18",
+    lastUpdated: "January 18, 2025",
+  },
+  {
+    id: 1,
+    name: "v1",
+    versionSlug: "version-1",
+    description: "Initial version with basic documentation guidelines",
+    status: "Undeployed",
+    tags: ["technical-writing", "documentation"],
+    totalUses: 523,
+    createdAt: "2025-01-15",
+    lastUpdated: "January 15, 2025",
+  },
+];
 
-  // Fetch prompt data on mount
-  useEffect(() => {
-    async function fetchPromptData() {
-      try {
-        setIsLoading(true);
-        const data = await promptsApi.getPromptById(id);
-        setPromptData(data);
-      } catch (err) {
-        setError(err.message || "Failed to load prompt");
-        console.error("Error fetching prompt:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    }
 
-    if (id) {
-      fetchPromptData();
-    }
+    const mockStats = [
+  {
+    title: "Owner",
+    value: "Pritesh Tiwari",
+    description: "Prompt owner",
+  },
+  {
+    title: "Total Versions",
+    value: mockVersions.length.toString(),
+    description: "Prompt versions",
+  },
+  {
+    title: "Deployed",
+    value: mockVersions.filter(v => v.status === "Deployed").length.toString(),
+    description: "Versions in production",
+  },
+];
+
+
+    setVersionsData(mockVersions);
+    setStatsData(mockStats);
   }, [id]);
 
-  const handleConfirmDelete = () => {
-    setIsDeleteOpen(false);
-    router.push(`/agent-studio/prompts?deleteId=${id}`);
+  // Agent metadata - in production this would come from API
+  const agentData = {
+    id: id,
+    name: "Auto Claims Processing Agent",
+    description: "Automates auto insurance claims intake, validation, and processing",
+    status: "active",
+    tags: ["auto", "claims", "processing"],
   };
 
-  function slugToTitle(slug) {
-    if (!slug) return "";
-
-    return slug
-      .split("-")
+  // Convert slug to Title
+  const slugToTitle = (slug) =>
+    slug
+      ?.split("-")
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(" ");
+
+  const title = slugToTitle(id);
+
+  //  FILTER: Collect unique tags
+  const availableTags = useMemo(() => {
+    const s = new Set();
+    versions.forEach((v) => v.tags?.forEach((t) => s.add(t)));
+    return Array.from(s).sort();
+  }, [versions]);
+
+  // -----------------------------------------
+  //  SEARCH + TAG FILTERING
+  // -----------------------------------------
+  let filteredVersions = versions.filter((v) => {
+    const matchesSearch =
+      v.name.toLowerCase().includes(query.toLowerCase()) ||
+      v.description.toLowerCase().includes(query.toLowerCase());
+
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => v.tags?.includes(tag));
+
+    return matchesSearch && matchesTags;
+  });
+
+  // -----------------------------------------
+  //  SORTING
+  // -----------------------------------------
+  if (sortOrder === "asc") {
+    filteredVersions = [...filteredVersions].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredVersions = [...filteredVersions].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
   }
 
-  const title = promptData?.name || slugToTitle(id) || "Loading...";
-  const description = promptData?.description || "Loading description...";
-  const items = [
-    {
-      id: "content",
-      value: "content",
-      label: "Content",
-      name: "Content",
-      render: () => (
-        <PromptContentGrid
-          value={editablePrompt?.content}
-          isEditing={isEditing}
-          onChange={(val) => setEditablePrompt((p) => ({ ...p, content: val }))}
-        />
-      ),
-    },
-    {
-      id: "metadata",
-      value: "metadata",
-      label: "Metadata",
-      name: "Metadata",
-      render: () => (
-        <PromptMetadataGrid
-          data={editablePrompt}
-          isEditing={isEditing}
-          onChange={setEditablePrompt}
-        />
-      ),
-    },
-    {
-      id: "usage",
-      value: "usage",
-      label: "Usage",
-      name: "Usage",
-      render: () => <PromptUsageGrid />,
-    },
-  ];
+  const handleDeleteVersion = async (versionId) => {
+    try {
+      // In production, call API to delete version
+      setVersionsData((prev) => prev.filter((v) => v.id !== versionId));
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
 
   return (
-    <div className="flex flex-col h-full w-full overflow-hidden">
-      <ConfirmDialog
-        open={isDeleteOpen}
-        onOpenChange={setIsDeleteOpen}
-        title="Delete prompt?"
-        description={
-          title
-            ? `This action cannot be undone. This will permanently delete "${title}".`
-            : "This action cannot be undone. This will permanently delete this prompt."
-        }
-        confirmLabel="Delete"
-        destructive
-        onConfirm={handleConfirmDelete}
-      />
-
-      {/* Header */}
+    <div className="flex flex-col h-full">
       <ScaleDown>
-        <div className=" bg-background p-6">
-          {/* <FadeUp> */}
+        <div className="bg-background p-6 space-y-8">
           <div className="flex items-center justify-between">
-            <div className="flex items-start gap-3">
-              <LeftArrowAnim link={"/agent-studio/prompts"} />
+            <div className="flex gap-3">
+              <LeftArrowAnim link={`/agent-studio/prompts`} />
 
-              <div className="space-y-2">
-                <h1 className="text-2xl font-medium">
-                  {isLoading ? "Loading..." : title}
-                </h1>
-                <p className="text-sm text-gray-600  dark:text-foreground">
-                  {isLoading
-                    ? "Helpful and empathetic customer service responses"
-                    : description}
+              <div className="space-y-1">
+                <div className="flex gap-3 items-center">
+                  <h1 className="text-xl font-medium">{title}</h1>
+
+                  <div className="flex flex-wrap gap-1 ">
+                    {agentData.tags.map((tag, index) => (
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className={cn(
+                          "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                        )}
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-foreground pl-0.5">
+                  {agentData.description}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+
+            <Link href="#">
               <RippleButton>
-                <Button
-                  onClick={() => setIsDeleteOpen(true)}
-                  variant="outline"
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4 text-red-500">
-                    <Bin />
-                  </div>
-                  Delete
+                <Button onClick={() => setCreatePrompt(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 !cursor-pointer rounded-full !px-6 !py-6 duration-300">
+                  <PlusIcon />
+                  Create Version
                 </Button>
               </RippleButton>
+            </Link>
+          </div>
 
-              <Link href={`#`}>
-                <RippleButton>
-                  <Button
-                    onClick={() => setIsEditing((prev) => !prev)}
-                    className="bg-primary hover:bg-[#E64A19] text-white gap-2"
-                  >
-                    <div className="!w-4">
-                      <EditIcon className={"text-white"} />
-                    </div>
-
-                    {isEditing ? "Save" : "Edit"}
-                  </Button>
-                </RippleButton>
-              </Link>
+          {isLoading ? (
+            // Loading skeleton for stats
+            <div className="w-full flex items-center justify-between gap-4">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card animate-pulse"
+                >
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                </div>
+              ))}
             </div>
-          </div>
-          {/* </FadeUp> */}
-        </div>
+          ) : (
+            <CardDetails data={statsData} first={true} />
+          )}
 
-        {/* Main Content */}
-        <div className="flex-1 p-6">
-          <div className=" mx-auto space-y-4">
-            <AnimatedTabsSection
-              items={items}
-              // ctx={ctx}
-              defaultValue="content"
+          <div className="space-y-4">
+            <h2 className="text-2xl font-medium">Versions</h2>
+
+            {/* SEARCH + FILTERBAR */}
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <SearchBar
+                  placeholder="Search by name, description, or tags..."
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <FilterBar
+              selectedTags={selectedTags}
+              onTagsChange={setSelectedTags}
+              availableTags={availableTags}
+              view={view}
+              setView={setView}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              cards={versions}
             />
-            {/* </FadeUp> */}
           </div>
+
+          {/* ERROR STATE */}
+          {error && !isLoading && (
+            <div className="p-4 text-center text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="font-medium">Failed to load versions</p>
+              <p className="text-sm mt-2">{error}</p>
+            </div>
+          )}
+
+          {/* LOADING STATE */}
+          {isLoading && !error && (
+            <div className={
+              view === "grid"
+                ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch"
+                : "flex flex-col gap-5"
+            }>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="border border-border-color-0 rounded-3xl p-6 animate-pulse dark:bg-card"
+                >
+                  <div className="h-14 w-14 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* GRID / LIST VIEW */}
+          {!isLoading && !error && (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={view}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch"
+                    : "flex flex-col gap-5"
+                }
+              >
+                {filteredVersions.map((item, index) => (
+                  <PromptsVersionCard key={item.id} view={view} version={item} index={index} onDelete={handleDeleteVersion} agentId={id} />
+                ))}
+
+                {filteredVersions.length === 0 && (
+                  <div className="flex h-64 items-center justify-center text-gray-500">
+                    No versions found
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
       </ScaleDown>
+       <CreatePromptModal open={createPrompt} onOpenChange={setCreatePrompt} />
     </div>
   );
-}
+};
+
+export default page;

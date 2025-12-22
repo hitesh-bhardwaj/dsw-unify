@@ -98,20 +98,23 @@ const FALLBACK_RECENT = [
   },
 ];
 
-const cardData = [
-  {
-    title: "Total Models",
-    value: 4,
-  },
-  {
-    title: "Active Models",
-    value: 3,
-  },
-  {
-    title: "Total Requests",
-    value: 2090,
-  },
-];
+const stats = [
+    {
+      title: "Total Models",
+      value: "04",
+      description:""
+    },
+    {
+      title: "Active Models",
+      value: "03",
+      description:""
+    },
+    {
+      title: "Total Requests",
+      value: "2090",
+      description:""
+    }
+  ];
 
 
 export default function LLMsPage() {
@@ -293,8 +296,7 @@ export default function LLMsPage() {
               
             </div>
       <div className="px-6 space-y-6">
-        
-            <CardDetails data={cardData} textSize='text-4xl' />
+            <CardDetails data={stats} textSize='text-4xl'/>
       </div>
      
       <div className="px-6 pt-6 pb-0">

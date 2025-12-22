@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { AiGenerator, LeftArrow, PlusIcon } from "./Icons";
+import { AiGenerator, LeftArrow, PlusIcon, SparklesIcon } from "./Icons";
 import { Button } from "./ui/button";
 import {
   Select,
@@ -50,6 +50,7 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [enhancePrompt, setEnhancePrompt] = useState("");
 
   const handleAddTag = () => {
     if (tags.trim()) {
@@ -171,6 +172,30 @@ const CreatePromptModal = ({ open, onOpenChange }) => {
               />
             </div>
           </div>
+
+          <div className="space-y-2">
+                    <label className="text-sm font-medium text-foreground dark:text-foreground">
+                      Generate or Enhance Prompt
+                    </label>
+                    <div className="flex gap-2 mt-2">
+                      <Input
+                        value={enhancePrompt}
+                        onChange={(e) => setEnhancePrompt(e.target.value)}
+                        placeholder="Describe how you want to modify the prompt..."
+                        className="h-12 flex-1 !text-xs p-4 border-border-color-0 shadow-none text-foreground placeholder:text-foreground/80"
+                      />
+                      <RippleButton className={"rounded-lg"}>
+                        <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2  cursor-pointer w-30 rounded-lg">
+                          <SparklesIcon />
+                          Generate
+                        </Button>
+                      </RippleButton>
+                    </div>
+                    <p className="text-xs text-foreground dark:text-foreground">
+                      Use natural language to create a new prompt or enhance the existing
+                      one
+                    </p>
+                  </div>
 
           {error && (
             <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-600 dark:text-red-400 text-sm">
