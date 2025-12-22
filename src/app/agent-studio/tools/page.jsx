@@ -494,6 +494,7 @@ function ToolsContent() {
         open={isCustomToolModalOpen}
         onOpenChange={setIsCustomToolModalOpen}
         tool={editingTool}
+        
       />
     </div>
   );
