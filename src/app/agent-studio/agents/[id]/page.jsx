@@ -1,303 +1,288 @@
 "use client";
-
-import { use, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import {
-  AiGenerator,
-  APIIcon,
-  Bin,
-  EditIcon,
-  RunTestsIcon,
-  SettingIcon,
-} from "@/components/Icons";
-import ApiEndpointModal from "@/components/api-endpoint-modal";
-import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import CountUp from "@/components/animations/CountUp";
-import { RippleButton } from "@/components/ui/ripple-button";
+import React, { useState, useMemo, useEffect } from "react";
+import { useParams } from "next/navigation";
 import { ScaleDown } from "@/components/animations/Animations";
+import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
+import { RippleButton } from "@/components/ui/ripple-button";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import SearchBar from "@/components/search-bar";
-import EmptyCard from "@/components/common/EmptyCard";
-import Overview from "@/components/agent-studio/agents/Overview";
-import AnimatedTabsSection from "@/components/common/TabsPane";
-import Guardrails from "@/components/agent-studio/agents/Guardrails";
-import Conversations from "@/components/agent-studio/agents/Conversations";
-import TestAgentModal from "@/components/agent-studio/agents/test-agent-modal";
-import { useRouter } from "next/navigation";
-import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
-import MonitoringTab from "@/components/agent-studio/agents/MonitoringTab";
-import PerformanceTab from "@/components/agent-studio/agents/PerformanceTab";
-import * as agentsApi from "@/lib/api/agents";
+import { Badge } from "@/components/ui/badge";
+import { PlusIcon } from "@/components/Icons";
+import Link from "next/link";
+import CardDetails from "@/components/CardDetails";
+import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
+import { motion, AnimatePresence } from "framer-motion";
+import VersionAgentCard from "@/components/agent-studio/agents/VersionAgentCard";
 
-export default function AgentDetailPage({ params }) {
-  const { id } = use(params);
-
-  const [apiModalOpen, setApiModalOpen] = useState(false);
-  const router = useRouter();
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-
-  // Show skeleton only once per agent id
-  const [isLoading, setIsLoading] = useState(true);
-  const [mounted, setMounted] = useState(false);
-
-  const handleConfirmDelete = () => {
-    // Redirect to agents page with delete instruction
-    router.push(`/agent-studio/agents?deleteId=${id}`);
-
-    // Close modal
-    setIsDeleteOpen(false);
-  };
-
-  const handleTrashClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDeleteOpen(true);
-  };
-
-  const items = [
-    {
-      id: "overview",
-      value: "overview",
-      label: "Overview",
-      name: "Overview",
-      render: () => <Overview />,
-    },
-    {
-      id: "monitoring",
-      value: "monitoring",
-      label: "Monitoring",
-      name: "Monitoring",
-      render: () => (
-        <MonitoringTab/>
-      ),
-    },
-    {
-      id: "performance",
-      value: "performance",
-      label: "Performance",
-      name: "Performance",
-      render: () => (
-        <PerformanceTab/>
-      ),
-    },
-    {
-      id: "guardrails",
-      value: "guardrails",
-      label: "Guardrails",
-      name: "Guardrails",
-      render: () => <Guardrails />,
-    },
-    {
-      id: "conversations",
-      value: "conversations",
-      label: "Conversations",
-      name: "Conversations",
-      render: () => <Conversations />,
-    },
-  ];
-
-  // Fallback mock data
-  const FALLBACK_AGENT = {
-    id: 0,
-    name: "Auto Claims Processing Agent",
-    description:
-      "Automates auto insurance claims intake, validation, and processing",
-    status: "active",
-    tags: ["support", "customer-service"],
-    lastModified: "2 Hours Ago",
-    usage: "1.2K Request",
-    metrics: {
-      totalRequests: "12,847",
-      avgResponse: "245ms",
-      successRate: "99.2%",
-      activeUsers: "156",
-    },
-    health: {
-      lastActivity: "2 minutes ago",
-      errorRate: "0.8%",
-      systemStatus: "operational",
-    },
-    recentActivity: [
-      { type: "success", event: "API call completed", time: "2 minutes ago" },
-      { type: "success", event: "User interaction", time: "5 minutes ago" },
-      {
-        type: "success",
-        event: "Knowledge base query",
-        time: "12 minutes ago",
-      },
-      { type: "error", event: "Guardrail triggered", time: "18 minutes ago" },
-      { type: "success", event: "Model inference", time: "25 minutes ago" },
-    ],
-  };
-
-  const [agent, setAgent] = useState(FALLBACK_AGENT);
-  const [error, setError] = useState(null);
-
-  // Fetch agent data from API
-  useEffect(() => {
-    async function fetchAgentData() {
-      try {
-        const [agentData, metricsData, healthData, activityData] = await Promise.all([
-          agentsApi.getAgentById(id),
-          agentsApi.getAgentMetrics(id),
-          agentsApi.getAgentHealth(id),
-          agentsApi.getAgentActivity(id),
-        ]);
-
-        setAgent({
-          ...agentData,
-          metrics: metricsData,
-          health: healthData,
-          recentActivity: activityData,
-        });
-      } catch (err) {
-        setError(err.message || "Failed to load agent");
-        console.error("Error fetching agent:", err);
-      }
-    }
-    if (id) {
-      fetchAgentData();
-    }
-  }, [id]);
-
-  // hydrate gate to avoid SSR mismatch
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  function slugToTitle(slug) {
-    if (!slug) return "";
-
-    return slug
-      .split("-") // break into words
-      .map((w) => w.charAt(0).toUpperCase() + w.slice(1)) // capitalize
-      .join(" "); // rejoin with spaces
-  }
-  const title = slugToTitle(id);
-
-  useEffect(() => {
-    if (!mounted) return;
-    const key = `agentDetailSkeleton:${id ?? "global"}`;
-    const alreadyShown =
-      typeof window !== "undefined" && localStorage.getItem(key) === "1";
-
-    if (alreadyShown) {
-      setIsLoading(false);
-      return;
-    }
-
-    // First visit: keep skeleton for at least 500ms, then disable for the future
-    const t = setTimeout(() => {
-      setIsLoading(false);
-      localStorage.setItem(key, "1");
-    }, 500);
-
-    return () => clearTimeout(t);
-  }, [mounted, id]);
-
-  // Mock data - in real app, fetch based on id
+const page = () => {
+  const params = useParams();
+  const { id } = params;
 
   const [query, setQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [view, setView] = useState("grid");
+  const [sortOrder, setSortOrder] = useState("none");
+  const [versions, setVersionsData] = useState([]);
+  const [statsData, setStatsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  // Mock data for agent versions
+  useEffect(() => {
+    // In production, fetch from API
+    const mockVersions = [
+      {
+        id: 1,
+        name: "v1",
+        versionSlug: "version-1",
+        description: "Initial production release with core functionality",
+        accuracy: "94.5%",
+        status: "Deployed",
+        tags: ["auto", "claims", "processing"],
+        lastUpdated: "2 days ago",
+        createdAt: "2025-01-15",
+      },
+      {
+        id: 2,
+        name: "v2",
+        versionSlug: "version-2",
+        description: "Enhanced with improved NLP model and faster response time",
+        accuracy: "96.2%",
+        status: "Deployed",
+        tags: ["auto", "claims", "processing"],
+        lastUpdated: "1 day ago",
+        createdAt: "2025-01-18",
+      },
+      {
+        id: 3,
+        name: "v3",
+        versionSlug: "version-3",
+        description: "Beta version with experimental guardrails and memory improvements",
+        accuracy: "97.1%",
+        status: "Undeployed",
+        tags: ["auto", "claims", "baseline"],
+        lastUpdated: "5 hours ago",
+        createdAt: "2025-01-20",
+      },
+    ];
 
-  if (!mounted) {
-    // optional: avoid any flicker during SSR hydration
-    return null;
+    const mockStats = [
+      { title: "Owner", value: "Shivam Thakkar", description: "Agent owner" },
+      { title: "Total Versions", value: mockVersions.length.toString(), description: "Agent versions" },
+      { title: "Deployed", value: mockVersions.filter(v => v.status === "Deployed").length.toString(), description: "Versions in production" },
+    ];
+
+    setVersionsData(mockVersions);
+    setStatsData(mockStats);
+  }, [id]);
+
+  // Agent metadata - in production this would come from API
+  const agentData = {
+    id: id,
+    name: "Auto Claims Processing Agent",
+    description: "Automates auto insurance claims intake, validation, and processing",
+    status: "active",
+    tags: ["auto", "claims", "processing"],
+  };
+
+  // Convert slug to Title
+  const slugToTitle = (slug) =>
+    slug
+      ?.split("-")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+
+  const title = slugToTitle(id);
+
+  //  FILTER: Collect unique tags
+  const availableTags = useMemo(() => {
+    const s = new Set();
+    versions.forEach((v) => v.tags?.forEach((t) => s.add(t)));
+    return Array.from(s).sort();
+  }, [versions]);
+
+  // -----------------------------------------
+  //  SEARCH + TAG FILTERING
+  // -----------------------------------------
+  let filteredVersions = versions.filter((v) => {
+    const matchesSearch =
+      v.name.toLowerCase().includes(query.toLowerCase()) ||
+      v.description.toLowerCase().includes(query.toLowerCase());
+
+    const matchesTags =
+      selectedTags.length === 0 ||
+      selectedTags.some((tag) => v.tags?.includes(tag));
+
+    return matchesSearch && matchesTags;
+  });
+
+  // -----------------------------------------
+  //  SORTING
+  // -----------------------------------------
+  if (sortOrder === "asc") {
+    filteredVersions = [...filteredVersions].sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+  } else if (sortOrder === "desc") {
+    filteredVersions = [...filteredVersions].sort((a, b) =>
+      b.name.localeCompare(a.name)
+    );
   }
+
+  const handleDeleteVersion = async (versionId) => {
+    try {
+      // In production, call API to delete version
+      setVersionsData((prev) => prev.filter((v) => v.id !== versionId));
+    } catch (err) {
+      console.error("Delete error:", err);
+    }
+  };
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
       <ScaleDown>
-        <div className="bg-background p-6">
+        <div className="bg-background p-6 space-y-8">
           <div className="flex items-center justify-between">
             <div className="flex gap-3">
-              <LeftArrowAnim link={"/agent-studio/agents"} />
-              <div>
-                <h1 className="text-xl font-medium">{title}</h1>
-                <p className="text-sm text-gray-600 pl-0.5 dark:text-foreground">
-                  {agent.description}
+              <LeftArrowAnim link={`/agent-studio/agents`} />
+
+              <div className="space-y-1">
+                <div className="flex gap-3 items-center">
+                  <h1 className="text-xl font-medium">{title}</h1>
+
+                  <div className="flex flex-wrap gap-1 ">
+                    {agentData.tags.map((tag, index) => (
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className={cn(
+                          "rounded-full border border-color-2 px-3 py-1 bg-white dark:bg-background text-xs font-light transition-all duration-500 ease-out dark:group-hover:bg-background"
+                        )}
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-foreground pl-0.5">
+                  {agentData.description}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <RippleButton>
-                <Button
-                  variant="outline"
-                  // onClick={() => setApiModalOpen(true)}
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4">
-                    <APIIcon />
-                  </div>
-                  API
-                </Button>
-              </RippleButton>
-              <RippleButton>
-                <Button
-                
-                  variant="outline"
-                  onClick={() => router.push("/agent-studio/testing")}
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4">
-                    <RunTestsIcon />
-                  </div>
-                  Test
-                </Button>
-              </RippleButton>
-              <RippleButton>
-                <Button
-                  variant="outline"
-                  onClick={handleTrashClick}
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4 text-red-500">
-                    <Bin />
-                  </div>
-                  Delete
-                </Button>
-              </RippleButton>
 
-              <Link href={`/agent-studio/agents/${id}/edit`}>
-                <RippleButton>
-                  <Button className="bg-primary hover:bg-[#E64A19] text-white gap-2">
-                    <div className="!w-4">
-                      <EditIcon className={"text-white"} />
-                    </div>
-                    Edit Agent
-                  </Button>
-                </RippleButton>
-              </Link>
-            </div>
+            <Link href="#">
+              <RippleButton>
+                <Button className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 !cursor-pointer rounded-full !px-6 !py-6 duration-300">
+                  <PlusIcon />
+                  Create Version
+                </Button>
+              </RippleButton>
+            </Link>
           </div>
-        </div>
-        <div className="p-6 py-3 space-y-3">
-          {/* Main Content */}
-          <AnimatedTabsSection items={items} defaultValue="overview" />
+
+          {isLoading ? (
+            // Loading skeleton for stats
+            <div className="w-full flex items-center justify-between gap-4">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card animate-pulse"
+                >
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <CardDetails data={statsData} first={true} />
+          )}
+
+          <div className="space-y-4">
+            <h2 className="text-2xl font-medium">Versions</h2>
+
+            {/* SEARCH + FILTERBAR */}
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <SearchBar
+                  placeholder="Search by name, description, or tags..."
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <FilterBar
+              selectedTags={selectedTags}
+              onTagsChange={setSelectedTags}
+              availableTags={availableTags}
+              view={view}
+              setView={setView}
+              sortOrder={sortOrder}
+              setSortOrder={setSortOrder}
+              cards={versions}
+            />
+          </div>
+
+          {/* ERROR STATE */}
+          {error && !isLoading && (
+            <div className="p-4 text-center text-red-600 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="font-medium">Failed to load versions</p>
+              <p className="text-sm mt-2">{error}</p>
+            </div>
+          )}
+
+          {/* LOADING STATE */}
+          {isLoading && !error && (
+            <div className={
+              view === "grid"
+                ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch"
+                : "flex flex-col gap-5"
+            }>
+              {Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="border border-border-color-0 rounded-3xl p-6 animate-pulse dark:bg-card"
+                >
+                  <div className="h-14 w-14 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* GRID / LIST VIEW */}
+          {!isLoading && !error && (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={view}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className={
+                  view === "grid"
+                    ? "grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch"
+                    : "flex flex-col gap-5"
+                }
+              >
+                {filteredVersions.map((item, index) => (
+                  <VersionAgentCard key={item.id} view={view} version={item} index={index} onDelete={handleDeleteVersion} agentId={id} />
+                ))}
+
+                {filteredVersions.length === 0 && (
+                  <div className="flex h-64 items-center justify-center text-gray-500">
+                    No versions found
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
       </ScaleDown>
-
-      {/* API Modal */}
-      <ApiEndpointModal
-        open={apiModalOpen}
-        onOpenChange={setApiModalOpen}
-        agentId={agent.id}
-      />
-
-      <ConfirmDialog
-        open={isDeleteOpen}
-        onOpenChange={setIsDeleteOpen}
-        title="Delete Agent?"
-        description="This action cannot be undone. The agent will be permanently deleted."
-        confirmText="Delete"
-        variant="destructive"
-        onConfirm={handleConfirmDelete}
-      />
     </div>
   );
-}
+};
+
+export default page;

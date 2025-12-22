@@ -7,7 +7,7 @@ import SuccessMonitoringAgents from './MonitoringGraphs/SuccessMonitoringAgents'
 import LatencyDashboardAgents from './MonitoringGraphs/LatencyDashboardAgents'
 import LLMDashboardAgents from './MonitoringGraphs/LLMDashboardAgents'
 
-const MonitoringTab = () => {
+const MonitoringTab = ({ agentId }) => {
     return (
         <>
             <div className="space-y-6">
@@ -16,7 +16,7 @@ const MonitoringTab = () => {
                 <GuardrailsDashboardAgents/>
                 <LatencyDashboardAgents />
                 <LLMDashboardAgents />
-                <ErrorMetricsDashboard />
+                <ErrorMetricsDashboard agentId={agentId} />
                <SuccessMonitoringAgents/>
             </div>
         </>

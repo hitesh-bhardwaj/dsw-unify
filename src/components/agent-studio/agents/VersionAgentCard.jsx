@@ -1,0 +1,321 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import {
+  Bin,
+  Editor,
+  Eye,
+  Calendar,
+  LineGraph,
+  RocketIcon,
+  AgentStudioIcon,
+} from "@/components/Icons";
+import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
+
+const skeletonShownMap = new Map();
+
+/**
+ * Component to display a versioned agent card.
+ *
+ * @param {Object} props - The component props.
+ * @param {Object} props.version - The version data.
+ * @param {string} props.agentId - The agent ID.
+ * @param {string} props.view - The view mode (grid/list).
+ * @param {number} props.index - The card index for styling.
+ * @param {Function} props.onDelete - Delete handler.
+ * @returns {React.JSX.Element} The rendered VersionAgentCard component.
+ */
+export default function VersionAgentCard({
+  version,
+  view,
+  index,
+  onDelete,
+  agentId,
+  minSkeletonMs = 500,
+}) {
+  const {
+    id,
+    name,
+    versionSlug,
+    description,
+    accuracy,
+    tags = [],
+    status,
+    lastUpdated,
+    createdAt,
+  } = version || {};
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [deployStatus, setDeployStatus] = useState(status);
+
+  const handleTrashClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDeleteOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (onDelete && id != null) {
+      onDelete(id);
+    }
+  };
+
+  const handleDeployToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setDeployStatus((prev) =>
+      prev === "Deployed" ? "Undeployed" : "Deployed"
+    );
+  };
+
+  const handleNoOpClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  // keep skeleton visible for minSkeletonMs
+  const [showSkeleton, setShowSkeleton] = useState(() => {
+    return !skeletonShownMap.has(id);
+  });
+
+  useEffect(() => {
+    if (showSkeleton && id) {
+      const t = setTimeout(() => {
+        setShowSkeleton(false);
+        skeletonShownMap.set(id, true);
+      }, minSkeletonMs);
+      return () => clearTimeout(t);
+    }
+  }, [minSkeletonMs, id, showSkeleton]);
+
+  const isGrid = view === "grid";
+  const isList = view === "list";
+
+  if (showSkeleton) return <VersionAgentCardSkeleton />;
+
+  return (
+    <div className=" w-full h-full">
+      <ConfirmDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title="Delete version?"
+        description={
+          name
+            ? `This action cannot be undone. This will permanently remove "${name}".`
+            : "This action cannot be undone. This will permanently remove this version."
+        }
+        confirmLabel="Delete"
+        destructive
+        onConfirm={handleConfirmDelete}
+      />
+
+      <Link href={`/agent-studio/agents/${agentId}/${versionSlug}`}>
+        <Card
+          className={cn(
+            "feature-card-hover-container gap-2  transition-all duration-300 hover:drop-shadow-xl hover:bg-transparent group",
+            isGrid &&
+              " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
+            isList &&
+              "w-full rounded-xl  py-6 bg-white dark:bg-card"
+          )}
+        >
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between mb-4">
+              {/* Icon */}
+              <div className="flex gap-2 items-end">
+                <div
+                  className="flex h-14 w-14 items-center justify-center rounded-lg  transition-all group-hover:!bg-white group-hover:!text-black duration-300 p-3"
+                  style={{
+                    color: `var(--icon-color-${(index % 4) + 1})`,
+                    backgroundColor: `rgb(from var(--icon-color-${(index % 4) + 1}) r g b / 0.1)`
+                  }}
+                >
+                  <AgentStudioIcon className="h-6 w-6" />
+                </div>
+                <p
+                  className={`text-xs border px-2 py-1 rounded-full group-hover:border-white group-hover:text-white duration-300 ${
+                    deployStatus === "Deployed"
+                      ? "border-badge-green"
+                      : "border-red-500"
+                  }`}
+                >
+                  {deployStatus}
+                </p>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  onClick={handleNoOpClick}
+                  size="icon"
+                  className={cn(
+                    "h-7 w-7 flex items-center justify-center text-white px-1 py-1 opacity-0 group-hover:opacity-100",
+                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
+                  )}
+                >
+                  <Eye />
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleNoOpClick}
+                  className={cn(
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
+                  )}
+                >
+                  <Editor />
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  onClick={handleTrashClick}
+                  size="icon"
+                  className={cn(
+                    "h-7 w-7 flex items-center justify-center px-1 py-1 text-white opacity-0 group-hover:opacity-100",
+                    "hover:bg-white/30 group-hover:text-white transition-all duration-300"
+                  )}
+                >
+                  <Bin />
+                </Button>
+              </div>
+            </div>
+
+            {/* Title */}
+            <h3 className="text-xl font-medium mb-2 group-hover:text-white transition-colors duration-300">{name}</h3>
+
+            {/* Description */}
+            <p className="text-sm text-muted-foreground line-clamp-2 group-hover:text-white/90 transition-colors duration-300">
+              {description}
+            </p>
+          </CardHeader>
+
+          <CardContent
+            className={cn(
+              "w-full mx-auto pt-4 space-y-4 rounded-xl duration-300"
+            )}
+          >
+
+            {/* Tags */}
+            <div className="flex flex-wrap gap-1 pt-2">
+              {tags.map((tag, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className={cn(
+                    "rounded-full border border-color-2 px-3 py-1 dark:bg-card text-xs font-light transition-all duration-300 group-hover:text-white group-hover:border-border-color-0 bg-white/10 dark:group-hover:bg-white/10"
+                  )}
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+
+            <div className={` flex flex-col gap-4`}>
+              {/* Accuracy + Deploy */}
+              <div
+                className={cn(
+                  "flex items-start justify-between gap-4 rounded-lg p-3 px-2 text-sm py-2 duration-300 dark:bg-transparent flex-col", isList && 'w-[25%]'
+                )}
+              >
+                <div className="flex items-center gap-6 ">
+                  <div className="w-5 h-5 text-white">
+                    <LineGraph className=" transition-all duration-300" />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-foreground text-xs group-hover:text-white transition-colors duration-300">Success Rate</p>
+                    <p className="text-badge-green  transition-colors duration-300">{accuracy}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 w-full">
+                  <button
+                    onClick={handleDeployToggle}
+                    className={`text-xs cursor-pointer flex gap-2 items-center p-3 pl-5 py-4 w-full rounded-full text-white  group-hover:text-foreground  transition-all duration-300 bg-primary group-hover:bg-white dark:group-hover:text-black`}
+                  >
+                    <RocketIcon className="w-4 h-4 " />
+                    {deployStatus === "Deployed" ? "Undeploy" : "Deploy"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Last Updated */}
+              <div className="flex items-center gap-3  pl-2">
+                <div className="w-4 h-4">
+                  <Calendar className="text-foreground/80 group-hover:text-white transition-colors duration-300 h-full w-full" />
+                </div>
+                <span className="text-foreground/80 text-xs group-hover:text-white/80 transition-colors duration-300">
+                  Updated {lastUpdated}
+                </span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+    </div>
+  );
+}
+
+/* ------------------ Skeleton Loader ------------------ */
+
+/**
+ * Skeleton component for VersionAgentCard.
+ *
+ * @returns {React.JSX.Element} The rendered VersionAgentCardSkeleton component.
+ */
+export function VersionAgentCardSkeleton() {
+  return (
+    <div className="group w-full h-full">
+      <Card className="overflow-hidden w-full h-full transition-all duration-500 ease-out py-5 bg-background border border-border-color-0">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-black/30">
+                <Skeleton className="h-full w-full rounded" />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-4 w-20" />
+                <Skeleton className="h-5 w-10 rounded-sm" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <Skeleton className="h-7 w-7 rounded" />
+              <Skeleton className="h-7 w-7 rounded" />
+              <Skeleton className="h-7 w-7 rounded" />
+            </div>
+          </div>
+
+          <Skeleton className="h-6 w-2/3 mb-2" />
+          <Skeleton className="h-4 w-11/12 mb-4" />
+
+          <div className="flex flex-wrap gap-1">
+            <Skeleton className="h-6 w-16 rounded-full" />
+            <Skeleton className="h-6 w-20 rounded-full" />
+            <Skeleton className="h-6 w-14 rounded-full" />
+          </div>
+        </CardHeader>
+
+        <CardContent className="w-[92%] mx-auto pt-5 rounded-xl px-4 border border-black/10 bg-sidebar-accent">
+          <div className="flex items-center justify-between text-sm mb-3">
+            <Skeleton className="h-4 w-20" />
+            <Skeleton className="h-4 w-24" />
+          </div>
+
+          <div className="rounded-lg p-3">
+            <Skeleton className="h-16 w-full rounded" />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
