@@ -74,7 +74,7 @@ export default function ForgotPasswordPage() {
           </div>
 
           {/* Send Code Button */}
-          <Button type="submit" className="w-full flex items-center justify-center" disabled={isSubmitting}>
+          <Button type="submit" className="w-full flex items-center justify-center dark:text-white" disabled={isSubmitting}>
             {isSubmitting ? "Sending..." : "Send Code"}
             <ArrowRight className="h-4 w-4" />
           </Button>

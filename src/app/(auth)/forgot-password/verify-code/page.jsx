@@ -63,7 +63,7 @@ function VerifyCodeForm() {
         <OTPInput value={otp} onChange={setOtp} error={error} />
 
         {/* Verify Code Button */}
-        <Button type="submit" className="w-full flex items-center justify-center" disabled={isSubmitting}>
+        <Button type="submit" className="w-full flex items-center justify-center dark:text-white" disabled={isSubmitting}>
           {isSubmitting ? "Verifying..." : "Verify Code"}
           <ArrowRight className="h-4 w-4" />
         </Button>

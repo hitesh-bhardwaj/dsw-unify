@@ -141,7 +141,7 @@ export default function LoginPage() {
         {/* Login Button */}
         <Button
           type="submit"
-          className="w-full flex items-center justify-center"
+          className="w-full flex items-center justify-center dark:text-white"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Logging in..." : "Login"}
