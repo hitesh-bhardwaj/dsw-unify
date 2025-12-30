@@ -5,7 +5,6 @@ import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
-import { DataEngineeringIcon } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import UsecaseInternalCard from "@/components/usecases/UsecaseInternalCard";
 import SearchBar from "@/components/search-bar";
@@ -85,8 +84,6 @@ const page = () => {
     lastModified: "2 Hours Ago",
     usage: "1.2K Request",
   };
-
-
 
   //  Convert slug to title
   function slugToTitle(slug) {

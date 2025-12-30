@@ -203,7 +203,7 @@ export function GlobalSearch({ compact = false }) {
 
       {/* Dialog */}
       <Dialog open={open} onOpenChange={setOpen} className="">
-        <DialogContent className="w-[35%] !py-4 p-0 px-2 bg-white dark:bg-background">
+        <DialogContent className="w-[35%] min-h-[42%] !py-4 p-0 px-2 bg-white dark:bg-background">
           <DialogHeader className="sr-only">
             <DialogTitle>Global search</DialogTitle>
           </DialogHeader>
@@ -219,7 +219,7 @@ export function GlobalSearch({ compact = false }) {
               className="!py-4"
             />
 
-            <CommandList>
+            <CommandList className='min-h-80 '>
               <CommandEmpty>No results found.</CommandEmpty>
 
               {Object.entries(searchItems).map(([category, items]) => (

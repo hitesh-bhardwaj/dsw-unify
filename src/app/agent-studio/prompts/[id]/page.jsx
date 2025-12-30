@@ -13,7 +13,6 @@ import Link from "next/link";
 import CardDetails from "@/components/CardDetails";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
-import VersionAgentCard from "@/components/agent-studio/agents/VersionAgentCard";
 import PromptsVersionCard from "@/components/agent-studio/prompts/PromptsVersionCard";
 import CreatePromptModal from "@/components/CreatePromptModal";
 

@@ -312,7 +312,7 @@ export function ViewCardSkelton() {
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-lg bg-black/30">
+              <div className="flex h-14 w-14 items-center justify-center rounded-3xl bg-black/30">
                 <Skeleton className="h-full w-full rounded" />
               </div>
               <div className="flex items-center gap-2">

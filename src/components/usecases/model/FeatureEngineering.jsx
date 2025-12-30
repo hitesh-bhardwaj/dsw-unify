@@ -14,7 +14,7 @@ import {
   RadioGroup,
   RadioGroupItem,
 } from "@/components/ui/radio-group";
-
+import { AnimatePresence, motion } from "framer-motion";
 
 
 export default function FeatureEngineering({
@@ -29,7 +29,6 @@ export default function FeatureEngineering({
 }) {
   const [mode, setMode] = useState(data.mode);
   const [selectedService, setSelectedService] = useState(data.selectedService);
-    const [isViewsModalOpen, setIsViewsModalOpen] =useState(false);
 
 
   const handleModeChange = (newMode) => {
@@ -105,60 +104,67 @@ export default function FeatureEngineering({
       </RadioGroup>
 
       {/* EXISTING MODE */}
-      {mode === "existing" && (
-        <div className="space-y-4">
-          <div>
-            <h3 className="text-base font-medium">Select Feature Service</h3>
-            <p className="text-sm text-muted-foreground">
-              Choose a Feature Service that contains the features you want to use
-              for training
-            </p>
-          </div>
-
-          <RadioGroup
-            value={selectedService}
-            onValueChange={handleServiceChange}
-            className="space-y-3"
-          >
-            {FEATURE_SERVICES.map((service) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                value={service.id}
-              />
-            ))}
-          </RadioGroup>
-
-          <div className="w-full flex justify-end gap-2 pt-4">
-            <RippleButton>
-              <Button
-                variant="outline"
-                className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
-                onClick={onClose}
-              >
-                Cancel
-              </Button>
-            </RippleButton>
-
-            <RippleButton>
-              <Button
-                className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full px-6 py-6 cursor-pointer duration-300"
-                onClick={handleNext}
-              >
-                Next Step
-                <div className="w-4 h-auto">
-                  <LeftArrow className="rotate-180" />
-                </div>
-              </Button>
-            </RippleButton>
-          </div>
+     <AnimatePresence mode="wait">
+  <motion.div
+    key={mode} // 👈 important (same as key={view})
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.3 }}
+    className="w-full"
+  >
+    {mode === "existing" && (
+      <div className="space-y-4">
+        <div>
+          <h3 className="text-base font-medium">Select Feature Service</h3>
+          <p className="text-sm text-muted-foreground">
+            Choose a Feature Service that contains the features you want to use
+            for training
+          </p>
         </div>
-      )}
 
-      {/* NEW MODE */}
-      {mode === "new" && (
-        <div className="flex flex-col items-stretch">
+        <RadioGroup
+          value={selectedService}
+          onValueChange={handleServiceChange}
+          className="space-y-3"
+        >
+          {FEATURE_SERVICES.map((service) => (
+            <ServiceCard
+              key={service.id}
+              service={service}
+              value={service.id}
+            />
+          ))}
+        </RadioGroup>
 
+        <div className="w-full flex justify-end gap-2 pt-4">
+          <RippleButton>
+            <Button
+              variant="outline"
+              className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+          </RippleButton>
+
+          <RippleButton>
+            <Button
+              className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full px-6 py-6 cursor-pointer duration-300"
+              onClick={handleNext}
+            >
+              Next Step
+              <div className="w-4 h-auto">
+                <LeftArrow className="rotate-180" />
+              </div>
+            </Button>
+          </RippleButton>
+        </div>
+      </div>
+    )}
+
+    {mode === "new" && (
+      <div className="flex flex-col items-stretch">
         <div className="rounded-xl border border-border-color-0 bg-background p-10 text-center space-y-2">
           <div className="flex justify-center">
             <div className="h-14 w-14 rounded-full flex items-center justify-center">
@@ -172,46 +178,46 @@ export default function FeatureEngineering({
           </p>
 
           <RippleButton className="mt-4">
-            <Button  
-            onClick={openViewsModal}
-     
-    
-            className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full px-6 py-6 cursor-pointer duration-300">
+            <Button
+              onClick={openViewsModal}
+              className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full px-6 py-6 cursor-pointer duration-300"
+            >
               Start Feature Creation Wizard
               <div className="w-4 h-auto">
                 <LeftArrow className="rotate-180" />
               </div>
             </Button>
           </RippleButton>
-
         </div>
 
-          <div className="w-full flex justify-end gap-2 pt-4">
-            <RippleButton>
-              <Button
-                variant="outline"
-                className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
-                onClick={onClose}
-              >
-                Cancel
-              </Button>
-            </RippleButton>
+        <div className="w-full flex justify-end gap-2 pt-4">
+          <RippleButton>
+            <Button
+              variant="outline"
+              className="gap-2 border-border-color-0 text-foreground hover:bg-gray-50 w-fit px-7"
+              onClick={onClose}
+            >
+              Cancel
+            </Button>
+          </RippleButton>
 
-            <RippleButton>
-              <Button
-                className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full px-6 py-6 cursor-pointer duration-300"
-                onClick={handleNext}
-              >
-                Next Step
-                <div className="w-4 h-auto">
-                  <LeftArrow className="rotate-180" />
-                </div>
-              </Button>
-            </RippleButton>
-          </div>
-        
+          <RippleButton>
+            <Button
+              className="bg-sidebar-primary hover:bg-primary text-white gap-3 rounded-full px-6 py-6 cursor-pointer duration-300"
+              onClick={handleNext}
+            >
+              Next Step
+              <div className="w-4 h-auto">
+                <LeftArrow className="rotate-180" />
+              </div>
+            </Button>
+          </RippleButton>
         </div>
-      )}
+      </div>
+    )}
+  </motion.div>
+</AnimatePresence>
+
           
       
     </div>

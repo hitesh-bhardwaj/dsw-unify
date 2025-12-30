@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import AnimatedProgressBar from "@/components/animations/ProgressBar";
-import { CheckCircle, Circle } from "lucide-react";
 import { CompleteCircleIcon, InProgressIcon } from "@/components/Icons";
 
 export default function FeatureCreation({ onCloseModal }) {
@@ -93,8 +92,14 @@ export default function FeatureCreation({ onCloseModal }) {
                 {isDone ? (
                   <CompleteCircleIcon className="text-badge-green w-5 h-5" />
                 ) : (
-                  <InProgressIcon className="text-foreground/40 w-5 h-5" />
-                )}
+<InProgressIcon
+  className="
+    w-5 h-5
+    text-sidebar-accent
+    [--icon-contrast:black]
+    dark:[--icon-contrast:white]
+  "
+/>                )}
                 <span
                   className={`text-sm ${
                     isDone ? "text-foreground" : "text-foreground/60"

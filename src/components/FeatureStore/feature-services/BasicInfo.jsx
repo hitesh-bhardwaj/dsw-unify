@@ -67,12 +67,12 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
           {/* NAME */}
           <div className="flex w-full h-fit gap-2">
             <div className="flex flex-col gap-2 w-full">
-              <label className="text-sm text-foreground"> Service Name*</label>
+              <label className="text-sm text-foreground"> Service Name</label>
               <Input
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className={`border placeholder:text-foreground/80 ${
-                  errors.name ? "border-red-500" : "border-foreground/20"
+                className={`border border-border-color-0 placeholder:text-foreground/80 ${
+                  errors.name ? "border-red-500" : "border-border-color-0"
                 }`}
                 placeholder="e.g. Customer 360 Service"
               />
@@ -89,7 +89,7 @@ const BasicInfo = ({ goNext, goBack,setIsModalOpen }) => {
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="border border-foreground/20 !text-xs h-32 placeholder:text-foreground/80"
+                className="border border-border-color-0 !text-xs h-32 placeholder:text-foreground/80"
                 placeholder="Describe what this feature service provides..."
               />
             </div>

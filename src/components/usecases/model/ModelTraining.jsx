@@ -111,7 +111,14 @@ export default function ModelTraining({ modelName, onCloseModal }) {
                 {isDone ? (
                   <CompleteCircleIcon className="text-orange-500 w-5 h-5" />
                 ) : (
-                  <InProgressIcon className="text-foreground/40 w-5 h-5" />
+                  <InProgressIcon
+                    className="
+                      w-5 h-5 
+                      text-sidebar-accent dark:text-sidebar-accent
+                      [--icon-contrast:black]
+                      dark:[--icon-contrast:white]
+                    "
+                  />    
                 )}
                 <span
                   className={`text-sm ${

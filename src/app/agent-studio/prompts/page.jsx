@@ -264,17 +264,7 @@ function PromptsContent() {
                 </p>
               </div>
               <div className="flex items-center gap-3">
-                {/* <RippleButton>
-                  <Button
-                    variant="outline"
-                    className="gap-2 border-primary text-foreground hover:bg-gray-50"
-                  >
-                    <div className="!w-4">
-                      <AiGenerator />
-                    </div>
-                    Generate Prompt
-                  </Button>
-                </RippleButton> */}
+                
 
                 <RippleButton>
                   <Button

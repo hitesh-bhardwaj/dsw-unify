@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useMemo, useState, useEffect } from "react";
-import { Tune } from "@/components/Icons";
 import { ViewCard } from "@/components/FeatureStore/view-card";
 import ViewsModal from "@/components/FeatureStore/feature-view/ViewsModal";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
@@ -229,7 +228,7 @@ const page = () => {
                 ? Array.from({ length: 3 }).map((_, index) => (
                     <div
                       key={index}
-                      className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full animate-pulse"
+                      className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full animate-pulse"
                     >
                       <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
                       <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
@@ -238,7 +237,7 @@ const page = () => {
                 : statsData.map((item, index) => (
                     <div
                       key={index}
-                      className="flex flex-col bg-white gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                      className="flex flex-col bg-white gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
                     >
                       <span className="text-sm text-foreground/80">
                         {item.title}

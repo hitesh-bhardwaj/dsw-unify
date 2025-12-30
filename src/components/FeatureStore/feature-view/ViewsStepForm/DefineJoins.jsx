@@ -147,7 +147,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                 >
                   <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
                     <SelectValue
-                      placeholder="Transactions"
+                      placeholder="Choose left table"
                       className="text-sm"
                     />
                   </SelectTrigger>
@@ -189,7 +189,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                   }
                 >
                   <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
-                    <SelectValue placeholder="Inner" className="text-sm" />
+                    <SelectValue placeholder="Select Join" className="text-sm" />
                   </SelectTrigger>
                   <SelectContent className="border border-border-color-0">
                     <SelectItem className="!cursor-pointer" value="inner">Inner</SelectItem>
@@ -214,7 +214,7 @@ export default function DefineJoins({ goNext, goBack, isLastStep, stepId }) {
                 >
                   <SelectTrigger className="!h-12 !cursor-pointer border-border-color-0 w-full rounded-xl">
                     <SelectValue
-                      placeholder="User_events"
+                      placeholder="Choose right table"
                       className="text-sm"
                     />
                   </SelectTrigger>
