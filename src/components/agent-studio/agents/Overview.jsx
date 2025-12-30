@@ -97,25 +97,25 @@ const Overview = () => {
             <h2 className="text-2xl font-medium mb-6">Performance Metrics</h2>
 
             <div className="flex w-full gap-4 justify-between">
-              <div className="border border-border-color-0 flex flex-col gap-7 rounded-2xl px-4 py-4 !w-full bg-white dark:bg-card">
+              <div className="border border-border-color-0 flex flex-col gap-7 rounded-3xl px-4 py-4 !w-full bg-white dark:bg-card">
                 <p className="text-sm text-foreground mb-2">Success Rate</p>
                 <p className="text-2xl font-medium text-badge-green">
                   <CountUp value="99.2%" startOnView />
                 </p>
               </div>
-              <div className="border border-border-color-0 flex flex-col gap-7 rounded-2xl px-4 py-4 !w-full bg-white dark:bg-card">
+              <div className="border border-border-color-0 flex flex-col gap-7 rounded-3xl px-4 py-4 !w-full bg-white dark:bg-card">
                 <p className="text-sm text-foreground mb-2">Avg Response Time</p>
                 <p className="text-2xl font-medium text-badge-green">
                   <CountUp value="245ms" startOnView />
                 </p>
               </div>
-              <div className="border border-border-color-0 flex flex-col gap-7 rounded-2xl px-4 py-4 !w-full bg-white dark:bg-card">
+              <div className="border border-border-color-0 flex flex-col gap-7 rounded-3xl px-4 py-4 !w-full bg-white dark:bg-card">
                 <p className="text-sm text-foreground mb-2">Total Requests</p>
                 <p className="text-2xl font-medium text-badge-green">
                   <CountUp value="12,847" startOnView />
                 </p>
               </div>
-              <div className="border border-border-color-0 flex flex-col gap-7 rounded-2xl px-4 py-4 !w-full bg-white dark:bg-card">
+              <div className="border border-border-color-0 flex flex-col gap-7 rounded-3xl px-4 py-4 !w-full bg-white dark:bg-card">
                 <p className="text-sm text-foreground mb-2">Active Users</p>
                 <p className="text-2xl font-medium text-badge-green">
                   <CountUp value="156" startOnView />

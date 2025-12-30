@@ -94,7 +94,7 @@ export default function StorageStrategy() {
         <div className="space-y-2">
           <h3 className="text-sm font-medium">Storage Strategy Type</h3>
           <Tabs value={storageStrategyTab} onValueChange={setStorageStrategyTab} className="">
-            <TabsList className="w-fit border border-border dark:bg-card">
+            <TabsList className="w-full border border-border dark:bg-card">
               <TabsTrigger className="px-4 font-normal" value="prebuilt">
                 Pre-built Strategy
               </TabsTrigger>
@@ -110,9 +110,9 @@ export default function StorageStrategy() {
           {storageStrategyTab === "prebuilt" && (
             <motion.div
               key="prebuilt"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="space-y-6"
             >
@@ -286,9 +286,9 @@ export default function StorageStrategy() {
           {storageStrategyTab === "custom" && (
             <motion.div
               key="custom"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="space-y-4"
             >

@@ -274,13 +274,13 @@ export default function Inference() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="border rounded-xl p-6 flex flex-col gap-6 dark:bg-card"
+            className="bg-background  flex flex-col gap-6 dark:bg-card"
           >
             <CardDetails data={stats} />
 
             <div className="flex gap-6 ">
               {/* Prediction Distribution Card */}
-              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
+              <div className="w-1/2 rounded-3xl shadow-sm border bg-white dark:bg-card border-border-color-0">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <h2 className="text-xl font-medium ">
                     Prediction Distribution
@@ -305,10 +305,10 @@ export default function Inference() {
                         paddingAngle={6}
                         startAngle={90}
                         endAngle={-270}
-                        cornerRadius={50} // ✅ rounded edges
+                        cornerRadius={50} // rounded edges
                         showLegend={false}
                         showLabels
-                        labelPlacement="inside" // ✅ percentage inside donut
+                        labelPlacement="inside" // percentage inside donut
                         colors={["#7ED957", "#FF1C1C"]}
                       />
                     </div>
@@ -331,7 +331,7 @@ export default function Inference() {
               </div>
 
               {/* Recent Fraud Cases Card */}
-              <div className="w-1/2 rounded-2xl shadow-sm border border-border-color-0">
+              <div className="w-1/2 rounded-3xl bg-white dark:bg-card shadow-sm border border-border-color-0">
                 <div className="flex items-center justify-between px-6 pt-6 pb-4">
                   <h2 className="text-xl font-medium">Recent Fraud Cases</h2>
                   <span className="text-xs px-3 py-1 rounded-full border border-border-color-0">
@@ -368,7 +368,7 @@ export default function Inference() {
             </div>
 
             <div className="w-full flex justify-between gap-6 items-center">
-              <div className="border h-[28vw]  w-1/2 border-border-color-0 rounded-2xl p-6">
+              <div className="border h-[28vw]  w-1/2 border-border-color-0 bg-white dark:bg-card rounded-3xl p-6">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-medium text-foreground">
                     Prediction Trends
@@ -417,7 +417,7 @@ export default function Inference() {
               </div>
 
               {/* ---------------- Risk Score Distribution ---------------- */}
-              <div className="border w-1/2 h-[28vw] border-border-color-0 rounded-2xl p-6  shadow-sm">
+              <div className="border w-1/2 h-[28vw] border-border-color-0 rounded-3xl bg-white dark:bg-card p-6  shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-medium text-foreground">
                     Risk Score Distribution
@@ -449,7 +449,7 @@ export default function Inference() {
             </div>
 
             <div className="w-full flex justify-between gap-6">
-              <div className="p-5 border w-1/2 h-[25vw] border-border-color-0 rounded-2xl space-y-6">
+              <div className="p-5 border w-1/2 h-[25vw] border-border-color-0 rounded-3xl bg-white dark:bg-card space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-medium">
                     Top Contributing Features
@@ -485,7 +485,7 @@ export default function Inference() {
               </div>
 
               {/* Right Card */}
-              <div className="p-5 w-1/2 h-[25vw] border border-border-color-0 rounded-2xl space-y-6">
+              <div className="p-5 w-1/2 h-[25vw] border border-border-color-0 rounded-3xl bg-white dark:bg-card space-y-6">
                 <div className="flex items-center justify-between">
                   <h2 className="text-xl font-medium">
                     Confidence Score Distribution
@@ -668,7 +668,7 @@ export default function Inference() {
 
                 {/* Run Inference Button */}
                 <div className="flex justify-end">
-                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full !px-5 py-6 font-medium text-base">
                     Run Inference
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -699,7 +699,7 @@ export default function Inference() {
 
                 {/* Run Inference Button */}
                 <div className="flex justify-end mt-6">
-                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full !px-5 py-6 font-medium text-base">
                     Run Inference
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -867,7 +867,7 @@ function ConfigureBatchInference() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full !px-5 py-6 font-medium text-base">
                     Run Batch Inference
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -938,7 +938,7 @@ function ConfigureBatchInference() {
                 </div>
 
                 <div className="flex justify-end">
-                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full px-8 py-6 font-medium text-base">
+                  <Button className="bg-primary hover:bg-orange-600 text-white rounded-full !px-5 py-6 font-medium text-base">
                     Run Batch Inference
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>

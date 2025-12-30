@@ -36,7 +36,7 @@ export default function MemoriesList() {
   };
 
   return (
-    <div className="w-full border border-border-color-0 rounded-2xl p-6 bg-background dark:bg-card">
+    <div className="w-full border border-border-color-0 rounded-2xl p-6 bg-white dark:bg-card">
       {/* HEADER */}
       <h2 className="text-xl font-medium">Memory Settings</h2>
       <p className="text-sm text-muted-foreground mb-6">
@@ -47,7 +47,7 @@ export default function MemoriesList() {
         {memoryOptions.map((mem) => (
           <div
             key={mem.id}
-            className="flex items-center justify-start gap-5 border border-border-color-0 rounded-xl px-5 py-4 bg-background dark:bg-card"
+            className="flex items-center justify-start gap-5 border border-border-color-0 rounded-xl px-5 py-4 bg-white dark:bg-card"
           >
             <Switch
               checked={memoryStates[mem.id]}

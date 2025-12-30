@@ -54,7 +54,7 @@ export default function KnowledgeBaseList() {
   };
 
   return (
-    <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-background dark:bg-card">
+    <div className="w-full rounded-2xl border border-border-color-0 p-6 space-y-2 bg-white dark:bg-card">
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-xl font-medium ">Knowledge Base Selection</h2>
@@ -67,7 +67,7 @@ export default function KnowledgeBaseList() {
             <Button
               onClick={() => setOpenCreateModal(true)}
               variant="outline"
-              className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
+              className=" gap-2 text-foreground border bg-white border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
             >
               <PlusIcon className="text-primary" />
               Create Knowledge Base

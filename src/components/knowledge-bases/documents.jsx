@@ -47,7 +47,7 @@ export default function Documents() {
           <Link href={"#"}>
             <Button
               variant="outline"
-              className="gap-2 text-foreground border border-primary"
+              className="gap-2 bg-white dark:bg-card text-foreground border border-primary"
             >
               <div className="!w-4 text-primary">
                 <Upload />

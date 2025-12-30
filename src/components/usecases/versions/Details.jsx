@@ -49,7 +49,7 @@ export default function Details() {
         </div>
 
         {/* Model Configuration */}
-        <div className="border border-border-color-0 bg-white rounded-2xl px-5 py-6 space-y-6 dark:bg-card">
+        <div className="border border-border-color-0 bg-white rounded-3xl px-5 py-6 space-y-6 dark:bg-card">
           <h2 className="text-xl font-medium ">Model Configuration</h2>
 
           <div>
@@ -87,7 +87,7 @@ export default function Details() {
           {metrics.map((m, i) => (
             <div
               key={i}
-              className="border border-border-color-0 flex flex-col gap-7  rounded-2xl px-4 py-4 !w-full bg-white dark:bg-card"
+              className="border border-border-color-0 flex flex-col gap-7  rounded-3xl px-4 py-4 !w-full bg-white dark:bg-card"
             >
               <p className="text-sm text-foreground mb-2">{m.label}</p>
               <p className="text-2xl font-medium text-badge-green">

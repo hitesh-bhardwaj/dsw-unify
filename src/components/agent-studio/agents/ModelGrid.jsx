@@ -51,7 +51,7 @@ const ModelGrid = () => {
             <Button
               onClick={() => setIsCreateModalOpen(true)}
               variant="outline"
-              className="gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
+              className="gap-2 text-foreground bg-white border border-primary !px-5 !py-0.8 !h-10 dark:bg-transparent dark:border-primary"
             >
               <PlusIcon className="text-primary" />
               Create New Model
@@ -164,7 +164,7 @@ const ModelGrid = () => {
   return (
     <>
       <CreateModal open={isCreateModalOpen} onOpenChange={setIsCreateModalOpen} />
-      <div className="space-y-6 border rounded-3xl p-6 border-border-color-0 h-full pb-8 dark:bg-card">
+      <div className="space-y-6 border rounded-3xl p-6 bg-white border-border-color-0 h-full pb-8 dark:bg-card">
         <div>
           <h3 className="text-xl font-medium mb-2">Model Configuration</h3>
           <p className="text-sm text-gray-600 mb-4 dark:text-foreground">

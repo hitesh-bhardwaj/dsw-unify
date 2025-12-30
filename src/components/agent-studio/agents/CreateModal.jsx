@@ -131,7 +131,7 @@ export default function CreateModal({ open, onOpenChange }) {
           {/* Model ID */}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm text-foreground">
-              Model ID<span className="text-red-500">*</span>
+              Model ID
             </label>
             <Input
               value={modelId}

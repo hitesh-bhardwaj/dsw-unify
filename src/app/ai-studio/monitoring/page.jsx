@@ -60,13 +60,13 @@ const page = () => {
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Use Case</label>
               <Select onValueChange={(val) => setUseCase(val)} className="py-2">
-                <SelectTrigger className="w-full py-5 cursor-pointer border border-border-color-0">
+                <SelectTrigger className="w-full py-5 bg-white cursor-pointer border border-border-color-0">
                   <SelectValue
                     placeholder="Choose a use case"
                     className="text-foreground/80"
                   />
                 </SelectTrigger>
-                <SelectContent className="border border-border-color-0">
+                <SelectContent className="border bg-white border-border-color-0">
                   {useCases.map((item) => (
                     <SelectItem
                       key={item.id}
@@ -84,13 +84,13 @@ const page = () => {
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Model</label>
               <Select onValueChange={(val) => setModel(val)}>
-                <SelectTrigger className="w-full py-5 border border-border-color-0 cursor-pointer">
+                <SelectTrigger className="w-full py-5 bg-white border border-border-color-0 cursor-pointer">
                   <SelectValue
                     placeholder="Choose a model"
                     className="text-foreground/80"
                   />
                 </SelectTrigger>
-                <SelectContent className="border border-border-color-0">
+                <SelectContent className="border bg-white border-border-color-0">
                   {models.map((item) => (
                     <SelectItem
                       key={item.id}
@@ -108,13 +108,13 @@ const page = () => {
             <div className="w-full">
               <label className="text-sm mb-2 block">Select Version</label>
               <Select onValueChange={(val) => setVersion(val)}>
-                <SelectTrigger className="w-full py-5 border border-border-color-0 cursor-pointer">
+                <SelectTrigger className="w-full py-5 bg-white border border-border-color-0 cursor-pointer">
                   <SelectValue
                     placeholder="Choose a version"
                     className="text-foreground/80"
                   />
                 </SelectTrigger>
-                <SelectContent className="border border-border-color-0">
+                <SelectContent className="border border-border-color-0 bg-white">
                   {versions.map((item) => (
                     <SelectItem
                       key={item.id}

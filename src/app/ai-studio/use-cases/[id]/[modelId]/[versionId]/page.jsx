@@ -148,7 +148,7 @@ const page = () => {
             </div>
             <div className="w-full flex items-center justify-between gap-4">
               {Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card animate-pulse">
+                <div key={index} className="flex flex-col gap-6 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card animate-pulse">
                   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
                   <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
                 </div>
@@ -228,7 +228,7 @@ const page = () => {
               {versionData?.stats.map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                  className="flex flex-col gap-8 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
                 >
                   <span className="text-sm text-foreground/80">
                     {item.title}

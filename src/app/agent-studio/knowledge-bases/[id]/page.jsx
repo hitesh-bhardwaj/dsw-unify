@@ -209,7 +209,7 @@ export default function KnowledgeBaseDetailPage({ params }) {
             </div>
           ) : (
             <div className="w-full flex gap-4">
-              <div className="w-1/3 h-fit rounded-2xl border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
+              <div className="w-1/3 h-fit rounded-3xl bg-white border border-border-color-0 flex flex-col items-start py-4 gap-10 px-5 hover:shadow-xl duration-500 ease-out countUpContainer dark:bg-card">
                 <p className="text-foreground/60 text-sm ">Documents</p>
                 <p className="text-3xl font-medium">
                   {renderMetric(knowledgeBase.documents, "1,250")}

@@ -187,7 +187,7 @@ const page = () => {
               {Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card animate-pulse"
+                  className="flex flex-col gap-6 bg-white border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card animate-pulse"
                 >
                   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
                   <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>

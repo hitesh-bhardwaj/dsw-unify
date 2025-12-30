@@ -61,7 +61,7 @@ const cardRef = useRef(null);
   
   return (
     <>
-      <Card className="space-y-6 border rounded-3xl p-6 px-0 border-border-color-0 h-fit pb-8 ">
+      <Card className="space-y-6 border bg-white dark:bg-card rounded-3xl p-6 px-0 border-border-color-0 h-fit pb-8 ">
         <CardHeader className="flex justify-between w-full">
     <div>
         <h3 className="text-xl font-medium mb-2">Guardrails Configuration</h3>
@@ -71,7 +71,7 @@ const cardRef = useRef(null);
     </div>
     <Link href="/agent-studio/agents/create">
               <RippleButton>
-                <Button onClick={() => setOpenCreateModal(true)} variant="outline" className=" gap-2 text-foreground border border-primary !px-5 !py-0.8 !h-10">
+                <Button onClick={() => setOpenCreateModal(true)} variant="outline" className=" gap-2 text-foreground border border-primary !bg-white dark:!bg-card !px-5 !py-0.8 !h-10">
                   <PlusIcon  className="text-primary"/>
                   Create Guard Suite
                 </Button>

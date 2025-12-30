@@ -269,7 +269,7 @@ export default function TestingPage() {
               : statsData.map((item, index) => (
                   <div
                     key={index}
-                    className="flex flex-col bg-white gap-4 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                    className="flex flex-col bg-white gap-4 border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
                   >
                     <span className="text-sm font-medium text-foreground/80">
                       {item.title}

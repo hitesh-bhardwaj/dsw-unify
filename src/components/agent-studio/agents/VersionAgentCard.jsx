@@ -123,7 +123,7 @@ export default function VersionAgentCard({
             isGrid &&
               " h-full flex flex-col justify-between gap-0 py-5 hover:border-white/20 ",
             isList &&
-              "w-full rounded-xl  py-6 bg-white dark:bg-card"
+              "w-full rounded-3xl  py-6 bg-white dark:bg-card"
           )}
         >
           <CardHeader className="pb-2">

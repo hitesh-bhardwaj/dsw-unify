@@ -30,7 +30,7 @@ export default function APITab({ agentId, versionId }) {
 
   return (
     <div className="w-full gap-8 py-3">
-      <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-6 dark:bg-card">
+      <div className="border border-border-color-0  bg-white rounded-3xl px-4 py-6 space-y-6 dark:bg-card">
         <div className="space-y-1">
           <h2 className="text-xl font-medium">API Endpoint</h2>
           <p className="text-sm text-foreground/80">
@@ -39,33 +39,33 @@ export default function APITab({ agentId, versionId }) {
         </div>
 
         {/* Endpoint URL */}
-        <div className="space-y-3">
+        <div className="flex flex-col gap-3">
           <label className="text-sm font-medium text-foreground/80">
             Endpoint URL
           </label>
           <Input
             value={endpointUrl}
             readOnly
-            className="h-11 border-border-color-0 bg-background"
+            className="h-11 border-border-color-0 bg-white dark:bg-background"
           />
         </div>
 
         {/* Example Request */}
-        <div className="space-y-3 pt-4">
+        <div className="flex flex-col gap-3 pt-4">
           <label className="text-sm font-medium text-foreground">
             Example Request
           </label>
-          <pre className="rounded-lg bg-background border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
+          <pre className="rounded-lg bg-white dark:bg-background border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
             <code>{exampleRequest}</code>
           </pre>
         </div>
 
         {/* Example Response */}
-        <div className="space-y-3 pt-4">
+        <div className="flex flex-col gap-3 pt-4">
           <label className="text-sm font-medium text-foreground">
             Example Response
           </label>
-          <pre className="rounded-lg bg-background border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
+          <pre className="rounded-lg bg-white dark:bg-background border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
             <code>{exampleResponse}</code>
           </pre>
         </div>

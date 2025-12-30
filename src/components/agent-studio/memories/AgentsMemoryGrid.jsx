@@ -86,12 +86,12 @@ const AgentsMemoryGrid = ({ memories: initialMemories }) => {
                 <div className='flex items-center gap-3 w-full'>
                     <Select value={selectedAgent} onValueChange={setSelectedAgent}>
                         <SelectTrigger
-                            className="w-100 !h-12 rounded-lg cursor-pointer"
+                            className="w-100 !h-12 border border-border-color-0  bg-white dark:bg-card rounded-lg cursor-pointer"
                             aria-label="Select an agent"
                         >
                             <SelectValue placeholder="Choose an Agent to view memories" />
                         </SelectTrigger>
-                        <SelectContent className="rounded-xl">
+                        <SelectContent className="rounded-xl border border-border-color-0">
                             <SelectItem value="auto-claims-processing-agent" className="rounded-lg cursor-pointer">
                                 Auto Claims Processing Agent
                             </SelectItem>

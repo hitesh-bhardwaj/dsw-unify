@@ -7,9 +7,7 @@ import Link from "next/link";
 import { AgentStudioIcon, PlusIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { ScaleDown } from "@/components/animations/Animations";
-import { cn } from "@/lib/utils";
 import { RippleButton } from "@/components/ui/ripple-button";
-import CardDetails from "@/components/CardDetails";
 import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "@/components/animations/CountUp";
 import { useSearchParams } from "next/navigation";
@@ -255,7 +253,7 @@ export default function AgentsPage() {
             {stats.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col gap-6 border bg-white border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
+                className="flex flex-col gap-8 border bg-white border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
               >
                 <span className="text-sm text-foreground/80">{item.title}</span>
                 <span className="text-4xl font-medium mt-1">

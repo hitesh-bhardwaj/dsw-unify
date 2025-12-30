@@ -8,7 +8,7 @@ export default function SwitchPopover({ tool, onOpenConfig }) {
   const [enabled, setEnabled] = useState(false);
 
   return (
-    <div className="border border-border-color-0 rounded-xl px-5 py-3 flex items-center justify-between bg-background w-full dark:bg-card">
+    <div className="border border-border-color-0 rounded-xl px-5 py-3 flex items-center justify-between bg-white w-full dark:bg-card">
       {/* LEFT SIDE */}
       <div className="flex items-center gap-4">
         <Switch

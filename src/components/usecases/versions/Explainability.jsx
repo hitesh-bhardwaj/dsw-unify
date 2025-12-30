@@ -12,7 +12,7 @@ export default function Explainability() {
   ];
 
   return (
-    <div className="border bg-white border-border-color-0 rounded-2xl space-y-8 py-6 pb-8 px-8 dark:bg-card">
+    <div className="border bg-white border-border-color-0 rounded-3xl space-y-8 py-6 pb-8 px-8 dark:bg-card">
 
         <h2 className="text-xl font-medium">Feature Importance</h2>
 

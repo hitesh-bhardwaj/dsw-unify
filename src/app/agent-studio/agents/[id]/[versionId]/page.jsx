@@ -2,18 +2,11 @@
 
 import { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import {
-  AiGenerator,
-  APIIcon,
   Bin,
   EditIcon,
-  RunTestsIcon,
-  SettingIcon,
 } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -24,7 +17,6 @@ import AnimatedTabsSection from "@/components/common/TabsPane";
 import { useRouter } from "next/navigation";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 import MonitoringTab from "@/components/agent-studio/agents/MonitoringTab";
-import PerformanceTab from "@/components/agent-studio/agents/PerformanceTab";
 import APITab from "@/components/agent-studio/agents/APITab";
 import * as agentsApi from "@/lib/api/agents";
 import CountUp from "@/components/animations/CountUp";
@@ -252,7 +244,7 @@ export default function AgentDetailPage({ params }) {
             {versionStats.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col gap-6 border border-border-color-0 rounded-lg py-6 px-4 w-full dark:bg-card"
+                className="flex flex-col gap-6 bg-white border border-border-color-0 rounded-3xl py-6 px-4 w-full dark:bg-card"
               >
                 <span className="text-sm text-foreground/80">
                   {item.title}

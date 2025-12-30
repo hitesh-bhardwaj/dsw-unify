@@ -177,7 +177,7 @@ public class APIPredict {
       {/* API DOCUMENTATION */}
       {/* ---------------------------------------------------------------------- */}
       <div className="w-full gap-8">
-        <div className="border border-border-color-0 rounded-3xl px-4 py-6 space-y-4 dark:bg-card">
+        <div className="border border-border-color-0 rounded-3xl bg-white px-4 py-6 space-y-4 dark:bg-card">
           <div className="space-y-1">
             <h2 className="text-xl font-medium">API Documentation</h2>
             <p className="text-sm text-foreground/80">
@@ -228,7 +228,7 @@ public class APIPredict {
               Response Format
             </label>
 
-            <pre className="rounded-xl bg-background border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
+            <pre className="rounded-xl  border border-border-color-0 p-4 text-xs text-foreground/80 overflow-x-auto">
               {`{
   "prediction": "No Fraud",
   "confidence": 0.924,
@@ -245,7 +245,7 @@ public class APIPredict {
             <h3 className="text-lg font-medium">Rate Limits</h3>
 
             <div className="flex justify-between gap-4  mt-4 min-h-32">
-              <div className="border border-border-color-0 w-full rounded-xl  p-4 bg-background  text-left flex flex-col justify-between dark:bg-card">
+              <div className="border border-border-color-0 w-full rounded-xl  p-4  text-left flex flex-col justify-between dark:bg-card">
                 <p className="text-sm text-foreground/80">
                   Requests per minute
                 </p>
@@ -255,7 +255,7 @@ public class APIPredict {
                   </p>
               </div>
 
-              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left dark:bg-card">
+              <div className="border border-border-color-0 w-full rounded-xl p-4  flex flex-col justify-between text-left dark:bg-card">
                 <p className="text-sm text-foreground/80">Requests per day</p>
                 <p className="text-4xl font-medium mt-1">                      <CountUp value='1000' duration={1.2} startOnView once />
 
@@ -263,7 +263,7 @@ public class APIPredict {
                 </p>
               </div>
 
-              <div className="border border-border-color-0 w-full rounded-xl p-4 bg-background flex flex-col justify-between text-left dark:bg-card">
+              <div className="border border-border-color-0 w-full rounded-xl p-4  flex flex-col justify-between text-left dark:bg-card">
                 <p className="text-sm text-foreground/80">Average latency</p>
                 <p className="text-4xl font-medium mt-1">                      <CountUp value='100' duration={1.2} startOnView once />
 
@@ -281,7 +281,7 @@ public class APIPredict {
               {errorCodes.map((err, index) => (
                 <div
                   key={index}
-                  className="border border-border-color-0 rounded-xl px-4 py-5 bg-background flex gap-4 dark:bg-card"
+                  className="border border-border-color-0 rounded-xl px-4 py-5 flex gap-4 dark:bg-card"
                 >
                   <p className="font-medium text-sm w-12">{err.code}</p>
 
@@ -321,7 +321,7 @@ function CodeBlock({ code }) {
 
   return (
     <>
-    <pre className="rounded-lg bg-background relative  p-4 text-xs text-foreground overflow-x-auto border border-border-color-0">
+    <pre className="rounded-lg relative  p-4 text-xs text-foreground overflow-x-auto border border-border-color-0">
       <code>{code}</code>
     </pre>
     <div className="absolute right-5 top-5">

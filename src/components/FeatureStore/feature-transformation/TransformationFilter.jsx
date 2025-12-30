@@ -87,7 +87,10 @@ const filteredTags = useMemo(
     </button>
   </PopoverTrigger>
 
-  <PopoverContent className="w-85 p-4 !rounded-3xl border border-border-color-0" align="start" avoidCollisions={false} side="bottom">
+  <PopoverContent className="w-85 max-h-104 h-90 overflow-hidden  p-4 !rounded-3xl border border-border-color-0" align="start" avoidCollisions={false} side="bottom">
+    <div className="h-full overflow-y-auto pr-2">
+
+    
     <div className="space-y-4">
       {/* Header with title + close icon */}
       <div className="flex items-center justify-between gap-2">
@@ -167,6 +170,7 @@ const filteredTags = useMemo(
           </div>
         </div>
       )}
+    </div>
     </div>
   </PopoverContent>
         </Popover>

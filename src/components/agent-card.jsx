@@ -117,7 +117,7 @@ export function AgentCard({ agent,index , view, minSkeletonMs = 500 }) {
       <Link href={`/agent-studio/agents/${id}`} className="block">
           <Card
           className={cn(
-            "feature-card-hover-container  overflow-hidden group hover:drop-shadow-xl space-y-6 cursor-pointer transition-all duration-300 bg-background border border-border-color-0 hover:border-transparent py-5", isList && 'space-y-2'
+            "feature-card-hover-container bg-white  overflow-hidden group hover:drop-shadow-xl space-y-6 cursor-pointer transition-all duration-300   border border-border-color-0 hover:border-transparent py-5", isList && 'space-y-2'
           )}
         >
           <CardHeader className=" h-fit">
@@ -161,9 +161,12 @@ export function AgentCard({ agent,index , view, minSkeletonMs = 500 }) {
             </div>
 
             {/* Agent name */}
+            <div className="min-h-22">
+
             <h3 className="mt-7 mb-2 line-clamp-2 text-xl font-medium text-foreground group-hover:text-white transition-colors duration-300">
               {name}
             </h3>
+            </div>
 
             {/* Description */}
             <p
