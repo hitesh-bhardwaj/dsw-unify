@@ -4,8 +4,6 @@ import { useMemo, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
-  AiGenerator,
-  DownloadIcon,
   LLMsIcon,
   PlusIcon,
 } from "@/components/Icons";
@@ -257,33 +255,7 @@ export default function LLMsPage() {
               <h1 className="text-3xl font-medium text-foreground">LLMs</h1>
             </div>
              <div className="gap-2 flex">
-              {/* <RippleButton>
-                <Link href={"/agent-studio/llms/llm-finetuning"}>
-                  <Button
-                    variant="outline"
-                    className="gap-2 text-foreground border border-primary"
-                  >
-                    <div className="!w-4">
-                      <AiGenerator />
-                    </div>
-                    LLM Finetuning
-                  </Button>
-                  </Link>
-                </RippleButton> */}
-
-               {/* <RippleButton>
-                <Button
-                  variant="outline"
-                  onClick={() => setOpenImportModal(true)}
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4">
-                    <DownloadIcon />
-                  </div>
-                  Import Model
-                </Button>
-              </RippleButton> */}
-
+             
                 <RippleButton>
                 <Link href="#">
                   <Button onClick={() => setOpenDeployModal(true)} className="bg-sidebar-primary hover:bg-[#E64A19] text-white gap-3 rounded-full !px-6 !py-6 !cursor-pointer duration-300">

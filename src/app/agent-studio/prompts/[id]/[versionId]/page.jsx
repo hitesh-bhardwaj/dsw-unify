@@ -1,24 +1,17 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { AiGenerator, Bin, EditIcon } from "@/components/Icons";
+
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import { RippleButton } from "@/components/ui/ripple-button";
-import AnimatedTabsSection from "@/components/common/TabsPane";
-import EmptyCard from "@/components/common/EmptyCard";
+
 import { ScaleDown } from "@/components/animations/Animations";
 import PromptContentGrid from "@/components/prompt-content-grid";
 import PromptMetadataGrid from "@/components/prompt-metadata-grid";
 import PromptUsageGrid from "@/components/prompt-usage-grid";
 import { useRouter } from "next/navigation";
-import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
 import { useState, useEffect, use } from "react";
 import * as promptsApi from "@/lib/api/prompts";
 
 export default function PromptDetailPage({ params }) {
   const { id, versionId } = use(params);
-
-
   const router = useRouter();
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -188,50 +181,9 @@ export default function PromptDetailPage({ params }) {
               </div>
             </div>
 
-            {/* <div className="flex items-center gap-3">
-              <RippleButton>
-                <Button
-                  onClick={() => setIsDeleteOpen(true)}
-                  variant="outline"
-                  className="gap-2 text-foreground border border-primary"
-                >
-                  <div className="!w-4 text-red-500">
-                    <Bin />
-                  </div>
-                  Delete
-                </Button>
-              </RippleButton>
-
-              <Link href={`#`}>
-                <RippleButton>
-                  <Button
-                    onClick={() => setIsEditing((prev) => !prev)}
-                    className="bg-primary hover:bg-[#E64A19] text-white gap-2"
-                  >
-                    <div className="!w-4">
-                      <EditIcon className={"text-white"} />
-                    </div>
-
-                    {isEditing ? "Save" : "Edit"}
-                  </Button>
-                </RippleButton>
-              </Link>
-            </div> */}
           </div>
-          {/* </FadeUp> */}
         </div>
 
-        {/* Main Content */}
-        {/* <div className="flex-1 p-6">
-          <div className=" mx-auto space-y-4">
-            <AnimatedTabsSection
-              items={items}
-            
-              defaultValue="content"
-            />
-         
-          </div>
-        </div> */}
       </ScaleDown>
     </div>
   );

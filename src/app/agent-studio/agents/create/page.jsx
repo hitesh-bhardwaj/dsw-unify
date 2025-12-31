@@ -5,14 +5,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import Link from "next/link";
 import { AiGenerator, EditIcon, SparklesIcon, APIIcon, SaveAgentIcon } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-// import { FadeUp } from "@/components/animations/Animations";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
-import EmptyCard from "@/components/common/EmptyCard";
 import PromptCardGrid from "@/components/prompt-card-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import ModelGrid from "@/components/agent-studio/agents/ModelGrid";
@@ -233,15 +230,13 @@ export default function CreateAgentPage() {
                 )}
               </CardContent>
             </Card>
-          {/* </FadeUp> */}
-
-          {/* <FadeUp delay={0.04}> */}
+         
             <AnimatedTabsSection
               items={items}
-              // ctx={ctx}
+            
               defaultValue="prompt"
             />
-          {/* </FadeUp> */}
+   
         </div>
       </div>
       </ScaleDown>

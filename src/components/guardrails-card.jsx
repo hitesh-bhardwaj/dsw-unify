@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Bounce } from "./animations/Animations";
 import { Copy } from "lucide-react";
 import { ConfirmDialog } from "./common/Confirm-Dialog";
-import { Editor, Eye } from "./Icons";
+import { Eye } from "./Icons";
 
 const skeletonShownMap = new Map();
 

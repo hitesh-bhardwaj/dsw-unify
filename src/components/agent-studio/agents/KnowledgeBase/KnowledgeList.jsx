@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import SwitchPopover from "../SwitchPopover";
 import KnowledgeBaseConfigPopover from "./KnowledgeConfigPopover";
 import KnowledgeBaseModal from "@/components/agent-studio/CreateKnowledgeBaseModal";

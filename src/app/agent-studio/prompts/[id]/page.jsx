@@ -16,7 +16,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import PromptsVersionCard from "@/components/agent-studio/prompts/PromptsVersionCard";
 import CreatePromptModal from "@/components/CreatePromptModal";
 
-
 const page = () => {
   const params = useParams();
   const { id } = params;
@@ -61,7 +60,7 @@ const page = () => {
 ];
 
 
-    const mockStats = [
+const mockStats = [
   {
     title: "Owner",
     value: "Pritesh Tiwari",

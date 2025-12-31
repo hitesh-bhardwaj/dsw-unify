@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton"; // <— shadcn/ui Skeleton
+import { Skeleton } from "@/components/ui/skeleton"; 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Calendar, FileTimeout, SynthWave } from "./Icons";
 import { Bounce } from "./animations/Animations";
 
 

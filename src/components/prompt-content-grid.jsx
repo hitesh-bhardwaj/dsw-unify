@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import { RippleButton } from "./ui/ripple-button";
-import { SparklesIcon } from "./Icons";
-import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import SearchBar from "./search-bar";
-import { Button } from "./ui/button";
 
 /**
  * Component to display the prompt content grid.

@@ -12,7 +12,6 @@ import TestingResultsGrid from "@/components/testing/testing-results-grid";
 import { ScaleDown } from "@/components/animations/Animations";
 import AddTestings from "@/components/agent-studio/AddTesting";
 import * as testingApi from "@/lib/api/testing";
-import CardDetails from "@/components/CardDetails";
 
 const initialTestSuites = [
   {
@@ -200,14 +199,6 @@ export default function TestingPage() {
       label: "Test Results",
       render: () => <TestingResultsGrid items={testResults}   />,
     },
-    // {
-    //   id: "analytics",
-    //   value: "analytics",
-    //   label: "Analytics",
-    //   render: () => (
-    //     <TestingAnalyticsComp cardData={analyticsData}  items={testResults} />
-    //   ),
-    // },
   ];
 
   if (isLoading) {

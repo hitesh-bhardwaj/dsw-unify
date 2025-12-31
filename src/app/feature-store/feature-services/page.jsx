@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useMemo, useState, useEffect } from "react";
-import { Tune } from "@/components/Icons";
 import StepFormModal from "@/components/common/StepModalForm";
 import BasicInfo from "@/components/FeatureStore/feature-services/BasicInfo";
 import SelectFeatureViews from "@/components/FeatureStore/feature-services/SelectFeatureViews";

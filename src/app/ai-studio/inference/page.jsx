@@ -1,6 +1,5 @@
 "use client";
 import { ScaleDown } from "@/components/animations/Animations";
-import SearchBar from "@/components/search-bar";
 
 import React, { useState } from "react";
 import {

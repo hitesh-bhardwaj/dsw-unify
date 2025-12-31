@@ -3,14 +3,11 @@
 import { useMemo, useState, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { PromptCard } from "@/components/prompt-card";
-import { cn } from "@/lib/utils";
 import CountUp from "@/components/animations/CountUp";
 import {
-  AiGenerator,
   PlusIcon,
   PromptsIcon,
   TemplatesIcon,
-  Tune,
 } from "@/components/Icons";
 import { TemplateCard } from "@/components/template-card";
 import CreatePromptModal from "@/components/CreatePromptModal";

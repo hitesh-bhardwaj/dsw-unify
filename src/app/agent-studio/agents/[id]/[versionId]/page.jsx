@@ -61,15 +61,7 @@ export default function AgentDetailPage({ params }) {
         <MonitoringTab agentId={id} />
       ),
     },
-    // {
-    //   id: "performance",
-    //   value: "performance",
-    //   label: "Performance",
-    //   name: "Performance",
-    //   render: () => (
-    //     <PerformanceTab/>
-    //   ),
-    // },
+    
     {
       id: "api",
       value: "api",

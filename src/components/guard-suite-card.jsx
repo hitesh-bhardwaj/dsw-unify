@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import {
   Check,
   Link as LinkIcon,
-  Trash2,
-  Edit3,
   ArrowDown,
   ArrowUp,
 } from "lucide-react";
@@ -13,7 +11,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Separator } from "./ui/separator";
 import Link from "next/link";
 import { ConfirmDialog } from "./common/Confirm-Dialog";
 import { Bin, Editor, Eye } from "./Icons";

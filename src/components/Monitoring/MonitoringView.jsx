@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
-import { Bar, BarChart } from "recharts";
-import CountUp from "../animations/CountUp";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { CustomBarChart, CustomLineChart } from "../common/Graphs/graphs";
 import { Badge } from "../ui/badge";

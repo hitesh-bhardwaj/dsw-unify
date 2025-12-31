@@ -143,7 +143,7 @@ export default function CreateGuardSuitesModal({ open, onOpenChange }) {
         <div className="flex-1 overflow-y-auto space-y-5 pt-4">
           {/* Name */}
           <div>
-            <label className="text-sm">Name*</label>
+            <label className="text-sm">Name</label>
             <Input
               placeholder="e.g., Production Safety Suite"
               value={name}

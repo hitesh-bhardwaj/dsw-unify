@@ -10,18 +10,14 @@ import { GuardSuiteCard } from "@/components/guard-suite-card";
 import SearchBar from "@/components/search-bar";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
-import AddGuardrailsModal from "@/components/agent-studio/AddGuardrails";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/motion-tabs";
-import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { motion, AnimatePresence } from "framer-motion";
 import AnimatedTabsSection from "@/components/common/TabsPane";
 import AddCustomGuardrailsModal from "@/components/agent-studio/AddCustomGuardrails";
 import CreateGuardSuitesModal from "@/components/agent-studio/guardrails/CreateGuardSuitesModal";
 import * as guardrailsApi from "@/lib/api/guardrails";
-import CardDetails from "@/components/CardDetails";
 import CountUp from "@/components/animations/CountUp";
-import { InfoIcon } from "lucide-react";
-import { Card } from "@/components/ui/card";
+
 
 // Mock data for Guard Suites
 const mockGuardSuites = [

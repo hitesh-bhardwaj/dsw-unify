@@ -25,7 +25,6 @@ import {
   AgentsIcon,
   DataEngineeringIcon,
   DataExplorerIcon,
-  DataIngestionIcon,
   FeatureStore,
   GuardrailsIcon,
   KnowledgeBaseIcon,

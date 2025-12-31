@@ -3,7 +3,6 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import { Download, Eye } from "lucide-react";
 import { Button } from "../ui/button";
 // import { motion, useAnimationControls, useInView } from "motion";

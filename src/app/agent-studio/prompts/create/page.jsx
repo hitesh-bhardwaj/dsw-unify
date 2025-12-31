@@ -2,24 +2,19 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { ApiEndpointModal } from "@/components/api-endpoint-modal";
-import Link from "next/link";
 import {
   AiGenerator,
   EditIcon,
-  LeftArrow,
   SearchIcon,
   SparklesIcon,
 } from "@/components/Icons";
 import ApiEndpointModal from "@/components/api-endpoint-modal";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
-import { ScaleDown } from "@/components/animations/Animations";
 import * as promptsApi from "@/lib/api/prompts";
 
 export default function CreatePromptPage() {

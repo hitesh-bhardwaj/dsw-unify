@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { AiGenerator, LeftArrow, PlusIcon, SparklesIcon } from "./Icons";
+import { LeftArrow, PlusIcon, SparklesIcon } from "./Icons";
 import { Button } from "./ui/button";
 import {
   Select,
@@ -19,7 +19,6 @@ import {
   SelectValue,
 } from "./ui/select";
 import { RippleButton } from "./ui/ripple-button";
-import { ArrowRight } from "lucide-react";
 import * as promptsApi from "@/lib/api/prompts";
 
 const CATEGORY_OPTIONS = [

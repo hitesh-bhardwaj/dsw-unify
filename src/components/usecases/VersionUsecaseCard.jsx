@@ -12,15 +12,11 @@ import {
   Bin,
   Editor,
   Eye,
-  SynthWave,
   Calendar,
-  FileTimeout,
-  People,
   LineGraph,
   RocketIcon,
 } from "../Icons";
 import { ConfirmDialog } from "@/components/common/Confirm-Dialog";
-
 
 const skeletonShownMap = new Map();
 
@@ -47,6 +43,7 @@ const skeletonShownMap = new Map();
  * @param {number} [minSkeletonMs=500] - The minimum time to show the skeleton loader.
  * @returns {React.JSX.Element} The rendered VersionUsecaseCard component.
  */
+
 export default function VersionUsecaseCard({
   usecase,
   view,
@@ -120,8 +117,6 @@ const handleConfirmDelete = () => {
     prev === "Deployed" ? "Undeployed" : "Deployed"
   );
 };
-
-
 
   const handleNoOpClick = (e) => {
   e.preventDefault();

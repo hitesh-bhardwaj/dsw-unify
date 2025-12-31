@@ -24,7 +24,7 @@ const OPTIONS_FALLBACK = [
 ];
 
 export default function TestingPage() {
-  const [agent, setAgent] = useState(""); // ✅ selected agent
+  const [agent, setAgent] = useState(""); 
   const [agents, setAgents] = useState(OPTIONS_FALLBACK);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -88,7 +88,7 @@ export default function TestingPage() {
             </Select>
           </div>
 
-          {/* ✅ Show dashboards only after selection */}
+          {/*  Show dashboards only after selection */}
           {agent ? (
             <div className="space-y-6">
               <TrafficMetricsDashboard agentId={agent} />

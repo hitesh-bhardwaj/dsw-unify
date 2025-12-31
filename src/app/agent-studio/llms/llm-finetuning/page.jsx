@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState } from "react";
@@ -6,7 +5,6 @@ import { UploadIcon } from "@/components/Icons";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import AnimatedTabsSection from "@/components/common/TabsPane";
-import EmptyCard from "@/components/common/EmptyCard";
 import DatasetsGrid from "@/components/llmtuning/datasets-grid";
 import TrainingJobsGrid from "@/components/llmtuning/training-jobs-grid";
 import { ScaleDown } from "@/components/animations/Animations";

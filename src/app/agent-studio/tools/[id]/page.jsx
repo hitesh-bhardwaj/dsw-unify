@@ -1,13 +1,11 @@
 "use client";
 import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { AiGenerator, Bin, EditIcon } from "@/components/Icons";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { ScaleDown } from "@/components/animations/Animations";
 import AnimatedTabsSection from "@/components/common/TabsPane";
-import EmptyCard from "@/components/common/EmptyCard";
 import Overviews from "@/components/agent-studio/tools/Overviews";
 import ToolsConfigure from "@/components/agent-studio/tools/ToolsConfig";
 import ToolsUsage from "@/components/agent-studio/tools/ToolsUsage";

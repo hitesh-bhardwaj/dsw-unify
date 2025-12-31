@@ -1,6 +1,5 @@
-"use client";
 
-import Link from "next/link";
+
 import { Card, CardHeader } from "@/components/ui/card";
 import { Bounce } from "@/components/animations/Animations";
 import { cn } from "@/lib/utils";

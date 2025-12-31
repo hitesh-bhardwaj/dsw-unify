@@ -1,12 +1,11 @@
 "use client";
 import { ScaleDown } from "@/components/animations/Animations";
-import { PlusIcon, UseCasesIcon } from "@/components/Icons";
+import { PlusIcon } from "@/components/Icons";
 import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
 import { RippleButton } from "@/components/ui/ripple-button";
 import Link from "next/link";
 import React, { useMemo, useState, useEffect } from "react";
-import { Tune } from "@/components/Icons";
 import { UseCaseCard } from "@/components/usecases/usecase-card";
 import UseCaseModal from "@/components/usecases/UsecaseModal";
 import CountUp from "@/components/animations/CountUp";

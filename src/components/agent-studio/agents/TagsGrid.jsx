@@ -5,7 +5,6 @@ import { PlusIcon } from "@/components/Icons";
 import Link from "next/link";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Plus, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 /**
@@ -55,7 +54,6 @@ const TagsGrid = () => {
               type="text"
               placeholder="key"
               value={key}
-             
               onChange={(e) => setKey(e.target.value)}
               onKeyPress={handleKeyPress}
             />

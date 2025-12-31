@@ -11,9 +11,7 @@ import { UploadFile } from "@/components/Icons";
 import CardDetails from "@/components/CardDetails";
 import { ArrowRight, Upload } from 'lucide-react';
 import { CustomBarChart, CustomPieChart } from "../common/Graphs/graphs";
-import { getInferenceInsights, runSingleInferenceById, runSingleInferenceByData, runBatchInferenceByIds, runBatchInferenceByData } from "@/lib/api/ai-studio";
-
-
+import { getInferenceInsights } from "@/lib/api/ai-studio";
 
 export default function InferenceView({ useCaseId, modelId, versionId }) {
   const [mode, setMode] = useState("single");
@@ -30,7 +28,6 @@ export default function InferenceView({ useCaseId, modelId, versionId }) {
 
   // State for single inference result
   const [inferenceResult, setInferenceResult] = useState(null);
-  const [isRunningInference, setIsRunningInference] = useState(false);
 
   // Values for Single Inference bars
   const confidence = inferenceResult?.confidence || 89.5;

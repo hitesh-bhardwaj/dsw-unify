@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect, Suspense } from "react";
-import { MemoriesIcon, PlusIcon } from "@/components/Icons";
+import { MemoriesIcon } from "@/components/Icons";
 import { ScaleDown } from "@/components/animations/Animations";
 import CountUp from "@/components/animations/CountUp";
 import { useSearchParams } from "next/navigation";
@@ -282,17 +282,8 @@ function MemoriesContent() {
 
           {/* SEARCH */}
             <AnimatedTabsSection items={items} defaultValue="organization-memory" />
-          {/* FILTER BAR */}
-          {/* <FilterBar
-            selectedTags={selectedTags}
-            onTagsChange={setSelectedTags}
-            availableTags={availableTags}
-            view={view}
-            setView={setView}
-            sortOrder={sortOrder}
-            setSortOrder={setSortOrder}
-            cards={memoriesState}
-          /> */}
+          
+      
         </div>
       </ScaleDown>
 

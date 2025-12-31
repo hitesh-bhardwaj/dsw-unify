@@ -5,7 +5,6 @@ import { ScaleDown } from "@/components/animations/Animations";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
 import { RippleButton } from "@/components/ui/ripple-button";
 import { Button } from "@/components/ui/button";
-import { VersionsIcon } from "@/components/Icons";
 import { cn } from "@/lib/utils";
 import VersionUsecaseCard from "@/components/usecases/VersionUsecaseCard";
 import SearchBar from "@/components/search-bar";

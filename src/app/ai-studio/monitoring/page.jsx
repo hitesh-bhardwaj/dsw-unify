@@ -1,6 +1,5 @@
 "use client";
 import { ScaleDown } from "@/components/animations/Animations";
-import SearchBar from "@/components/search-bar";
 
 import React, { useState } from "react";
 import {
@@ -52,8 +51,6 @@ const page = () => {
               </p>
             </div>
           </div>
-
-         
 
           <div className="grid grid-cols-3 gap-4 w-full">
             {/* Use Case */}
@@ -129,7 +126,6 @@ const page = () => {
             </div>
           </div>
 
-          {/* Conditional Rendering Section */}
           {!allSelected ? (
             <div className="flex justify-center items-center bg-sidebar-accent h-40 rounded-lg border border-border-color-0 dark:bg-card">
               <p className="text-xs text-foreground/80">

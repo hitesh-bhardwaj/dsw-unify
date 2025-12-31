@@ -16,7 +16,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import AnimatedTabsSection from "../../common/TabsPane";
-import EmptyCard from "../../common/EmptyCard";
 import { Bin, Editor } from "../../Icons";
 import { cn } from "@/lib/utils";
 import { Badge } from "../../ui/badge";
@@ -26,36 +25,7 @@ import DataPreview from "./DataPreview";
 import History from "./History";
 import CopyButton from "@/components/animate-ui/components/buttons/CopyButton";
 
-function CopyWithTooltip({
-  text,
-  className = "",
-  iconClassName = "h-4 w-4",
-  "aria-label": ariaLabel,
-}) {
-  const [label, setLabel] = useState("Copy");
 
-  const handleClick = () => {
-    navigator.clipboard?.writeText?.(text).catch(() => {});
-    setLabel("Copied");
-  };
-
-  return (
-    <Tooltip onOpenChange={(o) => !o && setLabel("Copy")}>
-      <TooltipTrigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={handleClick}
-          className={`shrink-0 flex justify-center items-center cursor-pointer pr-0 py-5 px-5 min-w-8 bg-gray-100 rounded-lg border-foreground/20 ${className}`}
-          aria-label={ariaLabel || label}
-        >
-          <Copy className={iconClassName} />
-        </Button>
-      </TooltipTrigger>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
-  );
-}
 
 /**
  * Modal component to display detailed information about a feature view, including overview, features, data preview, and history.

@@ -1,8 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import SearchBar from "@/components/search-bar";
-import { ScaleDown } from "@/components/animations/Animations";
 import EmptyCard from "@/components/common/EmptyCard";
 import FilterBar from "@/components/FeatureStore/feature-transformation/TransformationFilter";
 import { AnimatePresence, motion } from "framer-motion";

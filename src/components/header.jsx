@@ -10,7 +10,6 @@ import Breadcrumbs from "./common/Breadcrumbs";
 import { GlobalSearch } from "./global-search";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter } from "next/navigation";
-import { Bell } from "lucide-react";
 
 /**
  * Header component containing navigation controls, breadcrumbs, theme toggle, notifications, help, and user profile.

@@ -10,9 +10,7 @@ import {
   Bin,
   Editor,
   Eye,
-  SynthWave,
   Calendar,
-  FileTimeout,
   FeaturesIcon,
   TablesIcon,
 } from "../Icons";

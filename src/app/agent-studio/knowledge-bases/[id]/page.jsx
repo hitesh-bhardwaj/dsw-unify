@@ -2,7 +2,7 @@
 
 import { use, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { AiGenerator, Bin, ConfigureIcon } from "@/components/Icons";
+import { Bin, ConfigureIcon } from "@/components/Icons";
 import { Badge } from "@/components/ui/badge";
 import CountUp from "@/components/animations/CountUp";
 import LeftArrowAnim from "@/components/animations/LeftArrowAnim";
@@ -131,7 +131,6 @@ export default function KnowledgeBaseDetailPage({ params }) {
     />
   );
 };
-
 
   if (!mounted) return null;
 
