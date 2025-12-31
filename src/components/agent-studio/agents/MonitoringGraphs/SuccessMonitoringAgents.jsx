@@ -21,7 +21,7 @@ const SuccessMonitoringAgents = () => {
   const ticks = useMemo(() => data.map((d) => d.time), [data]);
 
   return (
-    <div className="w-full py-3">
+    <div className="w-full py-3  ">
       <div className="space-y-3">
         <div className="space-y-3 mb-8">
           <h1 className="text-2xl font-medium">Success Metrics</h1>

@@ -12,12 +12,14 @@ const MonitoringTab = ({ agentId }) => {
         <>
             <div className="space-y-6">
                 <TrafficMetricsAgents />
-
                 <GuardrailsDashboardAgents/>
                 <LatencyDashboardAgents />
                 <LLMDashboardAgents />
+                <div className='!overflow-y-hidden h-215'>
                 <ErrorMetricsDashboard agentId={agentId} />
+                </div>
                <SuccessMonitoringAgents/>
+              
             </div>
         </>
     )

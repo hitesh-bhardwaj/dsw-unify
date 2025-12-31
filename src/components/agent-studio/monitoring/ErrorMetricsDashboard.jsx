@@ -71,7 +71,7 @@ const ErrorMetricsDashboard = ({ agentId }) => {
   const baseTools = metrics.toolErrors || 0;
 
   return (
-    <div className="space-y-6 py-3">
+    <div className="space-y-6 py-3 !overflow-hidden !h-full">
       <div className="space-y-2">
         <h1 className="text-2xl font-medium">Error Metrics</h1>
         <p className="text-foreground text-sm">
@@ -79,7 +79,7 @@ const ErrorMetricsDashboard = ({ agentId }) => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
         <Card className="!pb-0 !py-7">
           <CardContent className="!space-y-5">
             <div className="text-sm">Agent Errors</div>
@@ -106,6 +106,7 @@ const ErrorMetricsDashboard = ({ agentId }) => {
           </CardContent>
         </Card>
       </div>
+
 
       <Card className="">
         <CardHeader>

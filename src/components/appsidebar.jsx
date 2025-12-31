@@ -35,9 +35,7 @@ import {
   TestingIcon,
   ToolsIcon,
   AIStudioIcon,
-  AgentStudioIcon,
   WorkFlowBuilderIcon,
-  SettingIcon,
   SettingsIcon,
   DataIngestionIcon2,
   DataVisualizationIcon,
@@ -90,7 +88,7 @@ const navigation = [
         name: "Data Validation",
         href: "#",
         icon: DataValidationIcon,
-      },
+      }
     ],
   },
   {
@@ -358,7 +356,7 @@ export function AppSidebar() {
                             className={cn(
                               "cursor-pointer transition-colors duration-200 ease-in-out",
                               (isActive || hasActiveChild) &&
-                              "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary   hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                              "bg-sidebar-primary text-sidebar-primary-foreground hover:bg-sidebar-primary hover:text-sidebar-primary-foreground hover:data-[active=true]:bg-sidebar-primary data-[active=true]:hover:text-white data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                             )}
                             onClick={(e) => {
                               if (isCollapsed && firstChild?.href) {
